@@ -2,15 +2,16 @@
 <html>
 
 <head>
-    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>GreenQuest - PAGE TITLE HERE</title>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" name="educator homepage">
+    <title>GreenQuest - Educator Homepage (New Users)</title>
 
     <!-- Bootstrap for Mobile-first, and JQuery -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
-    <!-- Optional styles and scripts of your own -- REMEMBER TO ADD YOUR PAGE-SPECIFIC STYLESHEET HERE -->
+    <!-- Optional styles and scripts of your own -->
     <link rel="stylesheet" href="/styles/all-pages.css">
+    <link rel="stylesheet" href="/styles/educator-new-home.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Mali&display=swap" rel="stylesheet">
 </head>
@@ -44,6 +45,21 @@
         </div>
     </nav>
 
+    <div class="page-container">
+        <div class="heading-container">
+            <p class="page-heading">Welcome, Educator!</p>
+        </div>
+        <div class="card mb-3" id="main-content-card">
+            <div class="card-text-container">
+                <p class="card-text">Looks like this is your first time here!<br/><br/>Click the button below to get started:</p>
+            </div>
+            <div class="card-button-container">
+            <a class="button" id="create-a-group-button" href="#">Create a Group</a>
+            </div>
+        </div>
+
+    </div>
+
     <!----------------------------------------------->
     <!-- JS: Boostrap, JQuery, Firebase, API related    -->
     <!----------------------------------------------->
@@ -60,7 +76,7 @@
     <script src="/scripts/firebase-api-GreenQuest.js"></script>
 
     <!--------------------------------------------------------------------->
-    <!-- JS files: Your own JavaScript functions included here - REMEMBER TO ADD YOUR PAGE-SPECIFIC JS FILES HERE  -->
+    <!-- JS files: Your own JavaScript functions included here    -->
     <!--------------------------------------------------------------------->
 
 </body>
