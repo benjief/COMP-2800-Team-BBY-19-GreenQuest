@@ -50,7 +50,7 @@
     <!---------------------GB pop-up more information-------------------------->
     <div class="more-info-modal-btn-container">
         <!-- how to guide: more-info-modal-btn trigger modal -->
-        <button type="button" class="more-info-modal-btn btn btn-primary" data-bs-toggle="modal"
+        <button id = "instructionBtn" type="button" class="more-info-modal-btn btn btn-primary" data-bs-toggle="modal"
             data-bs-target="#how-to-modal">
             How to?
         </button>
@@ -69,7 +69,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="how-to-label">How to</h5>
-                    <button id = "instructionBtn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                 </div>
                 <div id="instruction" class="modal-body">
                 </div>
@@ -84,7 +84,7 @@
     <!-- more-info-modal content  -->
     <div class="more-info-modal modal fade" id="more-info-modal" tabindex="-1" aria-labelledby="more-info-modal-label"
         aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="more-info-dialog modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="more-info-modal-label">What's good?</h5>
@@ -98,8 +98,6 @@
             </div>
         </div>
     </div>
-
-
 
     <!----------------------------------------------->
     <!-- JS: Boostrap, JQuery, Firebase, API related    -->
@@ -121,6 +119,7 @@
     <!--------------------------------------------------------------------->
 
     <!-- more-info-page-modal -->
+    <script src="../scripts/more-info-data.js"></script>
     <script src="../scripts/more-info-page.js"></script>
 
 </body>

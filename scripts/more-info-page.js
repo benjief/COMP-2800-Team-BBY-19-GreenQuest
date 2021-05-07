@@ -1,18 +1,26 @@
 'use-strict'
-const instructionRef = db.collection("instruction");
+const recyclingRef = db.collection("instructions").doc("recycling");
 const instructionBtn = document.querySelector("#instructionBtn");
 const instruction = document.querySelector("#instruction");
 
 
 instructionBtn.addEventListener("click",function() {
-  instructionRef.document("recycling").get().then(function(doc) {
-    if (doc && doc.exists) {
-      const myData = doc.data();
-      instruction.innerHTML = myData.task;
+  recyclingRef.get().then((doc) => {
+    if (doc.exists) {
+      instruction.innerHTML = "<iframe src='" + doc.data().link + "' title = '" + doc.data().task + "'></iframe>";
+      console.log("success");
     }
   }).catch(function(error) {
     console.log("Got an error: ", error);
   });
+  console.log("testing2");
 });
 
-console.log("testing");
+// db.collection("instructions").get().then((querySnapshot) => {
+//   console.log("testing");
+//   querySnapshot.forEach((doc) => {
+//     console.log("testing");
+
+//       console.log(`${doc.id} => ${doc.data()}`);
+//   });
+// });
