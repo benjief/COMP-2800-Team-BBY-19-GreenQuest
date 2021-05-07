@@ -56,21 +56,17 @@
             </div>
             <div class="input-container">
                 <input type="text" id="group-name" maxlength="100" placeholder="Enter Group Name..."
-                    onkeyup="charCounter(this,'counter',50);">
-                </input>
+                    onkeyup="charCounter(this,'counter',50)"></input>
             </div>
-
             <div class="characters-remaining-container">
                 <p id="characters-remaining">Characters Remaining:</p>
                 <input disabled id="counter" maxlength="3" size="3" value="50">
             </div>
-            <button id="submit-button" role="button" class="btn btn-primary button-main"
-                onclick="onClickSubmit()">Submit</button>
             <div class="feedback-placeholder">
                 <p id="feedback"></p>
             </div>
             <div class="card-button-container">
-                <a class="button" id="submit-button" href="#">Submit</a>
+                <a class="button" id="submit-button" href="#" onclick="onClickSubmit()">Submit</a>
             </div>
         </div>
 
@@ -94,6 +90,7 @@
     <!-- JS files: Your own JavaScript functions included here    -->
     <!--------------------------------------------------------------------->
     <script src="/scripts/educator-create-group.js"></script>
+
 </body>
 
 </html>
