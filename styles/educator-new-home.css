@@ -3,28 +3,10 @@
     margin-top: 50px;
 }
 
-.heading-container {
-    display: flex;
-    grid-area: header;
-    font-size: 25pt;
-    font-weight: 600;
-    justify-content: center;
-    height: 50px;
-    margin-bottom: 50px;
-}
-
-.page-heading {
-    display: flex;
-    height: 100%;
-    align-items: center;
-}
-
 #main-content-card {
-    display: grid;
     grid-template-areas: 
         "card-text"
         "buttons";
-    border-radius: 40px;
 }
 
 .card-text-container {
@@ -47,7 +29,6 @@
     border-radius: 10px;
     font-size: 15pt;
     justify-self: center;
-    margin-top: 40px;
     margin-bottom: 55px;
 }
 

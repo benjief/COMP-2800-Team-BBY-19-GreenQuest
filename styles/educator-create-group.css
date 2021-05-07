@@ -1,30 +1,10 @@
 /** CSS for educator-create-group.html */
-.page-container {
-    margin-top: 50px;
-}
-
-.heading-container {
-    display: flex;
-    grid-area: header;
-    font-size: 25pt;
-    font-weight: 600;
-    justify-content: center;
-    height: 50px;
-    margin-bottom: 50px;
-}
-
-.page-heading {
-    display: flex;
-    height: 100%;
-    align-items: center;
-}
-
 #main-content-card {
-    display: grid;
     grid-template-areas: 
         "card-text"
-        "buttons";
-    border-radius: 40px;
+        "input"
+        "chars-remaining"
+
 }
 
 .card-text-container {
@@ -37,24 +17,36 @@
     height: 100%;
 }
 
-.card-button-container {
+.input-container {
     display: flex;
-    height: 50px;
-    width: 180px;
-    grid-area: buttons;
-    background-color: rgb(72, 143, 102);
+    grid-area: input;
     justify-content: center;
-    border-radius: 10px;
-    font-size: 15pt;
-    justify-self: center;
-    margin-top: 40px;
-    margin-bottom: 55px;
 }
 
-#create-a-group-button {
+#group-name {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 7px;
+}
+
+.characters-remaining-container {
+    display: flex;
+    grid-area: chars-remaining;
+    margin-left: 37px;
+    font-size: 10pt;
+}
+
+#characters-remaining {
     display: flex;
     height: 100%;
-    align-items: center;
+}
+
+#counter {
+    display: flex;
+    border: none;
+    background-color: white;
+    margin-left: 1px;
+    height: 20px;
 }
 
 

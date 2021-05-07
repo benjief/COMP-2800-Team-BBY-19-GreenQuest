@@ -48,14 +48,29 @@
 
     <div class="page-container">
         <div class="heading-container">
-            <p class="page-heading">Welcome, <span class="name-goes-here"></span></p>
+            <p class="page-heading">Create Your Group</p>
         </div>
         <div class="card mb-3" id="main-content-card">
             <div class="card-text-container">
-                <p class="card-text">Looks like this is your first time here!<br/><br/>Click the button below to get started:</p>
+                <p class="card-text">Enter your group's name below:</p>
+            </div>
+            <div class="input-container">
+                <input type="text" id="group-name" maxlength="100" placeholder="Enter Group Name..."
+                    onkeyup="charCounter(this,'counter',50);">
+                </input>
+            </div>
+
+            <div class="characters-remaining-container">
+                <p id="characters-remaining">Characters Remaining:</p>
+                <input disabled id="counter" maxlength="3" size="3" value="50">
+            </div>
+            <button id="submit-button" role="button" class="btn btn-primary button-main"
+                onclick="onClickSubmit()">Submit</button>
+            <div class="feedback-placeholder">
+                <p id="feedback"></p>
             </div>
             <div class="card-button-container">
-            <a class="button" id="create-a-group-button" href="#">Create a Group</a>
+                <a class="button" id="submit-button" href="#">Submit</a>
             </div>
         </div>
 
@@ -78,7 +93,7 @@
     <!--------------------------------------------------------------------->
     <!-- JS files: Your own JavaScript functions included here    -->
     <!--------------------------------------------------------------------->
-
+    <script src="/scripts/educator-create-group.js"></script>
 </body>
 
 </html>
