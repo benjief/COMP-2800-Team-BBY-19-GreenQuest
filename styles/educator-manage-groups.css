@@ -1,0 +1,44 @@
+/** CSS for educator-manage-groups.html */
+#main-content-card {
+    grid-template-areas: 
+        "card-text"
+        "group-list";
+    margin-bottom: 60px !important;
+}
+
+.card-text-container {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.card-text {
+    height: 100%;
+}
+
+.group-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 300px;
+    grid-area: group-list;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.group-container {
+    display: flex;
+    width: 60%;
+    height: 50px;
+    justify-content: center;
+    justify-self: flex-end;
+    border: 1px solid rgb(72, 143, 102);
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.group-name {
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
