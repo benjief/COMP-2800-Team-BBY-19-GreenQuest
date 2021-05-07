@@ -10,8 +10,22 @@ instructionBtn.addEventListener("click",function() {
       var src = doc.data().link;
       $('#instruction iframe').attr('src', src);
       console.log("success");
-      console.log(doc.data().link);
+    }
+  }).catch(function(error) {
+    console.log("Got an error: ", error);
+  });
+});
 
+//more-info-button
+const moreInfoBtn = document.querySelector("#moreInfoBtn");
+
+moreInfoBtn.addEventListener("click",function() {
+  recyclingRef.get().then((doc) => {
+    if (doc.exists) {
+      var src = doc.data().moreInfo;
+      $('#moreInfo iframe').attr('src', src);
+
+      console.log("success");
     }
   }).catch(function(error) {
     console.log("Got an error: ", error);

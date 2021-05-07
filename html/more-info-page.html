@@ -56,7 +56,7 @@
         </button>
 
         <!-- more-info-modal-btn trigger modal -->
-        <button type="button" class="more-info-modal-btn btn btn-primary" data-bs-toggle="modal"
+        <button id="moreInfoBtn" type="button" class="more-info-modal-btn btn btn-primary" data-bs-toggle="modal"
             data-bs-target="#more-info-modal">
             What's good?
         </button>
@@ -65,14 +65,14 @@
     <!-- how-to more-info-modal content  -->
     <div class="more-info-modal modal fade" id="how-to-modal" tabindex="-1" aria-labelledby="how-to-label"
         aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="more-info-dialog modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="how-to-label">How to</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                 </div>
                 <div id="instruction" class="modal-body">
-                    <iframe class="embed-responsive-item allowfullscreen"></iframe>
+                    <iframe class="embed-responsive-item" allow="autoplay" allowfullscreen></iframe>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -91,7 +91,8 @@
                     <h5 class="modal-title" id="more-info-modal-label">What's good?</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div id="moreInfo" class="modal-body">
+                    <iframe class="embed-responsive-item" allow="autoplay" allowfullscreen></iframe>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

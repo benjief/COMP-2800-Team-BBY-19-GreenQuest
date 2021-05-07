@@ -10,6 +10,10 @@
     font-size: 10pt;
 }
 
+.more-info-dialog {
+    width: max-content;
+}
+
 .more-info-modal-btn {
     display: flex;
     font-family: 'Press Start 2P', Arial, Helvetica, sans-serif;
@@ -49,12 +53,12 @@
     box-shadow: 0 0 0 0.25rem white;
 }
 
-#video-section .modal-content {
-    min-width: 600px;
+.modal-content {
+    min-width: 100%;
 }
 
-#video-section .modal-content iframe {
-    width: 560px;
+.modal-content iframe {
+    width: 430px;
     height: 315px;
 }
 
