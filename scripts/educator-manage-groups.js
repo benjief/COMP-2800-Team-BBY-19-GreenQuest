@@ -10,6 +10,10 @@ var currentUser = null;
  * Appends a list of student names (along with a "+" icon) to the DOM.
  */
 function populateGroupList() {
+    if (userGroups.length == 0) {
+        let message = "<p class='message'>You haven't got any groups!</p>"
+        $(".group-list").append(message);
+    } else {
     for (var i = 0; i < userGroups.length; i++) {
         let groupContainer = "<div class='group-container' id='group-container-" + i + "'></div>";
         $(".group-list").append(groupContainer);

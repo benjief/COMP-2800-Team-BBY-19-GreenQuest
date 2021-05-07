@@ -13,7 +13,7 @@ $(".page-heading").html("Remove Students from " + groupName);
  */
 function populateStudentList() {
     if (currentStudents.length == 0) {
-        let message = "<p class='message'>There are no more students to add!</p>"
+        let message = "<p class='message'>There are no students to remove!</p>"
         $(".student-list").append(message);
     } else {
         for (var i = 0; i < currentStudents.length; i++) {
