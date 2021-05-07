@@ -53,6 +53,12 @@
     width: 24px;
 }
 
+.message {
+    text-align: center;
+    font-weight: 600;
+    color: red;
+}
+
 .card-button-container {
     display: flex;
     height: 50px;

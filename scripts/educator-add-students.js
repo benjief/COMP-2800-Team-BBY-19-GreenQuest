@@ -16,17 +16,21 @@ var redirectFlag = parsedUrl.searchParams.get("redirectflag");
  * Appends a list of student names (along with a "+" icon) to the DOM.
  */
 function populateStudentList() {
-    console.log(studentNames);
-    for (var i = 0; i < 10; i++) {
-        let studentContainer = "<div class='student-container' id='student-container-" + i + "'></div>";
-        $(".student-list").append(studentContainer);
-        let studentName = "<p class='student-name' id='student-name-" + i + "'>" + studentNames[i] + "</p>";
-        $("#student-container-" + i).append(studentName);
-        let iconContainer = "<div class='icon-container' id='icon-container-" + i + "'></div>";
-        $("#student-container-" + i).append(iconContainer);
-        let plusIcon = "<img src='/img/add_icon.png' class='icon' id='plus-icon-" + i
-            + "' onclick='addStudent()'>";
-        $("#icon-container-" + i).append(plusIcon);
+    if (studentNames.length == 0) {
+        let message = "<p class='message'>There are no more students to add!</p>"
+        $(".student-list").append(message);
+    } else {
+        for (var i = 0; i < studentNames.length; i++) {
+            let studentContainer = "<div class='student-container' id='student-container-" + i + "'></div>";
+            $(".student-list").append(studentContainer);
+            let studentName = "<p class='student-name' id='student-name-" + i + "'>" + studentNames[i] + "</p>";
+            $("#student-container-" + i).append(studentName);
+            let iconContainer = "<div class='icon-container' id='icon-container-" + i + "'></div>";
+            $("#student-container-" + i).append(iconContainer);
+            let plusIcon = "<img src='/img/add_icon.png' class='icon' id='plus-icon-" + i
+                + "' onclick='addStudent()'>";
+            $("#icon-container-" + i).append(plusIcon);
+        }
     }
 }
 
@@ -35,13 +39,13 @@ function populateStudentList() {
  */
 function getCurrentStudents() {
     db.collection("Groups").doc(groupName).collection("Students")
-    .get()
-    .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            currentStudents.push(doc.data().id);
-        });
-        getStudents();
-    })
+        .get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                currentStudents.push(doc.data().id);
+            });
+            getStudents();
+        })
 }
 
 /**
@@ -123,7 +127,7 @@ function removeStudent(event) {
  * Redirects users back to the main page (or the manage students page) once they've finished adding students. 
  * Redirection depends on whether or not users are adding students to their group for the first time.
  */
- function onClickSubmit() {
+function onClickSubmit() {
     setTimeout(function () {
         if (!redirectFlag) {
             location.href = "educator-home.html";
@@ -131,7 +135,7 @@ function removeStudent(event) {
             location.href = "educator-manage-group.html?groupname=" + groupName;
         }
 
-    }, 2300);
+    }, 1000);
 }
 
 /**

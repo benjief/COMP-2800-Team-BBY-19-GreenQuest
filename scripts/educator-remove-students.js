@@ -100,7 +100,7 @@ function addStudent() {
 function onClickSubmit() {
     setTimeout(function () {
             location.href = "educator-manage-group.html?groupname=" + groupName;
-    }, 2300);
+    }, 1000);
 }
 
 /**
