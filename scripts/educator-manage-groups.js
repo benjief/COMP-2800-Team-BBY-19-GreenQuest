@@ -1,4 +1,4 @@
-// JS for educator-add-students.js
+// JS for educator-manage-groups.js
 
 // Create an empty list to house group names
 var userGroups = [];
@@ -60,7 +60,7 @@ function onSelectGroup() {
     $(document).click(function (event) {
         let groupName = $(event.target).html();
         setTimeout(function () {
-            location.href = "/html/educator-manage-group?groupid=" + groupName;
+            location.href = "/html/educator-manage-group?groupname=" + groupName;
         }, 500);
     });
 }
