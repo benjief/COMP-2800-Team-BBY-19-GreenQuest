@@ -3,16 +3,20 @@
 // Set up a user type variable to store the type of user signing up or logging in
 var userType = null;
 
-// Set up redirectUrl to be used with signInSuccessWithAuthResult function below
-var redirectUrl = null;
+$("#educator-radio").click(function () {
+    userType = "educator";
+})
+
+$("#student-radio").click(function () {
+    userType = "student";
+})
 
 // Initialize the FirebaseUI Widget using Firebase.
 var ui = new firebaseui.auth.AuthUI(firebase.auth());
 // Call the getUserType function
-getUserType();
 var uiConfig = {
     callbacks: {
-        signInSuccessWithAuthResult: function (authResult, redirectUrl) {
+        signInSuccessWithAuthResult: function (authResult) {
             // User successfully signed in.
             // Return type determines whether we continue the redirect automatically
             // or whether we leave that to developer to handle.
@@ -48,21 +52,25 @@ var uiConfig = {
                         console.log("Error adding new user: " + error);
                     });
             } else {
-                return true;
+                if (userType === "educator") {
+                    window.location.pathname = "/html/educator-home.html";
+                } else if (userType === "student") {
+                    window.location.pathname = "/html/student-home.html";
+                }
             }
-            return false;
+            return true;
         },
     },
     // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
     signInFlow: 'popup',
-    signInSuccessUrl: redirectUrl,
+    signInSuccessUrl: "#",
     signInOptions: [
         // Leave the lines as is for the providers you want to offer your users.
-        //firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        // firebase.auth.GoogleAuthProvider.PROVIDER_ID,
         //firebase.auth.FacebookAuthProvider.PROVIDER_ID,
         //firebase.auth.TwitterAuthProvider.PROVIDER_ID,
         //firebase.auth.GithubAuthProvider.PROVIDER_ID,
-        firebase.auth.EmailAuthProvider.PROVIDER_ID,
+        firebase.auth.EmailAuthProvider.PROVIDER_ID
         //firebase.auth.PhoneAuthProvider.PROVIDER_ID
     ],
     // Terms of service url.
@@ -72,17 +80,3 @@ var uiConfig = {
 };
 // The start method will wait until the DOM is loaded.
 ui.start('#firebaseui-auth-container', uiConfig);
-
-/**
- * Checks to see which radio button is selected (Educator or Student) and assigns userType to either
- * "educator" or "student." Also sets redirectUrl to the appropriate page.
- */
-function getUserType() {
-    if ($("#educator-radio").prop('checked')) {
-        userType = "educator";
-        redirectUrl = "/html/educator-home.html";
-    } else {
-        userType = "student";
-        redirectUrl = "/html/student-home.html";
-    }
-}

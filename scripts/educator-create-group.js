@@ -3,7 +3,7 @@
 var noInput = false;
 
 /**
- * Implement a character limit counter
+ * Implement a character limit counter.
  * 
  * @param {*} field - DOM-element that characters are being counted in
  * @param {*} field2 - ID of the DOM-element displaying the number of characters remaining
@@ -33,15 +33,15 @@ function addGroup(groupName) {
         Date_Created: firebase.firestore.FieldValue.serverTimestamp()
     })
         .then(() => {
-            console.log("Document successfully written!");
+            console.log("Group successfully written!");
         })
         .catch((error) => {
-            console.error("Error adding document: ", error);
+            console.error("Error adding group: ", error);
         });
 }
 
 /**
- * Make sure the user has input a group name
+ * Make sure the user has input a group name.
  * 
  * @param groupName - String containing the name of the group to be created
  */
@@ -60,7 +60,7 @@ function checkInput(groupName) {
 }
 
 /**
- * Deal with submission click in the appropriate manner
+ * Deal with submission click in the appropriate manner.
  */
 function onClickSubmit() {
     // Store group name in a variable
@@ -78,8 +78,7 @@ function onClickSubmit() {
         $(feedback).show(0);
         $(feedback).fadeOut(2500);
         setTimeout(function () {
-            location.href = "#";
+            location.href = "../html/educator-add-students.html?groupname=" + groupName;
         }, 2300);
     }
-
 }

@@ -13,10 +13,12 @@
                     // Extract the first name of the user
                     var name = doc.data().Name.split(" ", 1);
                     if (name) {
-                        $(".name-goes-here").html( "&nbsp" + name);
+                        $("#personalized-greeting-new-user").html( "Welcome, " + name);
+                        $("#personalized-greeting-established-user").html( "Welcome back, " + name);
                         // Display a generic message if no name is entered when signing up
                     } else {
-                        $(".name-goes-here").html(" GreenQuest User!");
+                        $("#personalized-greeting-new-user").html("Welcome, GreenQuest User!");
+                        $("#personalized-greeting-established-user").html("Welcome back, GreenQuest User!");
                     }
                 });
         }
