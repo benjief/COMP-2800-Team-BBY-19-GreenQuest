@@ -37,6 +37,11 @@
     margin: 10px;
 }
 
+.more-info-modal-btn:hover {
+    background: rgb(72, 143, 102);
+    border-color: rgb(72, 143, 102);
+}
+
 /* We can change the media query width later */
 @media (min-width: 768px) {
     .navbar-brand.abs
