@@ -39,6 +39,7 @@
 
 #card-button-container-2 {
     grid-area: buttons-2;
+    margin-bottom: 35px;
 }
 
 /* #card-button-container-3 {

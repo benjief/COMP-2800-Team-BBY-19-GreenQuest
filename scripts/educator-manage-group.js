@@ -6,10 +6,12 @@ var groupName = parsedUrl.searchParams.get("groupname");
 $(".page-heading").html("Add Students to " + groupName);
 
 /**
- * Adds the current group to the link address of the selected option.
+ * Adds the current group, along with a redirect flag, to the link address of the selected option.
  */
 function onClick() {
     $(document).click(function (event) {
-        $(event.target).attr("href", $(event.target).attr("href") + "?groupname=" + groupname + "&redirectflag=true");
+        let redirectLink = $(event.target).attr("href");
+        redirectLink += "?groupname=" + groupName + "&redirectflag=true";
+        $(event.target).attr("href", redirectLink);
     });
 }
