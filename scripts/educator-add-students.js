@@ -8,7 +8,9 @@ var currentStudents = [];
 const parsedUrl = new URL(window.location.href);
 var groupName = parsedUrl.searchParams.get("groupname");
 $(".page-heading").html("Add Students to " + groupName);
- 
+
+// Pull redirect flag from URL
+var redirectFlag = parsedUrl.searchParams.get("redirectflag");
 
 /**
  * Appends a list of student names (along with a "+" icon) to the DOM.
@@ -118,11 +120,17 @@ function removeStudent(event) {
 }
 
 /**
- * Redirects users back to the main page once they've finished adding students.
+ * Redirects users back to the main page (or the manage students page) once they've finished adding students. 
+ * Redirection depends on whether or not users are adding students to their group for the first time.
  */
-function onClickSubmit() {
+ function onClickSubmit() {
     setTimeout(function () {
-        location.href = "/html/educator-home.html";
+        if (!redirectFlag) {
+            location.href = "educator-home.html";
+        } else {
+            location.href = "educator-manage-group.html?groupname=" + groupName;
+        }
+
     }, 2300);
 }
 

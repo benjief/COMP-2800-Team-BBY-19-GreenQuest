@@ -71,7 +71,8 @@ function onClickSubmit() {
         // Add group to Firestore
         addGroup(groupName);
         // Display success message and direct users back to the main page
-        document.getElementById("feedback").innerHTML = "Success! Please wait...";
+        let feedback = document.getElementById("feedback");
+        feedback.innerHTML = "Success! Please wait...";
         $(feedback).css({
             color: "green"
         });

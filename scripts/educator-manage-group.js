@@ -10,6 +10,6 @@ $(".page-heading").html("Add Students to " + groupName);
  */
 function onClick() {
     $(document).click(function (event) {
-        $(event.target).attr("href", $(event.target).attr("href") + "?groupname=" + groupname);
+        $(event.target).attr("href", $(event.target).attr("href") + "?groupname=" + groupname + "&redirectflag=true");
     });
 }

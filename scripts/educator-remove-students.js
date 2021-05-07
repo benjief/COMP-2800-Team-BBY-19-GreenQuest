@@ -6,9 +6,8 @@ var currentStudents = [];
 // Pull group name from URL and display it in the DOM
 const parsedUrl = new URL(window.location.href);
 var groupName = parsedUrl.searchParams.get("groupname");
-$(".page-heading").html("Add Students to " + groupName);
+$(".page-heading").html("Remove Students from " + groupName);
  
-
 /**
  * Appends a list of student names (along with a "+" icon) to the DOM.
  */
@@ -96,11 +95,11 @@ function addStudent() {
 }
 
 /**
- * Redirects users back to the main page once they've finished adding students.
+ * Redirects users back to the manage students page once they've finished removing students. 
  */
 function onClickSubmit() {
     setTimeout(function () {
-        location.href = "/html/educator-home.html";
+            location.href = "educator-manage-group.html?groupname=" + groupName;
     }, 2300);
 }
 
@@ -110,5 +109,3 @@ function onClickSubmit() {
 $(document).ready(function () {
     getCurrentStudents();
 });
-
-

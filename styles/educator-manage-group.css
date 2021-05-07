@@ -7,8 +7,8 @@
     grid-template-areas: 
         "card-text"
         "buttons-1"
-        "buttons-2"
-        "buttons-3";
+        "buttons-2";
+        /* "buttons-3"; */
 }
 
 .card-text-container {
@@ -41,10 +41,10 @@
     grid-area: buttons-2;
 }
 
-#card-button-container-3 {
+/* #card-button-container-3 {
     grid-area: buttons-3;
     margin-bottom: 35px;
-}
+} */
 
 .button {
     display: flex;
