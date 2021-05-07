@@ -14,14 +14,17 @@
     <link rel="stylesheet" href="../styles/all-pages.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Mali&display=swap" rel="stylesheet">
-</head>
 
+    <!-- Optional styles and scripts of your own -- more-info-modal-css -->
+    <link rel="stylesheet" href="../styles/more-info-modal.css">
+</head>
 
 <body>
     <nav class="navbar navbar-expand-md navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand abs" href="#">GreenQuest</a>
-            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNavbar">
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-collapse collapse" id="collapseNavbar">
@@ -45,54 +48,56 @@
         </div>
     </nav>
     <!---------------------GB pop-up more information-------------------------->
-<div class = "more-info-modal-btn-container">
-    <!-- how to guide: more-info-modal-btn trigger modal -->
-    <button type="button" class="more-info-modal-btn btn btn-primary" data-bs-toggle="modal" data-bs-target="#how-to-modal">
-        How to?
-    </button>
+    <div class="more-info-modal-btn-container">
+        <!-- how to guide: more-info-modal-btn trigger modal -->
+        <button type="button" class="more-info-modal-btn btn btn-primary" data-bs-toggle="modal"
+            data-bs-target="#how-to-modal">
+            How to?
+        </button>
 
-    <!-- more-info-modal-btn trigger modal -->
-    <button type="button" class="more-info-modal-btn btn btn-primary" data-bs-toggle="modal" data-bs-target="#more-info-modal">
-        What's good?
-    </button>
-</div>
+        <!-- more-info-modal-btn trigger modal -->
+        <button type="button" class="more-info-modal-btn btn btn-primary" data-bs-toggle="modal"
+            data-bs-target="#more-info-modal">
+            What's good?
+        </button>
+    </div>
 
     <!-- how-to more-info-modal content  -->
-    <div class="more-info-modal modal fade" id="how-to-modal" tabindex="-1" aria-labelledby="how-to-label" aria-hidden="true">
+    <div class="more-info-modal modal fade" id="how-to-modal" tabindex="-1" aria-labelledby="how-to-label"
+        aria-hidden="true">
         <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="how-to-label">How to</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="how-to-label">How to</h5>
+                    <button id = "instructionBtn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="instruction" class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
         </div>
     </div>
 
 
     <!-- more-info-modal content  -->
-    <div class="more-info-modal modal fade" id="more-info-modal" tabindex="-1" aria-labelledby="more-info-modal-label" aria-hidden="true">
+    <div class="more-info-modal modal fade" id="more-info-modal" tabindex="-1" aria-labelledby="more-info-modal-label"
+        aria-hidden="true">
         <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="more-info-modal-label">What's good?</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="more-info-modal-label">What's good?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
         </div>
     </div>
-
-
 
 
 
