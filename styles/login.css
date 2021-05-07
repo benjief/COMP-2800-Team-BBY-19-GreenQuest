@@ -1,19 +1,58 @@
+/** CSS for educator-new-home.html */
 #main-content-card {
-    grid-area: content-card;
-    margin-top: 10px;
-    width: 100%;
-    max-width: 300px;
-    margin-left: auto;
-    margin-right: auto;
-    overflow: hidden;
-    border-radius: 30px;
-    font-size: 12px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    grid-template-areas: 
+        "card-text"
+        "radio-buttons"
+        "login";
 }
 
-.login-message {
-    text-align: center;
-    font-size: 20px;
+.card-text-container {
+    margin-top: 20px;
+    justify-content: center;
 }
+
+.card-text {
+    grid-area: card-text;
+    display: flex;
+    height: 100%;
+}
+
+.radio-button-container {
+    display: flex;
+    flex-direction: column;
+    grid-area: radio-buttons;
+    font-size: 20pt;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.form-check {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+label {
+    margin-left: 10px;
+}
+
+.form-check-input {
+    height: 20px;
+    width: 20px;
+    position: relative;
+    top: -2px;
+}
+
+#student-radio, #student-radio-label {
+    position: relative;
+    left: -8px;
+}
+
+#firebaseui-auth-container {
+    grid-area: login;
+    margin-top: 20px;
+}
+
+
 
 
