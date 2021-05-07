@@ -50,3 +50,23 @@
     font-weight: 600;
     color: red;
 }
+
+.card-button-container {
+    display: flex;
+    height: 50px;
+    width: 180px;
+    grid-area: back;
+    background-color: rgb(72, 143, 102);
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 15pt;
+    justify-self: center;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+#back-button {
+    display: flex;
+    height: 100%;
+    align-items: center;
+}

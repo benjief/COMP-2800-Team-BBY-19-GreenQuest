@@ -13,6 +13,11 @@ function populateGroupList() {
     if (userGroups.length == 0) {
         let message = "<p class='message'>You haven't got any groups!</p>"
         $(".group-list").append(message);
+        let backButtonContainer = "<div class='card-button-container'></div>";
+        $(".group-list").append(backButtonContainer);
+        let backButton = "<a class='button' id='back-button' onclick='onClickBack()'>Back</a>";
+        $(".card-button-container").append(backButton);
+        
     } else {
         for (var i = 0; i < userGroups.length; i++) {
             let groupContainer = "<div class='group-container' id='group-container-" + i + "'></div>";
@@ -68,6 +73,16 @@ function onSelectGroup() {
             location.href = "educator-manage-group.html?groupname=" + groupName;
         }, 500);
     });
+}
+
+/**
+ * Redirects users back to the the main page page.
+ */
+ function onClickBack() {
+    setTimeout(function () {
+            location.href = "educator-home.html?";
+
+    }, 1000);
 }
 
 /**

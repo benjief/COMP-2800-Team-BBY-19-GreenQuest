@@ -15,6 +15,7 @@ function populateStudentList() {
     if (currentStudents.length == 0) {
         let message = "<p class='message'>There are no students to remove!</p>"
         $(".student-list").append(message);
+        $("#submit-button").html("Back");
     } else {
         for (var i = 0; i < currentStudents.length; i++) {
             let studentContainer = "<div class='student-container' id='student-container-" + i + "'></div>";
@@ -99,7 +100,7 @@ function addStudent() {
 }
 
 /**
- * Redirects users back to the manage students page once they've finished removing students. 
+ * Redirects users back to the manage group page once they've finished removing students. 
  */
 function onClickSubmit() {
     setTimeout(function () {

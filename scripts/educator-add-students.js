@@ -19,6 +19,7 @@ function populateStudentList() {
     if (studentNames.length == 0) {
         let message = "<p class='message'>There are no more students to add!</p>"
         $(".student-list").append(message);
+        $("#submit-button").html("Back");
     } else {
         for (var i = 0; i < studentNames.length; i++) {
             let studentContainer = "<div class='student-container' id='student-container-" + i + "'></div>";
@@ -124,7 +125,7 @@ function removeStudent(event) {
 }
 
 /**
- * Redirects users back to the main page (or the manage students page) once they've finished adding students. 
+ * Redirects users back to the main page (or the manage group page) once they've finished adding students. 
  * Redirection depends on whether or not users are adding students to their group for the first time.
  */
 function onClickSubmit() {

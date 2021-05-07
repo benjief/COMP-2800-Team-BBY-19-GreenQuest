@@ -1,7 +1,7 @@
 // JS for login.html
 
 // Set up a user type variable to store the type of user signing up or logging in
-var userType = null;
+var userType = "educator";
 
 $("#educator-radio").click(function () {
     userType = "educator";
@@ -39,11 +39,11 @@ var uiConfig = {
                         console.log("New user added to firestore");
                         if (userType === "educator") {
                             window.location.assign(
-                                "/html/educator-new-home.html"
+                                "educator-new-home.html"
                             ); //re-direct to educator-new-home.html after signup
                         } else {
                             window.location.assign(
-                                "/html/student-new-home.html"
+                                "student-new-home.html"
                             ); //re-direct to student-new-home.html after signup
                         }
 
@@ -53,9 +53,9 @@ var uiConfig = {
                     });
             } else {
                 if (userType === "educator") {
-                    window.location.pathname = "/html/educator-home.html";
+                    window.location.pathname = "educator-home.html";
                 } else if (userType === "student") {
-                    window.location.pathname = "/html/student-home.html";
+                    window.location.pathname = "student-home.html";
                 }
             }
             return true;
