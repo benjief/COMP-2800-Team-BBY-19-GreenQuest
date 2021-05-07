@@ -54,6 +54,12 @@
     filter: invert(48%) sepia(28%) saturate(600%) hue-rotate(93deg) brightness(96%) contrast(95%);
 }
 
+.message {
+    text-align: center;
+    font-weight: 600;
+    color: red;
+}
+
 .card-button-container {
     display: flex;
     height: 50px;

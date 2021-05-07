@@ -14,11 +14,12 @@ function populateGroupList() {
         let message = "<p class='message'>You haven't got any groups!</p>"
         $(".group-list").append(message);
     } else {
-    for (var i = 0; i < userGroups.length; i++) {
-        let groupContainer = "<div class='group-container' id='group-container-" + i + "'></div>";
-        $(".group-list").append(groupContainer);
-        let groupName = "<p class='group-name' id='group-name-" + i + "' + ' onclick='onSelectGroup()'>" + userGroups[i] + "</p>";
-        $("#group-container-" + i).append(groupName);
+        for (var i = 0; i < userGroups.length; i++) {
+            let groupContainer = "<div class='group-container' id='group-container-" + i + "'></div>";
+            $(".group-list").append(groupContainer);
+            let groupName = "<p class='group-name' id='group-name-" + i + "' + ' onclick='onSelectGroup()'>" + userGroups[i] + "</p>";
+            $("#group-container-" + i).append(groupName);
+        }
     }
 }
 
@@ -75,5 +76,3 @@ function onSelectGroup() {
 $(document).ready(function () {
     listGroups();
 });
-
-
