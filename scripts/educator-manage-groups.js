@@ -65,7 +65,7 @@ function onSelectGroup() {
     $(document).click(function (event) {
         let groupName = $(event.target).html();
         setTimeout(function () {
-            location.href = "/html/educator-manage-group?groupname=" + groupName;
+            location.href = "educator-manage-group.html?groupname=" + groupName;
         }, 500);
     });
 }
