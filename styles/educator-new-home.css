@@ -28,19 +28,12 @@
 }
 
 .card-text-container {
-    display: flex;
-    grid-area: card-text;
-    height: 200px;
     margin-top: 20px;
     margin-bottom: 40px;
-    margin-left: 10px;
-    margin-right: 10px;
-    font-size: 20pt;
     text-align: center;
 }
 
 .card-text {
-    display: flex;
     height: 100%;
 }
 

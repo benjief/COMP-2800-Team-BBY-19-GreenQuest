@@ -12,9 +12,10 @@
 }
 
 .card-text {
-    grid-area: card-text;
     display: flex;
     height: 100%;
+    align-items: center;
+
 }
 
 .radio-button-container {
