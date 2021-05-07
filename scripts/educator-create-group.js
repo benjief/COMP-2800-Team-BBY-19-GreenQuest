@@ -78,7 +78,7 @@ function onClickSubmit() {
         $(feedback).show(0);
         $(feedback).fadeOut(2500);
         setTimeout(function () {
-            location.href = "../html/educator-add-students.html?groupname=" + groupName;
+            location.href = "html/educator-add-students.html?groupname=" + groupName;
         }, 2300);
     }
 }

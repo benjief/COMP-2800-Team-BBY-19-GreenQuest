@@ -51,6 +51,7 @@
 .icon {
     height: 24px;
     width: 24px;
+    filter: invert(48%) sepia(28%) saturate(600%) hue-rotate(93deg) brightness(96%) contrast(95%);
 }
 
 .card-button-container {
