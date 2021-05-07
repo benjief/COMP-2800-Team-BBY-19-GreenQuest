@@ -7,8 +7,11 @@ const instruction = document.querySelector("#instruction");
 instructionBtn.addEventListener("click",function() {
   recyclingRef.get().then((doc) => {
     if (doc.exists) {
-      instruction.innerHTML = "<iframe src='" + doc.data().link + "' title = '" + doc.data().task + "'></iframe>";
+      var src = doc.data().link;
+      $('#instruction iframe').attr('src', src);
       console.log("success");
+      console.log(doc.data().link);
+
     }
   }).catch(function(error) {
     console.log("Got an error: ", error);
@@ -16,11 +19,15 @@ instructionBtn.addEventListener("click",function() {
   console.log("testing2");
 });
 
-// db.collection("instructions").get().then((querySnapshot) => {
-//   console.log("testing");
-//   querySnapshot.forEach((doc) => {
-//     console.log("testing");
+// stackoverflow boostrap and youtube in modal.
+// src: https://stackoverflow.com/questions/18622508/bootstrap-3-and-youtube-in-modal
+// accessed on: May 7, 2021
 
-//       console.log(`${doc.id} => ${doc.data()}`);
-//   });
-// });
+//modified by Giwoun Bae
+$('#instruction button.close').on('hidden.bs.modal', function () {
+  $('#instruction iframe').removeAttr('src');
+});
+
+
+
+    
