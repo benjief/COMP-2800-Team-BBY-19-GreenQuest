@@ -1,12 +1,14 @@
 // JS for educator-add-students.js
 
-// Create an empty list to house student names
+// Create empty lists to house student names
 var studentNames = [];
+var currentStudents = [];
 
 // Pull group name from URL and display it in the DOM
 const parsedUrl = new URL(window.location.href);
 var groupName = parsedUrl.searchParams.get("groupname");
 $(".page-heading").html("Add Students to " + groupName);
+ 
 
 /**
  * Appends a list of student names (along with a "+" icon) to the DOM.
@@ -26,16 +28,33 @@ function populateStudentList() {
     }
 }
 
+/** 
+ * Gets the names of students who are already in this group.
+ */
+function getCurrentStudents() {
+    db.collection("Groups").doc(groupName).collection("Students")
+    .get()
+    .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            currentStudents.push(doc.data().id);
+        });
+        getStudents();
+    })
+}
+
 /**
- * Reads students' names from Firestore and puts them into an array.
+ * Reads students' names from Firestore and puts them into an array if they aren't already in this group.
  */
 function getStudents() {
+    console.log(currentStudents);
     db.collection("Users")
         .where("User_Type", "==", "student")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                studentNames.push(doc.data().Name);
+                if (!currentStudents.includes(doc.data().Name)) {
+                    studentNames.push(doc.data().Name);
+                }
             });
             populateStudentList();
         })
@@ -111,7 +130,7 @@ function onClickSubmit() {
  * Call functions when the page is ready .
  */
 $(document).ready(function () {
-    getStudents();
+    getCurrentStudents();
 });
 
 
