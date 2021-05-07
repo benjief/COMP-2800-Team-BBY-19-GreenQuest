@@ -1,22 +1,62 @@
-/* CSS for all pages */
-
-.navbar-brand {
-    font-family: 'Press Start 2P', Arial, Helvetica, sans-serif;
-    font-size: 13pt;
+/** CSS for educator-create-group.html */
+.page-container {
+    margin-top: 50px;
 }
 
-.navbar {
+.heading-container {
+    display: flex;
+    grid-area: header;
+    font-size: 25pt;
+    font-weight: 600;
+    justify-content: center;
+    height: 50px;
+    margin-bottom: 50px;
+}
+
+.page-heading {
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+
+#main-content-card {
+    display: grid;
+    grid-template-areas: 
+        "card-text"
+        "buttons";
+    border-radius: 40px;
+}
+
+.card-text-container {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.card-text {
+    height: 100%;
+}
+
+.card-button-container {
+    display: flex;
+    height: 50px;
+    width: 180px;
+    grid-area: buttons;
     background-color: rgb(72, 143, 102);
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 15pt;
+    justify-self: center;
+    margin-top: 40px;
+    margin-bottom: 55px;
 }
 
-/* We can change the media query width later */
-@media (min-width: 768px) {
-    .navbar-brand.abs
-        {
-            position: absolute;
-            width: 100%;
-            left: 0;
-            text-align: center;
-        }
-    }
+#create-a-group-button {
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+
+
+
 
