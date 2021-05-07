@@ -8,7 +8,7 @@
 
 .card-text-container {
     margin-top: 20px;
-    margin-bottom: 40px;
+    margin-bottom: 25px;
     text-align: center;
 }
 
@@ -24,21 +24,23 @@
     grid-area: group-list;
     overflow: scroll;
     overflow-x: hidden;
+    margin-bottom: 25px;
 }
 
 .group-container {
     display: flex;
-    width: 60%;
+    width: 50%;
     height: 50px;
     justify-content: center;
     justify-self: flex-end;
-    border: 1px solid rgb(72, 143, 102);
     border-radius: 10px;
     margin-bottom: 15px;
+    background-color: rgb(72, 143, 102);
 }
 
 .group-name {
     display: flex;
     height: 100%;
     align-items: center;
+    color: white;
 }
