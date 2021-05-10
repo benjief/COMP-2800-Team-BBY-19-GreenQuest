@@ -2,7 +2,7 @@
 #main-content-card {
     grid-template-areas: 
         "card-text"
-        "radio-buttons"
+        "form"
         "login";
     margin-bottom: 40px !important;
 }
@@ -19,10 +19,10 @@
 
 }
 
-.radio-button-container {
+.form-container {
     display: flex;
     flex-direction: column;
-    grid-area: radio-buttons;
+    grid-area: form;
     font-size: 20pt;
     justify-content: center;
     margin-top: 20px;
@@ -56,4 +56,5 @@ label {
     margin-bottom: 40px;
     width: 100%;
     justify-self: center;
+    visibility: hidden;
 }
