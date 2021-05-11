@@ -3,10 +3,10 @@
 // Create empty lists to house student names
 var currentStudents = [];
 
-// Pull group name from URL and display it in the DOM
+// Pull class name from URL and display it in the DOM
 const parsedUrl = new URL(window.location.href);
-var groupName = parsedUrl.searchParams.get("groupname");
-$(".page-heading").html("Remove Students from " + groupName);
+var className = parsedUrl.searchParams.get("classname");
+$(".page-heading").html("Remove Students from " + className);
 
 /**
  * Appends a list of student names (along with a "+" icon) to the DOM.
@@ -32,10 +32,10 @@ function populateStudentList() {
 }
 
 /** 
-* Reads students' names from Firestore and puts them into an array if they aren't already in this group.
+* Reads students' names from Firestore and puts them into an array if they aren't already in this class.
  */
 function getCurrentStudents() {
-    db.collection("Groups").doc(groupName).collection("Students")
+    db.collection("Classes").doc(className).collection("Students")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
@@ -46,9 +46,9 @@ function getCurrentStudents() {
 }
 
 /**
- * Removes the chosen student from a collection in Firestore (nested under the group being removed from).
+ * Removes the chosen student from a collection in Firestore (nested under the class being removed from).
  * Also changes the "-" icon beside a student to a "+" icon and allows that student to be subsequently
- * re-added to the group in question.
+ * re-added to the class in question.
  */
 function removeStudent(event) {
     $(document).click(function (event) {
@@ -61,7 +61,7 @@ function removeStudent(event) {
         $(event.target).attr("onclick", "addStudent()");
         // Remove student from collection in Firestore
         let studentToRemove = currentStudents[index];
-        db.collection("Groups").doc(groupName).collection("Students").doc(studentToRemove).delete()
+        db.collection("Classes").doc(className).collection("Students").doc(studentToRemove).delete()
             .then(() => {
                 console.log("Student successfully removed!");
             })
@@ -72,9 +72,9 @@ function removeStudent(event) {
 }
 
 /**
- * Adds the chosen student to a collection in Firestore (nested under the group being added to).
+ * Adds the chosen student to a collection in Firestore (nested under the class being added to).
  * Also changes the "+" icon beside a student to a "-" icon and allows that student to be subsequently
- * removed from the group in question.
+ * removed from the class in question.
  */
 function addStudent() {
     $(document).click(function (event) {
@@ -85,9 +85,9 @@ function addStudent() {
         $(event.target).attr("src", "/img/remove_icon.png");
         // Get "remove" icon to call removeStudent()
         $(event.target).attr("onclick", "removeStudent()");
-        // Add student to a collection in Firestore (nested under the group being added to)
+        // Add student to a collection in Firestore (nested under the class being added to)
         let studentToAdd = currentStudents[index];
-        db.collection("Groups").doc(groupName).collection("Students").doc(studentToAdd).set({
+        db.collection("Classes").doc(className).collection("Students").doc(studentToAdd).set({
             id: studentToAdd
         })
             .then(() => {
@@ -100,11 +100,11 @@ function addStudent() {
 }
 
 /**
- * Redirects users back to the manage group page once they've finished removing students. 
+ * Redirects users back to the manage class page once they've finished removing students. 
  */
 function onClickSubmit() {
     setTimeout(function () {
-        location.href = "educator-manage-group.html?groupname=" + groupName;
+        location.href = "educator-manage-class.html?classname=" + className;
     }, 1000);
 }
 

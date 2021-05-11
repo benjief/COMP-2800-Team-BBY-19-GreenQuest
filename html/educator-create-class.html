@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>GreenQuest - Educator Create Group Page</title>
+    <title>GreenQuest - Educator Create Class Page</title>
 
     <!-- Bootstrap for Mobile-first, and JQuery -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -48,18 +48,26 @@
 
     <div class="page-container">
         <div class="heading-container">
-            <p class="page-heading">Create Your Group</p>
+            <p class="page-heading">Create Your Class</p>
         </div>
         <div class="card mb-3" id="main-content-card">
             <div class="card-text-container">
-                <p class="card-text">Enter your group's name below:</p>
+                <p class="card-text">Enter a descriptive class name and nickname below:</p>
             </div>
             <div class="input-container">
-                <input type="text" id="group-name" maxlength="100" placeholder="Enter Group Name..."
+                <input type="text" id="class-description" maxlength="100" placeholder="Enter Class Description..."
+                    onkeyup="charCounter(this,'counter',100)"></input>
+            </div>
+            <div class="characters-remaining-container">
+                <p id="characters-remaining-1">Characters Remaining:</p>
+                <input disabled id="counter" maxlength="3" size="3" value="100">
+            </div>
+            <div class="input-container">
+                <input type="text" id="class-nickname" maxlength="50" placeholder="Enter Class Nickname..."
                     onkeyup="charCounter(this,'counter',50)"></input>
             </div>
             <div class="characters-remaining-container">
-                <p id="characters-remaining">Characters Remaining:</p>
+                <p id="characters-remaining-2">Characters Remaining:</p>
                 <input disabled id="counter" maxlength="3" size="3" value="50">
             </div>
             <div class="card-button-container">
@@ -89,7 +97,7 @@
     <!--------------------------------------------------------------------->
     <!-- JS files: Your own JavaScript functions included here    -->
     <!--------------------------------------------------------------------->
-    <script src="/scripts/educator-create-group.js"></script>
+    <script src="/scripts/educator-create-class.js"></script>
 
 </body>
 

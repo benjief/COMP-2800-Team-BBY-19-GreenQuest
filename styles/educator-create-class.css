@@ -1,4 +1,4 @@
-/** CSS for educator-create-group.html */
+/** CSS for educator-create-class.html */
 #main-content-card {
     grid-template-areas: 
         "card-text"
@@ -24,7 +24,7 @@
     justify-content: center;
 }
 
-#group-name {
+#class-nickname {
     border: 1px solid black;
     border-radius: 5px;
     padding: 7px;

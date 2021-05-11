@@ -21,14 +21,15 @@ function charCounter(field, field2, maxlimit) {
 }
 
 /**
- * Write a group to Firestore.
+ * Write a class to Firestore.
  * 
- * @param groupName - String containing the name of the group to be created
+ * @param nickname - String containing the name of the group to be created
  */
-function addGroup(groupName) {
-    db.collection("Groups").doc(groupName).set({
-        id: groupName,
-        Owner_Name: firebase.auth().currentUser.displayName,
+function addClass(description, nickname) {
+    db.collection("Groups").doc(nickname).set({
+        Class_Name: description,
+        Class_Nickname: nickname, 
+        Class_Owner: firebase.auth().currentUser.displayName,
         Owner_Email: firebase.auth().currentUser.email,
         Date_Created: firebase.firestore.FieldValue.serverTimestamp()
     })
@@ -43,12 +44,12 @@ function addGroup(groupName) {
 /**
  * Make sure the user has input a group name.
  * 
- * @param groupName - String containing the name of the group to be created
+ * @param nickname - String containing the name of the group to be created
  */
-function checkInput(groupName) {
-    if (groupName == null || groupName === "") {
+function checkInput(description, nickname) {
+    if (description == null || nickname == null || desciption == "" || nickname === "") {
         noInput = true;
-        $("#feedback").html("Please enter a group name");
+        $("#feedback").html("Please enter a class description and nickname");
         $("#feedback").css({
             color: "red"
         });
@@ -63,13 +64,12 @@ function checkInput(groupName) {
  * Deal with submission click in the appropriate manner.
  */
 function onClickSubmit() {
-    // Store group name in a variable
-    console.log(document.getElementById("group-name").value);
-    let groupName = document.getElementById("group-name").value;
-    checkInput(groupName);
+    let description = document.getElementById("class-description").value;
+    let nickname = document.getElementById("class-nickname").value;
+    checkInput(description, nickname);
     if (noInput == false) {
         // Add group to Firestore
-        addGroup(groupName);
+        addClass(description, nickname);
         // Display success message and direct users back to the main page
         let feedback = document.getElementById("feedback");
         feedback.innerHTML = "Success! Please wait...";
@@ -79,7 +79,7 @@ function onClickSubmit() {
         $(feedback).show(0);
         $(feedback).fadeOut(2500);
         setTimeout(function () {
-            location.href = "educator-add-students.html?groupname=" + groupName;
+            location.href = "educator-add-students.html?classname=" + nickname;
         }, 2300);
     }
 }
