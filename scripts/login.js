@@ -38,7 +38,7 @@ var uiConfig = {
                     })
                         .then(function () {
                             console.log("New student added to firestore");
-                            //re-direct to student-new-home.html after signup
+                            // Re-direct to student-new-home.html after signup
                             window.location.assign(
                                 "student-new-home.html"
                             );
@@ -53,7 +53,7 @@ var uiConfig = {
                     })
                         .then(function () {
                             console.log("New educator added to firestore");
-                            //re-direct to educator-new-home.html after signup
+                            // Re-direct to educator-new-home.html after signup
                             window.location.assign(
                                 "educator-new-home.html"
                             );
@@ -78,11 +78,11 @@ var uiConfig = {
     signInOptions: [
         // Leave the lines as is for the providers you want to offer your users.
         // firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        //firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-        //firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-        //firebase.auth.GithubAuthProvider.PROVIDER_ID,
+        // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+        // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+        // firebase.auth.GithubAuthProvider.PROVIDER_ID,
         firebase.auth.EmailAuthProvider.PROVIDER_ID
-        //firebase.auth.PhoneAuthProvider.PROVIDER_ID
+        // firebase.auth.PhoneAuthProvider.PROVIDER_ID
     ],
     // Terms of service url.
     tosUrl: '<your-tos-url>',
