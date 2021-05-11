@@ -2,6 +2,7 @@
 
 // Create empty lists to house student names
 var studentNames = [];
+var studentEmails = [];
 var currentStudents = [];
 
 // Pull class name from URL and display it in the DOM
@@ -36,7 +37,7 @@ function populateStudentList() {
 }
 
 /** 
- * Gets the names of students who are already in this class.
+ * Gets the names and emails of students who are already in this class.
  */
 function getCurrentStudents() {
     db.collection("Classes").doc(className).collection("Students")
@@ -54,8 +55,7 @@ function getCurrentStudents() {
  */
 function getStudents() {
     console.log(currentStudents);
-    db.collection("Users")
-        .where("User_Type", "==", "student")
+    db.collection("Lone_Students")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
@@ -87,7 +87,8 @@ function addStudent() {
         // Add student to a collection in Firestore (nested under the class being added to)
         let studentToAdd = studentNames[index];
         db.collection("Classes").doc(className).collection("Students").doc(studentToAdd).set({
-            id: studentToAdd
+            Student_Name: studentToAdd,
+            Student_Class: className,
         })
             .then(() => {
                 console.log("Student successfully written!");

@@ -30,27 +30,38 @@ var uiConfig = {
             //------------------------------------------------------------------------------------------
             var user = authResult.user;
             if (authResult.additionalUserInfo.isNewUser) { //if new user
-                db.collection("Users").doc(user.uid).set({ //write to firestore
-                    Name: user.displayName, //"users" collection
-                    Email: user.email, //with authenticated user's ID (user.uid)
-                    User_Type: userType, //with user type "educator" or "student"
-                })
-                    .then(function () {
-                        console.log("New user added to firestore");
-                        if (userType === "educator") {
-                            window.location.assign(
-                                "educator-new-home.html"
-                            ); //re-direct to educator-new-home.html after signup
-                        } else {
+                if (userType === "student") {
+                    db.collection("Lone_Students").doc(user.uid).set({
+                        Student_Name: user.displayName,
+                        Student_Email: user.email,
+                        Student_Class: null
+                    })
+                        .then(function () {
+                            console.log("New student added to firestore");
+                            //re-direct to student-new-home.html after signup
                             window.location.assign(
                                 "student-new-home.html"
-                            ); //re-direct to student-new-home.html after signup
-                        }
-
+                            );
+                        })
+                        .catch(function (error) {
+                            console.log("Error adding new student: " + error);
+                        });
+                } else {
+                    db.collection("Educators").doc(user.uid).set({
+                        Educator_Name: user.displayName,
+                        Educator_Email: user.email,
                     })
-                    .catch(function (error) {
-                        console.log("Error adding new user: " + error);
-                    });
+                        .then(function () {
+                            console.log("New educator added to firestore");
+                            //re-direct to educator-new-home.html after signup
+                            window.location.assign(
+                                "educator-new-home.html"
+                            );
+                        })
+                        .catch(function (error) {
+                            console.log("Error adding new educator: " + error);
+                        });
+                }
             } else {
                 if (userType === "educator") {
                     window.location.pathname = "educator-home.html";
