@@ -78,7 +78,7 @@ function getStudents() {
 function addStudent() {
     $(document).click(function (event) {
         let index = $(event.target).attr("id");
-        // Extract index from event id
+        // Extract index from event id (CITE THIS CODE)
         index = index.match(/\d+/);
         // Replace "add" icon with a "remove" icon
         $(event.target).attr("src", "/img/remove_icon.png");
