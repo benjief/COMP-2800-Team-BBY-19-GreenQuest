@@ -11,7 +11,7 @@ $(".page-heading").html("Add Students to " + className);
 function onClick() {
     $(document).click(function (event) {
         let redirectLink = $(event.target).attr("href");
-        redirectLink += "?className=" + className + "&redirectflag=true";
+        redirectLink += "?classname=" + className + "&redirectflag=true";
         $(event.target).attr("href", redirectLink);
     });
 }
