@@ -48,18 +48,26 @@
 
     <div class="page-container">
         <div class="heading-container">
-            <p class="page-heading">Create Your Group</p>
+            <p class="page-heading">Create Your Class</p>
         </div>
         <div class="card mb-3" id="main-content-card">
             <div class="card-text-container">
-                <p class="card-text">Enter your group's name below:</p>
+                <p class="card-text">Enter a descriptive class name and nickname below:</p>
             </div>
             <div class="input-container">
-                <input type="text" id="group-name" maxlength="100" placeholder="Enter Group Name..."
+                <input type="text" id="class-description" maxlength="100" placeholder="Enter Class Description..."
+                    onkeyup="charCounter(this,'counter',100)"></input>
+            </div>
+            <div class="characters-remaining-container">
+                <p id="characters-remaining-1">Characters Remaining:</p>
+                <input disabled id="counter" maxlength="3" size="3" value="100">
+            </div>
+            <div class="input-container">
+                <input type="text" id="class-description" maxlength="50" placeholder="Enter Class Nickname..."
                     onkeyup="charCounter(this,'counter',50)"></input>
             </div>
             <div class="characters-remaining-container">
-                <p id="characters-remaining">Characters Remaining:</p>
+                <p id="characters-remaining-1">Characters Remaining:</p>
                 <input disabled id="counter" maxlength="3" size="3" value="50">
             </div>
             <div class="card-button-container">
