@@ -45,7 +45,7 @@ var uiConfig = {
                             console.log("New student added to firestore");
                             // Re-direct to student-new-home.html after signup
                             window.location.assign(
-                                "student-new-home.html"
+                                "./student-new-home.html"
                             );
                         })
                         .catch(function (error) {
@@ -60,7 +60,7 @@ var uiConfig = {
                             console.log("New educator added to firestore");
                             // Re-direct to educator-new-home.html after signup
                             window.location.assign(
-                                "html/educator-new-home.html"
+                                "./educator-new-home.html"
                             );
                         })
                         .catch(function (error) {
@@ -69,9 +69,9 @@ var uiConfig = {
                 }
             } else {
                 if (userType === "educator") {
-                    window.location.pathname = "html/educator-home.html";
+                    window.location.pathname = "./educator-home.html";
                 } else if (userType === "student") {
-                    window.location.pathname = "html/student-home.html";
+                    window.location.pathname = "./student-home.html";
                 }
             }
             return true;
