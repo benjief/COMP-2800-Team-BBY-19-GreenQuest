@@ -31,6 +31,7 @@ function addClass(description, nickname) {
         Class_Nickname: nickname, 
         Class_Owner: firebase.auth().currentUser.displayName,
         Owner_Email: firebase.auth().currentUser.email,
+        Class_Points: 0,
         Date_Created: firebase.firestore.FieldValue.serverTimestamp()
     })
         .then(() => {
