@@ -40,7 +40,7 @@ function populateStudentList() {
  */
 function getCurrentStudents() {
     db.collection("Students")
-        .where("Student_Class", "===", className)
+        .where("Student_Class", "==", className)
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
@@ -55,7 +55,6 @@ function getCurrentStudents() {
  * Reads students' names from the Students collection and puts them into an array if they aren't already in this class.
  */
 function getStudents() {
-    console.log(currentStudents);
     db.collection("Students")
         .get()
         .then((querySnapshot) => {

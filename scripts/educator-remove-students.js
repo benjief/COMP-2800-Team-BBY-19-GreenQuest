@@ -36,7 +36,7 @@ function populateStudentList() {
 */
 function getCurrentStudents() {
     db.collection("Students")
-        .where("Student_Class", "===", className)
+        .where("Student_Class", "==", className)
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
