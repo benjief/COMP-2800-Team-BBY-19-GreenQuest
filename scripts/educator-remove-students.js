@@ -1,7 +1,8 @@
 // JS for educator-remove-students.js
 
-// Create empty lists to house student names and emails
+// Create empty lists to house student names and IDs
 var currentStudents = [];
+var studentIDs = [];
 
 // Pull class name from URL and display it in the DOM
 const parsedUrl = new URL(window.location.href);
@@ -32,7 +33,7 @@ function populateStudentList() {
 }
 
 /** 
-* Reads students' names and emails from Firestore and puts them into an array if they are already in this class.
+* Reads students' names and IDs from Firestore and puts them into an array if they are already in this class.
 */
 function getCurrentStudents() {
     db.collection("Students")
@@ -41,6 +42,8 @@ function getCurrentStudents() {
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 currentStudents.push(doc.data().Student_Name);
+                studentIDs.push(doc.id);
+                console.log(studentIDs);
             });
             populateStudentList();
         })
@@ -60,8 +63,7 @@ function getCurrentStudents() {
         $(event.target).attr("src", "/img/add_icon.png");
         // Get "add" icon to call addStudent()
         $(event.target).attr("onclick", "addStudent()");
-        // Remove student from this class' Students collection
-        let studentToRemove = currentStudents[index];
+        let studentToRemove = studentIDs[index];
         // Update the student's Student_Class attribute
         db.collection("Students").doc(studentToRemove).set({
             Student_Class: null
@@ -89,7 +91,7 @@ function getCurrentStudents() {
         $(event.target).attr("src", "/img/remove_icon.png");
         // Get "remove" icon to call removeStudent()
         $(event.target).attr("onclick", "removeStudent()");
-        let studentToAdd = currentStudents[index];
+        let studentToAdd = studentIDs[index];
         // Update the student's Student_Class attribute
         db.collection("Students").doc(studentToAdd).set({
             Student_Class: className

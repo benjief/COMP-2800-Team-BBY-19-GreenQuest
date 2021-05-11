@@ -1,7 +1,8 @@
 // JS for educator-add-students.js
 
-// Create empty lists to house student names
+// Create empty lists to house student names and IDs
 var studentNames = [];
+var studentIDs = [];
 var currentStudents = [];
 
 // Pull class name from URL and display it in the DOM
@@ -36,7 +37,7 @@ function populateStudentList() {
 }
 
 /** 
- * Gets the names and uids of students who are already in this class.
+ * Gets the names of students who are already in this class.
  */
 function getCurrentStudents() {
     db.collection("Students")
@@ -45,7 +46,6 @@ function getCurrentStudents() {
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 currentStudents.push(doc.data().Student_Name);
-
             });
             getStudents();
         })
@@ -61,7 +61,9 @@ function getStudents() {
             querySnapshot.forEach((doc) => {
                 if (!currentStudents.includes(doc.data().Student_Name)) {
                     studentNames.push(doc.data().Student_Name);
+                    studentIDs.push(doc.id);
                 }
+                console.log(studentIDs);
             });
             populateStudentList();
         })
@@ -84,7 +86,8 @@ function addStudent() {
         $(event.target).attr("src", "/img/remove_icon.png");
         // Get "remove" icon to call removeStudent()
         $(event.target).attr("onclick", "removeStudent()");
-        let studentToAdd = studentNames[index];
+        let studentToAdd = studentIDs[index];
+        console.log(studentToAdd);
         // Update the student's Student_Class attribute
         db.collection("Students").doc(studentToAdd).set({
             Student_Class: className
@@ -112,8 +115,7 @@ function removeStudent() {
         $(event.target).attr("src", "/img/add_icon.png");
         // Get "add" icon to call addStudent()
         $(event.target).attr("onclick", "addStudent()");
-        // Remove student from this class' Students collection
-        let studentToRemove = studentNames[index];
+        let studentToRemove = studentIDs[index];
         // Update the student's Student_Class attribute
         db.collection("Students").doc(studentToRemove).set({
             Student_Class: null
