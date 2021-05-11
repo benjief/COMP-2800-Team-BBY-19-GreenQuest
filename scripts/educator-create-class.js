@@ -47,7 +47,7 @@ function addClass(description, nickname) {
  * @param nickname - String containing the name of the group to be created
  */
 function checkInput(description, nickname) {
-    if (description == null || nickname == null || desciption == "" || nickname === "") {
+    if (description == null || nickname == null || description == "" || nickname === "") {
         noInput = true;
         $("#feedback").html("Please enter a class description and nickname");
         $("#feedback").css({

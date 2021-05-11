@@ -89,11 +89,12 @@
     display: flex;
     justify-content: center;
     grid-area: feedback;
-    height: 50px;
+    height: 70px;
 }
 
 #feedback {
     display: flex;
     height: 100%;
     align-items: center;
+    text-align: center;
 }
