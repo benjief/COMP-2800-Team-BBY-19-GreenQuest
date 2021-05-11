@@ -4,10 +4,10 @@
 var studentNames = [];
 var currentStudents = [];
 
-// Pull group name from URL and display it in the DOM
+// Pull class name from URL and display it in the DOM
 const parsedUrl = new URL(window.location.href);
-var groupName = parsedUrl.searchParams.get("groupname");
-$(".page-heading").html("Add Students to " + groupName);
+var className = parsedUrl.searchParams.get("className");
+$(".page-heading").html("Add Students to " + className);
 
 // Pull redirect flag from URL
 var redirectFlag = parsedUrl.searchParams.get("redirectflag");
@@ -36,10 +36,10 @@ function populateStudentList() {
 }
 
 /** 
- * Gets the names of students who are already in this group.
+ * Gets the names of students who are already in this class.
  */
 function getCurrentStudents() {
-    db.collection("Groups").doc(groupName).collection("Students")
+    db.collection("Classes").doc(className).collection("Students")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
@@ -50,7 +50,7 @@ function getCurrentStudents() {
 }
 
 /**
- * Reads students' names from Firestore and puts them into an array if they aren't already in this group.
+ * Reads students' names from Firestore and puts them into an array if they aren't already in this class.
  */
 function getStudents() {
     console.log(currentStudents);
@@ -71,9 +71,9 @@ function getStudents() {
 }
 
 /**
- * Adds the chosen student to a collection in Firestore (nested under the group being added to).
+ * Adds the chosen student to a collection in Firestore (nested under the class being added to).
  * Also changes the "+" icon beside a student to a "-" icon and allows that student to be subsequently
- * removed from the group in question.
+ * removed from the class in question.
  */
 function addStudent() {
     $(document).click(function (event) {
@@ -84,9 +84,9 @@ function addStudent() {
         $(event.target).attr("src", "/img/remove_icon.png");
         // Get "remove" icon to call removeStudent()
         $(event.target).attr("onclick", "removeStudent()");
-        // Add student to a collection in Firestore (nested under the group being added to)
+        // Add student to a collection in Firestore (nested under the class being added to)
         let studentToAdd = studentNames[index];
-        db.collection("Groups").doc(groupName).collection("Students").doc(studentToAdd).set({
+        db.collection("Classes").doc(className).collection("Students").doc(studentToAdd).set({
             id: studentToAdd
         })
             .then(() => {
@@ -99,9 +99,9 @@ function addStudent() {
 }
 
 /**
- * Removes the chosen student from a collection in Firestore (nested under the group being removed from).
+ * Removes the chosen student from a collection in Firestore (nested under the class being removed from).
  * Also changes the "-" icon beside a student to a "+" icon and allows that student to be subsequently
- * re-added to the group in question.
+ * re-added to the class in question.
  */
 function removeStudent(event) {
     $(document).click(function (event) {
@@ -114,7 +114,7 @@ function removeStudent(event) {
         $(event.target).attr("onclick", "addStudent()");
         // Remove student from collection in Firestore
         let studentToRemove = studentNames[index];
-        db.collection("Groups").doc(groupName).collection("Students").doc(studentToRemove).delete()
+        db.collection("Classes").doc(className).collection("Students").doc(studentToRemove).delete()
             .then(() => {
                 console.log("Student successfully removed!");
             })
@@ -125,15 +125,15 @@ function removeStudent(event) {
 }
 
 /**
- * Redirects users back to the main page (or the manage group page) once they've finished adding students. 
- * Redirection depends on whether or not users are adding students to their group for the first time.
+ * Redirects users back to the main page (or the manage class page) once they've finished adding students. 
+ * Redirection depends on whether or not users are adding students to their class for the first time.
  */
 function onClickSubmit() {
     setTimeout(function () {
         if (!redirectFlag) {
             location.href = "educator-home.html";
         } else {
-            location.href = "educator-manage-group.html?groupname=" + groupName;
+            location.href = "educator-manage-class.html?classame=" + className;
         }
 
     }, 1000);

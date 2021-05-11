@@ -79,7 +79,7 @@ function onClickSubmit() {
         $(feedback).show(0);
         $(feedback).fadeOut(2500);
         setTimeout(function () {
-            location.href = "educator-add-students.html?nickname=" + nickname;
+            location.href = "educator-add-students.html?classname=" + nickname;
         }, 2300);
     }
 }
