@@ -44,14 +44,15 @@ function getCurrentStudents() {
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                currentStudents.push(doc.data().id);
+                currentStudents.push(doc.data().Student_Name);
+
             });
             getStudents();
         })
 }
 
 /**
- * Reads students' names from Firestore and puts them into an array if they aren't already in this class.
+ * Reads students' names from the Lone_Students collection and puts them into an array if they aren't already in this class.
  */
 function getStudents() {
     console.log(currentStudents);
@@ -61,6 +62,7 @@ function getStudents() {
             querySnapshot.forEach((doc) => {
                 if (!currentStudents.includes(doc.data().Name)) {
                     studentNames.push(doc.data().Name);
+                    studentEmails.push(doc.data().Email);
                 }
             });
             populateStudentList();
@@ -86,15 +88,26 @@ function addStudent() {
         $(event.target).attr("onclick", "removeStudent()");
         // Add student to a collection in Firestore (nested under the class being added to)
         let studentToAdd = studentNames[index];
+        let studentEmail = studentEmails[index];
+        // Remove the student from the Lone_Students collection
+        db.collection("Lone_Students").doc(studentToAdd)
+            .delete()
+            .then(() => {
+                console.log("Student successfully removed from Lone_Students!");
+            }).catch((error) => {
+                console.error("Error removing student from Lone_Students: ", error);
+            });
+        // Add the student to this class' Students collection
         db.collection("Classes").doc(className).collection("Students").doc(studentToAdd).set({
             Student_Name: studentToAdd,
-            Student_Class: className,
+            Student_Email: studentEmail,
+            Student_Class: className
         })
             .then(() => {
-                console.log("Student successfully written!");
+                console.log("Student successfully added to this class!");
             })
             .catch((error) => {
-                console.error("Error adding student: ", error);
+                console.error("Error adding student to this class: ", error);
             });
     });
 }
@@ -113,15 +126,28 @@ function removeStudent(event) {
         $(event.target).attr("src", "/img/add_icon.png");
         // Get "add" icon to call addStudent()
         $(event.target).attr("onclick", "addStudent()");
-        // Remove student from collection in Firestore
+        // Remove student from this class' Students collection
         let studentToRemove = studentNames[index];
+        let studentEmail = studentEmails[index];
         db.collection("Classes").doc(className).collection("Students").doc(studentToRemove).delete()
             .then(() => {
-                console.log("Student successfully removed!");
+                console.log("Student successfully removed from this class!");
             })
             .catch((error) => {
-                console.error("Error removing student: ", error);
+                console.error("Error removing student from this class: ", error);
             })
+        // Add the student back to the Lone_Students collection
+        db.collection("Lone_Students").doc(studentToAdd).set({
+            Student_Name: studentToRemove,
+            Student_Email: studentEmail,
+            Student_Class: null
+        })
+            .then(() => {
+                console.log("Student successfully added to Lone_Students!");
+            })
+            .catch((error) => {
+                console.error("Error adding student to Lone_Students: ", error);
+            });
     });
 }
 
