@@ -11,7 +11,7 @@
 
     <!-- Optional styles and scripts of your own -->
     <link rel="stylesheet" href="/styles/all-pages.css">
-    <link rel="stylesheet" href="/styles/educator-create-group.css">
+    <link rel="stylesheet" href="/styles/educator-create-class.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Mali&display=swap" rel="stylesheet">
 </head>
@@ -54,21 +54,21 @@
             <div class="card-text-container">
                 <p class="card-text">Enter a descriptive class name and nickname below:</p>
             </div>
-            <div class="input-container">
+            <div id="input-container-1">
                 <input type="text" id="class-description" maxlength="100" placeholder="Enter Class Description..."
                     onkeyup="charCounter(this,'counter',100)"></input>
             </div>
-            <div class="characters-remaining-container">
+            <div id="characters-remaining-container-1">
                 <p id="characters-remaining-1">Characters Remaining:</p>
-                <input disabled id="counter" maxlength="3" size="3" value="100">
+                <input disabled class="counter" maxlength="3" size="3" value="100">
             </div>
-            <div class="input-container">
+            <div id="input-container-2">
                 <input type="text" id="class-nickname" maxlength="50" placeholder="Enter Class Nickname..."
                     onkeyup="charCounter(this,'counter',50)"></input>
             </div>
-            <div class="characters-remaining-container">
+            <div id="characters-remaining-container-2">
                 <p id="characters-remaining-2">Characters Remaining:</p>
-                <input disabled id="counter" maxlength="3" size="3" value="50">
+                <input disabled class="counter" maxlength="3" size="3" value="50">
             </div>
             <div class="card-button-container">
                 <a class="button" id="submit-button" href="#" onclick="onClickSubmit()">Submit</a>
