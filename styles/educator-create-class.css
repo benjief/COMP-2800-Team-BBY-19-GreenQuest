@@ -58,7 +58,7 @@
     height: 100%;
 }
 
-.counter {
+#counter-1, #counter-2 {
     display: flex;
     border: none;
     background-color: transparent;

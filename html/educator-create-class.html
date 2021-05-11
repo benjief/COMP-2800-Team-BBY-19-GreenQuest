@@ -56,19 +56,19 @@
             </div>
             <div id="input-container-1">
                 <input type="text" id="class-description" maxlength="100" placeholder="Enter Class Description..."
-                    onkeyup="charCounter(this,'counter',100)"></input>
+                    onkeyup="charCounter(this,'counter-1',100)"></input>
             </div>
             <div id="characters-remaining-container-1">
                 <p id="characters-remaining-1">Characters Remaining:</p>
-                <input disabled class="counter" maxlength="3" size="3" value="100">
+                <input disabled id="counter-1" maxlength="3" size="3" value="100">
             </div>
             <div id="input-container-2">
                 <input type="text" id="class-nickname" maxlength="50" placeholder="Enter Class Nickname..."
-                    onkeyup="charCounter(this,'counter',50)"></input>
+                    onkeyup="charCounter(this,'counter-2',50)"></input>
             </div>
             <div id="characters-remaining-container-2">
                 <p id="characters-remaining-2">Characters Remaining:</p>
-                <input disabled class="counter" maxlength="3" size="3" value="50">
+                <input disabled id="counter-2" maxlength="3" size="3" value="50">
             </div>
             <div class="card-button-container">
                 <a class="button" id="submit-button" href="#" onclick="onClickSubmit()">Submit</a>
