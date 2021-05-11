@@ -31,11 +31,6 @@ var uiConfig = {
             var user = authResult.user;
             if (authResult.additionalUserInfo.isNewUser) { //if new user
                 if (userType === "student") {
-                    db.collection("Lone_Students").doc(user.uid).set({
-                        Student_Name: user.displayName,
-                        Student_Email: user.email,
-                        Student_Class: null
-                    })
                     db.collection("Students").doc(user.uid).set({
                         Student_Name: user.displayName,
                         Student_Email: user.email,

@@ -2,7 +2,6 @@
 
 // Create empty lists to house student names
 var studentNames = [];
-var studentEmails = [];
 var currentStudents = [];
 
 // Pull class name from URL and display it in the DOM
@@ -37,10 +36,11 @@ function populateStudentList() {
 }
 
 /** 
- * Gets the names and emails of students who are already in this class.
+ * Gets the names and uids of students who are already in this class.
  */
 function getCurrentStudents() {
-    db.collection("Classes").doc(className).collection("Students")
+    db.collection("Students")
+        .where("Student_Class", "===", className)
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
@@ -52,20 +52,18 @@ function getCurrentStudents() {
 }
 
 /**
- * Reads students' names from the Lone_Students collection and puts them into an array if they aren't already in this class.
+ * Reads students' names from the Students collection and puts them into an array if they aren't already in this class.
  */
 function getStudents() {
     console.log(currentStudents);
-    db.collection("Lone_Students")
+    db.collection("Students")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 if (!currentStudents.includes(doc.data().Student_Name)) {
                     studentNames.push(doc.data().Student_Name);
-                    studentEmails.push(doc.data().Email);
                 }
             });
-            console.log(studentNames);
             populateStudentList();
         })
         .catch((error) => {
@@ -74,25 +72,7 @@ function getStudents() {
 }
 
 /**
- * WRITE THIS.
- * 
- * @param {*} student 
- * @param {*} className 
- */
-function updateStudent(student, className) {
-    db.collection("Students").doc(student).set({
-        Student_Class: className
-    })
-        .then(() => {
-            console.log("Student successfully updated student class!");
-        })
-        .catch((error) => {
-            console.error("Error updating student class: ", error);
-        });
-}
-
-/**
- * Adds the chosen student to a collection in Firestore (nested under the class being added to).
+ * Updates the student's Student_Class attribute to the class they're being added to.
  * Also changes the "+" icon beside a student to a "-" icon and allows that student to be subsequently
  * removed from the class in question.
  */
@@ -105,21 +85,9 @@ function addStudent() {
         $(event.target).attr("src", "/img/remove_icon.png");
         // Get "remove" icon to call removeStudent()
         $(event.target).attr("onclick", "removeStudent()");
-        // Add student to a collection in Firestore (nested under the class being added to)
         let studentToAdd = studentNames[index];
-        let studentEmail = studentEmails[index];
-        // Remove the student from the Lone_Students collection
-        db.collection("Lone_Students").doc(studentToAdd)
-            .delete()
-            .then(() => {
-                console.log("Student successfully removed from Lone_Students!");
-            }).catch((error) => {
-                console.error("Error removing student from Lone_Students: ", error);
-            });
-        // Add the student to this class' Students collection
-        db.collection("Classes").doc(className).collection("Students").doc(studentToAdd).set({
-            Student_Name: studentToAdd,
-            Student_Email: studentEmail,
+        // Update the student's Student_Class attribute
+        db.collection("Students").doc(studentToAdd).set({
             Student_Class: className
         })
             .then(() => {
@@ -128,17 +96,15 @@ function addStudent() {
             .catch((error) => {
                 console.error("Error adding student to this class: ", error);
             });
-        // Update the student's Student_Class attribute in the Students collection
-        updateStudent(studentToAdd, className);
     });
 }
 
 /**
- * Removes the chosen student from a collection in Firestore (nested under the class being removed from).
- * Also changes the "-" icon beside a student to a "+" icon and allows that student to be subsequently
- * re-added to the class in question.
+ * Updates the student's Student_Class attribute to null.
+ * Also changes the "+" icon beside a student to a "-" icon and allows that student to be subsequently
+ * added to the class in question.
  */
-function removeStudent(event) {
+function removeStudent() {
     $(document).click(function (event) {
         let index = $(event.target).attr("id");
         // Extract index from event id
@@ -149,28 +115,16 @@ function removeStudent(event) {
         $(event.target).attr("onclick", "addStudent()");
         // Remove student from this class' Students collection
         let studentToRemove = studentNames[index];
-        let studentEmail = studentEmails[index];
-        db.collection("Classes").doc(className).collection("Students").doc(studentToRemove).delete()
-            .then(() => {
-                console.log("Student successfully removed from this class!");
-            })
-            .catch((error) => {
-                console.error("Error removing student from this class: ", error);
-            })
-        // Add the student back to the Lone_Students collection
-        db.collection("Lone_Students").doc(studentToAdd).set({
-            Student_Name: studentToRemove,
-            Student_Email: studentEmail,
+        // Update the student's Student_Class attribute
+        db.collection("Students").doc(studentToRemove).set({
             Student_Class: null
         })
             .then(() => {
-                console.log("Student successfully added to Lone_Students!");
+                console.log("Student successfully added to this class!");
             })
             .catch((error) => {
-                console.error("Error adding student to Lone_Students: ", error);
+                console.error("Error adding student to this class: ", error);
             });
-        // Update the student's Student_Class attribute in the Students collection
-        updateStudent(studentToRemove, null);
     });
 }
 
@@ -195,5 +149,3 @@ function onClickSubmit() {
 $(document).ready(function () {
     getCurrentStudents();
 });
-
-
