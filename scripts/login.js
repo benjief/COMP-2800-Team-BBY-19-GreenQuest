@@ -34,7 +34,8 @@ var uiConfig = {
                     db.collection("Students").doc(user.uid).set({
                         Student_Name: user.displayName,
                         Student_Email: user.email,
-                        Student_Class: null
+                        Student_Class: null,
+                        Student_Points: 0;
                     })
                         .then(function () {
                             console.log("New student added to firestore");
