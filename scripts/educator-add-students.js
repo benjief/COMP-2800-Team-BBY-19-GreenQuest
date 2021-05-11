@@ -138,7 +138,7 @@ function onClickSubmit() {
         if (!redirectFlag) {
             location.href = "educator-home.html";
         } else {
-            location.href = "educator-manage-class.html?classame=" + className;
+            location.href = "educator-manage-class.html?classname=" + className;
         }
 
     }, 1000);
