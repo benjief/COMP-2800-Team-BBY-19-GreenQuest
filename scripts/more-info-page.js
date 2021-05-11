@@ -1,25 +1,26 @@
 'use-strict'
 const recyclingRef = db.collection("instructions").doc("recycling");
-const instructionBtn = document.querySelector("#instructionBtn");
-const instruction = document.querySelector("#instruction");
 
-
-instructionBtn.addEventListener("click",function() {
+//how-to-modal actions.
+$('#how-to-modal').on('show.bs.modal', function() {
   recyclingRef.get().then((doc) => {
-    if (doc.exists) {
-      var src = doc.data().link;
-      $('#instruction iframe').attr('src', src);
-      console.log("success");
-    }
-  }).catch(function(error) {
-    console.log("Got an error: ", error);
-  });
-});
+        if (doc.exists) {
+          var src = doc.data().link;
+          $('#instruction iframe').attr('src', src);
+          console.log("success");
+        }
+      }).catch(function(error) {
+        console.log("Got an error: ", error);
+      });
+})
 
-//more-info-button
-const moreInfoBtn = document.querySelector("#moreInfoBtn");
+//video stops when modal closes
+$('#how-to-modal').on('hide.bs.modal', function() {
+  $('#instruction iframe').attr('src', '');
+})
 
-moreInfoBtn.addEventListener("click",function() {
+//more-info-modal actions.
+$('#more-info-modal').on('show.bs.modal',function() {
   recyclingRef.get().then((doc) => {
     if (doc.exists) {
       var src = doc.data().moreInfo;
@@ -33,11 +34,8 @@ moreInfoBtn.addEventListener("click",function() {
   console.log("testing2");
 });
 
-// stackoverflow boostrap and youtube in modal.
-// src: https://stackoverflow.com/questions/18622508/bootstrap-3-and-youtube-in-modal
-// accessed on: May 7, 2021
-
-//modified by Giwoun Bae
-$('#instruction button.close').on('hidden.bs.modal', function () {
-  $('#instruction iframe').removeAttr('src');
-});   
+//video stops when modal closes
+$('#more-info-modal').on('hide.bs.modal', function() {
+  $('#more-info-modal iframe').attr('src', '');
+})
+    
