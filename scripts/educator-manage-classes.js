@@ -31,7 +31,7 @@ function populateclassList() {
 function listClasses() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
-            db.collection("Users")
+            db.collection("Educators")
                 .doc(user.uid)
                 // Read
                 .get()
