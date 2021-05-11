@@ -48,6 +48,7 @@ function getCurrentStudents() {
                 currentStudents.push(doc.data().Student_Name);
             });
             getStudents();
+            console.log(currentStudents);
         })
 }
 
@@ -63,7 +64,6 @@ function getStudents() {
                     studentNames.push(doc.data().Student_Name);
                     studentIDs.push(doc.id);
                 }
-                console.log(studentIDs);
             });
             populateStudentList();
         })
@@ -89,7 +89,7 @@ function addStudent() {
         let studentToAdd = studentIDs[index];
         console.log(studentToAdd);
         // Update the student's Student_Class attribute
-        db.collection("Students").doc(studentToAdd).set({
+        db.collection("Students").doc(studentToAdd).update({
             Student_Class: className
         })
             .then(() => {
@@ -117,7 +117,7 @@ function removeStudent() {
         $(event.target).attr("onclick", "addStudent()");
         let studentToRemove = studentIDs[index];
         // Update the student's Student_Class attribute
-        db.collection("Students").doc(studentToRemove).set({
+        db.collection("Students").doc(studentToRemove).update({
             Student_Class: null
         })
             .then(() => {
