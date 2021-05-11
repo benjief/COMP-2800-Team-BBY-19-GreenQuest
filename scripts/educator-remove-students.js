@@ -1,7 +1,8 @@
 // JS for educator-remove-students.js
 
-// Create empty lists to house student names
+// Create empty lists to house student names and emails
 var currentStudents = [];
+var studentEmails = [];
 
 // Pull class name from URL and display it in the DOM
 const parsedUrl = new URL(window.location.href);
@@ -32,25 +33,26 @@ function populateStudentList() {
 }
 
 /** 
-* Reads students' names from Firestore and puts them into an array if they aren't already in this class.
- */
+* Reads students' names and emails from Firestore and puts them into an array if they are already in this class.
+*/
 function getCurrentStudents() {
     db.collection("Classes").doc(className).collection("Students")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                currentStudents.push(doc.data().id);
+                currentStudents.push(doc.data().Student_Name);
+                studentEmails.push(doc.data().Student_Email);
             });
             populateStudentList();
         })
 }
 
 /**
- * Removes the chosen student from a collection in Firestore (nested under the class being removed from).
+ * Removes the chosen student from this class' Students collection.
  * Also changes the "-" icon beside a student to a "+" icon and allows that student to be subsequently
- * re-added to the class in question.
+ * re-added to the class.
  */
-function removeStudent(event) {
+function removeStudent() {
     $(document).click(function (event) {
         let index = $(event.target).attr("id");
         // Extract index from event id
@@ -59,20 +61,33 @@ function removeStudent(event) {
         $(event.target).attr("src", "/img/add_icon.png");
         // Get "add" icon to call addStudent()
         $(event.target).attr("onclick", "addStudent()");
-        // Remove student from collection in Firestore
+        // Remove student from this class' Students collection
         let studentToRemove = currentStudents[index];
+        let studentEmail = studentEmails[index];
         db.collection("Classes").doc(className).collection("Students").doc(studentToRemove).delete()
             .then(() => {
-                console.log("Student successfully removed!");
+                console.log("Student successfully removed from this class!");
             })
             .catch((error) => {
-                console.error("Error removing student: ", error);
+                console.error("Error removing student from this class: ", error);
             })
+        // Add student back to Lone_Students collection
+        db.collection("Lone_Students").doc(studentToRemove).set({
+            Student_Name: studentToRemove,
+            Student_Email: studentEmail,
+            Student_Class: className
+        })
+            .then(() => {
+                console.log("Student successfully added to Lone_Students!");
+            })
+            .catch((error) => {
+                console.error("Error adding student to Lone_Student: ", error);
+            });
     });
 }
 
 /**
- * Adds the chosen student to a collection in Firestore (nested under the class being added to).
+ * Adds the chosen student this class' Students collection.
  * Also changes the "+" icon beside a student to a "-" icon and allows that student to be subsequently
  * removed from the class in question.
  */
@@ -85,8 +100,9 @@ function addStudent() {
         $(event.target).attr("src", "/img/remove_icon.png");
         // Get "remove" icon to call removeStudent()
         $(event.target).attr("onclick", "removeStudent()");
-        // Add student to a collection in Firestore (nested under the class being added to)
+        // Add student to this class' Students collection (nested under the class being added to)
         let studentToAdd = currentStudents[index];
+        let studentEmail = studentEmails[index];
         db.collection("Classes").doc(className).collection("Students").doc(studentToAdd).set({
             id: studentToAdd
         })
@@ -96,6 +112,14 @@ function addStudent() {
             .catch((error) => {
                 console.error("Error adding student: ", error);
             });
+        // Remove student from Lone_Students collection
+        db.collection("Lone_Students").doc(studentToAdd).delete()
+            .then(() => {
+                console.log("Student successfully removed from Lone_Students!");
+            })
+            .catch((error) => {
+                console.error("Error removing student from Lone_Students: ", error);
+            })
     });
 }
 
@@ -109,7 +133,7 @@ function onClickSubmit() {
 }
 
 /**
- * Call functions when the page is ready .
+ * Call function when the page is ready.
  */
 $(document).ready(function () {
     getCurrentStudents();
