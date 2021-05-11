@@ -2,7 +2,7 @@
 
 // Pull class name from URL and display it in the DOM
 const parsedUrl = new URL(window.location.href);
-var className = parsedUrl.searchParams.get("className");
+var className = parsedUrl.searchParams.get("classname");
 $(".page-heading").html("Add Students to " + className);
 
 /**

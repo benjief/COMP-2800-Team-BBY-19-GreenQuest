@@ -26,7 +26,7 @@ function charCounter(field, field2, maxlimit) {
  * @param nickname - String containing the name of the group to be created
  */
 function addClass(description, nickname) {
-    db.collection("Groups").doc(nickname).set({
+    db.collection("Classes").doc(nickname).set({
         Class_Name: description,
         Class_Nickname: nickname, 
         Class_Owner: firebase.auth().currentUser.displayName,

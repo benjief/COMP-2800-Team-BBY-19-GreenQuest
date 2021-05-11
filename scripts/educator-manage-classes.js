@@ -22,7 +22,7 @@ function populateclassList() {
         for (var i = 0; i < userClasses.length; i++) {
             let classContainer = "<div class='class-container' id='class-container-" + i + "'></div>";
             $(".class-list").append(classContainer);
-            let className = "<p class='class-name' id='class-name-" + i + "' + ' onclick='onSelectclass()'>" + userClasses[i] + "</p>";
+            let className = "<p class='class-name' id='class-name-" + i + "' + ' onclick='onSelectClass()'>" + userClasses[i] + "</p>";
             $("#class-container-" + i).append(className);
         }
     }
@@ -36,7 +36,7 @@ function listClasses() {
                 // Read
                 .get()
                 .then(function (doc) {
-                    currentUser = doc.data().Name;
+                    currentUser = doc.data().Educator_Name;
                     console.log(currentUser);
                     getClasses();
                 });
@@ -50,11 +50,11 @@ function listClasses() {
  */
 function getClasses() {
     db.collection("Classes")
-        .where("Owner_Name", "==", currentUser)
+        .where("Class_Owner", "==", currentUser)
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                userClasses.push(doc.data().id);
+                userClasses.push(doc.id);
             });
             populateclassList();
         })
@@ -66,7 +66,7 @@ function getClasses() {
 /**
  * Redirects users to a page where they can choose how to manage the selected class.
  */
-function onSelectclass() {
+function onSelectClass() {
     $(document).click(function (event) {
         let className = $(event.target).html();
         setTimeout(function () {
@@ -81,7 +81,6 @@ function onSelectclass() {
  function onClickBack() {
     setTimeout(function () {
             location.href = "educator-home.html?";
-
     }, 1000);
 }
 
