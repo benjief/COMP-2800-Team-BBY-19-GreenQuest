@@ -60,11 +60,12 @@ function getStudents() {
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                if (!currentStudents.includes(doc.data().Name)) {
-                    studentNames.push(doc.data().Name);
+                if (!currentStudents.includes(doc.data().Student_Name)) {
+                    studentNames.push(doc.data().Student_Name);
                     studentEmails.push(doc.data().Email);
                 }
             });
+            console.log(studentNames);
             populateStudentList();
         })
         .catch((error) => {
