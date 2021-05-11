@@ -36,6 +36,11 @@ var uiConfig = {
                         Student_Email: user.email,
                         Student_Class: null
                     })
+                    db.collection("Students").doc(user.uid).set({
+                        Student_Name: user.displayName,
+                        Student_Email: user.email,
+                        Student_Class: null
+                    })
                         .then(function () {
                             console.log("New student added to firestore");
                             // Re-direct to student-new-home.html after signup
