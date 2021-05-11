@@ -73,6 +73,24 @@ function getStudents() {
 }
 
 /**
+ * WRITE THIS.
+ * 
+ * @param {*} student 
+ * @param {*} className 
+ */
+function updateStudent(student, className) {
+    db.collection("Students").doc(student).set({
+        Student_Class: className
+    })
+        .then(() => {
+            console.log("Student successfully updated student class!");
+        })
+        .catch((error) => {
+            console.error("Error updating student class: ", error);
+        });
+}
+
+/**
  * Adds the chosen student to a collection in Firestore (nested under the class being added to).
  * Also changes the "+" icon beside a student to a "-" icon and allows that student to be subsequently
  * removed from the class in question.
@@ -109,6 +127,8 @@ function addStudent() {
             .catch((error) => {
                 console.error("Error adding student to this class: ", error);
             });
+        // Update the student's Student_Class attribute in the Students collection
+        updateStudent(studentToAdd, className);
     });
 }
 
@@ -148,6 +168,8 @@ function removeStudent(event) {
             .catch((error) => {
                 console.error("Error adding student to Lone_Students: ", error);
             });
+        // Update the student's Student_Class attribute in the Students collection
+        updateStudent(studentToRemove, null);
     });
 }
 

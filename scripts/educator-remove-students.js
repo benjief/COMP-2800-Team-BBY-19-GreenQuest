@@ -48,6 +48,24 @@ function getCurrentStudents() {
 }
 
 /**
+ * WRITE THIS.
+ * 
+ * @param {*} student 
+ * @param {*} className 
+ */
+function updateStudent(student, className) {
+    db.collection("Students").doc(student).set({
+        Student_Class: className
+    })
+        .then(() => {
+            console.log("Student successfully updated student class!");
+        })
+        .catch((error) => {
+            console.error("Error updating student class: ", error);
+        });
+}
+
+/**
  * Removes the chosen student from this class' Students collection.
  * Also changes the "-" icon beside a student to a "+" icon and allows that student to be subsequently
  * re-added to the class.
@@ -83,6 +101,8 @@ function removeStudent() {
             .catch((error) => {
                 console.error("Error adding student to Lone_Student: ", error);
             });
+        // Update the student's Student_Class attribute in the Students collection
+        updateStudent(studentToRemove, null);
     });
 }
 
@@ -120,6 +140,8 @@ function addStudent() {
             .catch((error) => {
                 console.error("Error removing student from Lone_Students: ", error);
             })
+        // Update the student's Student_Class attribute in the Students collection
+        updateStudent(studentToAdd, className);
     });
 }
 
