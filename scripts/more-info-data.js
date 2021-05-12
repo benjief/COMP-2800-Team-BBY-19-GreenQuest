@@ -1,4 +1,7 @@
-const taskRef = db.collection("instructions");
+
+
+
+const taskRef = db.collection("task");
 
 taskRef.doc("recycling").set({
   task: "recycle",
