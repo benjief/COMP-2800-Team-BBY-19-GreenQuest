@@ -25,10 +25,8 @@
 }
 
 .student-container {
-    display: grid;
-    grid-template-columns: 80% 20%;
-    grid-template-areas: 
-        "name icon";
+    display: flex;
+    justify-content: center;
     margin-bottom: 10px;
 }
 
@@ -37,20 +35,6 @@
     height: 100%;
     align-items: center;
     grid-area: name;
-    margin-left: 25px;
-}
-
-.icon-container {
-    display: flex;
-    height: 100%;
-    align-items: center;
-    grid-area: icon;
-    margin-left: 10px;
-}
-
-.icon {
-    height: 24px;
-    width: 24px;
 }
 
 .message {

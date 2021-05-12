@@ -6,7 +6,7 @@ var className;
 // Create a variable to house the names of students who are also in this class
 var studentsInClass = [];
 
-/* Get the current user's ID and class name from Firestore. */
+/* Get the current user's name and class name from Firestore. */
 function getCurrentStudent() {
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {
@@ -16,7 +16,7 @@ function getCurrentStudent() {
                 .get()
                 .then(function (doc) {
                     // Extract the current student's ID and class name
-                    currentStudent = doc.id;
+                    currentStudent = doc.data().Student_Name;
                     className = doc.data().Student_Class;
                     if (className == null) {
                         let message = "<p class='message'>You aren't in a class yet!</p>"
@@ -42,11 +42,6 @@ function populateStudentList() {
             $(".student-list").append(studentContainer);
             let studentName = "<p class='student-name' id='student-name-" + i + "'>" + studentsInClass[i] + "</p>";
             $("#student-container-" + i).append(studentName);
-            let iconContainer = "<div class='icon-container' id='icon-container-" + i + "'></div>";
-            $("#student-container-" + i).append(iconContainer);
-            let plusIcon = "<img src='/img/remove_icon.png' class='icon' id='minus-icon-" + i
-                + "' onclick='removeStudent()'>";
-            $("#icon-container-" + i).append(plusIcon);
         }
     }
 }
@@ -57,11 +52,12 @@ function populateStudentList() {
 function getStudentsInClass() {
     db.collection("Students")
         .where("Student_Class", "==", className)
-        // .where("id", "!=", currentStudent)
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                studentsInClass.push(doc.data().Student_Name);
+                if (doc.data().Student_Name != currentStudent) {
+                    studentsInClass.push(doc.data().Student_Name);
+                }
             });
             populateStudentList();
         })
