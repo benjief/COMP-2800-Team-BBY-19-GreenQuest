@@ -1,7 +1,7 @@
 // JS for login.html
 
 // Set up a user type variable to store the type of user signing up or logging in
-var userType = null;
+var userType = "educator";
 
 $("#educator-radio").click(function () {
     userType = "educator";
@@ -30,32 +30,44 @@ var uiConfig = {
             //------------------------------------------------------------------------------------------
             var user = authResult.user;
             if (authResult.additionalUserInfo.isNewUser) { //if new user
-                db.collection("Users").doc(user.uid).set({ //write to firestore
-                    Name: user.displayName, //"users" collection
-                    Email: user.email, //with authenticated user's ID (user.uid)
-                    User_Type: userType, //with user type "educator" or "student"
-                })
-                    .then(function () {
-                        console.log("New user added to firestore");
-                        if (userType === "educator") {
-                            window.location.assign(
-                                "/html/educator-new-home.html"
-                            ); //re-direct to educator-new-home.html after signup
-                        } else {
-                            window.location.assign(
-                                "/html/student-new-home.html"
-                            ); //re-direct to student-new-home.html after signup
-                        }
-
+                if (userType === "student") {
+                    db.collection("Students").doc(user.uid).set({
+                        Student_Name: user.displayName,
+                        Student_Email: user.email,
+                        Student_Class: null,
+                        Student_Points: 0
                     })
-                    .catch(function (error) {
-                        console.log("Error adding new user: " + error);
-                    });
+                        .then(function () {
+                            console.log("New student added to firestore");
+                            // Re-direct to student-new-home.html after signup
+                            window.location.assign(
+                                "./student-new-home.html"
+                            );
+                        })
+                        .catch(function (error) {
+                            console.log("Error adding new student: " + error);
+                        });
+                } else {
+                    db.collection("Educators").doc(user.uid).set({
+                        Educator_Name: user.displayName,
+                        Educator_Email: user.email,
+                    })
+                        .then(function () {
+                            console.log("New educator added to firestore");
+                            // Re-direct to educator-new-home.html after signup
+                            window.location.assign(
+                                "./educator-new-home.html"
+                            );
+                        })
+                        .catch(function (error) {
+                            console.log("Error adding new educator: " + error);
+                        });
+                }
             } else {
                 if (userType === "educator") {
-                    window.location.pathname = "/html/educator-home.html";
+                    window.location.assign("./educator-home.html");
                 } else if (userType === "student") {
-                    window.location.pathname = "/html/student-home.html";
+                    window.location.assign("./html/student-home.html");
                 }
             }
             return true;
@@ -67,11 +79,11 @@ var uiConfig = {
     signInOptions: [
         // Leave the lines as is for the providers you want to offer your users.
         // firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        //firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-        //firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-        //firebase.auth.GithubAuthProvider.PROVIDER_ID,
+        // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+        // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+        // firebase.auth.GithubAuthProvider.PROVIDER_ID,
         firebase.auth.EmailAuthProvider.PROVIDER_ID
-        //firebase.auth.PhoneAuthProvider.PROVIDER_ID
+        // firebase.auth.PhoneAuthProvider.PROVIDER_ID
     ],
     // Terms of service url.
     tosUrl: '<your-tos-url>',

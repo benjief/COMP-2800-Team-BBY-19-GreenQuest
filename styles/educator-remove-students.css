@@ -51,13 +51,11 @@
 .icon {
     height: 24px;
     width: 24px;
-    filter: invert(48%) sepia(28%) saturate(600%) hue-rotate(93deg) brightness(96%) contrast(95%);
 }
 
 .message {
     text-align: center;
     font-weight: 600;
-    color: red;
 }
 
 .card-button-container {
@@ -65,7 +63,7 @@
     height: 50px;
     width: 180px;
     grid-area: submit;
-    background-color: rgb(72, 143, 102);
+    background-color: #ff80ee;
     justify-content: center;
     border-radius: 10px;
     font-size: 15pt;

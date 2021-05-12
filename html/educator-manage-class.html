@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>GreenQuest - Educator Manage Groups Page</title>
+    <title>GreenQuest - Educator Manage Class Page</title>
 
     <!-- Bootstrap for Mobile-first, and JQuery -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -11,7 +11,7 @@
 
     <!-- Optional styles and scripts of your own -->
     <link rel="stylesheet" href="/styles/all-pages.css">
-    <link rel="stylesheet" href="/styles/educator-manage-groups.css">
+    <link rel="stylesheet" href="/styles/educator-manage-class.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Mali&display=swap" rel="stylesheet">
     
@@ -57,13 +57,24 @@
 
     <div class="page-container">
         <div class="heading-container">
-            <p class="page-heading">Manage Groups</p>
+            <p class="page-heading"></p>
         </div>
         <div class="card mb-3" id="main-content-card">
             <div class="card-text-container">
-                <p class="card-text">Choose a group to manage:</p>
+                <p class="card-text">Please choose from the following options:</p>
             </div>
-            <div class="group-list"></div>
+            <div class="card-button-container" id="card-button-container-1">
+                <a class="button" id="manage-classes-button" href="educator-add-students.html" onclick="onClick()">Add Students</a>
+            </div>
+            <div class="card-button-container" id="card-button-container-2">
+                <a class="button" id="approve-tasks-button" href="educator-remove-students.html" onclick="onClick()">Remove Students</a>
+            </div>
+            <div class="card-button-container" id="card-button-container-3">
+                <a class="button" id="approve-tasks-button" href="educator-home.html">Home</a>
+            </div>
+            <!-- <div class="card-button-container" id="card-button-container-3">
+                <a class="button" id="create-a-class-button" href="/html/educator-rename-class.html" onclick="onClick()">Rename Class</a>
+            </div> -->
         </div>
 
     </div>
@@ -85,7 +96,7 @@
     <!--------------------------------------------------------------------->
     <!-- JS files: Your own JavaScript functions included here    -->
     <!--------------------------------------------------------------------->
-    <script src="/scripts/educator-manage-groups.js"></script>
+    <script src="/scripts/educator-manage-class.js"></script>
 
 </body>
 
