@@ -40,7 +40,7 @@
 .message {
     text-align: center;
     font-weight: 600;
-    color: red;
+    color: rgb(0, 0, 0);
 }
 
 .card-button-container {
