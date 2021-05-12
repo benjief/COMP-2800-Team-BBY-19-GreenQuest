@@ -9,6 +9,8 @@
         "buttons-1"
         "buttons-2"
         "buttons-3";
+    background: url('/img/background_pattern.png');
+    /* background-color: rgb(255, 255, 78); */
 }
 
 .card-text-container {
