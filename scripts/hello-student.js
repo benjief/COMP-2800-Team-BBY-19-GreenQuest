@@ -18,9 +18,9 @@ var firstVisit = parsedUrl.searchParams.get("firstvisit");
                     var name = doc.data().Student_Name.split(" ", 1);
                     if (name) {
                         if (firstVisit) {
-                            $("#personalized-greeting-new-user").html( "Welcome, " + name);
+                            $("#personalized-greeting").html( "Welcome, " + name);
                         } else {
-                            $("#personalized-greeting-established-user").html( "Welcome back, " + name);
+                            $("#personalized-greeting").html( "Welcome back, " + name);
                         }
                         // Display a generic message if no name is entered when signing up
                     } else {
