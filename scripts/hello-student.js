@@ -1,5 +1,7 @@
 // JS for personalized greetings (student homepage)
 
+
+
 /* Get the current user's name from Firestore and use it to create personalized greetings
    on student-(new-)home.html */
    function sayHello() {
