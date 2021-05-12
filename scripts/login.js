@@ -65,9 +65,9 @@ var uiConfig = {
                 }
             } else {
                 if (userType === "educator") {
-                    window.location.pathname = "html/educator-home.html";
+                    window.location.assign("./educator-home.html");
                 } else if (userType === "student") {
-                    window.location.pathname = "html/student-home.html?firstvisit=false";
+                    window.location.assign("./student-home.html?firstvisit=false");
                 }
             }
             return true;
