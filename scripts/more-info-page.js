@@ -6,7 +6,7 @@ $('#how-to-modal').on('show.bs.modal', function() {
   recyclingRef.get().then((doc) => {
         if (doc.exists) {
           var src = doc.data().link;
-          $('#instruction iframe').attr('src', src);
+          $('iframe').attr('src', src);
           console.log("success");
         }
       }).catch(function(error) {
@@ -14,17 +14,12 @@ $('#how-to-modal').on('show.bs.modal', function() {
       });
 })
 
-//video stops when modal closes
-$('#how-to-modal').on('hide.bs.modal', function() {
-  $('#instruction iframe').attr('src', '');
-})
-
 //more-info-modal actions.
 $('#more-info-modal').on('show.bs.modal',function() {
   recyclingRef.get().then((doc) => {
     if (doc.exists) {
       var src = doc.data().moreInfo;
-      $('#moreInfo iframe').attr('src', src);
+      $('iframe').attr('src', src);
 
       console.log("success");
     }
@@ -35,7 +30,6 @@ $('#more-info-modal').on('show.bs.modal',function() {
 });
 
 //video stops when modal closes
-$('#more-info-modal').on('hide.bs.modal', function() {
-  $('#more-info-modal iframe').attr('src', '');
+$('.more-info-modal').on('hide.bs.modal', function() {
+  $('.more-info-modal iframe').attr('src', '');
 })
-    
