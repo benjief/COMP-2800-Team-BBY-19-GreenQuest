@@ -10,7 +10,6 @@
 }
 
 .image-container {
-    z-index: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -46,17 +45,28 @@
 
 .message {
     font-weight: 600;
+    text-align: center;
 }
 
 ul {
-    text-align: center;
-    padding: 0;
+    /* text-align: center; */
     margin-top: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
+    width: 80%;
+    align-self: center;
+    font-size: 12pt;
 }
 
-li {
+li {    
+    display: grid;
+    grid-template-columns: 90% 10%;
     list-style: none;
+    margin-bottom: 5px;
+}
+
+.remove-icon {
+    width: 24px;
+    height: 24px;
 }
 
 #upload-image-input {

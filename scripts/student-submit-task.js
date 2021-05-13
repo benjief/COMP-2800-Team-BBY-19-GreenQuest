@@ -28,7 +28,7 @@ function checkNumUploaded() {
     const maxImages = 3;
     const message = "<div class='text-container'><p class='message'>You haven't uploaded any images</p></div>"
     if (uploadedImagePaths.length == maxImages) {
-        $("#upload-image-input").attr("disabled");
+        $("#upload-image-input").attr("disabled", "");
     } else if (uploadedImagePaths.length == 0) {
         $(".uploaded-images").append(message);
     } else {
@@ -50,7 +50,7 @@ function processImage() {
         console.log(event.target.files[0]);
         var imagePath = event.target.files[0].name;
         uploadedImagePaths.push(imagePath);
-        addPathToDOM();
+        addPathsToDOM();
     });
 }
 
@@ -58,7 +58,7 @@ function processImage() {
  * Write this
  */
 function resetDOM() {
-    var uploadedImages = document.getElementsByClassName('uploaded-image');
+    var uploadedImages = document.getElementsByClassName('list-item');
     while (uploadedImages[0]) {
         uploadedImages[0].parentNode.removeChild(uploadedImages[0]);
     }
@@ -67,14 +67,29 @@ function resetDOM() {
 /**
  * Write this
  */
-function addPathToDOM() {
+function addPathsToDOM() {
     resetDOM();
     for (var i = 0; i < uploadedImagePaths.length; i++) {
-        let imagePath = "<li><a class='uploaded-image' href='#'>" + uploadedImagePaths[i] + "</a></li>";
+        let imagePath = "<li class='list-item'><a class='uploaded-image' href='#'>" + uploadedImagePaths[i] +
+            "</a><img src='/img/remove_icon.png' class='remove-icon' id='delete-" + uploadedImagePaths[i] + "' onclick='removeImage(this)'></li>";
         $(".uploaded-images").append(imagePath);
     }
+    console.log(uploadedImagePaths);
     checkNumUploaded();
     $("#upload-image-input").prop("value", null);
+}
+
+/**
+ * Write this
+ */
+function removeImage(element) {
+    let imageName = $(element).attr("id");
+    imageName = imageName.replace("delete-","");
+    let index = uploadedImagePaths.indexOf(imageName);
+    if (index >= 0) {
+        uploadedImagePaths.splice(index, 1);
+    }
+    addPathsToDOM();
 }
 
 /**
