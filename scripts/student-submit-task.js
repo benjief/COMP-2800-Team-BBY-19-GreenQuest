@@ -29,7 +29,7 @@ function checkNumUploaded() {
     if (uploadedImagePaths.length == 3) {
         $("#upload-image-input").attr("disabled");
     } else {
-        if (("#uploaded-image-input").attr("disabled")) {
+        if ($("#uploaded-image-input").attr("disabled")) {
             $("#upload-image-input").removeAttr("disabled");
         }
     }
@@ -40,7 +40,7 @@ function checkNumUploaded() {
  */
 function processImage() {
     const imageInput = document.getElementById("upload-image-input");
-    fileInput.addEventListener('change', function (event) {
+    imageInput.addEventListener('change', function (event) {
         var imagePath = event.target.attr("value");
         uploadedImagePaths.push(imagePath);
         addPathToDOM();
