@@ -1,7 +1,52 @@
+'use strict'
+class Task {
+  constructor(title, description, difficulty, instruction, moreInfo) {
+    this.title = title;
+    this.description = description;
+    this.difficulty = difficulty;
+    this.instruction = instruction;
+    this.moreInfo = moreInfo;
+  }
+
+  getTitle() {
+    return this.title;
+  }
+
+  getDifficulty() {
+    return this.difficulty;
+  }
+
+  getDescription() {
+    return this.description;
+  }
+}
+
+// Firestore data converter
+var taskConverter = {
+  toFirestore: function(task) {
+      return {
+          title: task.title,
+          description: task.description,
+          difficulty: task.difficulty,
+          instruction: task.instruction,
+          moreInfo: task.moreInfo
+      };
+  },
+  fromFirestore: function(snapshot, options){
+      const data = snapshot.data(options);
+      return new Task(data.title, data.description, data.difficulty, data.instruction, data.moreInfo);
+  }
+};
+
+
+
+
+
+
+
+//This is to create database.
+//You can add/edit here and it will be shown on firestore realtime.
 const taskRef = db.collection("Tasks");
-
-
-
 
 //Creating task objects.
 const recycling = new Task("recycle", "Throw recyclable bottle in the recycle bin", "easy", "https://www.youtube.com/embed/6jQ7y_qQYUA", "https://www.youtube.com/embed/7UuUeoyYmxI");
