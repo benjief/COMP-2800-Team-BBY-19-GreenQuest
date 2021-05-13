@@ -40,10 +40,6 @@ var taskConverter = {
 
 
 
-
-
-
-
 //This is to create database.
 //You can add/edit here and it will be shown on firestore realtime.
 const taskRef = db.collection("Tasks");

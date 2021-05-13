@@ -17,18 +17,40 @@ function getRandomInt(max) {
 var myListOfTasks = [];
 var referenceTask;
 var docTask;
+var docTask2;
+var docTask3;
 
 myCollections.get().then((querySnapShot) => {
   querySnapShot.forEach((doc) => {
     myListOfTasks.push(doc.id);
   });
+
+  //task 1 of 3 on the page
   docTask = myListOfTasks[getRandomInt(myListOfTasks.length)];
-  console.log(docTask + "  yes?");
   referenceTask = myCollections.doc(docTask);
   taskCardLoadingFromFirebase();
   howToModalAction();
   moreInfoModalAction();
+
+  docTask2 = myListOfTasks[getRandomInt(myListOfTasks.length)];
+  referenceTask = myCollections.doc(docTask2);
+
+  taskCardLoadingFromFirebase2();
+  howToModalAction();
+  moreInfoModalAction();
+
+  docTask3 = myListOfTasks[getRandomInt(myListOfTasks.length)];
+  referenceTask = myCollections.doc(docTask3);
+
+  taskCardLoadingFromFirebase3();
+  howToModalAction();
+  moreInfoModalAction();
+
+
+
 });
+
+
 
 function taskCardLoadingFromFirebase() {
   referenceTask.withConverter(taskConverter).get().then((doc) => {
@@ -44,6 +66,39 @@ function taskCardLoadingFromFirebase() {
       console.log("Error getting document: ", error);
     });
 }
+
+function taskCardLoadingFromFirebase2() {
+  referenceTask.withConverter(taskConverter).get().then((doc) => {
+    if (doc.exists) {
+      var mytask = doc.data();
+      $("#task-title2").text(mytask.getTitle());
+      $("#difficulty2").text(mytask.getDifficulty());
+      $("#task-description2").text(mytask.getDescription());
+      console.log("converting successful.");
+    } else {
+      console.log("No such document");
+    }}).catch((error) => {
+      console.log("Error getting document: ", error);
+    });
+}
+
+function taskCardLoadingFromFirebase3() {
+  referenceTask.withConverter(taskConverter).get().then((doc) => {
+    if (doc.exists) {
+      var mytask = doc.data();
+      $("#task-title3").text(mytask.getTitle());
+      $("#difficulty3").text(mytask.getDifficulty());
+      $("#task-description3").text(mytask.getDescription());
+      console.log("converting successful.");
+    } else {
+      console.log("No such document");
+    }}).catch((error) => {
+      console.log("Error getting document: ", error);
+    });
+}
+
+
+
 
 // how-to-modal actions.
 function howToModalAction() {
