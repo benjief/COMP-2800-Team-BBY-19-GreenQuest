@@ -109,7 +109,7 @@ function getCurrentStudents() {
  */
 function onClickSubmit() {
     setTimeout(function () {
-        location.href = "educator-manage-class.html?classname=" + className;
+        location.href = "html/educator-manage-class.html?classname=" + className;
     }, 1000);
 }
 

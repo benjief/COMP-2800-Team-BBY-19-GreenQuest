@@ -136,9 +136,9 @@ function removeStudent() {
 function onClickSubmit() {
     setTimeout(function () {
         if (!redirectFlag) {
-            location.href = "educator-home.html";
+            location.href = "html/educator-home.html";
         } else {
-            location.href = "educator-manage-class.html?classname=" + className;
+            location.href = "html/educator-manage-class.html?classname=" + className;
         }
 
     }, 1000);
