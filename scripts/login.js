@@ -41,7 +41,7 @@ var uiConfig = {
                             console.log("New student added to firestore");
                             // Re-direct to student-new-home.html after signup
                             window.location.assign(
-                                "./student-new-home.html"
+                                "./student-home.html?firstvisit=true"
                             );
                         })
                         .catch(function (error) {
@@ -67,7 +67,7 @@ var uiConfig = {
                 if (userType === "educator") {
                     window.location.assign("./educator-home.html");
                 } else if (userType === "student") {
-                    window.location.assign("./html/student-home.html");
+                    window.location.assign("./student-home.html?firstvisit=false");
                 }
             }
             return true;
