@@ -1,12 +1,15 @@
+
 // JS for student-submit-task.js
 
 var userName;
 var className;
-var educatorName;
 var userID;
+var educatorName;
+var educatorID;
 
-// Create an empty array to store files added to this task
+// Create empty arrays to store files added to this task and their URLs
 var uploadedImageFiles = [];
+var imageURLs = [];
 
 /**
  * CITE - Implement a character limit counter.
@@ -100,7 +103,7 @@ function removeImage(element) {
         }
     }
     if (index >= 0) {
-        uploadedImageNames.splice(index, 1);
+        uploadedImageFiles.splice(index, 1);
     }
     addNamesToDOM();
 }
@@ -111,7 +114,8 @@ function removeImage(element) {
 function getStorageRef(file) {
     let imageID = file.lastModified;
     // Create a storage reference and keep track of it
-    var storageRef = storage.ref("images/tasks/" + imageID + ".jpg");
+    let storageRef = storage.ref();
+    storageRef = storageRef.child("images/tasks/" + imageID + ".jpg");
     return storageRef;
 }
 
@@ -133,10 +137,13 @@ function getCurrentStudent() {
                         let message = "<div class='text-container'><p class='message'>You haven't been added to a class yet</p></div>"
                         $(".uploaded-images").append(message);
                         $("#card-button-container-1").remove();
-                        $("#upload-image-input").attr("disabled","");
-                        $("#task-notes").attr("disabled","");
-                        $("#task-notes").attr("placeholder","Ask your teacher to add you to their class to start getting tasks");
+                        $("#upload-image-input").attr("disabled", "");
+                        $("#task-notes").attr("disabled", "");
+                        $("#task-notes").attr("placeholder", "Ask your teacher to add you to their class to start getting tasks");
                     }
+                    checkNumUploaded();
+                    getEducatorID();
+                    processImage();
                 });
         }
     });
@@ -153,10 +160,28 @@ function pseudorandomID() {
 
 /**
  * Write this
+ */
+function getEducatorID() {
+    db.collection("Educators")
+        .where("Educator_Name", "==", educatorName)
+        .get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                educatorID = doc.id;
+            })
+        })
+        .catch((error) => {
+            console.log("Error getting educator ID: ", error);
+        });
+}
+
+/**
+ * Write this
  * 
  * @param {*} imageURLs 
  */
 function addTaskToDB(imageURLs) {
+    let taskID = pseudorandomID();
     // Write task to student's task collection
     db.collection("Students").doc(userID).collection("Tasks").doc(taskID).set({
         Task_Submitter: userName,
@@ -171,53 +196,45 @@ function addTaskToDB(imageURLs) {
             console.error("Error adding student task: ", error);
         });
     // Write task to teacher's task collection
-    db.collection("Educators")
-        .where("Educator_Name", "==", educatorName)
-        .get()
-        .then(function (doc) {
-            let educatorID = doc.id
-            db.collection("Educators").doc(educatorID).collection("Tasks").doc(taskID).set({
-                Task_Submitter: userName,
-                Task_Description: "Test",
-                Task_Photos: imageURLs,
-                Task_Notes: $("#task-notes").prop("value")
-            })
-                .then(() => {
-                    console.log("Educator task successfully written!");
-                })
-                .catch((error) => {
-                    console.error("Error adding educator task: ", error);
-                });
+    db.collection("Educators").doc(educatorID).collection("Tasks").doc(taskID).set({
+        Task_Submitter: userName,
+        Task_Description: "Test",
+        Task_Photos: imageURLs,
+        Task_Notes: $("#task-notes").prop("value")
+    })
+        .then(() => {
+            console.log("Educator task successfully written!");
         })
+        .catch((error) => {
+            console.error("Error adding educator task: ", error);
+        });
 }
 
 /**
  * CITE and write this
  */
 function onClickSubmit() {
-    let imageURLs = [];
     // Generate image URLs and add them to an array
     for (var i = 0; i < uploadedImageFiles.length; i++) {
         let storageRef = getStorageRef(uploadedImageFiles[i]);
-        let taskID = pseudorandomID();
-        storageRef.put(file)
+        storageRef.put(uploadedImageFiles[i])
             .then(function () {
                 console.log('Uploaded to Cloud storage');
+                storageRef.getDownloadURL()
+                    .then(function (url) {
+                        console.log(url);
+                        imageURLs.push(url);
+                        console.log(imageURLs);
+                        /* Create task documents in the student's and their teacher's task collection 
+                           (include array of image URLs as an attribute) */
+                        addTaskToDB(imageURLs);
+                    })
             });
-        storageRef.getDownloadURL()
-            .then(function (url) {
-                console.log(url);
-                imageURLs.push(url);
-            })
+
     }
-    /* Create task documents in the student's and their teacher's task collection 
-    (include array of image URLs as an attribute) */
-    addTaskToDB(imageURLs);
 }
 
 // Run function when document is ready 
 $(document).ready(function () {
     getCurrentStudent();
-    checkNumUploaded();
-    processImage();
 });
