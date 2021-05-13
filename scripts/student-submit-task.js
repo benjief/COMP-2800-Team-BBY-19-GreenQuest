@@ -35,6 +35,9 @@ function checkNumUploaded() {
         if ($("#uploaded-image-input").attr("disabled")) {
             $("#upload-image-input").removeAttr("disabled");
         }
+        if ($(".message")) {
+            $(".message").remove();
+        }
     }
 }
 
@@ -44,7 +47,8 @@ function checkNumUploaded() {
 function processImage() {
     const imageInput = document.getElementById("upload-image-input");
     imageInput.addEventListener('change', function (event) {
-        var imagePath = event.target.attr("value");
+        console.log(event.target.files[0]);
+        var imagePath = event.target.files[0].name;
         uploadedImagePaths.push(imagePath);
         addPathToDOM();
     });
@@ -69,6 +73,7 @@ function addPathToDOM() {
         let imagePath = "<li><a class='uploaded-image' href='#'>" + uploadedImagePaths[i] + "</a></li>";
         $(".uploaded-images").append(imagePath);
     }
+    checkNumUploaded();
 }
 
 /**
