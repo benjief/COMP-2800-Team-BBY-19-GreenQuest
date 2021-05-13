@@ -1,8 +1,33 @@
 'use-strict'
 var inst = "instructions";
-var docTask = "turn_off_light"
-const collection = db.collection(inst);
-const referenceTask = collection.doc(docTask);
+const myCollections = db.collection(inst);
+
+// var docTask = "turn_off_light"
+// const referenceTask = myCollections.doc(docTask);
+
+//trying to create an array of current tasks available 
+//to call three? or to call random one
+//calling random index of the list.
+var myListOfTasks = new Array();
+
+myCollections.get().then((querySnapShot) => {
+  querySnapShot.forEach((doc) => {
+    myListOfTasks.push(doc.data());
+  });
+});
+
+console.log(myListOfTasks);
+
+
+//random integer generator from MDN webdocs. 
+//source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+var docTask = myListOfTasks[getRandomInt(myListOfTasks.length)];
+const referenceTask = myCollections.doc(docTask);
+
 
 referenceTask.withConverter(taskConverter).get().then((doc) => {
   if (doc.exists) {
@@ -50,3 +75,6 @@ $('#more-info-modal').on('show.bs.modal',function() {
 $('.more-info-modal').on('hide.bs.modal', function() {
   $('.more-info-modal iframe').attr('src', '');
 });
+
+
+
