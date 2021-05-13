@@ -1,5 +1,8 @@
 // JS for student-submit-task.js
 
+// Create an empty array that stores the paths of images uploaded
+var uploadedImagePaths = [];
+
 /**
  * CITE - Implement a character limit counter.
  * 
@@ -8,7 +11,7 @@
  * @param {*} maxlimit - Maximum number of characters allowed in "field"
  * @returns - false if the character limit has been exceeded
  */
- function charCounter(field, field2, maxlimit) {
+function charCounter(field, field2, maxlimit) {
     var countfield = document.getElementById(field2);
     if (field.value.length > maxlimit) {
         field.value = field.value.substring(0, maxlimit);
@@ -19,21 +22,61 @@
 }
 
 /**
- * CITE - Displays a picture uploaded by the user in the DOM and resets the "Choose File" input button.
+ * Write this
  */
-function processUploadedPicture(){
-    const fileInput = document.getElementById("mypic-input");   // pointer #1
-    const image = document.getElementById("mypic-goes-here");   // pointer #2
-    fileInput.addEventListener('change', function(e){        //event listener
-        var blob = URL.createObjectURL(e.target.files[0]);
-        image.src = blob;    //change DOM image
-    })
+function checkNumUploaded() {
+    const maxImages = 3;
+    if (uploadedImagePaths.length == 3) {
+        $("#upload-image-input").attr("disabled");
+    } else {
+        if (("#uploaded-image-input").attr("disabled")) {
+            $("#upload-image-input").removeAttr("disabled");
+        }
+    }
 }
-showUploadedPicture();
 
 /**
- * 
+ * CITE - Write this.
+ */
+function processImage() {
+    const imageInput = document.getElementById("upload-image-input");
+    fileInput.addEventListener('change', function (event) {
+        var imagePath = event.target.attr("value");
+        uploadedImagePaths.push(imagePath);
+        addPathToDOM();
+    });
+}
+
+/**
+ * Write this
+ */
+function resetDOM() {
+    var uploadedImages = document.getElementsByClassName('uploaded-image');
+    while (uploadedImages[0]) {
+        uploadedImages[0].parentNode.removeChild(uploadedImages[0]);
+    }
+}
+
+/**
+ * Write this
+ */
+function addPathToDOM() {
+    resetDOM();
+    for (var i = 0; i < uploadedImagePaths.length; i++) {
+        let imagePath = "<li><a class='uploaded-image' href='#'>" + uploadedImagePaths[i] + "</a></li>";
+        $(".uploaded-images").append(imagePath);
+    }
+}
+
+/**
+ * Write this
  */
 function onClickSubmit() {
-
+    return 0;
 }
+
+// Run function when document is ready 
+$(document).ready(function () {
+    checkNumUploaded();
+    processImage();
+});
