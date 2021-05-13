@@ -31,17 +31,19 @@ function charCounter(field, field2, maxlimit) {
  */
 function checkNumUploaded() {
     const maxImages = 3;
-    let message = "<div class='text-container'><p class='message'>You haven't uploaded any images</p></div>"
-    if (uploadedImageFiles.length == maxImages) {
-        $("#upload-image-input").attr("disabled", "");
-    } else if (uploadedImageFiles.length == 0) {
-        $(".uploaded-images").append(message);
-    } else {
-        if ($("#uploaded-image-input").attr("disabled")) {
-            $("#upload-image-input").removeAttr("disabled");
-        }
-        if ($(".message")) {
-            $(".message").remove();
+    if (className) {
+        let message = "<div class='text-container'><p class='message'>You haven't uploaded any images</p></div>"
+        if (uploadedImageFiles.length == maxImages) {
+            $("#upload-image-input").attr("disabled", "");
+        } else if (uploadedImageFiles.length == 0) {
+            $(".uploaded-images").append(message);
+        } else {
+            if ($("#uploaded-image-input").attr("disabled")) {
+                $("#upload-image-input").removeAttr("disabled");
+            }
+            if ($(".message")) {
+                $(".message").remove();
+            }
         }
     }
 }
@@ -128,9 +130,12 @@ function getCurrentStudent() {
                     educatorName = doc.data().Student_Educator;
                     userID = doc.id;
                     if (className == null) {
-                        let message = "<div class='text-container'><p class='message'>You haven't uploaded any images</p></div>"
-                        $(".upload-images").append(message);
-                        $("#submit-button").remove();
+                        let message = "<div class='text-container'><p class='message'>You haven't been added to a class yet</p></div>"
+                        $(".uploaded-images").append(message);
+                        $("#card-button-container-1").remove();
+                        $("#upload-image-input").attr("disabled","");
+                        $("#task-notes").attr("disabled","");
+                        $("#task-notes").attr("placeholder","Ask your teacher to add you to their class to start getting tasks");
                     }
                 });
         }
@@ -159,12 +164,12 @@ function addTaskToDB(imageURLs) {
         Task_Photos: imageURLs,
         Task_Notes: $("#task-notes").prop("value")
     })
-    .then(() => {
-        console.log("Student task successfully written!");
-    })
-    .catch((error) => {
-        console.error("Error adding student task: ", error);
-    });
+        .then(() => {
+            console.log("Student task successfully written!");
+        })
+        .catch((error) => {
+            console.error("Error adding student task: ", error);
+        });
     // Write task to teacher's task collection
     db.collection("Educators")
         .where("Educator_Name", "==", educatorName)
@@ -177,15 +182,14 @@ function addTaskToDB(imageURLs) {
                 Task_Photos: imageURLs,
                 Task_Notes: $("#task-notes").prop("value")
             })
-            .then(() => {
-                console.log("Educator task successfully written!");
-            })
-            .catch((error) => {
-                console.error("Error adding educator task: ", error);
-            });
+                .then(() => {
+                    console.log("Educator task successfully written!");
+                })
+                .catch((error) => {
+                    console.error("Error adding educator task: ", error);
+                });
         })
 }
-
 
 /**
  * CITE and write this
