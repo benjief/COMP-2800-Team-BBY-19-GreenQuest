@@ -1,0 +1,38 @@
+body {
+    background-image: url('../images/background_clouds.png');
+}
+
+.navbar-brand {
+    font-family: 'Press Start 2P', Arial, Helvetica, sans-serif;
+    font-size: 13pt;
+}
+
+.navbar {
+    background-color: rgb(72, 143, 102);
+}
+
+.main-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+      "Title"
+      "Cards";
+  }
+  .Title {
+       grid-area: Title;
+     }
+  .Cards {
+       grid-area: Cards; 
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        gap: 0px 0px;
+      }
+      .Profile-Picture { grid-area: 1 / 1 / 2 / 2; }
+      .Name { grid-area: 2 / 1 / 3 / 2; }
+      .Description { grid-area: 3 / 1 / 4 / 2; }
