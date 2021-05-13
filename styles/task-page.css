@@ -22,6 +22,7 @@ body {
     display: inline-flex;
     padding: 50px;
     border-radius: 25px;
+    background: rgb(255, 255, 255);
 }
 
 .card {

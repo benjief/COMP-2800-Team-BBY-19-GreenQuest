@@ -104,6 +104,10 @@
     font-size: 1em;
 }
 
+.card-img-top {
+    width: 4rem;
+    height: 3rem;
+}
 
 /* We can change the media query width later */
 @media (min-width: 768px) {
