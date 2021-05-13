@@ -1,9 +1,7 @@
 // JS for student-submit-task.js
 
-// Create empty arrays that store the names and URLs of imaged added to this task
-var uploadedImageNames = [];
-var uploadedImageURLs = [];
-
+// Create an empty array to store files added to this task
+var uploadedImageFiles = [];
 
 /**
  * CITE - Implement a character limit counter.
@@ -29,9 +27,9 @@ function charCounter(field, field2, maxlimit) {
 function checkNumUploaded() {
     const maxImages = 3;
     const message = "<div class='text-container'><p class='message'>You haven't uploaded any images</p></div>"
-    if (uploadedImageNames.length == maxImages) {
+    if (uploadedImageFiles.length == maxImages) {
         $("#upload-image-input").attr("disabled", "");
-    } else if (uploadedImageNames.length == 0) {
+    } else if (uploadedImageFiles.length == 0) {
         $(".uploaded-images").append(message);
     } else {
         if ($("#uploaded-image-input").attr("disabled")) {
@@ -43,6 +41,8 @@ function checkNumUploaded() {
     }
 }
 
+
+
 /**
  * CITE - Write this.
  */
@@ -50,9 +50,10 @@ function processImage() {
     const imageInput = document.getElementById("upload-image-input");
     imageInput.addEventListener('change', function (event) {
         console.log(event.target.files[0]);
-        var imagePath = event.target.files[0].name;
-        uploadedImageNames.push(imagePath);
-        addPathsToDOM();
+        uploadedImageFiles.push(event.target.files[0]);
+        // var imagePath = event.target.files[0].name;
+        // uploadedImageNames.push(imagePath);
+        addNamesToDOM();
     });
 }
 
@@ -69,14 +70,14 @@ function resetDOM() {
 /**
  * Write this
  */
-function addPathsToDOM() {
+function addNamesToDOM() {
     resetDOM();
-    for (var i = 0; i < uploadedImageNames.length; i++) {
-        let imagePath = "<li class='list-item'><a class='uploaded-image' href='#'>" + uploadedImageNames[i] +
-            "</a><img src='/img/remove_icon.png' class='remove-icon' id='delete-" + uploadedImageNames[i] + "' onclick='removeImage(this)'></li>";
-        $(".uploaded-images").append(imagePath);
+    for (var i = 0; i < uploadedImageFiles.length; i++) {
+        let imageDOM = "<li class='list-item'><a class='uploaded-image' href='#'>" + uploadedImageFiles[i].name +
+            "</a><img src='/img/remove_icon.png' class='remove-icon' id='delete-" + uploadedImageFiles[i].name
+            + "' onclick='removeImage(this)'></li>";
+        $(".uploaded-images").append(imageDOM);
     }
-    console.log(uploadedImageNames);
     checkNumUploaded();
     $("#upload-image-input").prop("value", null);
 }
@@ -86,19 +87,45 @@ function addPathsToDOM() {
  */
 function removeImage(element) {
     let imageName = $(element).attr("id");
-    imageName = imageName.replace("delete-","");
-    let index = uploadedImageNames.indexOf(imageName);
+    imageName = imageName.replace("delete-", "");
+    let index = null;
+    for (var i = 0; i < uploadedImageFiles.length; i++) {
+        if (uploadedImageFiles[i].name === imageName) {
+            index = i;
+        }
+    }
     if (index >= 0) {
         uploadedImageNames.splice(index, 1);
     }
-    addPathsToDOM();
+    addNamesToDOM();
 }
 
 /**
- * Write this
+ * CITE and write
+ */
+function getStorageRef(file) {
+    let imageID = file.lastModified;
+    // Create a storage reference and keep track of it
+    var storageRef = storage.ref("images/tasks/" + imageID + ".jpg");
+    return storageRef;
+}
+
+/**
+ * CITE and write this
  */
 function onClickSubmit() {
-    return 0;
+    for (var i = 0; i < uploadedImageFiles.length; i++) {
+        let storageRef = getStorageRef(uploadedImageFiles[i]);
+        storageRef.put(file)
+            .then(function () {
+                console.log('Uploaded to Cloud storage');
+            });
+        storageRef.getDownloadURL()
+            .then(function (url) {
+                console.log(url);
+                debugger.collection("")
+            })
+    }
 }
 
 // Run function when document is ready 
