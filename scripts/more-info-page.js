@@ -1,6 +1,6 @@
 'use-strict'
 var inst = "instructions";
-var docTask = "walking"
+var docTask = "turn_off_light"
 const collection = db.collection(inst);
 const referenceTask = collection.doc(docTask);
 
@@ -10,21 +10,6 @@ referenceTask.withConverter(taskConverter).get().then((doc) => {
     $("#task-title").text(mytask.getTitle());
     $("#task-rating").text(mytask.getDifficulty());
     $("#task-description").text(mytask.getDescription());
-    
-
-    //how-to-modal actions
-    $('#how-to-modal').on('show.bs.modal', function() {
-      referenceTask.get().then((doc) => {
-            if (doc.exists) {
-              var src = doc.data().link;
-              $('iframe').attr('src', src);
-              console.log("success");
-            }
-          }).catch(function(error) {
-            console.log("Got an error: ", error);
-          });
-    })
-
   } else {
     console.log("No such document");
   }}).catch((error) => {
@@ -64,4 +49,4 @@ $('#more-info-modal').on('show.bs.modal',function() {
 //video stops when modal closes
 $('.more-info-modal').on('hide.bs.modal', function() {
   $('.more-info-modal iframe').attr('src', '');
-})
+});
