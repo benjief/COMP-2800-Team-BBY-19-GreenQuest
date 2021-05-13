@@ -74,6 +74,7 @@ function addPathToDOM() {
         $(".uploaded-images").append(imagePath);
     }
     checkNumUploaded();
+    $("#upload-image-input").prop("value", null);
 }
 
 /**
