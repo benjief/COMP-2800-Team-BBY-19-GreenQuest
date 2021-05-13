@@ -89,7 +89,7 @@ function getStudents() {
 }
 
 /**
- * Updates the student's Student_Class attribute to the class they're being added to.
+ * Updates the student's Student_Class and Student_Educator attributes to the class they're being added to.
  * Also changes the "+" icon beside a student to a "-" icon and allows that student to be subsequently
  * removed from the class in question.
  */
@@ -119,7 +119,7 @@ function addStudent() {
 }
 
 /**
- * Updates the student's Student_Class attribute to null.
+ * Updates the student's Student_Class and Student_Educator attributes to null.
  * Also changes the "+" icon beside a student to a "-" icon and allows that student to be subsequently
  * added to the class in question.
  */
@@ -135,7 +135,8 @@ function removeStudent() {
         let studentToRemove = studentIDs[index];
         // Update the student's Student_Class attribute
         db.collection("Students").doc(studentToRemove).update({
-            Student_Class: null
+            Student_Class: null,
+            Student_Educator: null
         })
             .then(() => {
                 console.log("Student successfully added to this class!");

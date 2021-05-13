@@ -49,7 +49,7 @@ function getCurrentStudents() {
 }
 
 /**
- * Updates the student's Student_Class attribute to null.
+ * Updates the student's Student_Class and Student_Educator attributes to null.
  * Also changes the "+" icon beside a student to a "-" icon and allows that student to be subsequently
  * added to the class in question.
  */
@@ -63,9 +63,9 @@ function getCurrentStudents() {
         // Get "add" icon to call addStudent()
         $(event.target).attr("onclick", "addStudent()");
         let studentToRemove = studentIDs[index];
-        // Update the student's Student_Class attribute
         db.collection("Students").doc(studentToRemove).update({
-            Student_Class: null
+            Student_Class: null,
+            Student_Educator: null
         })
             .then(() => {
                 console.log("Student successfully added to this class!");
