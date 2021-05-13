@@ -26,8 +26,11 @@ function charCounter(field, field2, maxlimit) {
  */
 function checkNumUploaded() {
     const maxImages = 3;
-    if (uploadedImagePaths.length == 3) {
+    const message = "<div class='text-container'><p class='message'>You haven't uploaded any images</p></div>"
+    if (uploadedImagePaths.length == maxImages) {
         $("#upload-image-input").attr("disabled");
+    } else if (uploadedImagePaths.length == 0) {
+        $(".uploaded-images").append(message);
     } else {
         if ($("#uploaded-image-input").attr("disabled")) {
             $("#upload-image-input").removeAttr("disabled");
