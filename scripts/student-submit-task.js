@@ -2,6 +2,7 @@
 
 var userName;
 var className;
+var educatorName;
 var userID;
 
 // Create an empty array to store files added to this task
@@ -112,7 +113,7 @@ function getStorageRef(file) {
     return storageRef;
 }
 
-/* Get the current user's class name and ID from Firestore. */
+/* Get the current user's name, class name, educator name, and ID from Firestore. */
 function getCurrentStudent() {
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {
@@ -124,6 +125,7 @@ function getCurrentStudent() {
                     // Extract the current student's class name
                     userName = doc.data().Student_Name;
                     className = doc.data().Student_Class;
+                    educatorName = doc.data().Student_Educator;
                     userID = doc.id;
                     if (className == null) {
                         let message = "<div class='text-container'><p class='message'>You haven't uploaded any images</p></div>"
@@ -156,8 +158,20 @@ function addTaskToDB(imageURLs) {
         Task_Description: "Test",
         Task_Photos: imageURLs,
         Task_Notes: $("#task-notes").prop("value")
-    }) 
+    });
     // Write task to teacher's task collection
+    db.collection("Educators")
+        .where("Educator_Name", "==", educatorName)
+        .get()
+        .then(function (doc) {
+            let educatorID = doc.id
+            db.collection("Educators").doc(educatorID).collection("Tasks").doc(taskID).set({
+                Task_Submitter: userName,
+                Task_Description: "Test",
+                Task_Photos: imageURLs,
+                Task_Notes: $("#task-notes").prop("value")
+            })
+        })
 }
 
 
@@ -187,6 +201,7 @@ function onClickSubmit() {
 
 // Run function when document is ready 
 $(document).ready(function () {
+    getCurrentStudent();
     checkNumUploaded();
     processImage();
 });
