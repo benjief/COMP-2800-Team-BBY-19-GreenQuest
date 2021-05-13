@@ -1,70 +1,43 @@
-const taskRef = db.collection("instructions");
+const taskRef = db.collection("task");
 
 taskRef.doc("recycling").set({
-  title: "Recyling Plastic Wastes",
-  description: "Take your plastic wastes to any recycling facility",
-  difficulty: "medium",
-  link: "https://www.youtube.com/embed/6jQ7y_qQYUA",
+  taskName: "recycle",
+  instruction: "https://www.youtube.com/embed/6jQ7y_qQYUA",
   schoolAge: "middle",
   moreInfo: "https://www.youtube.com/embed/7UuUeoyYmxI"
 });
 
 taskRef.doc("walking").set({
-  title: "Walk Instead of Using a Car",
-  description: "Reduce carbon emission by walking to nearby places rather" +
-    "than driving",
-  difficulty: "easy",
-  link: "https://www.youtube.com/embed/6jQ7y_qQYUA",
-  schoolAge: "middle",
-  moreInfo: "https://www.youtube.com/embed/7UuUeoyYmxI"
+  taskName: "walking",
+  instruction: "https://www.youtube.com/embed/BWR3DxGHLD4",
+  schoolAge: "elementary", 
+  moreInfo: ""
 });
 
 taskRef.doc("plant_a_seed").set({
-  title: "Plant a Seed",
-  description: "In your local community or at home plant a seed of any" +
-  "kind of plant",
-  difficulty: "easy - medium",
-  link: "https://www.youtube.com/embed/BWR3DxGHLD4",
+  taskName: "plant_a_seed",
+  instruction: "https://www.youtube.com/embed/BWR3DxGHLD4",
   schoolAge: "middle",
   moreInfo: ""
 });
 
 taskRef.doc("plant_a_tree").set({
-  title: "Plant a Tree",
-  description: "Plant a tree in your local community or at home",
-  difficulty: "medium",
-  link: "https://www.youtube.com/embed/N7fIqlLB1eU",
+  taskName: "plant_a_tree",
+  instruction: "https://www.youtube.com/embed/N7fIqlLB1eU",
   schoolAge: "middle",
   moreInfo: ""
 });
 
 taskRef.doc("turn_off_light").set({
-  title: "Turn Off Any Unused light",
-  description: "Reduce electricity usage by turning off any" +
-  " unused light",
-  difficulty: "easy",
-  link: "https://www.youtube.com/embed/DfrHBy6YPj0",
+  taskName: "turn_off_light",
+  instruction: "https://www.youtube.com/embed/DfrHBy6YPj0",
   schoolAge: "elementary",
   moreInfo: ""
 });
 
-taskRef.doc("plant_based_diet").set({
-  title: "Plant Based Diet For a Day",
-  description: "Reduce meat on your plate and consume a plant based" +
-  " diet for the day",
-  difficulty: "medium",
-  link: "",
-  schoolAge: "middle",
-  moreInfo: ""
-});
-
-
-taskRef.doc("composting").set({
-  title: "Composting Your Left-Over Food Scraps",
-  description: "Compost your left-over food scraps rather than" +
-  " placing it directly into garbage",
-  difficulty: "easy",
-  link: "",
+taskRef.doc("turn_off").set({
+  taskName: "turn_off",
+  instruction: "https://www.youtube.com/embed/6xJU5jZgnJI",
   schoolAge: "elementary",
   moreInfo: ""
 });
