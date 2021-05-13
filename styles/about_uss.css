@@ -11,28 +11,64 @@ body {
     background-color: rgb(72, 143, 102);
 }
 
-.main-container {
+.Card-container {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
     gap: 0px 0px;
-    grid-template-areas:
-      "Title"
-      "Cards";
-  }
-  .Title {
-       grid-area: Title;
-     }
-  .Cards {
-       grid-area: Cards; 
-    }
+    grid-template-areas: 
+    "Title"
+    "Cards";
+    background-image: url('../images/background_pattern.png');
+    margin-top: 50px;
+    padding: 50px;
+    width: 18rem;
+    
+}
 
-    .grid-container {
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr 1fr;
-        gap: 0px 0px;
-      }
-      .Profile-Picture { grid-area: 1 / 1 / 2 / 2; }
-      .Name { grid-area: 2 / 1 / 3 / 2; }
-      .Description { grid-area: 3 / 1 / 4 / 2; }
+.Title {
+    grid-area: Title;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    word-wrap: break-word;
+}
+
+.Cards {
+    grid-area: Cards;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-template-areas: 
+    "Picture" 
+    "Name" 
+    "Description";
+}
+
+.Picture {
+    grid-area: Picture;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Name {
+    grid-area: Name;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Description {
+    grid-area: Description;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
