@@ -16,16 +16,13 @@ function getRandomInt(max) {
 //calling random index of the list.
 var myListOfTasks = [];
 var referenceTask;
+var docTask;
 
 myCollections.get().then((querySnapShot) => {
   querySnapShot.forEach((doc) => {
     myListOfTasks.push(doc.id);
   });
-  console.log(myListOfTasks);
-  count = myListOfTasks.length;
-  console.log(count);
-
-  var docTask = myListOfTasks[getRandomInt(count)];
+  docTask = myListOfTasks[getRandomInt(myListOfTasks.length)];
   console.log(docTask + "  yes?");
   referenceTask = myCollections.doc(docTask);
   taskCardLoadingFromFirebase();
