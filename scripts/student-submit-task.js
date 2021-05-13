@@ -1,5 +1,7 @@
 // JS for student-submit-task.js
 
+var className;
+
 // Create an empty array to store files added to this task
 var uploadedImageFiles = [];
 
@@ -26,7 +28,7 @@ function charCounter(field, field2, maxlimit) {
  */
 function checkNumUploaded() {
     const maxImages = 3;
-    const message = "<div class='text-container'><p class='message'>You haven't uploaded any images</p></div>"
+    let message = "<div class='text-container'><p class='message'>You haven't uploaded any images</p></div>"
     if (uploadedImageFiles.length == maxImages) {
         $("#upload-image-input").attr("disabled", "");
     } else if (uploadedImageFiles.length == 0) {
@@ -40,8 +42,6 @@ function checkNumUploaded() {
         }
     }
 }
-
-
 
 /**
  * CITE - Write this.
@@ -110,6 +110,27 @@ function getStorageRef(file) {
     return storageRef;
 }
 
+/* Get the current user's class name from Firestore. */
+function getCurrentStudent() {
+    firebase.auth().onAuthStateChanged(function (somebody) {
+        if (somebody) {
+            db.collection("Students")
+                .doc(somebody.uid)
+                // Read
+                .get()
+                .then(function (doc) {
+                    // Extract the current student's class name
+                    className = doc.data().Student_Class;
+                    if (className == null) {
+                        let message = "<div class='text-container'><p class='message'>You haven't uploaded any images</p></div>"
+                        $(".upload-images").append(message);
+                        $("#submit-button").remove();
+                    }
+                });
+        }
+    });
+}
+
 /**
  * CITE and write this
  */
@@ -123,7 +144,6 @@ function onClickSubmit() {
         storageRef.getDownloadURL()
             .then(function (url) {
                 console.log(url);
-                debugger.collection("")
             })
     }
 }
