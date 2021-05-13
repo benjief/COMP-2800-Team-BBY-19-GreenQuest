@@ -158,6 +158,12 @@ function addTaskToDB(imageURLs) {
         Task_Description: "Test",
         Task_Photos: imageURLs,
         Task_Notes: $("#task-notes").prop("value")
+    })
+    .then(() => {
+        console.log("Student task successfully written!");
+    })
+    .catch((error) => {
+        console.error("Error adding student task: ", error);
     });
     // Write task to teacher's task collection
     db.collection("Educators")
@@ -171,6 +177,12 @@ function addTaskToDB(imageURLs) {
                 Task_Photos: imageURLs,
                 Task_Notes: $("#task-notes").prop("value")
             })
+            .then(() => {
+                console.log("Educator task successfully written!");
+            })
+            .catch((error) => {
+                console.error("Error adding educator task: ", error);
+            });
         })
 }
 
