@@ -10,7 +10,7 @@
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
     <!-- Optional styles and scripts of your own -- REMEMBER TO ADD YOUR PAGE-SPECIFIC STYLESHEET HERE -->
-    <link rel="stylesheet" href="../styles/all-pages.css">
+    <link rel="stylesheet" href="../styles/task-page.css">
     <link rel="stylesheet" href="../styles/more-info-modal.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Mali&display=swap" rel="stylesheet">
@@ -70,11 +70,105 @@
                         </div>
                         <div class="desc-buttons">
                             <div class="Description">
-                                <p id="task-description">
+                                <p id="task-Description">
+                                    This iss where the title of this thing
+                                </p>
+                            </div>
+                            <div class="Accept"><button type="button" class="btn btn-outline-secondary">Accept Task</button>
+                            </div>
+                            <div class="done"><button type="button" class="btn btn-outline-secondary">Done</button>
+                            </div>
+                            <div class="how-to">
+                                <!-- how to guide: more-info-modal-btn trigger modal -->
+                                <button id="instructionBtn" type="button" class="more-info-modal-btn btn btn-primary"
+                                    data-bs-toggle="modal" data-bs-target="#how-to-modal">
+                                    Guide
+                                </button>
+                            </div>
+                            <div class="why">
+                                <!-- more-info-modal-btn trigger modal -->
+                                <button id="moreInfoBtn" type="button" class="more-info-modal-btn btn btn-primary"
+                                    data-bs-toggle="modal" data-bs-target="#more-info-modal">
+                                    What's good?
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="card">
+                    <img class="card-img-top"
+                        src="https://thedesignest.net/wp-content/uploads/2020/05/Woosh-Vivid-Library-of-Characters%E2%80%8B.jpg"
+                        alt="Card image cap">
+                    <div class="card-body">
+                        <hr>
+                        <div class="title-rate">
+                            <div class="title">
+                                <h3 id="task-title">
+                                    Title of this task
+                                </h3>
+                                <hr>
+                            </div>
+                            <div class="button">
+                                <h4 id="difficulty">
+                                    rating of the task
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="desc-buttons">
+                            <div class="Description">
+                                <p id="task-Description">
                                     This is where the title of this thing
                                 </p>
                             </div>
-                            <div class="Accept"><button type="button" class="btn btn-outline-secondary">Accept</button>
+                            <div class="Accept"><button type="button" class="btn btn-outline-secondary">Accept Task</button>
+                            </div>
+                            <div class="done"><button type="button" class="btn btn-outline-secondary">Done</button>
+                            </div>
+                            <div class="how-to">
+                                <!-- how to guide: more-info-modal-btn trigger modal -->
+                                <button id="instructionBtn" type="button" class="more-info-modal-btn btn btn-primary"
+                                    data-bs-toggle="modal" data-bs-target="#how-to-modal">
+                                    Guide
+                                </button>
+                            </div>
+                            <div class="why">
+                                <!-- more-info-modal-btn trigger modal -->
+                                <button id="moreInfoBtn" type="button" class="more-info-modal-btn btn btn-primary"
+                                    data-bs-toggle="modal" data-bs-target="#more-info-modal">
+                                    What's good?
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="card">
+                    <img class="card-img-top"
+                        src="https://thedesignest.net/wp-content/uploads/2020/05/Woosh-Vivid-Library-of-Characters%E2%80%8B.jpg"
+                        alt="Card image cap">
+                    <div class="card-body">
+                        <hr>
+                        <div class="title-rate">
+                            <div class="title">
+                                <h3 id="task-title">
+                                    Title of this task
+                                </h3>
+                                <hr>
+                            </div>
+                            <div class="button">
+                                <h4 id="difficulty">
+                                    rating of the task
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="desc-buttons">
+                            <div class="Description">
+                                <p id="task-Description">
+                                    This is where the title of this thing
+                                </p>
+                            </div>
+                            <div class="Accept"><button type="button" class="btn btn-outline-secondary">Accept Task</button>
                             </div>
                             <div class="done"><button type="button" class="btn btn-outline-secondary">Done</button>
                             </div>
@@ -154,8 +248,11 @@
     <!--------------------------------------------------------------------->
 
     <!-- more-info-page-modal -->
-    <script src="../scripts/more-info-data.js"></script>    
+    <script src="../scripts/more-info-data.js"></script>
+    <script src="../scripts/more-info-task-class-firebase.js"></script>
     <script src="../scripts/more-info-page.js"></script>
+    <script src="../scripts/tasks-task-page.js"></script>
+
 </body>
 
 </html>

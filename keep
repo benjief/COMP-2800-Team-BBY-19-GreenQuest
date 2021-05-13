@@ -1,0 +1,31 @@
+<div class="Cards">
+
+        <div class="Picture">
+            <img class="image-sizing" src="/images/benjie.png" alt="image of benjie">
+        </div>
+        <div class="Name">Giwoun</div>
+        <div class="Description">
+           
+        </div>
+    </div>
+    <div class="Cards">
+
+        <div class="Picture">
+            <img class="image-sizing" src="/images/benjie.png" alt="image of benjie">
+        </div>
+        <div class="Name">Gyephel</div>
+        <div class="Description">
+            
+        </div>
+    </div>
+    <div class="Cards">
+
+        <div class="Picture">
+            <img class="image-sizing" src="/images/benjie.png" alt="image of benjie">
+        </div>
+        <div class="Name">Samuela</div>
+        <div class="Description">
+           .
+        </div>
+
+        <div class="Description"> </div>
