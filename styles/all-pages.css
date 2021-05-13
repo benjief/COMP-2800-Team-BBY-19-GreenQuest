@@ -37,14 +37,15 @@ body {
 .heading-container {
     display: flex;
     grid-area: header;
-    font-size: 25pt;
+    font-family: 'Press Start 2P';
+    font-size: 20pt;
     font-weight: 600;
     justify-content: center;
     margin-bottom: 50px;
     margin-left: 5px;
     margin-right: 5px;
     text-align: center;
-    text-shadow: 0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white;
+    /* text-shadow: 0px 0px 2px white, 0px 0px 15px white; */
 }
 
 .page-heading {
