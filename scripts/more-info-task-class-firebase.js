@@ -1,9 +1,10 @@
 'use strict'
 
 class Task {
-  constructor(title, description, instruction, moreInfo) {
+  constructor(title, description, difficulty, instruction, moreInfo) {
     this.title = title;
     this.description = description;
+    this.difficulty = difficulty;
     this.instruction = instruction;
     this.moreInfo = moreInfo;
   }
@@ -27,13 +28,14 @@ var taskConverter = {
       return {
           title: task.title,
           description: task.description,
+          difficulty: task.difficulty,
           instruction: task.instruction,
           moreInfo: task.moreInfo
       };
   },
   fromFirestore: function(snapshot, options){
       const data = snapshot.data(options);
-      return new Task(data.title, data.description, data.instruction, data.moreInfo);
+      return new Task(data.title, data.description, data.difficulty, data.instruction, data.moreInfo);
   }
 };
 

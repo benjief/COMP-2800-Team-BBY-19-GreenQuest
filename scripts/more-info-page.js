@@ -1,9 +1,10 @@
 'use-strict'
 var inst = "instructions";
+var docTask = "walking"
 const collection = db.collection(inst);
-const recyclingRef = collection.doc("recycling");
+const referenceTask = collection.doc(docTask);
 
-recyclingRef.withConverter(taskConverter).get().then((doc) => {
+referenceTask.withConverter(taskConverter).get().then((doc) => {
   if (doc.exists) {
     var mytask = doc.data();
     $("#task-title").text(mytask.getTitle());
@@ -13,7 +14,7 @@ recyclingRef.withConverter(taskConverter).get().then((doc) => {
 
     //how-to-modal actions
     $('#how-to-modal').on('show.bs.modal', function() {
-      recyclingRef.get().then((doc) => {
+      referenceTask.get().then((doc) => {
             if (doc.exists) {
               var src = doc.data().link;
               $('iframe').attr('src', src);
@@ -34,7 +35,7 @@ recyclingRef.withConverter(taskConverter).get().then((doc) => {
 
 // how-to-modal actions.
 $('#how-to-modal').on('show.bs.modal', function() {
-  recyclingRef.get().then((doc) => {
+  referenceTask.get().then((doc) => {
         if (doc.exists) {
           var src = doc.data().link;
           $('iframe').attr('src', src);
@@ -47,7 +48,7 @@ $('#how-to-modal').on('show.bs.modal', function() {
 
 //more-info-modal actions.
 $('#more-info-modal').on('show.bs.modal',function() {
-  recyclingRef.get().then((doc) => {
+  referenceTask.get().then((doc) => {
     if (doc.exists) {
       var src = doc.data().moreInfo;
       $('iframe').attr('src', src);
