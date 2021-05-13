@@ -1,6 +1,8 @@
 // JS for student-submit-task.js
 
+var userName;
 var className;
+var userID;
 
 // Create an empty array to store files added to this task
 var uploadedImageFiles = [];
@@ -110,7 +112,7 @@ function getStorageRef(file) {
     return storageRef;
 }
 
-/* Get the current user's class name from Firestore. */
+/* Get the current user's class name and ID from Firestore. */
 function getCurrentStudent() {
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {
@@ -120,7 +122,9 @@ function getCurrentStudent() {
                 .get()
                 .then(function (doc) {
                     // Extract the current student's class name
+                    userName = doc.data().Student_Name;
                     className = doc.data().Student_Class;
+                    userID = doc.id;
                     if (className == null) {
                         let message = "<div class='text-container'><p class='message'>You haven't uploaded any images</p></div>"
                         $(".upload-images").append(message);
@@ -132,11 +136,40 @@ function getCurrentStudent() {
 }
 
 /**
+ * CITE and write this 
+ * (https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript?page=1&tab=votes#tab-top)
+ */
+function pseudorandomID() {
+    let generatedID = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+    return generatedID;
+}
+
+/**
+ * Write this
+ * 
+ * @param {*} imageURLs 
+ */
+function addTaskToDB(imageURLs) {
+    // Write task to student's task collection
+    db.collection("Students").doc(userID).collection("Tasks").doc(taskID).set({
+        Task_Submitter: userName,
+        Task_Description: "Test",
+        Task_Photos: imageURLs,
+        Task_Notes: $("#task-notes").prop("value")
+    }) 
+    // Write task to teacher's task collection
+}
+
+
+/**
  * CITE and write this
  */
 function onClickSubmit() {
+    let imageURLs = [];
+    // Generate image URLs and add them to an array
     for (var i = 0; i < uploadedImageFiles.length; i++) {
         let storageRef = getStorageRef(uploadedImageFiles[i]);
+        let taskID = pseudorandomID();
         storageRef.put(file)
             .then(function () {
                 console.log('Uploaded to Cloud storage');
@@ -144,8 +177,12 @@ function onClickSubmit() {
         storageRef.getDownloadURL()
             .then(function (url) {
                 console.log(url);
+                imageURLs.push(url);
             })
     }
+    /* Create task documents in the student's and their teacher's task collection 
+    (include array of image URLs as an attribute) */
+    addTaskToDB(imageURLs);
 }
 
 // Run function when document is ready 
