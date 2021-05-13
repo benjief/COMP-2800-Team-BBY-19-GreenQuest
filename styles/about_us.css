@@ -35,6 +35,8 @@ body {
     background: rgb(255, 255, 255);
     padding: 20px;
     border-radius: 25px;
+    text-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 h1 {
     text-align: center;
@@ -43,11 +45,11 @@ h2{
     text-align: center;
 }
 .card {
-    width: 300px;
-    max-width: 300px;
+    width: 400px;
+    max-width: 400px;
     min-height: 490px;
     position: relative;
-    text-align: center;
+    text-align: justify;
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
@@ -74,6 +76,9 @@ h2{
     color: #394f63;
     font-weight: bold;
     font-size: 18px;
+    text-align: center;
+    font-family: 'Press Start 2P', Arial, Helvetica, sans-serif;
+    text-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 
 .description {
