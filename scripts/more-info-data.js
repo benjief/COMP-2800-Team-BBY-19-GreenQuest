@@ -1,6 +1,3 @@
-
-
-
 const taskRef = db.collection("task");
 
 taskRef.doc("recycling").set({
@@ -45,3 +42,41 @@ taskRef.doc("turn_off").set({
   moreInfo: ""
 });
 
+taskRef.doc("buy_local_products").set({
+  title: "Buy Things Local",
+  description: "Reduce product transportation carbon emission" +
+  " by purchasing locally grown or manufactured products.",
+  difficulty: "easy - medium",
+  link: "",
+  schoolAge: "elementary",
+  moreInfo: ""
+});
+
+taskRef.doc("public_transportation").set({
+  title: "Use Public Transportation Instead of Driving",
+  description: "Instead of Driving, use public transportation to reduce" +
+  " carbon emission",
+  difficulty: "easy",
+  link: "",
+  schoolAge: "elementary",
+  moreInfo: ""
+});
+
+taskRef.doc("conserve_water").set({
+  title: "Reduce Water Usage",
+  description: "Reduce your water usage for a day",
+  difficulty: "easy",
+  link: "",
+  schoolAge: "elementary",
+  moreInfo: ""
+});
+
+taskRef.doc("conserve_water").set({
+  title: "Change to LED Bulbs",
+  description: "Use LED Bulbs instead of incadescent to reduce" +
+  " electricity usage.",
+  difficulty: "easy",
+  link: "",
+  schoolAge: "elementary",
+  moreInfo: ""
+});
