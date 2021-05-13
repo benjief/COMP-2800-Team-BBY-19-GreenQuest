@@ -28,6 +28,9 @@ function populateclassList() {
     }
 }
 
+/**
+ * Write this
+ */
 function listClasses() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
