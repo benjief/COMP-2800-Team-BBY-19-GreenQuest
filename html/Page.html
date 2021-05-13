@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>GreenQuest - Task Page</title>
+    <title>GreenQuest - PAGE TITLE HERE</title>
 
     <!-- Bootstrap for Mobile-first, and JQuery -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -57,15 +57,15 @@
                         <hr>
                         <div class="title-rate">
                             <div class="title">
-                                <h3>Title of this task</h3>
+                                <h3 id="task-title">Title of this task</h3>
                                 <hr>
                             </div>
                             <div class="button">
-                                <h4> rating of the task</h4>
+                                <h4 id="task-rating"> rating of the task</h4>
                             </div>
                         </div>
                         <div class="desc-buttons">
-                            <div class="Description">This is where the title of this thing</div>
+                            <div id="task-description" class="Description">This is where the title of this thing</div>
                             <div class="Accept"><button type="button" class="btn btn-outline-secondary">Accept</button>
                             </div>
                             <div class="done"><button type="button" class="btn btn-outline-secondary">Done</button>
@@ -147,6 +147,7 @@
 
     <!-- more-info-page-modal -->
     <script src="../scripts/more-info-data.js"></script>
+    <script src="../scripts/more-info-task-class-firebase.js"></script>
     <script src="../scripts/more-info-page.js"></script>
 
 </body>

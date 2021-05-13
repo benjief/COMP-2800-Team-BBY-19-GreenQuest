@@ -1,7 +1,38 @@
 'use-strict'
-const recyclingRef = db.collection("instructions").doc("recycling");
+var inst = "instructions";
+const collection = db.collection(inst);
+const recyclingRef = collection.doc("recycling");
 
-//how-to-modal actions.
+recyclingRef.withConverter(taskConverter).get().then((doc) => {
+  if (doc.exists) {
+    var mytask = doc.data();
+    $("#task-title").text(mytask.getTitle());
+    $("#task-rating").text(mytask.getDifficulty());
+    $("#task-description").text(mytask.getDescription());
+    
+
+    //how-to-modal actions
+    $('#how-to-modal').on('show.bs.modal', function() {
+      recyclingRef.get().then((doc) => {
+            if (doc.exists) {
+              var src = doc.data().link;
+              $('iframe').attr('src', src);
+              console.log("success");
+            }
+          }).catch(function(error) {
+            console.log("Got an error: ", error);
+          });
+    })
+
+  } else {
+    console.log("No such document");
+  }}).catch((error) => {
+    console.log("Error getting document: ", error);
+  });
+
+
+
+// how-to-modal actions.
 $('#how-to-modal').on('show.bs.modal', function() {
   recyclingRef.get().then((doc) => {
         if (doc.exists) {
