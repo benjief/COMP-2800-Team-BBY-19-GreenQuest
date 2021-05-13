@@ -12,7 +12,7 @@
 
     <!-- Optional styles and scripts of your own -->
     <link rel="stylesheet" href="/styles/all-pages.css">
-    <link rel="stylesheet" href="/styles/student-home.css">
+    <link rel="stylesheet" href="/styles/student-submit-task.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Mali&display=swap" rel="stylesheet">
 </head>
@@ -52,49 +52,57 @@
             <p class="page-heading">Submit your task</p>
         </div>
         <div class="card mb-3" id="main-content-card">
-            <!-- <div class="card-text-container">
-                <p class="card-text">Please choose from the following options:</p>
-            </div> -->
-            <div class="upload-image-container">
-                <div class="text-container">
+            <div class="image-container">
+                <div class="text-container" id="uploaded-images-header">
                     <p>Uploaded Images</p>
                 </div>
-                <div class="thumbnail-container">
-                    <img id="task-photo-1">
-                </div>
+                <ul>
+                    <li><a href="#">uploaded-image-1</a></li>
+                    <li><a href="#">uploaded-image-2</a></li>
+                    <li><a href="#">uploaded-image-3</a></li>
+                </ul>
                 <!-- CITE SOURCE: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file -->
-                <div class="container text-center py-3">
+                <div class="container text-center py-3" id="upload-image-container">
                     <!-- CITE SOURCE: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/accept -->
-                    <input type="file" id="uploaded-task-photo-1" accept="image/*" />
-                </div>
-                <div class="task-notes-container">
-                    <div class="text-container">
-                        <p>Task Notes</p>
-                        <div id="input-container">
-                            <input type="text" id="task-notes" maxlength="300" placeholder="Enter task notes"
-                                onkeyup="charCounter(this,'counter',300)"></input>
-                        </div>
-                        <div id="characters-remaining-container">
-                            <p id="characters-remaining">Characters Remaining:</p>
-                            <input disabled id="counter" maxlength="3" size="3" value="300">
-                        </div>
-                    </div>
+                    <input type="file" id="upload-task-input" accept="image/*" />
                 </div>
             </div>
-
-        </div>
-        <div class="card-button-container" id="card-button-container-1">
-            <a class="button" id="my-class-button" href="student-my-class.html">My Class</a>
-        </div>
-        <div class="card-button-container" id="card-button-container-2">
-            <a class="button" id="quests-button" href="#">Quests</a>
-        </div>
-        <div class="card-button-container" id="card-button-container-3">
-            <a class="button" id="leaderboard-button" href="/html/student-leaderboard.html">Leaderboard</a>
+            <div class="task-notes-container">
+                <div class="text-container">
+                    <p>Task Notes</p>
+                </div>
+                <div id="input-container">
+                    <textarea class="form-control" id="task-notes" rows="5" maxlength="300"
+                        placeholder="Enter your notes" onkeyup="charCounter(this,'counter',300);"></textarea>
+                </div>
+                <div id="characters-remaining-container">
+                    <p id="characters-remaining">Characters Remaining:</p>
+                    <input disabled id="counter" maxlength="3" size="3" value="300">
+                </div>
+            </div>
+            <div class="card-button-container" id="card-button-container-1">
+                <a class="button" id="submit-button" href="#" onclick="onClickSubmit()">Submit</a>
+            </div>
+            <div class="card-button-container" id="card-button-container-2">
+                <a class="button" id="home-button" href="#">Home</a>
+            </div>
+            <div class="feedback-placeholder">
+                <p id="feedback"></p>
+            </div> 
         </div>
     </div>
 
     </div>
+
+    </div>
+
+
+
+
+
+
+
+
 
     <!----------------------------------------------->
     <!-- JS: Boostrap, JQuery, Firebase, API related    -->
@@ -114,7 +122,7 @@
     <!--------------------------------------------------------------------->
     <!-- JS files: Your own JavaScript functions included here    -->
     <!--------------------------------------------------------------------->
-    <script src="/scripts/student-submit-task.js"></script>
+    <!-- <script src="/scripts/student-submit-task.js"></script> -->
 
 </body>
 

@@ -1,24 +1,98 @@
-/** CSS for educator-new-home.html */
-.page-container {
-    margin-top: 50px;
-}
-
+/** CSS for educator-create-class.html */
 #main-content-card {
+    grid-template-columns: 100%;
     grid-template-areas: 
-        "card-text"
-        "buttons-1"
-        "buttons-2"
-        "buttons-3";
+        "images"
+        "input"
+        "submit"
+        "home";
+    align-items: center;
 }
 
-.card-text-container {
-    margin-top: 20px;
-    margin-bottom: 40px;
-    text-align: center;
+.image-container {
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    grid-area: images;
+    margin-top: 60px;
+    width: 90%;
+    border: 2px solid #ff80ee;
+    border-style: dashed;
+    border-radius: 10px;
+    justify-self: center;
 }
 
-.card-text {
+.text-container {
+    display: flex;
+    justify-content: center;
+    height: 30px;
+}
+
+.text-container p {
+    display: flex;
     height: 100%;
+    align-items: center;
+    font-size: 15pt;
+    margin: 0;
+}
+
+#uploaded-images-header {
+    margin-top: 20px;
+}
+
+ul {
+    text-align: center;
+    padding: 0;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+li {
+    list-style: none;
+}
+
+#upload-task-input {
+    width: 70%;
+    font-size: 10pt;
+    margin-bottom: 15px;
+}
+
+.task-notes-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    grid-area: input;
+    margin-top: 30px;
+}
+
+#input-container {
+    display: flex;
+    justify-content: center;
+}
+
+#task-notes {
+    width: 90%;
+}
+
+#characters-remaining-container {
+    display: flex;
+    margin-left: 20px;
+    font-size: 10pt;
+    grid-area: chars-remaining;
+}
+
+#characters-remaining {
+    display: flex;
+    height: 100%;
+}
+
+#counter {
+    display: flex;
+    border: none;
+    background-color: transparent;
+    margin-left: 1px;
+    height: 21px;
 }
 
 .card-button-container {
@@ -30,24 +104,39 @@
     border-radius: 10px;
     font-size: 15pt;
     justify-self: center;
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 #card-button-container-1 {
-    grid-area: buttons-1;
+    grid-area: submit;
 }
 
 #card-button-container-2 {
-    grid-area: buttons-2;
+    grid-area: home;
 }
 
-#card-button-container-3 {
-    grid-area: buttons-3;
-    margin-bottom: 35px;
-}
-
-.button {
+#submit-button {
     display: flex;
     height: 100%;
     align-items: center;
+}
+
+#home-button {
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+
+.feedback-placeholder {
+    display: flex;
+    justify-content: center;
+    grid-area: feedback;
+    height: 70px;
+}
+
+#feedback {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    text-align: center;
 }

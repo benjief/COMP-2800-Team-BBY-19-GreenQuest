@@ -32,7 +32,6 @@ body {
 /* Page container and heading styling */
 .page-container {
     margin-top: 50px;
-    
 }
 
 .heading-container {
@@ -59,7 +58,7 @@ body {
     grid-area: content-card;
     margin-top: 10px;
     width: 90%;
-    max-width: 300px;
+    max-width: 350px;
     margin-left: auto;
     margin-right: auto;
     overflow: hidden;
@@ -67,7 +66,7 @@ body {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 40px;
     background: url('/img/background_pattern.png');
-    /* background-color: rgb(255, 255, 78); */
+    /* background-color: rgb(255, 255, 110); */
 }
 
 .card-text-container {
