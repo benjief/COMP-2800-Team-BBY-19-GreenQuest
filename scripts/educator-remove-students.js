@@ -14,8 +14,9 @@ $(".page-heading").html("Remove Students from " + className);
  */
 function populateStudentList() {
     if (currentStudents.length == 0) {
-        let message = "<p class='message'>There are no students to remove!</p>"
+        let message = "<div class='text-container'><p class='message'>There are no students to remove!</p></div>"
         $(".student-list").append(message);
+        $(".student-list").css({ width: "90%", display: "flex", justifyContent: "center" });
         $("#submit-button").html("Back");
     } else {
         for (var i = 0; i < currentStudents.length; i++) {

@@ -34,8 +34,9 @@ function getCurrentUser() {
  */
 function populateStudentList() {
     if (studentNames.length == 0) {
-        let message = "<p class='message'>There are no more students to add!</p>"
+        let message = "<div class='text-container'><p class='message'>There are no more students to add!</p></div>"
         $(".student-list").append(message);
+        $(".student-list").css({ width: "90%", display: "flex", justifyContent: "center" });
         $("#submit-button").html("Back");
     } else {
         for (var i = 0; i < studentNames.length; i++) {
