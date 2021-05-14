@@ -48,6 +48,22 @@ myCollections.get().then((querySnapShot) => {
 });
 
 
+/*
+Original code from stackoverflow.
+modified by Giwoun Bae on May 13, 2021
+src: https://stackoverflow.com/questions/1987524/turn-a-number-into-star-rating-display-using-jquery-and-css
+*/
+$.fn.stars = function() {
+  return $(this).each(function() {
+      const rating = $(this).data("rating");
+      const numStars = $(this).data("numStars");
+      const fullStar = ' <i class="fas fa-thumbs-up"></i>'.repeat(Math.ceil(rating));
+      const noStar = ' <i class="far fa-thumbs-up"></i>'.repeat(Math.floor(numStars-rating));
+      $(this).html(`${fullStar}${noStar}`);
+  });
+}
+$('.stars').stars();
+
 
 function taskCardLoadingFromFirebase() {
   referenceTask.withConverter(taskConverter).get().then((doc) => {
