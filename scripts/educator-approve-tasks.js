@@ -22,7 +22,7 @@ function populateTaskList() {
         for (var i = 0; i < taskIDs.length; i++) {
             let taskContainer = "<div class='task-container' id='task-container-" + i + "'></div>";
             $(".task-list").append(taskContainer);
-            let taskName = "<p class='task-name' id='task-name-" + i + "' + ' onclick='onSelectTask()'>Task " + (i + 1) + "</p>";
+            let taskName = "<p class='task-name' id='" + taskIDs[i] + "' + ' onclick='onSelectTask()'>Task " + (i + 1) + "</p>";
             $("#task-container-" + i).append(taskName);
         }
     }
@@ -71,8 +71,9 @@ function getTasks() {
 function onSelectTask() {
     $(document).click(function (event) {
         let taskName = $(event.target).html();
+        let  taskID = $(event.target).attr("id");
         setTimeout(function () {
-            location.href = "educator-manage-task.html?taskname=" + taskName;
+            location.href = "educator-manage-task.html?taskname=" + taskName + "&taskid=" + taskID;
         }, 500);
     });
 }

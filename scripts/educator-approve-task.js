@@ -1,79 +1,64 @@
 
 // JS for educator-approve-task.js
 
-// Pull class name from URL and display it in the DOM
+// Pull class name and ID from URL
 const parsedUrl = new URL(window.location.href);
 var taskName = parsedUrl.searchParams.get("taskname");
+var taskID = parsedUrl.searchParams.get("taskid");
 $(".page-heading").html(taskName);
 
-var userName;
-var taskID;
-// var className;
-// var userID;
-// var educatorName;
-// var educatorID;
+var userID;
+var taskSubmitter = null;
+var taskDescription = null;
+var taskNotes = null;
+var taskPoints = 0;
+var taskApproved = false;
 
 // Create an empty array to store URLs of images attached to this task
 var imageURLs = [];
 
-
-/**
- * Write this
- */
-function checkNumUploaded() {
-    const maxImages = 3;
-    if (className) {
-        let message = "<div class='text-container'><p class='message'>You haven't uploaded any images</p></div>"
-        if (uploadedImageFiles.length == maxImages) {
-            $("#upload-image-input").attr("disabled", "");
-        } else if (uploadedImageFiles.length == 0) {
-            $(".uploaded-images").append(message);
-        } else {
-            $("#upload-image-input").removeAttr("disabled");
-            if ($(".message")) {
-                $(".message").remove();
-            }
+/* Get the current user's ID from Firestore. */
+function getCurrentUser() {
+    firebase.auth().onAuthStateChanged(function (somebody) {
+        if (somebody) {
+            db.collection("Educators")
+                .doc(somebody.uid)
+                // Read
+                .get()
+                .then(function (doc) {
+                    // Extract the current user's ID
+                    userID = doc.id;
+                    pullTaskInfo();
+                });
         }
-    }
-}
-/**
- * Write this.
- */
-function storeTemporaryImage(image) {
-    $("#" + image.name).attr("data-target", "modalCenter");
-    let storageRef = getStorageRef(image, true);
-    storageRef.put(image)
-        .then(function () {
-            console.log('Uploaded to temp Cloud storage');
-            storageRef.getDownloadURL()
-                .then(function (url) {
-                    console.log(url);
-                    image.tempURL = url;
-                })
-        });
-}
-
-/**
- * CITE - Write this.
- */
-function processImage() {
-    const imageInput = document.getElementById("upload-image-input");
-    imageInput.addEventListener('change', function (event) {
-        console.log(event.target.files[0]);
-        uploadedImageFiles.push(event.target.files[0]);
-        storeTemporaryImage(event.target.files[0]);
-        addNamesToDOM();
     });
 }
 
 /**
- * Write this
+ * Write this.
  */
-function resetDOM() {
-    var uploadedImages = document.getElementsByClassName('list-item');
-    while (uploadedImages[0]) {
-        uploadedImages[0].parentNode.removeChild(uploadedImages[0]);
-    }
+function pullTaskInfo() {
+    db.collection("Educators").doc(userID).collection("Tasks").doc(taskID)
+        .get()
+        .then((doc) => {
+            taskSubmitter = doc.data().Task_Submitter;
+            taskDescription = doc.data().Task_Description;
+            taskNotes = doc.data().Task_Notes;
+            imageURLs = doc.data().Task_Photos;
+            pupulateDOM();
+        })
+        .catch((error) => {
+            console.log("Error getting task: ", error);
+        });
+}
+
+function populateDOM() {
+    let taskSubmitter = "<p id='task-submitter'>" + taskSubmitter + "</p>";
+    $("#task-submitter-container").append(taskSubmitter);
+    let taskDescription = "<p id='task-description'>" + taskDescription + "</p>";
+    $("#task-description-container").append(taskDescription);
+    let taskNotes = "<p id='task-notes'>" + taskNotes + "</p>";
+    $("#task-notes-container").append(taskNotes);
 }
 
 /**
@@ -106,21 +91,6 @@ function showPreview(element) {
     }, 1000);
 }
 
-/**
- * Write this
- */
-function addNamesToDOM() {
-    resetDOM();
-    for (var i = 0; i < uploadedImageFiles.length; i++) {
-        let imageDOM = "<li class='list-item'><a class='uploaded-image' id='"
-            + uploadedImageFiles[i].name + "' data-bs-toggle='modal' data-bs-target='#imagePreview' onclick='showPreview(this)'>"
-            + uploadedImageFiles[i].name + "</a><img src='/img/remove_icon.png' class='remove-icon' id='delete-"
-            + uploadedImageFiles[i].name + "' onclick='removeImage(this)'></li>";
-        $(".uploaded-images").append(imageDOM);
-    }
-    checkNumUploaded();
-    $("#upload-image-input").prop("value", null);
-}
 
 /**
  * Write this
@@ -155,35 +125,7 @@ function getStorageRef(file, temp) {
     return storageRef;
 }
 
-/* Get the current user's name, class name, educator name, and ID from Firestore. */
-function getCurrentStudent() {
-    firebase.auth().onAuthStateChanged(function (somebody) {
-        if (somebody) {
-            db.collection("Students")
-                .doc(somebody.uid)
-                // Read
-                .get()
-                .then(function (doc) {
-                    // Extract the current student's class name
-                    userName = doc.data().Student_Name;
-                    className = doc.data().Student_Class;
-                    educatorName = doc.data().Student_Educator;
-                    userID = doc.id;
-                    if (className == null) {
-                        let message = "<div class='text-container'><p class='message'>You haven't been added to a class yet</p></div>"
-                        $(".uploaded-images").append(message);
-                        $("#card-button-container-1").remove();
-                        $("#upload-image-input").attr("disabled", "");
-                        $("#task-notes").attr("disabled", "");
-                        $("#task-notes").attr("placeholder", "Ask your teacher to add you to their class to start getting tasks");
-                    }
-                    checkNumUploaded();
-                    getEducatorID();
-                    processImage();
-                });
-        }
-    });
-}
+
 
 /**
  * CITE and write this 
