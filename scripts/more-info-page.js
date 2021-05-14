@@ -48,21 +48,6 @@ myCollections.get().then((querySnapShot) => {
 });
 
 
-/*
-Original code from stackoverflow.
-modified by Giwoun Bae on May 13, 2021
-src: https://stackoverflow.com/questions/1987524/turn-a-number-into-star-rating-display-using-jquery-and-css
-*/
-$.fn.stars = function() {
-  return $(this).each(function() {
-      const rating = $(this).data("rating");
-      const numStars = $(this).data("numStars");
-      const fullStar = ' <i class="fas fa-thumbs-up"></i>'.repeat(Math.ceil(rating));
-      const noStar = ' <i class="far fa-thumbs-up"></i>'.repeat(Math.floor(numStars-rating));
-      $(this).html(`${fullStar}${noStar}`);
-  });
-}
-$('.stars').stars();
 
 
 function taskCardLoadingFromFirebase() {
@@ -70,7 +55,7 @@ function taskCardLoadingFromFirebase() {
     if (doc.exists) {
       var mytask = doc.data();
       $("#task-title").text(mytask.getTitle());
-      $("#difficulty").text(mytask.getDifficulty());
+      $("#difficulty").html('Difficulty: ' + mytask.getDifficultyStars(5));
       $("#task-description").text(mytask.getDescription());
       console.log("converting successful.");
     } else {
@@ -85,7 +70,7 @@ function taskCardLoadingFromFirebase2() {
     if (doc.exists) {
       var mytask = doc.data();
       $("#task-title2").text(mytask.getTitle());
-      $("#difficulty2").text(mytask.getDifficulty());
+      $("#difficulty2").html('Difficulty: ' + mytask.getDifficultyStars(5));
       $("#task-description2").text(mytask.getDescription());
       console.log("converting successful.");
     } else {
@@ -100,7 +85,7 @@ function taskCardLoadingFromFirebase3() {
     if (doc.exists) {
       var mytask = doc.data();
       $("#task-title3").text(mytask.getTitle());
-      $("#difficulty3").text(mytask.getDifficulty());
+      $("#difficulty3").html('Difficulty: ' + mytask.getDifficultyStars(5));
       $("#task-description3").text(mytask.getDescription());
       console.log("converting successful.");
     } else {
