@@ -30,6 +30,10 @@ body {
     width: 22rem;
 }
 
+.card-img-top {
+    border-radius: 25px;
+}
+
 .title-rate {
     display: grid;
     grid-template-columns: 1fr;
@@ -65,14 +69,13 @@ body {
 
 .Description {
     grid-area: Description;
+    font-family: 'Press Start 2P', Arial, Helvetica, sans-serif;
+    font-size: small;
     padding: 10px;
     border-radius: 2vh;
     border-color: rgb(72, 143, 102);
     border-width: 3px;
     border-style: solid;
-
-
-
 }
 
 .Accept {
@@ -83,7 +86,7 @@ body {
     justify-content: center;
     width: max-content;
     height: max-content;
-    margin-left: 10px;
+    /* margin-left: 10px; */
     
 }
 
