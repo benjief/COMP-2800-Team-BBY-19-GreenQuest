@@ -84,7 +84,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
 }
 
 .done {
@@ -124,6 +124,7 @@
         left: 0;
         text-align: center;
     }
+}
 
 /* Body styling */
 body {
@@ -136,7 +137,7 @@ body {
 /* Page container and heading styling */
 .page-container {
     margin-top: 50px;
-    
+
 }
 
 .heading-container {
