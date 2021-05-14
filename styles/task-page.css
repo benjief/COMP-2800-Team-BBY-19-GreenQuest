@@ -1,0 +1,147 @@
+body {
+    background-image: url('../images/background_clouds.png');
+}
+
+.navbar-brand {
+    font-family: 'Press Start 2P', Arial, Helvetica, sans-serif;
+    font-size: 13pt;
+}
+
+.navbar {
+    background-color: rgb(72, 143, 102);
+}
+
+.main-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.task-page {
+    display: inline-flex;
+    background-image: url('../images/background_pattern.png');
+    padding: 50px;
+    border-radius: 25px;
+}
+
+.card {
+    border-radius: 25px;
+    width: 22rem;
+}
+
+.title-rate {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+        "title"
+        "button";
+}
+
+.title {
+    grid-area: title;
+    font-family: 'Press Start 2P', Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+}
+
+.button {
+    grid-area: button;
+}
+
+.desc-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    gap: 15px 15px;
+    grid-template-areas:
+        "Description Description Description Description Description Description"
+        "Description Description Description Description Description Description"
+        "how-to how-to how-to how-to how-to how-to"
+        "why why why why why why"
+        "Accept Accept Accept done done done";
+}
+
+.Description {
+    grid-area: Description;
+    padding: 10px;
+    border-radius: 2vh;
+    border-color: rgb(72, 143, 102);
+    border-width: 3px;
+    border-style: solid;
+
+
+
+}
+
+.Accept {
+    grid-area: Accept;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    height: max-content;
+    margin-left: 10px;
+    
+}
+
+.done {
+    grid-area: done;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    height: max-content;
+    margin-left: 30px;
+    
+}
+
+.how-to {
+    grid-area: how-to;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.why {
+    grid-area: why;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-outline-secondary {
+    font-family: 'Press Start 2P', Arial, Helvetica, sans-serif;
+    background-color: white;
+    border-radius: 2vh;
+    border-color: rgb(72, 143, 102);
+    color: rgb(72, 143, 102);
+    font-size: 10pt;
+    border-width: 3px;
+    
+}
+
+
+/* We can change the media query width later */
+@media screen and (max-width: 500px) {
+    .navbar-brand.abs {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        text-align: center;
+    }
+   
+    .done {
+        margin-left: 40px;
+}
+.task-page {
+        padding: 20px;
+       
+    }
+    .card {
+        border-radius: 25px;
+        width: 18rem;
+    }
+}
