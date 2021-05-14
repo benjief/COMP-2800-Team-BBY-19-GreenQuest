@@ -40,7 +40,8 @@ border: none;
         "task-points"
         "uploaded-images"
         "approve"
-        "reject";
+        "reject"
+        "feedback";
     align-items: center;
 }
 
@@ -59,6 +60,10 @@ border: none;
     display: flex;
     height: 100%;
     align-items: flex-end
+}
+
+.text-container :nth-child(2) {
+    align-items: flex-start;
 }
 
 #task-submitter-container {
@@ -93,6 +98,20 @@ input {
     grid-area: uploaded-images;
 }
 
+.page-container ul {
+    /* text-align: center; */
+    margin-bottom: 10px;
+    width: 80%;
+    align-self: center;
+    font-size: 12pt;
+    padding: 0;
+}
+
+.page-container li {    
+    list-style: none;
+    margin-bottom: 5px;
+}
+
 .card-button-container {
     display: flex;
     height: 50px;
@@ -124,4 +143,20 @@ input {
     display: flex;
     height: 100%;
     align-items: center;
+}
+
+.feedback-placeholder {
+    display: flex;
+    justify-content: center;
+    grid-area: feedback;
+    height: 70px;
+}
+
+#feedback {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    text-align: center;
+    font-weight: 600;
+    color: green;
 }

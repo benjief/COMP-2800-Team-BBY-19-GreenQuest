@@ -237,7 +237,8 @@ function addTaskToDB(imageURLs) {
         Submitter_ID: userID,
         Task_Description: "Test",
         Task_Photos: imageURLs,
-        Task_Notes: $("#task-notes").prop("value")
+        Task_Notes: $("#task-notes").prop("value"),
+        Task_Approved: false
     })
         .then(() => {
             console.log("Student task successfully written!");
@@ -248,6 +249,7 @@ function addTaskToDB(imageURLs) {
     // Write task to teacher's task collection
     db.collection("Educators").doc(educatorID).collection("Tasks").doc(taskID).set({
         Task_Submitter: userName,
+        Submitter_ID: userID,
         Task_Description: "Test",
         Task_Photos: imageURLs,
         Task_Notes: $("#task-notes").prop("value"),

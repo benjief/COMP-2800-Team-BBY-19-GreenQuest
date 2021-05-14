@@ -10,9 +10,9 @@ var currentUser = null;
  */
 function populateTaskList() {
     if (taskIDs.length == 0) {
-        let message = "<div class='text-container><p class='message'>You haven't got any tasks to approve.</p></div>"
+        let message = "<div class='text-container'><p class='message'>You haven't got any tasks to approve.</p></div>"
         $(".task-list").append(message);
-        $(".task-list").css({ width: "90%", display: "flex", justifyContent: "center" });
+        $(".task-list").css({ height: "150px", width: "90%", display: "flex", justifyContent: "center", justifySelf: "center"});
         let backButtonContainer = "<div class='card-button-container'></div>";
         $(".task-list").append(backButtonContainer);
         let backButton = "<a class='button' id='back-button' onclick='onClickBack()'>Back</a>";
@@ -22,7 +22,7 @@ function populateTaskList() {
         for (var i = 0; i < taskIDs.length; i++) {
             let taskContainer = "<div class='task-container' id='task-container-" + i + "'></div>";
             $(".task-list").append(taskContainer);
-            let taskName = "<p class='task-name' id='task-name-" + i + "' + ' onclick='onSelectTask()'>Task " + (i + 1) + "</p>";
+            let taskName = "<p class='task-name' id='" + taskIDs[i] + "' + ' onclick='onSelectTask()'>Task " + (i + 1) + "</p>";
             $("#task-container-" + i).append(taskName);
         }
     }
@@ -71,8 +71,9 @@ function getTasks() {
 function onSelectTask() {
     $(document).click(function (event) {
         let taskName = $(event.target).html();
+        let  taskID = $(event.target).attr("id");
         setTimeout(function () {
-            location.href = "educator-manage-task.html?taskname=" + taskName;
+            location.href = "educator-approve-task.html?taskname=" + taskName + "&taskid=" + taskID;
         }, 500);
     });
 }
