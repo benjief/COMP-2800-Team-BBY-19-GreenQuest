@@ -41,9 +41,7 @@ function checkNumUploaded() {
         } else if (uploadedImageFiles.length == 0) {
             $(".uploaded-images").append(message);
         } else {
-            if ($("#uploaded-image-input").attr("disabled")) {
                 $("#upload-image-input").removeAttr("disabled");
-            }
             if ($(".message")) {
                 $(".message").remove();
             }
@@ -306,7 +304,7 @@ function onClickSubmit() {
                     })
             });
         console.log(uploadedImageFiles[i]);
-        deleteTempImages(uploadedImageFiles[i]);
+        // deleteTempImages(uploadedImageFiles[i]);
     }
 }
 
@@ -314,9 +312,9 @@ function onClickSubmit() {
  * CITE and write this
  */
 function onClickHome() {
-    for (var i = 0; i < uploadedImageFiles.length; i++) {
-        deleteTempImages(uploadedImageFiles[i]);
-    }
+    // for (var i = 0; i < uploadedImageFiles.length; i++) {
+    //     deleteTempImages(uploadedImageFiles[i]);
+    // }
     location.href = "./student-home.html";
 }
 
@@ -324,3 +322,12 @@ function onClickHome() {
 $(document).ready(function () {
     getCurrentStudent();
 });
+
+/**
+ * Write this.
+ */
+function unloadFunction() {
+    for (var i = 0; i < uploadedImageFiles; i++) {
+        deleteTempImages(uploadedImageFiles[i]);
+    }
+}
