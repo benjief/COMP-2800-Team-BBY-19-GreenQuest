@@ -164,13 +164,30 @@ function deleteStoredImages() {
 /**
  * Write this.
  */
+function updateStudentPoints() {
+    let pointsGained = document.getElementById("task-points-input").value;
+    let updatedPoints = submitterPoints + pointsGained;
+    db.collection("Students").doc(submitterID).update({
+        Student_Points: updatedPoints
+    })
+    .then(() => {
+        console.log("Student points updated successfully!");
+    })
+    .catch((error) => {
+        console.error("Error updating student points: ", error);
+    });
+}
+
+/**
+ * Write this.
+ */
 function approveStudentTask() {
     db.collection("Students").doc(submitterID).collection("Tasks").doc(taskID).update({
-        Student_Points: submitterPoints + taskPoints,
         Task_Approved: true
     })
         .then(() => {
             console.log("Student task successfully updated!");
+            updateStudentPoints();
         })
         .catch((error) => {
             console.error("Error updating student task: " + error);
@@ -200,7 +217,7 @@ function onClickApprove() {
         .then(() => {
             console.log("Task successfully approved!");
             approveStudentTask();
-            deleteStoredImages();
+            // deleteStoredImages();
             $("#feedback").html("Success! Please wait...");
             $("#feedback").show(0);
             $("#feedback").fadeOut(2500);
