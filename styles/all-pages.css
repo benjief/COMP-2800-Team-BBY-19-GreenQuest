@@ -3,6 +3,14 @@
     font-size: 13pt;
 }
 
+.navbar-brand:hover {
+    text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.85);
+}
+
+.navbar-brand:active {
+    text-shadow: 5px 5px 5px rgba(116, 117, 116, 0.85);
+}
+
 .navbar {
     background-color: rgb(72, 143, 102);
 }
@@ -113,8 +121,4 @@
         left: 0;
         text-align: center;
     }
-}
-
-.Profile-Picture {
-    border-radius: 50%;
 }

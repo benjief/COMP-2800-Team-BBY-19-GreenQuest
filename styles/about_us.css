@@ -1,5 +1,5 @@
 body {
-    background-image: url('../images/background_clouds.png');
+    background-image: url('../images/Trees.png');
 }
 
 .navbar-brand {
@@ -29,13 +29,13 @@ body {
 }
 .header {
     margin-top: 50px;
+    margin: 20px;
     font-family: 'Press Start 2P', Arial, Helvetica, sans-serif;
     color: rgb(72, 143, 102);
-    max-width: fit-content;
+    max-width: 500px;
     background: rgb(255, 255, 255);
     padding: 20px;
     border-radius: 25px;
-    text-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 h1 {
