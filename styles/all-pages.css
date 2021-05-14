@@ -10,6 +10,10 @@
     background-color: rgba(53, 255, 46, 0.788);
 }
 
+.hamburger {
+    background-image: url(/images/hamburger.png);
+}
+
 .main-container {
     display: flex;
     align-items: center;
