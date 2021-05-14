@@ -74,9 +74,6 @@ function onClickSubmit() {
         // Display success message and direct users back to the main page
         let feedback = document.getElementById("feedback");
         feedback.innerHTML = "Success! Please wait...";
-        $(feedback).css({
-            color: "green"
-        });
         $(feedback).show(0);
         $(feedback).fadeOut(2500);
         setTimeout(function () {

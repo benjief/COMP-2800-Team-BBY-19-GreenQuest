@@ -11,13 +11,14 @@ var currentUser = null;
  */
 function populateclassList() {
     if (userClasses.length == 0) {
-        let message = "<p class='message'>You haven't got any classes!</p>"
+        let message = "<div class='text-container><p class='message'>You haven't got any classes!</p></div>"
         $(".class-list").append(message);
+        $(".class-list").css({ width: "90%", display: "flex", justifyContent: "center" });
         let backButtonContainer = "<div class='card-button-container'></div>";
         $(".class-list").append(backButtonContainer);
         let backButton = "<a class='button' id='back-button' onclick='onClickBack()'>Back</a>";
         $(".card-button-container").append(backButton);
-        
+
     } else {
         for (var i = 0; i < userClasses.length; i++) {
             let classContainer = "<div class='class-container' id='class-container-" + i + "'></div>";
@@ -81,9 +82,9 @@ function onSelectClass() {
 /**
  * Redirects users back to the the main page page.
  */
- function onClickBack() {
+function onClickBack() {
     setTimeout(function () {
-            location.href = "educator-home.html?";
+        location.href = "educator-home.html?";
     }, 1000);
 }
 
