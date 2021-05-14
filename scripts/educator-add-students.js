@@ -5,7 +5,7 @@ var currentUser = null;
 // Create empty lists to house student names and IDs
 var studentNames = [];
 var studentIDs = [];
-var currentStudents = [];
+var studentsInAClass = [];
 
 // Pull class name from URL and display it in the DOM
 const parsedUrl = new URL(window.location.href);
@@ -54,30 +54,30 @@ function populateStudentList() {
 }
 
 /** 
- * Gets the names of students who are already in this class.
+ * Gets the names of students who are already in a class.
  */
-function getCurrentStudents() {
+function getStudentsInAClass() {
     db.collection("Students")
-        .where("Student_Class", "==", className)
+        .where("Student_Class", "!=", "null")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                currentStudents.push(doc.data().Student_Name);
+                studentsInAClass.push(doc.data().Student_Name);
             });
             getStudents();
-            console.log(currentStudents);
+            console.log(studentsInAClass);
         })
 }
 
 /**
- * Reads students' names from the Students collection and puts them into an array if they aren't already in this class.
+ * Reads students' names from the Students collection and puts them into an array if they aren't already in ANY class.
  */
 function getStudents() {
     db.collection("Students")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                if (!currentStudents.includes(doc.data().Student_Name)) {
+                if (!studentsInAClass.includes(doc.data().Student_Name)) {
                     studentNames.push(doc.data().Student_Name);
                     studentIDs.push(doc.id);
                 }
@@ -168,5 +168,5 @@ function onClickSubmit() {
  */
 $(document).ready(function () {
     getCurrentUser();
-    getCurrentStudents();
+    getStudentsInAClass();
 });
