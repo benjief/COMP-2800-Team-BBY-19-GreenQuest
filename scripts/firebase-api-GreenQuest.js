@@ -1,4 +1,3 @@
-'use-strict'
 // JS for Firebase API
 
 // Your web app's Firebase configuration

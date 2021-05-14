@@ -6,14 +6,6 @@
     font-size: 13pt;
 }
 
-.navbar-brand:hover {
-    text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.85);
-}
-
-.navbar-brand:active {
-    text-shadow: 5px 5px 5px rgba(116, 117, 116, 0.85);
-}
-
 .navbar {
     background-color: rgba(53, 255, 46, 0.788);
 }

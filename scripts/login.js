@@ -42,7 +42,7 @@ var uiConfig = {
                             console.log("New student added to firestore");
                             // Re-direct to student-new-home.html after signup
                             window.location.assign(
-                                "../html/student-home.html?firstvisit=true"
+                                "html/student-home.html?firstvisit=true"
                             );
                         })
                         .catch(function (error) {
@@ -57,7 +57,7 @@ var uiConfig = {
                             console.log("New educator added to firestore");
                             // Re-direct to educator-new-home.html after signup
                             window.location.assign(
-                                "../html/educator-new-home.html"
+                                "html/educator-new-home.html"
                             );
                         })
                         .catch(function (error) {
@@ -66,9 +66,9 @@ var uiConfig = {
                 }
             } else {
                 if (userType === "educator") {
-                    window.location.assign("../html/educator-home.html");
+                    window.location.assign("html/educator-home.html");
                 } else if (userType === "student") {
-                    window.location.assign("../html/student-home.html?firstvisit=false");
+                    window.location.assign("html/student-home.html?firstvisit=false");
                 }
             }
             return true;
@@ -76,7 +76,7 @@ var uiConfig = {
     },
     // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
     signInFlow: 'popup',
-    // signInSuccessUrl: "#",
+    signInSuccessUrl: "#",
     signInOptions: [
         // Leave the lines as is for the providers you want to offer your users.
         // firebase.auth.GoogleAuthProvider.PROVIDER_ID,
