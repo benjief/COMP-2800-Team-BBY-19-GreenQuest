@@ -1,30 +1,29 @@
-// JS for educator-manage-classes.js
+// JS for educator-manage-tasks.js
 
-// Create an empty list to house class names
-var userClasses = [];
+// Create an empty list to house task IDs
+var taskIDs = [];
 
-// Create a variable to store the current user's name
 var currentUser = null;
 
 /**
- * Appends a list of student names (along with a "+" icon) to the DOM.
+ * Appends a list of tasks to the DOM.
  */
-function populateclassList() {
-    if (userClasses.length == 0) {
-        let message = "<div class='text-container><p class='message'>You haven't got any classes!</p></div>"
-        $(".class-list").append(message);
-        $(".class-list").css({ width: "90%", display: "flex", justifyContent: "center" });
+function populateTaskList() {
+    if (taskIDs.length == 0) {
+        let message = "<div class='text-container><p class='message'>You haven't got any tasks to approve.</p></div>"
+        $(".task-list").append(message);
+        $(".task-list").css({ width: "90%", display: "flex", justifyContent: "center" });
         let backButtonContainer = "<div class='card-button-container'></div>";
-        $(".class-list").append(backButtonContainer);
+        $(".task-list").append(backButtonContainer);
         let backButton = "<a class='button' id='back-button' onclick='onClickBack()'>Back</a>";
         $(".card-button-container").append(backButton);
 
     } else {
-        for (var i = 0; i < userClasses.length; i++) {
-            let classContainer = "<div class='class-container' id='class-container-" + i + "'></div>";
-            $(".class-list").append(classContainer);
-            let className = "<p class='class-name' id='class-name-" + i + "' + ' onclick='onSelectClass()'>" + userClasses[i] + "</p>";
-            $("#class-container-" + i).append(className);
+        for (var i = 0; i < taskIDs.length; i++) {
+            let taskContainer = "<div class='task-container' id='task-container-" + i + "'></div>";
+            $(".task-list").append(taskContainer);
+            let taskName = "<p class='task-name' id='task-name-" + i + "' + ' onclick='onSelectTask()'>Task " + (i + 1) + "</p>";
+            $("#task-container-" + i).append(taskName);
         }
     }
 }
@@ -32,7 +31,7 @@ function populateclassList() {
 /**
  * Write this
  */
-function listClasses() {
+function listTasks() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             db.collection("Educators")
@@ -40,9 +39,9 @@ function listClasses() {
                 // Read
                 .get()
                 .then(function (doc) {
-                    currentUser = doc.data().Educator_Name;
+                    currentUser = doc.id;
                     console.log(currentUser);
-                    getClasses();
+                    getTasks();
                 });
         }
     });
@@ -50,31 +49,30 @@ function listClasses() {
 
 
 /**
- * Reads class names from Firestore and puts them into an array.
+ * Reads task IDs from Firestore and puts them into an array.
  */
-function getClasses() {
-    db.collection("Classes")
-        .where("Class_Owner", "==", currentUser)
+function getTasks() {
+    db.collection("Educators").doc(currentUser).collection("Tasks")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                userClasses.push(doc.id);
+                taskIDs.push(doc.id);
             });
-            populateclassList();
+            populateTaskList();
         })
         .catch((error) => {
-            console.log("Error getting classes: ", error);
+            console.log("Error getting tasks: ", error);
         });
 }
 
 /**
- * Redirects users to a page where they can choose how to manage the selected class.
+ * Redirects users to a page where they can approve or reject the selected task.
  */
-function onSelectClass() {
+function onSelectTask() {
     $(document).click(function (event) {
-        let className = $(event.target).html();
+        let taskName = $(event.target).html();
         setTimeout(function () {
-            location.href = "educator-manage-class.html?classname=" + className;
+            location.href = "educator-manage-task.html?taskname=" + taskName;
         }, 500);
     });
 }
@@ -92,5 +90,5 @@ function onClickBack() {
  * Call functions when the page is ready .
  */
 $(document).ready(function () {
-    listClasses();
+    listTasks();
 });

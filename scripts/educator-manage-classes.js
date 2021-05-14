@@ -9,7 +9,7 @@ var currentUser = null;
 /**
  * Appends a list of student names (along with a "+" icon) to the DOM.
  */
-function populateclassList() {
+function populateClassList() {
     if (userClasses.length == 0) {
         let message = "<div class='text-container><p class='message'>You haven't got any classes!</p></div>"
         $(".class-list").append(message);
@@ -60,7 +60,7 @@ function getClasses() {
             querySnapshot.forEach((doc) => {
                 userClasses.push(doc.id);
             });
-            populateclassList();
+            populateClassList();
         })
         .catch((error) => {
             console.log("Error getting classes: ", error);
