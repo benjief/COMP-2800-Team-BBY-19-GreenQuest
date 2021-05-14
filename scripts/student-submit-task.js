@@ -260,7 +260,7 @@ function addTaskToDB(imageURLs) {
             $("#feedback").show(0);
             $("#feedback").fadeOut(2500);
             setTimeout(function () {
-                location.href = "student-home.html";
+                location.href = "html/student-home.html";
             }, 2300);
         })
         .catch((error) => {
@@ -317,7 +317,7 @@ function onClickHome() {
     for (var i = 0; i < uploadedImageFiles.length; i++) {
         deleteTempImages(uploadedImageFiles[i]);
     }
-    location.href = "student-home.html";
+    location.href = "html/student-home.html";
 }
 
 // Run function when document is ready 

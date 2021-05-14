@@ -68,7 +68,7 @@ function getStudentsInClass() {
  */
 function onClickBack() {
     setTimeout(function () {
-        location.href = "student-home.html";
+        location.href = "html/student-home.html";
     }, 1000);
 }
 
