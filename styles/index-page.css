@@ -39,7 +39,7 @@
 
 .description {
     color: black;
-    font-size: 13pt;
+    font-size: 15pt;
     font-weight: 200;
 }
 
@@ -58,7 +58,7 @@
         color: rgb(72, 143, 102);
     }
     .description {
-        font-size: 15pt;
+        font-size: 12pt;
     }
     .buttons {
         height: 40px;
@@ -67,7 +67,7 @@
         align-items: center;
     }
     .box {
-        width: 18rem;
+        width: 20rem;
     }
     .btn2 {
         font-size: 13pt;
