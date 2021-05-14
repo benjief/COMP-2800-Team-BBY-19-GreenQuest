@@ -234,6 +234,7 @@ function addTaskToDB(imageURLs) {
     // Write task to student's task collection
     db.collection("Students").doc(userID).collection("Tasks").doc(taskID).set({
         Task_Submitter: userName,
+        Submitter_ID: userID,
         Task_Description: "Test",
         Task_Photos: imageURLs,
         Task_Notes: $("#task-notes").prop("value")
