@@ -45,9 +45,6 @@ myCollections.get().then((querySnapShot) => {
   taskCardLoadingFromFirebase3();
   howToModalAction();
   moreInfoModalAction();
-
-
-
 });
 
 
