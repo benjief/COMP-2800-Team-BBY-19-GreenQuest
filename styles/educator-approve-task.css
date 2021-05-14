@@ -1,4 +1,4 @@
-/** CSS for educator-create-class.html */
+/** CSS for educator-approve-task.html */
 
 .modal-header {
     border: none;
@@ -33,116 +33,64 @@ border: none;
 #main-content-card {
     grid-template-columns: 100%;
     grid-template-areas: 
-        "images"
-        "input"
-        "submit"
-        "home"
-        "feedback";
+        "card-text"
+        "task-submitter"
+        "task-description"
+        "task-notes"
+        "task-points"
+        "uploaded-images"
+        "approve"
+        "reject";
     align-items: center;
 }
 
-.image-container {
-    display: flex;
-    flex-direction: column;
+.card-text-container {
+    margin-top: 20px;
+    margin-bottom: 5px;
     justify-content: center;
-    grid-area: images;
-    margin-top: 60px;
-    width: 90%;
-    border: 2px solid #ff80ee;
-    border-style: dashed;
-    border-radius: 10px;
-    justify-self: center;
 }
 
 .text-container {
-    display: flex;
-    justify-content: center;
-}
-
-#task-notes-container {
-    height: 30px;
+    display: grid;
+    margin-left: 10px;
 }
 
 .text-container p {
     display: flex;
     height: 100%;
-    align-items: center;
-    font-size: 15pt;
-    margin: 0;
+    align-items: flex-end
 }
 
-#uploaded-images-header {
-    margin-top: 20px;
+#task-submitter-container {
+    grid-area: task-submitter;
 }
 
-.message {
-    font-weight: 600;
-    text-align: center;
+#task-description-container {
+    grid-area: task-description;
 }
 
-.page-container ul {
-    /* text-align: center; */
-    margin-top: 10px;
-    margin-bottom: 10px;
-    width: 80%;
-    align-self: center;
-    font-size: 12pt;
-    padding: 0;
+#task-notes-container {
+    grid-area: task-notes;
 }
 
-.page-container li {    
-    display: grid;
-    grid-template-columns: 90% 10%;
-    list-style: none;
-    margin-bottom: 5px;
+#task-points-container {
+    grid-area: task-points;
 }
 
-.remove-icon {
-    width: 24px;
-    height: 24px;
-}
-
-#upload-image-input {
-    width: 70%;
-    font-size: 10pt;
-    margin-bottom: 15px;
-}
-
-.task-notes-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    grid-area: input;
-    margin-top: 30px;
-}
-
-#input-container {
-    display: flex;
-    justify-content: center;
-}
-
-#task-notes {
-    width: 90%;
-}
-
-#characters-remaining-container {
-    display: flex;
-    margin-left: 20px;
-    font-size: 10pt;
-    grid-area: chars-remaining;
-}
-
-#characters-remaining {
+.input-container {
     display: flex;
     height: 100%;
+    align-items: center;
 }
 
-#counter {
-    display: flex;
-    border: none;
-    background-color: transparent;
-    margin-left: 1px;
-    height: 21px;
+input {
+    border-radius: 5px;
+    border: 1px solid rgb(175, 175, 175);
+    width: 100px;
+}
+
+#uploaded-images-container {
+    grid-area: uploaded-images;
 }
 
 .card-button-container {
@@ -159,37 +107,21 @@ border: none;
 }
 
 #card-button-container-1 {
-    grid-area: submit;
+    grid-area: approve;
 }
 
 #card-button-container-2 {
-    grid-area: home;
+    grid-area: reject;
 }
 
-#submit-button {
+#approve-button {
     display: flex;
     height: 100%;
     align-items: center;
 }
 
-#home-button {
+#reject-button {
     display: flex;
     height: 100%;
     align-items: center;
-}
-
-.feedback-placeholder {
-    display: flex;
-    justify-content: center;
-    grid-area: feedback;
-    height: 70px;
-}
-
-#feedback {
-    display: flex;
-    height: 100%;
-    align-items: center;
-    text-align: center;
-    font-weight: 600;
-    color: green;
 }
