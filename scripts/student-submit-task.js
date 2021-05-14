@@ -257,9 +257,14 @@ function addTaskToDB(imageURLs) {
         .then(() => {
             console.log("Educator task successfully written!");
             $("#feedback").html("Success! Please wait...")
+            // $("#feedback").css({
+            //     color: "rgb(53, 255, 46)"
+            // });
+            $("#feedback").show(0);
+            $("#feedback").fadeOut(2500);
             setTimeout(function () {
                 location.href = "student-home.html";
-            }, 1000);
+            }, 2300);
         })
         .catch((error) => {
             console.error("Error adding educator task: ", error);
