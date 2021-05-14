@@ -100,7 +100,6 @@ input {
 
 .page-container ul {
     /* text-align: center; */
-    margin-top: 10px;
     margin-bottom: 10px;
     width: 80%;
     align-self: center;
@@ -109,8 +108,6 @@ input {
 }
 
 .page-container li {    
-    display: grid;
-    grid-template-columns: 90% 10%;
     list-style: none;
     margin-bottom: 5px;
 }

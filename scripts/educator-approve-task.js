@@ -9,6 +9,7 @@ $(".page-heading").html(taskName);
 
 var userID;
 var submitterID;
+var submitterPoints;
 var taskSubmitter = null;
 var taskDescription = null;
 var taskNotes = null;
@@ -30,9 +31,24 @@ function getCurrentUser() {
                     // Extract the current user's ID
                     userID = doc.id;
                     pullTaskInfo();
+                    getSubmitterPoints();
                 });
         }
     });
+}
+
+/**
+ * Write this.
+ */
+function getSubmitterPoints() {
+    db.collection("Students").doc(submitterID)
+        .get()
+        .then((doc) => {
+            submitterPoints = doc.data().Submitter_Points;
+        })
+        .catch((error) => {
+            console.log("Error getting submitter points: ", error);
+        });
 }
 
 /**
@@ -132,8 +148,8 @@ function getStorageRef(file, temp) {
  */
 function deleteStoredImages() {
     let storageRef = storage.ref();
-    for (var i = 0; i < imageURLs.length; i ++)
-    deleteRef = storageRef.child(imageURLs[i]);
+    for (var i = 0; i < imageURLs.length; i++)
+        deleteRef = storageRef.child(imageURLs[i]);
     deleteRef.delete()
         .then(() => {
             console.log("Approved image successfully removed from storage!");
@@ -148,6 +164,7 @@ function deleteStoredImages() {
  */
 function approveStudentTask() {
     db.collection("Students").doc(submitterID).collection("Tasks").doc(taskID).update({
+        Student_Points: submitterPoints + taskPoints,
         Task_Approved: true
     })
         .then(() => {
@@ -181,11 +198,17 @@ function onClickApprove() {
         .then(() => {
             console.log("Task successfully approved!");
             approveStudentTask();
+            deleteStoredImages();
+            $("#feedback").html("Success! Please wait...");
+            $("#feedback").show(0);
+            $("#feedback").fadeOut(2500);
+            setTimeout(function () {
+                location.href = "./educator-home.html";
+            }, 2300);
         })
         .catch((error) => {
             console.error("Error approving task: ", error);
         })
-    deleteStoredImages();
 }
 
 /**
