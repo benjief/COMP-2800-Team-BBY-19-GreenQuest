@@ -40,7 +40,8 @@ border: none;
         "task-points"
         "uploaded-images"
         "approve"
-        "reject";
+        "reject"
+        "feedback";
     align-items: center;
 }
 
@@ -145,4 +146,20 @@ input {
     display: flex;
     height: 100%;
     align-items: center;
+}
+
+.feedback-placeholder {
+    display: flex;
+    justify-content: center;
+    grid-area: feedback;
+    height: 70px;
+}
+
+#feedback {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    text-align: center;
+    font-weight: 600;
+    color: green;
 }
