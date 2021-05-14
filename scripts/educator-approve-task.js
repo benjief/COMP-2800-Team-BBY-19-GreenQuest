@@ -31,24 +31,9 @@ function getCurrentUser() {
                     // Extract the current user's ID
                     userID = doc.id;
                     pullTaskInfo();
-                    getSubmitterPoints();
                 });
         }
     });
-}
-
-/**
- * Write this.
- */
-function getSubmitterPoints() {
-    db.collection("Students").doc(submitterID)
-        .get()
-        .then((doc) => {
-            submitterPoints = doc.data().Submitter_Points;
-        })
-        .catch((error) => {
-            console.log("Error getting submitter points: ", error);
-        });
 }
 
 /**
@@ -63,11 +48,27 @@ function pullTaskInfo() {
             taskDescription = doc.data().Task_Description;
             taskNotes = doc.data().Task_Notes;
             imageURLs = doc.data().Task_Photos;
+            getSubmitterPoints();
             populateDOM();
         })
         .catch((error) => {
             console.log("Error getting task: ", error);
         });
+}
+
+/**
+ * Write this.
+ */
+ function getSubmitterPoints() {
+    console.log(submitterID);
+    // db.collection("Students").doc(submitterID)
+    //     .get()
+    //     .then((doc) => {
+    //         submitterPoints = doc.data().Student_Points;
+    //     })
+    //     .catch((error) => {
+    //         console.log("Error getting submitter points: ", error);
+    //     });
 }
 
 /**
@@ -81,7 +82,7 @@ function populateDOM() {
     let notes = "<p id='task-notes'>" + taskNotes + "</p>";
     $("#task-notes-container").append(notes);
     for (var i = 0; i < imageURLs.length; i++) {
-        let imageDOM = "<li class='list-item'><a class='uploaded-image' id=image'"
+        let imageDOM = "<li class='list-item'><a class='uploaded-image' id='"
             + imageURLs[i] + "' data-bs-toggle='modal' data-bs-target='#imagePreview' onclick='showPreview(this)'>Image "
             + (i + 1) + "</li>";
         $(".uploaded-images").append(imageDOM);
@@ -95,10 +96,11 @@ function populateDOM() {
  */
 function showPreview(element) {
     $(".modal-body").html("");
+    let previewName = $(element).text();
+    let previewURL = $(element).attr("id");
+    console.log(previewName);
+    console.log(previewURL);
     setTimeout(() => {
-        let previewName = $(element).html;
-        let previewURL = $(element).attr("id");
-
         if (previewName) {
             $(".modal-title").html(previewName);
             $(".modal-body").html("<img src='" + previewURL + "'>");

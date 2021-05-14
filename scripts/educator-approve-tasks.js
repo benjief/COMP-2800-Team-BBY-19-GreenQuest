@@ -10,9 +10,9 @@ var currentUser = null;
  */
 function populateTaskList() {
     if (taskIDs.length == 0) {
-        let message = "<div class='text-container><p class='message'>You haven't got any tasks to approve.</p></div>"
+        let message = "<div class='text-container'><p class='message'>You haven't got any tasks to approve.</p></div>"
         $(".task-list").append(message);
-        $(".task-list").css({ width: "90%", display: "flex", justifyContent: "center" });
+        $(".task-list").css({ height: "150px", width: "90%", display: "flex", justifyContent: "center", justifySelf: "center"});
         let backButtonContainer = "<div class='card-button-container'></div>";
         $(".task-list").append(backButtonContainer);
         let backButton = "<a class='button' id='back-button' onclick='onClickBack()'>Back</a>";

@@ -8,7 +8,7 @@
 
 .card-text-container {
     margin-top: 20px;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
     text-align: center;
 }
 
@@ -63,7 +63,6 @@
     font-size: 15pt;
     justify-self: center;
     margin-top: 20px;
-    margin-bottom: 40px;
     box-shadow: 5px 5px 5px rgb(116, 103, 103);
 }
 
