@@ -1,0 +1,38 @@
+
+.main-container {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    filter: drop-shadow(4px 10px 5px #444444);
+    
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 0px 0px;
+    width: 20rem;
+    background: rgb(255, 255, 255);
+    border-radius: 50px;
+    grid-template-areas: "Completed-Task" "List-of-tasks" "List-of-tasks";
+}
+
+.Completed-Task {
+    grid-area: Completed-Task;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Press Start 2P', Arial, Helvetica, sans-serif;
+}
+
+.List-of-tasks {
+    grid-area: List-of-tasks;
+    padding: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(252, 242, 190);
+    border-radius: 0px 0px 30px 30px;
+}
