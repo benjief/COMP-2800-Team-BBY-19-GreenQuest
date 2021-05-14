@@ -60,15 +60,15 @@ function pullTaskInfo() {
  * Write this.
  */
  function getSubmitterPoints() {
-    console.log(submitterID);
-    // db.collection("Students").doc(submitterID)
-    //     .get()
-    //     .then((doc) => {
-    //         submitterPoints = doc.data().Student_Points;
-    //     })
-    //     .catch((error) => {
-    //         console.log("Error getting submitter points: ", error);
-    //     });
+    db.collection("Students").doc(submitterID)
+        .get()
+        .then((doc) => {
+            submitterPoints = doc.data().Student_Points;
+            console.log(submitterPoints);
+        })
+        .catch((error) => {
+            console.log("Error getting submitter points: ", error);
+        });
 }
 
 /**
@@ -166,6 +166,8 @@ function deleteStoredImages() {
  */
 function updateStudentPoints() {
     let pointsGained = document.getElementById("task-points-input").value;
+    pointsGained = parseInt(pointsGained);
+    console.log(pointsGained);
     let updatedPoints = submitterPoints + pointsGained;
     db.collection("Students").doc(submitterID).update({
         Student_Points: updatedPoints
