@@ -204,9 +204,9 @@ function onClickApprove() {
             $("#feedback").html("Success! Please wait...");
             $("#feedback").show(0);
             $("#feedback").fadeOut(2500);
-            setTimeout(function () {
-                location.href = "./educator-home.html";
-            }, 2300);
+            // setTimeout(function () {
+            //     location.href = "./educator-home.html";
+            // }, 2300);
         })
         .catch((error) => {
             console.error("Error approving task: ", error);
@@ -223,6 +223,12 @@ function onClickReject() {
         .then(() => {
             console.log("Task successfully rejected!");
             rejectStudentTask();
+            $("#feedback").html("Success! Please wait...");
+            $("#feedback").show(0);
+            $("#feedback").fadeOut(2500);
+            // setTimeout(function () {
+            //     location.href = "./educator-home.html";
+            // }, 2300);
         })
         .catch((error) => {
             console.error("Error rejecting task: ", error);
