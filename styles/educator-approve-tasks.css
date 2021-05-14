@@ -1,16 +1,8 @@
-<<<<<<< HEAD
 /** CSS for educator-manage-tasks.html */
 #main-content-card {
     grid-template-areas: 
         "card-text"
         "task-list";
-=======
-/** CSS for educator-manage-classes.html */
-#main-content-card {
-    grid-template-areas: 
-        "card-text"
-        "class-list";
->>>>>>> daf5298ac89353bb84bcb1877cafba77e52dfca7
     margin-bottom: 60px !important;
 }
 
