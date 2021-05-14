@@ -19,8 +19,8 @@ class Task {
   getDifficultyStars () {
     const maxDifficulty = 5;
     const rating = this.difficulty;
-    const fullStar = ' <i class="fas fa-star"></i>'.repeat(Math.ceil(rating));
-    const noStar = ' <i class="far fa-star"></i>'.repeat(Math.floor(maxDifficulty-rating));
+    const fullStar = ' <i class="fas fa-star stars"></i>'.repeat(Math.ceil(rating));
+    const noStar = ' <i class="far fa-star stars"></i>'.repeat(Math.floor(maxDifficulty-rating));
     return `${fullStar}${noStar}`;
 }
 

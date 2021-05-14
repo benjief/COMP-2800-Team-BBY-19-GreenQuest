@@ -126,6 +126,9 @@ body {
     
 }
 
+.stars {
+    color: rgb(72, 143, 102);
+}
 
 /* We can change the media query width later */
 @media screen and (max-width: 500px) {
