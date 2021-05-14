@@ -34,8 +34,9 @@ function getCurrentStudent() {
  */
 function populateStudentList() {
     if (studentsInClass.length == 0) {
-        let message = "<p class='message'>There are no other students in your class!</p>"
+        let message = "<div class='text-container'><p class='message'>There are no other students in your class!</p></div>"
         $(".student-list").append(message);
+        $(".student-list").css({ height: "100px", display: "flex", justifyContent: "center"})
     } else {
         for (var i = 0; i < studentsInClass.length; i++) {
             let studentContainer = "<div class='student-container' id='student-container-" + i + "'></div>";
@@ -68,7 +69,7 @@ function getStudentsInClass() {
  */
 function onClickBack() {
     setTimeout(function () {
-        location.href = "html/student-home.html";
+        location.href = "./student-home.html";
     }, 1000);
 }
 
