@@ -43,27 +43,31 @@ function pullTaskInfo() {
         .get()
         .then((doc) => {
             taskSubmitter = doc.data().Task_Submitter;
+            submitterID = doc.data().Submitter_ID;
             taskDescription = doc.data().Task_Description;
             taskNotes = doc.data().Task_Notes;
             imageURLs = doc.data().Task_Photos;
-            pupulateDOM();
+            populateDOM();
         })
         .catch((error) => {
             console.log("Error getting task: ", error);
         });
 }
 
+/**
+ * Write this.
+ */
 function populateDOM() {
-    let taskSubmitter = "<p id='task-submitter'>" + taskSubmitter + "</p>";
-    $("#task-submitter-container").append(taskSubmitter);
-    let taskDescription = "<p id='task-description'>" + taskDescription + "</p>";
-    $("#task-description-container").append(taskDescription);
-    let taskNotes = "<p id='task-notes'>" + taskNotes + "</p>";
-    $("#task-notes-container").append(taskNotes);
+    let submitter = "<p id='task-submitter'>" + taskSubmitter + "</p>";
+    $("#task-submitter-container").append(submitter);
+    let description = "<p id='task-description'>" + taskDescription + "</p>";
+    $("#task-description-container").append(description);
+    let notes = "<p id='task-notes'>" + taskNotes + "</p>";
+    $("#task-notes-container").append(notes);
     for (var i = 0; i < imageURLs.length; i++) {
         let imageDOM = "<li class='list-item'><a class='uploaded-image' id=image'"
-            + imageURLs[i] + "' data-bs-toggle='modal' data-bs-target='#imagePreview' onclick='showPreview(this)'>Image"
-            + i + "</li>";
+            + imageURLs[i] + "' data-bs-toggle='modal' data-bs-target='#imagePreview' onclick='showPreview(this)'>Image "
+            + (i + 1) + "</li>";
         $(".uploaded-images").append(imageDOM);
     }
 }
@@ -126,17 +130,16 @@ function getStorageRef(file, temp) {
  * Write this.
  * 
  */
-function deleteTempImages() {
+function deleteStoredImages() {
     let storageRef = storage.ref();
-    deleteRef = storageRef.child("images/temp");
-    deleteRef.listAll()
-        .then((res) => {
-            res.items.forEach((itemRef) => {
-                itemRef.delete();
-            });
+    for (var i = 0; i < imageURLs.length; i ++)
+    deleteRef = storageRef.child(imageURLs[i]);
+    deleteRef.delete()
+        .then(() => {
+            console.log("Approved image successfully removed from storage!");
         })
         .catch((error) => {
-            console.error("Error deleting temp images: ", error);
+            console.error("Error deleting approved image from storage: ", error);
         });
 }
 
@@ -144,7 +147,30 @@ function deleteTempImages() {
  * Write this.
  */
 function approveStudentTask() {
-    db.collection("Students").doc(taskSubmitter).
+    db.collection("Students").doc(submitterID).collection("Tasks").doc(taskID).update({
+        Task_Approved: true
+    })
+        .then(() => {
+            console.log("Student task successfully updated!");
+        })
+        .catch((error) => {
+            console.error("Error updating student task: " + error);
+        })
+}
+
+/**
+ * Write this.
+ */
+function rejectStudentTask() {
+    db.collection("Students").doc(submitterID).collection("Tasks").doc(taskID).update({
+        Task_Rejected: true
+    })
+        .then(() => {
+            console.log("Student task successfully updated!");
+        })
+        .catch((error) => {
+            console.error("Error updating student task: " + error);
+        })
 }
 
 /**
@@ -152,50 +178,33 @@ function approveStudentTask() {
  */
 function onClickApprove() {
     db.collection("Educators").doc(userID).collection("Tasks").doc(taskID).delete()
-    .then(() => {
-        console.log("Task successfully approved!");
-        approveStudentTask();
-    })
-    .catch((error) => {
-        console.error("Error approving task: ", error);
-    })
-    // Generate image URLs and add them to an array
-    for (var i = 0; i < uploadedImageFiles.length; i++) {
-        let storageRef = getStorageRef(uploadedImageFiles[i], false);
-        console.log(storageRef);
-        storageRef.put(uploadedImageFiles[i])
-            .then(function () {
-                console.log('Uploaded to Cloud storage');
-                storageRef.getDownloadURL()
-                    .then(function (url) {
-                        console.log(url);
-                        imageURLs.push(url);
-                        console.log(imageURLs);
-                        /* Once list of permanent URLs is complete, create task documents in the student's and 
-                           their teacher's task collection (include array of image URLs as an attribute) */
-                        if (i == (uploadedImageFiles.length)) {
-                            addTaskToDB(imageURLs);
-                        };
-                    })
-            });
-        console.log(uploadedImageFiles[i]);
-        // deleteTempImages(uploadedImageFiles[i]);
-    }
-    deleteTempImages();
+        .then(() => {
+            console.log("Task successfully approved!");
+            approveStudentTask();
+        })
+        .catch((error) => {
+            console.error("Error approving task: ", error);
+        })
+    deleteStoredImages();
 }
 
 /**
- * CITE and write this
+ * Write this
  */
-function onClickHome() {
-    // for (var i = 0; i < uploadedImageFiles.length; i++) {
-    //     deleteTempImages(uploadedImageFiles[i]);
-    // }
-    deleteTempImages();
-    location.href = "./student-home.html";
+function onClickReject() {
+    db.collection("Educators").doc(userID).collection("Tasks").doc(taskID).update({
+        Task_Rejected: true
+    })
+        .then(() => {
+            console.log("Task successfully rejected!");
+            rejectStudentTask();
+        })
+        .catch((error) => {
+            console.error("Error rejecting task: ", error);
+        })
 }
 
 // Run function when document is ready 
 $(document).ready(function () {
-    getCurrentStudent();
+    getCurrentUser();
 });

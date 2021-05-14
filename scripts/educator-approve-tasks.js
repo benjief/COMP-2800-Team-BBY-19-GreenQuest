@@ -73,7 +73,7 @@ function onSelectTask() {
         let taskName = $(event.target).html();
         let  taskID = $(event.target).attr("id");
         setTimeout(function () {
-            location.href = "educator-manage-task.html?taskname=" + taskName + "&taskid=" + taskID;
+            location.href = "educator-approve-task.html?taskname=" + taskName + "&taskid=" + taskID;
         }, 500);
     });
 }

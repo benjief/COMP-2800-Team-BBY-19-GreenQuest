@@ -61,6 +61,10 @@ border: none;
     align-items: flex-end
 }
 
+.text-container :nth-child(2) {
+    align-items: flex-start;
+}
+
 #task-submitter-container {
     grid-area: task-submitter;
 }
@@ -91,6 +95,23 @@ input {
 
 #uploaded-images-container {
     grid-area: uploaded-images;
+}
+
+.page-container ul {
+    /* text-align: center; */
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 80%;
+    align-self: center;
+    font-size: 12pt;
+    padding: 0;
+}
+
+.page-container li {    
+    display: grid;
+    grid-template-columns: 90% 10%;
+    list-style: none;
+    margin-bottom: 5px;
 }
 
 .card-button-container {
