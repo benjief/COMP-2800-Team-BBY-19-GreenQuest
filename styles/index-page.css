@@ -48,6 +48,9 @@
     background-color: rgb(72, 143, 102);
     color: rgb(255, 255, 255);
 }
+.btn2:hover {
+    background-color: rgb(122, 173, 144);
+}
 
 @media screen and (max-width: 700px) {
     .title {
