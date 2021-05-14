@@ -1,4 +1,4 @@
-// JS for educator-create-group.js
+// JS for educator-create-class.js
 
 var noInput = false;
 
@@ -23,7 +23,7 @@ function charCounter(field, field2, maxlimit) {
 /**
  * Write a class to Firestore.
  * 
- * @param nickname - String containing the name of the group to be created
+ * @param nickname - String containing the name of the class to be created
  */
 function addClass(description, nickname) {
     db.collection("Classes").doc(nickname).set({
@@ -35,17 +35,17 @@ function addClass(description, nickname) {
         Date_Created: firebase.firestore.FieldValue.serverTimestamp()
     })
         .then(() => {
-            console.log("Group successfully written!");
+            console.log("Class successfully written!");
         })
         .catch((error) => {
-            console.error("Error adding group: ", error);
+            console.error("Error adding class: ", error);
         });
 }
 
 /**
- * Make sure the user has input a group name.
+ * Make sure the user has input a class name.
  * 
- * @param nickname - String containing the name of the group to be created
+ * @param nickname - String containing the name of the class to be created
  */
 function checkInput(description, nickname) {
     if (description == null || nickname == null || description == "" || nickname === "") {
@@ -69,14 +69,11 @@ function onClickSubmit() {
     let nickname = document.getElementById("class-nickname").value;
     checkInput(description, nickname);
     if (noInput == false) {
-        // Add group to Firestore
+        // Add class to Firestore
         addClass(description, nickname);
         // Display success message and direct users back to the main page
         let feedback = document.getElementById("feedback");
         feedback.innerHTML = "Success! Please wait...";
-        $(feedback).css({
-            color: "green"
-        });
         $(feedback).show(0);
         $(feedback).fadeOut(2500);
         setTimeout(function () {

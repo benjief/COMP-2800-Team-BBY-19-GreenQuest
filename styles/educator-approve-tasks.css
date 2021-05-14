@@ -1,15 +1,14 @@
-/** CSS for educator-add-students.html */
+/** CSS for educator-manage-tasks.html */
 #main-content-card {
     grid-template-areas: 
         "card-text"
-        "student-list"
-        "submit";
+        "task-list";
     margin-bottom: 60px !important;
 }
 
 .card-text-container {
     margin-top: 20px;
-    margin-bottom: 40px;
+    margin-bottom: 25px;
     text-align: center;
 }
 
@@ -17,40 +16,35 @@
     height: 100%;
 }
 
-.student-list {
-    grid-area: student-list;
+.task-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     height: 300px;
+    grid-area: task-list;
     overflow: scroll;
     overflow-x: hidden;
+    margin-bottom: 25px;
 }
 
-.student-container {
-    display: grid;
-    grid-template-columns: 80% 20%;
-    grid-template-areas: 
-        "name icon";
-    margin-bottom: 10px;
+.task-container {
+    display: flex;
+    width: 50%;
+    height: 50px;
+    justify-content: center;
+    justify-self: flex-end;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    background-color: #ff80ee;
+    box-shadow: 5px 5px 5px rgb(116, 103, 103);
 }
 
-.student-name {
+.task-name {
     display: flex;
     height: 100%;
     align-items: center;
-    grid-area: name;
-    margin-left: 25px;
-}
-
-.icon-container {
-    display: flex;
-    height: 100%;
-    align-items: center;
-    grid-area: icon;
-    margin-left: 10px;
-}
-
-.icon {
-    height: 24px;
-    width: 24px;
+    color: white;
+    font-size: 15pt;
 }
 
 .message {
@@ -62,7 +56,7 @@
     display: flex;
     height: 50px;
     width: 180px;
-    grid-area: submit;
+    grid-area: back;
     background-color: #ff80ee;
     justify-content: center;
     border-radius: 10px;
@@ -73,7 +67,7 @@
     box-shadow: 5px 5px 5px rgb(116, 103, 103);
 }
 
-#submit-button {
+#back-button {
     display: flex;
     height: 100%;
     align-items: center;

@@ -1,9 +1,11 @@
 // JS for educator-add-students.js
 
+var currentUser = null;
+
 // Create empty lists to house student names and IDs
 var studentNames = [];
 var studentIDs = [];
-var currentStudents = [];
+var studentsInAClass = [];
 
 // Pull class name from URL and display it in the DOM
 const parsedUrl = new URL(window.location.href);
@@ -13,13 +15,28 @@ $(".page-heading").html("Add Students to " + className);
 // Pull redirect flag from URL
 var redirectFlag = parsedUrl.searchParams.get("redirectflag");
 
+function getCurrentUser() {
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            db.collection("Educators")
+                .doc(user.uid)
+                // Read
+                .get()
+                .then(function (doc) {
+                    currentUser = doc.data().Educator_Name;
+                });
+        }
+    });
+}
+
 /**
  * Appends a list of student names (along with a "+" icon) to the DOM.
  */
 function populateStudentList() {
     if (studentNames.length == 0) {
-        let message = "<p class='message'>There are no more students to add!</p>"
+        let message = "<div class='text-container'><p class='message'>There are no more students to add!</p></div>"
         $(".student-list").append(message);
+        $(".student-list").css({ width: "90%", display: "flex", justifyContent: "center" });
         $("#submit-button").html("Back");
     } else {
         for (var i = 0; i < studentNames.length; i++) {
@@ -37,30 +54,30 @@ function populateStudentList() {
 }
 
 /** 
- * Gets the names of students who are already in this class.
+ * Gets the names of students who are already in a class.
  */
-function getCurrentStudents() {
+function getStudentsInAClass() {
     db.collection("Students")
-        .where("Student_Class", "==", className)
+        .where("Student_Class", "!=", "null")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                currentStudents.push(doc.data().Student_Name);
+                studentsInAClass.push(doc.data().Student_Name);
             });
             getStudents();
-            console.log(currentStudents);
+            console.log(studentsInAClass);
         })
 }
 
 /**
- * Reads students' names from the Students collection and puts them into an array if they aren't already in this class.
+ * Reads students' names from the Students collection and puts them into an array if they aren't already in ANY class.
  */
 function getStudents() {
     db.collection("Students")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                if (!currentStudents.includes(doc.data().Student_Name)) {
+                if (!studentsInAClass.includes(doc.data().Student_Name)) {
                     studentNames.push(doc.data().Student_Name);
                     studentIDs.push(doc.id);
                 }
@@ -73,7 +90,7 @@ function getStudents() {
 }
 
 /**
- * Updates the student's Student_Class attribute to the class they're being added to.
+ * Updates the student's Student_Class and Student_Educator attributes to the class they're being added to.
  * Also changes the "+" icon beside a student to a "-" icon and allows that student to be subsequently
  * removed from the class in question.
  */
@@ -90,7 +107,8 @@ function addStudent() {
         console.log(studentToAdd);
         // Update the student's Student_Class attribute
         db.collection("Students").doc(studentToAdd).update({
-            Student_Class: className
+            Student_Class: className,
+            Student_Educator: userName
         })
             .then(() => {
                 console.log("Student successfully added to this class!");
@@ -102,7 +120,7 @@ function addStudent() {
 }
 
 /**
- * Updates the student's Student_Class attribute to null.
+ * Updates the student's Student_Class and Student_Educator attributes to null.
  * Also changes the "+" icon beside a student to a "-" icon and allows that student to be subsequently
  * added to the class in question.
  */
@@ -118,7 +136,8 @@ function removeStudent() {
         let studentToRemove = studentIDs[index];
         // Update the student's Student_Class attribute
         db.collection("Students").doc(studentToRemove).update({
-            Student_Class: null
+            Student_Class: null,
+            Student_Educator: null
         })
             .then(() => {
                 console.log("Student successfully added to this class!");
@@ -148,5 +167,6 @@ function onClickSubmit() {
  * Call functions when the page is ready .
  */
 $(document).ready(function () {
-    getCurrentStudents();
+    getCurrentUser();
+    getStudentsInAClass();
 });

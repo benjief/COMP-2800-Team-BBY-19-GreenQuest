@@ -14,8 +14,9 @@ $(".page-heading").html("Remove Students from " + className);
  */
 function populateStudentList() {
     if (currentStudents.length == 0) {
-        let message = "<p class='message'>There are no students to remove!</p>"
+        let message = "<div class='text-container'><p class='message'>There are no students to remove!</p></div>"
         $(".student-list").append(message);
+        $(".student-list").css({ width: "90%", display: "flex", justifyContent: "center" });
         $("#submit-button").html("Back");
     } else {
         for (var i = 0; i < currentStudents.length; i++) {
@@ -49,7 +50,7 @@ function getCurrentStudents() {
 }
 
 /**
- * Updates the student's Student_Class attribute to null.
+ * Updates the student's Student_Class and Student_Educator attributes to null.
  * Also changes the "+" icon beside a student to a "-" icon and allows that student to be subsequently
  * added to the class in question.
  */
@@ -63,9 +64,9 @@ function getCurrentStudents() {
         // Get "add" icon to call addStudent()
         $(event.target).attr("onclick", "addStudent()");
         let studentToRemove = studentIDs[index];
-        // Update the student's Student_Class attribute
         db.collection("Students").doc(studentToRemove).update({
-            Student_Class: null
+            Student_Class: null,
+            Student_Educator: null
         })
             .then(() => {
                 console.log("Student successfully added to this class!");
