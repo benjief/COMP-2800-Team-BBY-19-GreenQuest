@@ -55,7 +55,7 @@ function taskCardLoadingFromFirebase() {
     if (doc.exists) {
       var mytask = doc.data();
       $("#task-title").text(mytask.getTitle());
-      $("#difficulty").html('Difficulty: ' + mytask.getDifficultyStars(5));
+      $("#difficulty").html('Difficulty: ' + mytask.getDifficultyStars());
       $("#task-description").text(mytask.getDescription());
       console.log("converting successful.");
     } else {
@@ -70,7 +70,7 @@ function taskCardLoadingFromFirebase2() {
     if (doc.exists) {
       var mytask = doc.data();
       $("#task-title2").text(mytask.getTitle());
-      $("#difficulty2").html('Difficulty: ' + mytask.getDifficultyStars(5));
+      $("#difficulty2").html('Difficulty: ' + mytask.getDifficultyStars());
       $("#task-description2").text(mytask.getDescription());
       console.log("converting successful.");
     } else {
@@ -85,7 +85,7 @@ function taskCardLoadingFromFirebase3() {
     if (doc.exists) {
       var mytask = doc.data();
       $("#task-title3").text(mytask.getTitle());
-      $("#difficulty3").html('Difficulty: ' + mytask.getDifficultyStars(5));
+      $("#difficulty3").html('Difficulty: ' + mytask.getDifficultyStars());
       $("#task-description3").text(mytask.getDescription());
       console.log("converting successful.");
     } else {
