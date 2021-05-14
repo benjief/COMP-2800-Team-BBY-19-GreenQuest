@@ -8,6 +8,7 @@ var taskID = parsedUrl.searchParams.get("taskid");
 $(".page-heading").html(taskName);
 
 var userID;
+var submitterID;
 var taskSubmitter = null;
 var taskDescription = null;
 var taskNotes = null;
@@ -59,6 +60,12 @@ function populateDOM() {
     $("#task-description-container").append(taskDescription);
     let taskNotes = "<p id='task-notes'>" + taskNotes + "</p>";
     $("#task-notes-container").append(taskNotes);
+    for (var i = 0; i < imageURLs.length; i++) {
+        let imageDOM = "<li class='list-item'><a class='uploaded-image' id=image'"
+            + imageURLs[i] + "' data-bs-toggle='modal' data-bs-target='#imagePreview' onclick='showPreview(this)'>Image"
+            + i + "</li>";
+        $(".uploaded-images").append(imageDOM);
+    }
 }
 
 /**
@@ -69,18 +76,9 @@ function populateDOM() {
 function showPreview(element) {
     $(".modal-body").html("");
     setTimeout(() => {
-        let previewName = null;
-        let previewURL = null;
-        // console.log(uploadedImageFiles);
-        // console.log($(element).attr("id"));
-        // console.log($(element).attr("id") == uploadedImageFiles[0].name);
-        // console.log(uploadedImageFiles[0].tempURL);
-        for (var i = 0; i < uploadedImageFiles.length; i++) {
-            if (uploadedImageFiles[i].name == $(element).attr("id")) {
-                previewName = uploadedImageFiles[i].name;
-                previewURL = uploadedImageFiles[i].tempURL;
-            }
-        }
+        let previewName = $(element).html;
+        let previewURL = $(element).attr("id");
+
         if (previewName) {
             $(".modal-title").html(previewName);
             $(".modal-body").html("<img src='" + previewURL + "'>");
@@ -90,7 +88,6 @@ function showPreview(element) {
         }
     }, 1000);
 }
-
 
 /**
  * Write this
@@ -125,77 +122,6 @@ function getStorageRef(file, temp) {
     return storageRef;
 }
 
-
-
-/**
- * CITE and write this 
- * (https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript?page=1&tab=votes#tab-top)
- */
-function pseudorandomID() {
-    let generatedID = Math.random().toString(36).replace(/[^a-z\d]+/g, '').substr(0, 11);
-    console.log(generatedID);
-    return generatedID;
-}
-
-/**
- * Write this
- */
-function getEducatorID() {
-    db.collection("Educators")
-        .where("Educator_Name", "==", educatorName)
-        .get()
-        .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                educatorID = doc.id;
-            })
-        })
-        .catch((error) => {
-            console.log("Error getting educator ID: ", error);
-        });
-}
-
-/**
- * Write this
- * 
- * @param {*} imageURLs 
- */
-function addTaskToDB(imageURLs) {
-    let taskID = pseudorandomID();
-    // Write task to student's task collection
-    db.collection("Students").doc(userID).collection("Tasks").doc(taskID).set({
-        Task_Submitter: userName,
-        Task_Description: "Test",
-        Task_Photos: imageURLs,
-        Task_Notes: $("#task-notes").prop("value")
-    })
-        .then(() => {
-            console.log("Student task successfully written!");
-        })
-        .catch((error) => {
-            console.error("Error adding student task: ", error);
-        });
-    // Write task to teacher's task collection
-    db.collection("Educators").doc(educatorID).collection("Tasks").doc(taskID).set({
-        Task_Submitter: userName,
-        Task_Description: "Test",
-        Task_Photos: imageURLs,
-        Task_Notes: $("#task-notes").prop("value"),
-        Task_Approved: false
-    })
-        .then(() => {
-            console.log("Educator task successfully written!");
-            $("#feedback").html("Success! Please wait...");
-            $("#feedback").show(0);
-            $("#feedback").fadeOut(2500);
-            setTimeout(function () {
-                location.href = "./student-home.html";
-            }, 2300);
-        })
-        .catch((error) => {
-            console.error("Error adding educator task: ", error);
-        });
-}
-
 /**
  * Write this.
  * 
@@ -215,9 +141,24 @@ function deleteTempImages() {
 }
 
 /**
- * CITE and write this
+ * Write this.
  */
-function onClickSubmit() {
+function approveStudentTask() {
+    db.collection("Students").doc(taskSubmitter).
+}
+
+/**
+ * Write this
+ */
+function onClickApprove() {
+    db.collection("Educators").doc(userID).collection("Tasks").doc(taskID).delete()
+    .then(() => {
+        console.log("Task successfully approved!");
+        approveStudentTask();
+    })
+    .catch((error) => {
+        console.error("Error approving task: ", error);
+    })
     // Generate image URLs and add them to an array
     for (var i = 0; i < uploadedImageFiles.length; i++) {
         let storageRef = getStorageRef(uploadedImageFiles[i], false);
