@@ -41,7 +41,7 @@ function checkNumUploaded() {
         } else if (uploadedImageFiles.length == 0) {
             $(".uploaded-images").append(message);
         } else {
-                $("#upload-image-input").removeAttr("disabled");
+            $("#upload-image-input").removeAttr("disabled");
             if ($(".message")) {
                 $(".message").remove();
             }
@@ -269,15 +269,19 @@ function addTaskToDB(imageURLs) {
 /**
  * Write this.
  * 
- * @param {} file 
  */
-function deleteTempImages(file) {
-    let deleteRef = getStorageRef(file, true);
-    deleteRef.delete().then(() => {
-        console.log("Temp directory successfully deleted!");
-    }).catch((error) => {
-        console.log("Error deleting temp directory: ", error);
-    });
+function deleteTempImages() {
+    let storageRef = storage.ref();
+    deleteRef = storageRef.child("images/temp");
+    deleteRef.listAll()
+        .then((res) => {
+            res.items.forEach((itemRef) => {
+                itemRef.delete();
+            });
+        })
+        .catch((error) => {
+            console.error("Error deleting temp images: ", error);
+        });
 }
 
 /**
@@ -306,6 +310,7 @@ function onClickSubmit() {
         console.log(uploadedImageFiles[i]);
         // deleteTempImages(uploadedImageFiles[i]);
     }
+    deleteTempImages();
 }
 
 /**
@@ -315,6 +320,7 @@ function onClickHome() {
     // for (var i = 0; i < uploadedImageFiles.length; i++) {
     //     deleteTempImages(uploadedImageFiles[i]);
     // }
+    deleteTempImages();
     location.href = "./student-home.html";
 }
 
@@ -322,12 +328,3 @@ function onClickHome() {
 $(document).ready(function () {
     getCurrentStudent();
 });
-
-/**
- * Write this.
- */
-function unloadFunction() {
-    for (var i = 0; i < uploadedImageFiles; i++) {
-        deleteTempImages(uploadedImageFiles[i]);
-    }
-}
