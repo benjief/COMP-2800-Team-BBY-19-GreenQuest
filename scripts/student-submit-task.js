@@ -50,6 +50,22 @@ function checkNumUploaded() {
         }
     }
 }
+/**
+ * Write this.
+ */
+function storeTemporaryImage(image) {
+    $("#" + image.name).attr("data-target", "modalCenter");
+    let storageRef = getStorageRef(image, true);
+    storageRef.put(image)
+        .then(function () {
+            console.log('Uploaded to temp Cloud storage');
+            storageRef.getDownloadURL()
+                .then(function (url) {
+                    console.log(url);
+                    image.tempURL = url;
+                })
+        });
+}
 
 /**
  * CITE - Write this.
@@ -59,8 +75,7 @@ function processImage() {
     imageInput.addEventListener('change', function (event) {
         console.log(event.target.files[0]);
         uploadedImageFiles.push(event.target.files[0]);
-        // var imagePath = event.target.files[0].name;
-        // uploadedImageNames.push(imagePath);
+        storeTemporaryImage(event.target.files[0]);
         addNamesToDOM();
     });
 }
@@ -76,14 +91,45 @@ function resetDOM() {
 }
 
 /**
+ * Write this.
+ * 
+ * @param {*} element 
+ */
+function showPreview(element) {
+    $(".modal-body").html("");
+    setTimeout(() => {
+        let previewName = null;
+        let previewURL = null;
+        // console.log(uploadedImageFiles);
+        // console.log($(element).attr("id"));
+        // console.log($(element).attr("id") == uploadedImageFiles[0].name);
+        // console.log(uploadedImageFiles[0].tempURL);
+        for (var i = 0; i < uploadedImageFiles.length; i++) {
+            if (uploadedImageFiles[i].name == $(element).attr("id")) {
+                previewName = uploadedImageFiles[i].name;
+                previewURL = uploadedImageFiles[i].tempURL;
+            }
+        }
+        if (previewName) {
+            $(".modal-title").html(previewName);
+            $(".modal-body").html("<img src='" + previewURL + "'>");
+        } else {
+            $(".modal-title").html("No preview available");
+            $(".modal-body").html("Sorry, we couldn't generate a preview for you.");
+        }
+    }, 1000);
+}
+
+/**
  * Write this
  */
 function addNamesToDOM() {
     resetDOM();
     for (var i = 0; i < uploadedImageFiles.length; i++) {
-        let imageDOM = "<li class='list-item'><a class='uploaded-image' href='#'>" + uploadedImageFiles[i].name +
-            "</a><img src='/img/remove_icon.png' class='remove-icon' id='delete-" + uploadedImageFiles[i].name
-            + "' onclick='removeImage(this)'></li>";
+        let imageDOM = "<li class='list-item'><a class='uploaded-image' id='"
+            + uploadedImageFiles[i].name + "' data-bs-toggle='modal' data-bs-target='#imagePreview' onclick='showPreview(this)'>"
+            + uploadedImageFiles[i].name + "</a><img src='/img/remove_icon.png' class='remove-icon' id='delete-"
+            + uploadedImageFiles[i].name + "' onclick='removeImage(this)'></li>";
         $(".uploaded-images").append(imageDOM);
     }
     checkNumUploaded();
@@ -111,11 +157,15 @@ function removeImage(element) {
 /**
  * CITE and write
  */
-function getStorageRef(file) {
+function getStorageRef(file, temp) {
     let imageID = file.lastModified;
-    // Create a storage reference and keep track of it
+    // Create a storage reference
     let storageRef = storage.ref();
-    storageRef = storageRef.child("images/tasks/" + imageID + ".jpg");
+    if (!temp) {
+        storageRef = storageRef.child("images/tasks/" + imageID + ".jpg");
+    } else {
+        storageRef = storageRef.child("images/temp/" + imageID + ".jpg");
+    }
     return storageRef;
 }
 
@@ -154,7 +204,8 @@ function getCurrentStudent() {
  * (https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript?page=1&tab=votes#tab-top)
  */
 function pseudorandomID() {
-    let generatedID = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+    let generatedID = Math.random().toString(36).replace(/[^a-z\d]+/g, '').substr(0, 11);
+    console.log(generatedID);
     return generatedID;
 }
 
@@ -205,10 +256,28 @@ function addTaskToDB(imageURLs) {
     })
         .then(() => {
             console.log("Educator task successfully written!");
+            $("#feedback").html("Success! Please wait...")
+            setTimeout(function () {
+                location.href = "student-home.html";
+            }, 1000);
         })
         .catch((error) => {
             console.error("Error adding educator task: ", error);
         });
+}
+
+/**
+ * Write this.
+ * 
+ * @param {} file 
+ */
+function deleteTempImages(file) {
+    let deleteRef = getStorageRef(file, true);
+    deleteRef.delete().then(() => {
+        console.log("Temp directory successfully deleted!");
+    }).catch((error) => {
+        console.log("Error deleting temp directory: ", error);
+    });
 }
 
 /**
@@ -217,7 +286,8 @@ function addTaskToDB(imageURLs) {
 function onClickSubmit() {
     // Generate image URLs and add them to an array
     for (var i = 0; i < uploadedImageFiles.length; i++) {
-        let storageRef = getStorageRef(uploadedImageFiles[i]);
+        let storageRef = getStorageRef(uploadedImageFiles[i], false);
+        console.log(storageRef);
         storageRef.put(uploadedImageFiles[i])
             .then(function () {
                 console.log('Uploaded to Cloud storage');
@@ -226,13 +296,26 @@ function onClickSubmit() {
                         console.log(url);
                         imageURLs.push(url);
                         console.log(imageURLs);
-                        /* Create task documents in the student's and their teacher's task collection 
-                           (include array of image URLs as an attribute) */
-                        addTaskToDB(imageURLs);
+                        /* Once list of permanent URLs is complete, create task documents in the student's and 
+                           their teacher's task collection (include array of image URLs as an attribute) */
+                        if (i == (uploadedImageFiles.length)) {
+                            addTaskToDB(imageURLs);
+                        };
                     })
             });
-
+        console.log(uploadedImageFiles[i]);
+        deleteTempImages(uploadedImageFiles[i]);
     }
+}
+
+/**
+ * CITE and write this
+ */
+function onClickHome() {
+    for (var i = 0; i < uploadedImageFiles.length; i++) {
+        deleteTempImages(uploadedImageFiles[i]);
+    }
+    location.href = "student-home.html";
 }
 
 // Run function when document is ready 
