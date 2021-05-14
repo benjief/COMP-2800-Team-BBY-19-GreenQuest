@@ -36,6 +36,7 @@
     border-radius: 10px;
     margin-bottom: 15px;
     background-color: #ff80ee;
+    box-shadow: 5px 5px 5px rgb(116, 103, 103);
 }
 
 .class-name {
