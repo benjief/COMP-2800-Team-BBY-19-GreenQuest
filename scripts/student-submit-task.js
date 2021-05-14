@@ -256,10 +256,7 @@ function addTaskToDB(imageURLs) {
     })
         .then(() => {
             console.log("Educator task successfully written!");
-            $("#feedback").html("Success! Please wait...")
-            // $("#feedback").css({
-            //     color: "rgb(53, 255, 46)"
-            // });
+            $("#feedback").html("Success! Please wait...");
             $("#feedback").show(0);
             $("#feedback").fadeOut(2500);
             setTimeout(function () {

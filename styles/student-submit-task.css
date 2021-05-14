@@ -34,7 +34,8 @@ border: none;
         "images"
         "input"
         "submit"
-        "home";
+        "home"
+        "feedback";
     align-items: center;
 }
 
@@ -186,4 +187,6 @@ li {
     height: 100%;
     align-items: center;
     text-align: center;
+    font-weight: 600;
+    color: green;
 }
