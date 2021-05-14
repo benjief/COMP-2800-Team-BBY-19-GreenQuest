@@ -237,7 +237,7 @@ function addTaskToDB(imageURLs) {
         Submitter_ID: userID,
         Task_Description: "Test",
         Task_Photos: imageURLs,
-        Task_Notes: $("#task-notes").prop("value")
+        Task_Notes: $("#task-notes").prop("value"),
         Task_Approved: false
     })
         .then(() => {
