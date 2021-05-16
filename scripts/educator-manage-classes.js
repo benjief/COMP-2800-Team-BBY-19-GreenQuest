@@ -74,7 +74,7 @@ function onSelectClass() {
     $(document).click(function (event) {
         let className = $(event.target).html();
         setTimeout(function () {
-            location.href = "educator-manage-class.html?classname=" + className;
+            location.href = "./educator-manage-class.html?classname=" + className;
         }, 500);
     });
 }
@@ -84,7 +84,7 @@ function onSelectClass() {
  */
 function onClickBack() {
     setTimeout(function () {
-        location.href = "educator-home.html?";
+        location.href = "./educator-home.html?";
     }, 1000);
 }
 

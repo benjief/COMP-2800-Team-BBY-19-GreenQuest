@@ -108,7 +108,7 @@ function addStudent() {
         // Update the student's Student_Class attribute
         db.collection("Students").doc(studentToAdd).update({
             Student_Class: className,
-            Student_Educator: userName
+            Student_Educator: currentUser
         })
             .then(() => {
                 console.log("Student successfully added to this class!");
@@ -155,9 +155,9 @@ function removeStudent() {
 function onClickSubmit() {
     setTimeout(function () {
         if (!redirectFlag) {
-            location.href = "educator-home.html";
+            location.href = "./educator-home.html";
         } else {
-            location.href = "educator-manage-class.html?classname=" + className;
+            location.href = "./educator-manage-class.html?classname=" + className;
         }
 
     }, 1000);

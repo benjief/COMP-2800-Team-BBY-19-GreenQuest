@@ -73,7 +73,7 @@ function onSelectTask() {
         let taskName = $(event.target).html();
         let  taskID = $(event.target).attr("id");
         setTimeout(function () {
-            location.href = "educator-approve-task.html?taskname=" + taskName + "&taskid=" + taskID;
+            location.href = "./educator-approve-task.html?taskname=" + taskName + "&taskid=" + taskID;
         }, 500);
     });
 }
@@ -83,7 +83,7 @@ function onSelectTask() {
  */
 function onClickBack() {
     setTimeout(function () {
-        location.href = "educator-home.html?";
+        location.href = "./educator-home.html?";
     }, 1000);
 }
 
