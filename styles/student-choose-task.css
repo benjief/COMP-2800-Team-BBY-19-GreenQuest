@@ -15,7 +15,7 @@
     /* word-wrap: break-word; */
 }
 
-.modal-body img {
+.modal-body iframe {
     max-width: 100%;
     max-height: auto;
     object-fit: contain;
@@ -33,11 +33,12 @@ border: none;
 #main-content-card {
     grid-template-columns: 100%;
     grid-template-areas: 
-        "images"
-        "input"
-        "submit"
-        "home"
-        "feedback";
+        "title"
+        "description"
+        "instructions"
+        "more-info"
+        "accept"
+        "reject";
     align-items: center;
 }
 
@@ -166,30 +167,14 @@ border: none;
     grid-area: home;
 }
 
-#submit-button {
+#accept-button {
     display: flex;
     height: 100%;
     align-items: center;
 }
 
-#home-button {
+#reject-button {
     display: flex;
     height: 100%;
     align-items: center;
-}
-
-.feedback-placeholder {
-    display: flex;
-    justify-content: center;
-    grid-area: feedback;
-    height: 70px;
-}
-
-#feedback {
-    display: flex;
-    height: 100%;
-    align-items: center;
-    text-align: center;
-    font-weight: 600;
-    color: green;
 }
