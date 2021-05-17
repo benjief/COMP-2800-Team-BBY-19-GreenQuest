@@ -33,19 +33,42 @@ function addInfoToDOM() {
     $("#task-title-container").append(title);
     let description = "<p id='task-description'>" + taskDescription + "</p>";
     $("#task-description-container").append(description);
-    let instructions = "<a class='task-instructions' id='" + taskInstructions + "onclick='showVideo(this)"
+    let instructions = "<a id='task-instructions' onclick='showVideo(this)"
         + "data-bs-toggle='modal' data-bs-target='#videoViewer'>Task Instructions</a>";
     $("#task-instructions-container").append(instructions);
-    let info = "<a class='task-instructions' id='" + taskInfo + "onclick='showVideo(this)"
+    let info = "<a id='task-information' onclick='showVideo(this)"
         + "data-bs-toggle='modal' data-bs-target='#videoViewer'>Task Instructions</a>";
     $("#task-information-container").append(info);
 }
 
 /**
+ * Write this.
  * 
+ * @param {*} element 
  */
 function showVideo(element) {
+    let category = $(element).attr("id");
+    let videoURL = null;
+    let videoTitle = null;
 
+    if (category === "task-instructions") {
+        videoURL = taskInstructions;
+        videoTitle = "Instructions";
+        
+    } else {
+        videoURL = taskInfo;
+        videoTitle = "More Information";
+    }
+
+    $(".modal-body").html("");
+
+    if (videoURL) {
+        $(".modal-title").html(videoTitle);
+        $(".modal-body").html("<iframe src='" + videoURL + "' allowfullscreen>");
+    } else {
+            $(".modal-title").html("No video available");
+            $(".modal-body").html("Sorry, we couldn't generate a video for you.");
+        }
 }
 
 
