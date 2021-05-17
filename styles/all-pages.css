@@ -1,0 +1,86 @@
+/* CSS for all pages */
+
+/* Nav bar styling */
+.navbar-brand {
+    font-family: 'Press Start 2P', Arial, Helvetica, sans-serif;
+    font-size: 13pt;
+}
+
+.navbar {
+    background-color: rgba(53, 255, 46, 0.788);
+}
+
+/* We can change the media query width later */
+@media (min-width: 768px) {
+    .navbar-brand.abs
+        {
+            position: absolute;
+            width: 100%;
+            left: 0;
+            text-align: center;
+        }
+    }
+
+/* Body styling */
+body {
+    font-family: 'Mali', Arial, Helvetica, sans-serif;
+    font-size: 13pt;
+    background-image: url('/img/background_clouds.png');
+    background-repeat: repeat-x repeat-y;
+}
+
+/* Page container and heading styling */
+.page-container {
+    margin-top: 50px;
+}
+
+.heading-container {
+    display: flex;
+    grid-area: header;
+    font-family: 'Press Start 2P';
+    font-size: 16pt;
+    font-weight: 600;
+    justify-content: center;
+    margin-bottom: 50px;
+    margin-left: 5px;
+    margin-right: 5px;
+    text-align: center;
+    /* text-shadow: 0px 0px 1px rgb(255, 255, 255); */
+}
+
+.page-heading {
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+
+/* Content card styling */
+#main-content-card {
+    display: grid;
+    grid-area: content-card;
+    margin-top: 10px;
+    width: 90%;
+    max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    border-radius: 7px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 40px;
+    background: url('/img/background_pattern.png');
+    /* background-color: rgb(255, 255, 110); */
+}
+
+.card-text-container {
+    display: flex;
+    grid-area: card-text;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 20pt;
+}
+
+/* Other styling */
+.button {
+    color: white;
+    text-decoration: none;
+}
