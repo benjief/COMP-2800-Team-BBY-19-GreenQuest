@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>GreenQuest - About Us</title>
+
+    <!-- Bootstrap for Mobile-first, and JQuery -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <!-- Optional styles and scripts of your own -- REMEMBER TO ADD YOUR PAGE-SPECIFIC STYLESHEET HERE -->
+    <link rel="stylesheet" href="../styles/all-pages.css">
+    <link rel="stylesheet" href="../styles/about-us.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mali&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon//favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon//favicon-16x16.png">
+    <link rel="manifest" href="/favicon//site.webmanifest">
+    <link rel="mask-icon" href="/favicon//safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+</head>
+
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand abs" href="#">GreenQuest</a>
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse" id="collapseNavbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="./login.html">Logout</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="//codeply.com">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Logout</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="" data-bs-target="#myModal" data-bs-toggle="modal">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="page-container">
+        <div class="heading-container">
+            <p class="page-heading">About Us</p>
+        </div>
+        <div class="card mb-3" id="content-card-1">
+            <div class="text-container" id="about-us-container">
+                <p id="about-us">Greenquest is made up of four dreamers who really want to make our planet better place.
+                    Our project was born from our desire to help the next generation learn about how they do this.
+                    A little tweak here and there in one's everyday life can make a world of difference.</p>
+            </div>
+        </div>
+        <div class="card mb-3" id="content-card-2">
+            <div class="text-container" id="benjie-container">
+                <img class="bio-pic" id="bio-pic-1" src="../img/benjie_1.png" onclick="easterEgg(this)">
+                <p id="benjie-bio">Benjie loves acquiring new skills through coding - so it makes sense that he's 
+                    our primary coder! Benjie is currently completing his diploma in Computer Systems Technology at BCIT,
+                    although he already has a BSc in Geophysics from UBC. Although he's looking to break into the tech world,
+                    Benjie still goes out to the middle of nowhere to look at rocks whenever he has a chance. Speaking of rocks,
+                    Benjie also loves climbing them! His other hobbies include hiking, running, loving on his Japanese Chin named Smeagol, 
+                    Miyazaki films, Nintendo, and playing guitar (albeit very badly).</p>
+            </div>
+        </div>
+        <div class="card mb-3" id="content-card-3">
+            <div class="text-container" id="sam-container">
+                <img class="bio-pic" id="bio-pic-2" src="../img/sam_1.png" onclick="easterEgg(this)">
+                <p id="sam-bio">Samuel, who is the Primary Designer, has a niche with generating ideas and
+                    creative designs. Samuel is eager to grasp the concepts of coding as a term and is driven to 
+                    work on things until completion. He enjoys outdoor activities such as rock climbing and camping.</p>
+            </div>
+        </div>
+        <div class="card mb-3" id="content-card-4">
+            <div class="text-container" id="giwoun-container">
+                <img class="bio-pic" id="bio-pic-3" src="../img/giwoun_1.png" onclick="easterEgg(this)">
+                <p id="giwoun-bio">Giwoun, who is our Co-Designer and Co-Coder, has great communication skills, eager to learn
+                    about coding, projects and everything. Giwoun is enthusiastic about well.. everything? Her
+                    enthusiasm is the glue that keeps the team together. She loves snowboarding, playing baseball and drinking a 
+                    cup of coffee outdoors.</p>
+            </div>
+        </div>
+        <div class="card mb-3" id="content-card-5">
+            <div class="text-container" id="gyephel-container">
+                <img class="bio-pic" id="bio-pic-4" src="../img/gyephel_1.png" onclick="easterEgg(this)">
+                <p id="gyephel-bio">Gyephel, who is the Front End Developer, likes designing and is eager to taste
+                    the real life work environment. Gyephel is driven to learn more in depth about
+                    coding. Gyephel has great imagination and creativity which translates into his artistic ability.
+                    Gyephel has a cat that stalks him</p>
+            </div>
+        </div>
+        <div class="card-button-container" id="card-button-container-1">
+            <a class="button" id="home-button" href="#" onclick="onClickHome()">Home</a>
+        </div>
+    </div>
+
+    <!----------------------------------------------->
+    <!-- JS: Boostrap, JQuery, Firebase, API related    -->
+    <!----------------------------------------------->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+        </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
+
+    <!-- Link to the api keys for your firebase project -->
+    <script src="../scripts/firebase-api-GreenQuest.js"></script>
+
+    <!--------------------------------------------------------------------->
+    <!-- JS files: Your own JavaScript functions included here - REMEMBER TO ADD YOUR PAGE-SPECIFIC JS FILES HERE  -->
+    <!--------------------------------------------------------------------->
+    <script src="../scripts/about-us.js"></script>
+
+</body>
+
+</html>

@@ -36,13 +36,22 @@ var uiConfig = {
                         Student_Email: user.email,
                         Student_Class: null,
                         Student_Educator: null,
+<<<<<<< HEAD
                         Student_Points: 0
+=======
+                        Student_Points: 0,
+                        Student_Quest: false
+>>>>>>> TEAM_student_get_task_feature
                     })
                         .then(function () {
                             console.log("New student added to firestore");
                             // Re-direct to student-new-home.html after signup
                             window.location.assign(
+<<<<<<< HEAD
                                 "html/student-home.html?firstvisit=true"
+=======
+                                "/html/student-home.html?firstvisit=true"
+>>>>>>> TEAM_student_get_task_feature
                             );
                         })
                         .catch(function (error) {
@@ -57,7 +66,11 @@ var uiConfig = {
                             console.log("New educator added to firestore");
                             // Re-direct to educator-new-home.html after signup
                             window.location.assign(
+<<<<<<< HEAD
                                 "html/educator-new-home.html"
+=======
+                                "/html/educator-new-home.html"
+>>>>>>> TEAM_student_get_task_feature
                             );
                         })
                         .catch(function (error) {
@@ -66,9 +79,15 @@ var uiConfig = {
                 }
             } else {
                 if (userType === "educator") {
+<<<<<<< HEAD
                     window.location.assign("html/educator-home.html");
                 } else if (userType === "student") {
                     window.location.assign("html/student-home.html");
+=======
+                    window.location.assign("/html/educator-home.html");
+                } else if (userType === "student") {
+                    window.location.assign("/html/student-home.html");
+>>>>>>> TEAM_student_get_task_feature
                 }
             }
             return true;
