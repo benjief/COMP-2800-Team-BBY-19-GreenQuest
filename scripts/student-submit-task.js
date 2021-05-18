@@ -242,18 +242,34 @@ function getTaskDescription() {
 
 
 /**
+ * Write this
+ */
+function updateQuestStatus() {
+    db.collection("Students").doc(userID).update({
+        Student_Quest: true
+    })
+    .then(() => {
+        console.log("Student quest status succesfully updated!");
+    })
+    .catch((error) => {
+        console.error("Error updating student quest status: ", error);
+    });
+}
+
+/**
  * Write this.
  * 
  * @param {*} imageURLs 
  */
 function addTaskToDB(imageURLs) {
     let taskID = pseudorandomID();
-    // Write task to student's task collection
+    // Update task in student's task collection
     db.collection("Students").doc(userID).collection("Tasks").doc(taskID).update({
         Task_Submitted: true
     })
         .then(() => {
             console.log("Student task successfully updated!");
+            updateQuestStatus();
         })
         .catch((error) => {
             console.error("Error updating student task: ", error);
@@ -265,7 +281,8 @@ function addTaskToDB(imageURLs) {
         Task_Description: taskDescription,
         Task_Photos: imageURLs,
         Task_Notes: $("#task-notes").prop("value"),
-        Task_Approved: false
+        Task_Approved: false,
+        Task_Rejected: false
     })
         .then(() => {
             console.log("Educator task successfully written!");
