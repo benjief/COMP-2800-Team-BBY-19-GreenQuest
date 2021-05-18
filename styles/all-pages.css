@@ -110,9 +110,7 @@ body {
 /* We can change the media query width later */
 @media (min-width: 768px) {
     .navbar-brand.abs {
-        position: absolute;
-        width: 100%;
-        left: 0;
+        position: relative;
         text-align: center;
     }
 }
