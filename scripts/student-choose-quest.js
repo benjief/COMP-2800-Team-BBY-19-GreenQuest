@@ -1,12 +1,12 @@
 
-// JS for student-choose-task.js
+// JS for student-choose-quest.js
 
-var taskIDs = [];
-var currentTaskID = null;
-var taskTitle;
-var taskDescription;
-var taskInstructions;
-var taskInfo;
+var questIDs = [];
+var currentQuestID = null;
+var questTitle;
+var questDescription;
+var questInstructions;
+var questInfo;
 var bitmojiURL;
 var userName;
 var className;
@@ -42,7 +42,7 @@ function getCurrentStudent() {
                         $("#accept-button").html("Home");
                         $(".card-button-container").css({ marginBottom: "30px" });
                     }
-                    getTaskIDs();
+                    getQuestIDs();
                 });
         }
     });
@@ -51,37 +51,37 @@ function getCurrentStudent() {
 /**
  * Write this
  */
-function getTaskIDs() {
-    db.collection("Tasks")
+function getQuestIDs() {
+    db.collection("Quests")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                taskIDs.push(doc.id);
+                questIDs.push(doc.id);
             })
-            let numOfTasks = taskIDs.length;
-            let randomNum = Math.floor(Math.random() * numOfTasks);
-            currentTaskID = taskIDs[randomNum];
-            getTask(currentTaskID);
+            let numOfQuests = questIDs.length;
+            let randomNum = Math.floor(Math.random() * numOfQuests);
+            currentQuestID = questIDs[randomNum];
+            getQuest(currentQuestID);
         })
         .catch((error) => {
-            console.log("Error getting task ID: ", error);
+            console.log("Error getting quest ID: ", error);
         });
 }
 
 /**
  * Write this.
  */
-function getTask(taskID) {
+function getQuest(questID) {
 
-    db.collection("Tasks").doc(taskID)
+    db.collection("Quests").doc(questID)
         // Read
         .get()
         .then(function (doc) {
-            currentTaskID = doc.id;
-            taskTitle = doc.data().title;
-            taskDescription = doc.data().description;
-            taskInstructions = doc.data().instruction;
-            taskInfo = doc.data().moreInfo;
+            currentQuestID = doc.id;
+            questTitle = doc.data().title;
+            questDescription = doc.data().description;
+            questInstructions = doc.data().instruction;
+            questInfo = doc.data().moreInfo;
             getBitmoji();
         });
 }
@@ -120,19 +120,19 @@ function getBitmoji() {
  * Write this.
  */
 function addInfoToDOM() {
-    let title = "<p id='task-title'>" + taskTitle + "</p>";
-    $("#task-title-container").append(title);
-    let description = "<p id='task-description'>Your Quest:<br />" + taskDescription + "</p>";
-    $("#task-description-container").append(description);
+    let title = "<p id='quest-title'>" + questTitle + "</p>";
+    $("#quest-title-container").append(title);
+    let description = "<p id='quest-description'>Your Quest:<br />" + questDescription + "</p>";
+    $("#quest-description-container").append(description);
     let bitmoji = "<img src='" + bitmojiURL + "'>";
     $(".image-container").append(bitmoji);
     getBitmojiBackground();
-    let instructions = "<a id='task-instructions' onclick='showVideo(this)'"
+    let instructions = "<a id='quest-instructions' onclick='showVideo(this)'"
         + "data-bs-toggle='modal' data-bs-target='#videoViewer'>Instructions</a>";
-    $("#task-instructions-container").append(instructions);
-    let info = "<a id='task-information' onclick='showVideo(this)'"
+    $("#quest-instructions-container").append(instructions);
+    let info = "<a id='quest-information' onclick='showVideo(this)'"
         + "data-bs-toggle='modal' data-bs-target='#videoViewer'>More Information</a>";
-    $("#task-information-container").append(info);
+    $("#quest-information-container").append(info);
 }
 
 /**
@@ -145,12 +145,12 @@ function showVideo(element) {
     let videoURL = null;
     let videoTitle = null;
 
-    if (category === "task-instructions") {
-        videoURL = taskInstructions;
+    if (category === "quest-instructions") {
+        videoURL = questInstructions;
         videoTitle = "Instructions";
 
     } else {
-        videoURL = taskInfo;
+        videoURL = questInfo;
         videoTitle = "More Information";
     }
 
@@ -186,38 +186,38 @@ function pseudorandomID() {
 /** 
  * Write this.
  */
-function activateTask() {
+function activateQuest() {
     db.collection("Students").doc(userID).update({
         Student_Quest: true
     })
     .then(() => {
-        console.log("Task successfully activated!");
-        location.href = "./student-view-quest.html?taskid=" + currentTaskID;
+        console.log("Quest successfully activated!");
+        location.href = "./student-view-quest.html?questid=" + currentQuestID;
     })
     .catch((error) => {
-        console.error("Error activating task: ", error);
+        console.error("Error activating quest: ", error);
     });
 }
 
 /** 
  * Write this.
  */
-function writeTask() {
-    let taskID = pseudorandomID();
-    // Update student task
-    db.collection("Students").doc(userID).collection("Tasks").doc(taskID).set({
-        Task_ID: currentTaskID,
-        Task_Approved: false,
-        Task_Rejected: false,
-        Task_Unread: false,
-        Task_Submitted: false
+function writeQuest() {
+    let questID = pseudorandomID();
+    // Update student quest
+    db.collection("Students").doc(userID).collection("Quests").doc(questID).set({
+        Quest_ID: currentQuestID,
+        Quest_Approved: false,
+        Quest_Rejected: false,
+        Quest_Unread: false,
+        Quest_Submitted: false
     })
         .then(() => {
-            console.log("Task successfully written!");
-            activateTask();
+            console.log("Quest successfully written!");
+            activateQuest();
         })
         .catch((error) => {
-            console.error("Error writing task: ", error);
+            console.error("Error writing quest: ", error);
         });
 }
 
@@ -225,7 +225,7 @@ function writeTask() {
  * Write this.
  */
 function onClickAccept() {
-    writeTask();
+    writeQuest();
 }
 
 // Run function when document is ready 

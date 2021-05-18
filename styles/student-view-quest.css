@@ -58,7 +58,7 @@ border: none;
     text-align: center;
 }
 
-#task-title-container {
+#quest-title-container {
     grid-area: title;
     font-weight: 600;
     margin-top: 20px;
@@ -82,20 +82,20 @@ border: none;
     object-fit: scale-down;
 }
 
-#task-description-container {
+#quest-description-container {
     grid-area: description;
     margin-bottom: 0;
     width: 90%;
     justify-self: center;
 }
 
-#task-instructions-container {
+#quest-instructions-container {
     grid-area: instructions;
     margin-top: 0;
     margin-bottom: 0;
 }
 
-#task-information-container {
+#quest-information-container {
     grid-area: more-info;
     margin-top: 5px;
     margin-bottom: 35px;
@@ -146,6 +146,6 @@ border: none;
     align-items: center;
 }
 
-#task-instructions, #task-information {
+#quest-instructions, #quest-information {
     text-decoration: underline;
 }
