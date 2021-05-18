@@ -1,18 +1,39 @@
 
 // JS for student-choose-task.js
 
-var currentTaskID;
+var taskIDs = [];
+var currentTaskID = null;
 var taskTitle;
 var taskDescription;
 var taskInstructions;
 var taskInfo;
 
 /**
+ * Write this
+ */
+function getTaskIDs() {
+    db.collection("Tasks")
+        .get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                taskIDs.push(doc.id);
+            })
+            let numOfTasks = taskIDs.length;
+            let randomNum = Math.floor(Math.random() * numOfTasks);
+            currentTaskID = taskIDs[randomNum];
+            getTask(currentTaskID);
+        })
+        .catch((error) => {
+            console.log("Error getting task ID: ", error);
+        });
+}
+
+/**
  * Write this.
  */
-function getATask() {
-    db.collection("Tasks")
-        .where("id", "!=", currentTaskID)
+function getTask(taskID) {
+
+    db.collection("Tasks").doc(currentTaskID)
         // Read
         .get()
         .then(function (doc) {
@@ -70,6 +91,12 @@ function showVideo(element) {
             $(".modal-body").html("Sorry, we couldn't generate a video for you.");
         }
 }
+
+// Run function when document is ready 
+$(document).ready(function () {
+    getTaskIDs();
+});
+
 
 
 // // Create empty arrays to store files added to this task and their URLs
