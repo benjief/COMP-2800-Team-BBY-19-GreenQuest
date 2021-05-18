@@ -36,7 +36,8 @@ var uiConfig = {
                         Student_Email: user.email,
                         Student_Class: null,
                         Student_Educator: null,
-                        Student_Points: 0
+                        Student_Points: 0,
+                        Student_Quest: false
                     })
                         .then(function () {
                             console.log("New student added to firestore");
