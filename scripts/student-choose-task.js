@@ -214,7 +214,7 @@ function writeTask() {
         Task_Unread: false
     })
         .then(() => {
-            console.log("Task sucessfully written!");
+            console.log("Task successfully written!");
             activateTask();
         })
         .catch((error) => {

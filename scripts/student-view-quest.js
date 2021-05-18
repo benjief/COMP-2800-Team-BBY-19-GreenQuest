@@ -147,3 +147,17 @@ $(document).ready(function () {
         $('.modal-body iframe').attr('src', '');
     });
 });
+
+function onClickNew() {
+
+        db.collection("Students").doc(userID).update({
+            Student_Quest: false
+        })
+        .then(() => {
+            console.log("Student quest successfully skipped!");
+            location.href = "./student-choose-task.html";
+        })
+        .catch((error) => {
+            console.error("Error activating task: ", error);
+        });
+}
