@@ -37,7 +37,7 @@ border: none;
         "description"
         "instructions"
         "more-info"
-        "submit"
+        "submit-quest"
         "new-quest"
         "home";
     align-items: center;
@@ -115,7 +115,7 @@ border: none;
 }
 
 #card-button-container-1 {
-    grid-area: submit;
+    grid-area: submit-quest;
     margin-top: 0;
 }
 
@@ -128,7 +128,7 @@ border: none;
     margin-bottom: 30px;
 }
 
-#submit-button {
+#submit-quest-button {
     display: flex;
     height: 100%;
     align-items: center;
