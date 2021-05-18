@@ -11,6 +11,7 @@ var className;
 var educatorName;
 var educatorID;
 var taskDescription;
+var uniqueTaskID;
 
 // Create empty arrays to store files added to this task and their URLs
 var uploadedImageFiles = [];
@@ -190,21 +191,11 @@ function getCurrentStudent() {
                 $("#task-notes").attr("placeholder", "Ask your teacher to add you to their class to start getting tasks");
             }
             getTaskDescription();
+            getUniqueTaskID();
             checkNumUploaded();
             getEducatorID();
             processImage();
         });
-}
-
-
-/**
- * CITE and write this 
- * (https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript?page=1&tab=votes#tab-top)
- */
-function pseudorandomID() {
-    let generatedID = Math.random().toString(36).replace(/[^a-z\d]+/g, '').substr(0, 11);
-    console.log(generatedID);
-    return generatedID;
 }
 
 /**
@@ -240,6 +231,24 @@ function getTaskDescription() {
         });
 }
 
+/**
+ * Write this.
+ */
+function getUniqueTaskID() {
+    db.collection("Students").doc(userID).collection("Tasks")
+    .where("Task_Submitted", "==", false)
+    .get()
+    .then((querySnapshot) => {
+        // There should only ever be one task at a time
+        querySnapshot.forEach((doc) => {
+            uniqueTaskID = doc.id;
+        })
+    })
+    .catch((error) => {
+        console.log("Error getting unique task ID: ", error);
+    });
+}
+
 
 /**
  * Write this
@@ -248,12 +257,12 @@ function updateQuestStatus() {
     db.collection("Students").doc(userID).update({
         Student_Quest: true
     })
-    .then(() => {
-        console.log("Student quest status succesfully updated!");
-    })
-    .catch((error) => {
-        console.error("Error updating student quest status: ", error);
-    });
+        .then(() => {
+            console.log("Student quest status succesfully updated!");
+        })
+        .catch((error) => {
+            console.error("Error updating student quest status: ", error);
+        });
 }
 
 /**
@@ -262,39 +271,38 @@ function updateQuestStatus() {
  * @param {*} imageURLs 
  */
 function addTaskToDB(imageURLs) {
-    let taskID = pseudorandomID();
     // Update task in student's task collection
-    db.collection("Students").doc(userID).collection("Tasks").doc(taskID).update({
+    db.collection("Students").doc(userID).collection("Tasks").doc(uniqueTaskID).update({
         Task_Submitted: true
     })
         .then(() => {
             console.log("Student task successfully updated!");
             updateQuestStatus();
+            // Write task to teacher's task collection
+            db.collection("Educators").doc(educatorID).collection("Tasks").doc(uniqueTaskID).set({
+                Task_Submitter: userName,
+                Submitter_ID: userID,
+                Task_Description: taskDescription,
+                Task_Photos: imageURLs,
+                Task_Notes: $("#task-notes").prop("value"),
+                Task_Approved: false,
+                Task_Rejected: false
+            })
+                .then(() => {
+                    console.log("Educator task successfully written!");
+                    $("#feedback").html("Success! Please wait...");
+                    $("#feedback").show(0);
+                    $("#feedback").fadeOut(2500);
+                    setTimeout(function () {
+                        location.href = "./student-home.html";
+                    }, 2300);
+                })
+                .catch((error) => {
+                    console.error("Error adding educator task: ", error);
+                });
         })
         .catch((error) => {
             console.error("Error updating student task: ", error);
-        });
-    // Write task to teacher's task collection
-    db.collection("Educators").doc(educatorID).collection("Tasks").doc(taskID).set({
-        Task_Submitter: userName,
-        Submitter_ID: userID,
-        Task_Description: taskDescription,
-        Task_Photos: imageURLs,
-        Task_Notes: $("#task-notes").prop("value"),
-        Task_Approved: false,
-        Task_Rejected: false
-    })
-        .then(() => {
-            console.log("Educator task successfully written!");
-            $("#feedback").html("Success! Please wait...");
-            $("#feedback").show(0);
-            $("#feedback").fadeOut(2500);
-            setTimeout(function () {
-                location.href = "./student-home.html";
-            }, 2300);
-        })
-        .catch((error) => {
-            console.error("Error adding educator task: ", error);
         });
 }
 
