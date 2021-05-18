@@ -61,7 +61,7 @@ function getBitmoji() {
             res.items.forEach(() => {
                 counter++;
             });
-            let randomNum = Math.floor(Math.random() * counter);
+            let randomNum = Math.floor(Math.random() * counter + 1);
             storageRef.child("images/bitmojis/" + randomNum.toString() + ".png").getDownloadURL()
                 .then((url) => {
                     bitmojiURL = url;
@@ -87,6 +87,7 @@ function addInfoToDOM() {
     $("#task-description-container").append(description);
     let bitmoji = "<img src='" + bitmojiURL + "'>";
     $(".image-container").append(bitmoji);
+    getBitmojiBackground();
     let instructions = "<a id='task-instructions' onclick='showVideo(this)'"
         + "data-bs-toggle='modal' data-bs-target='#videoViewer'>Instructions</a>";
     $("#task-instructions-container").append(instructions);
@@ -123,6 +124,11 @@ function showVideo(element) {
         $(".modal-title").html("No video available");
         $(".modal-body").html("Sorry, we couldn't generate a video for you.");
     }
+}
+
+function getBitmojiBackground() {
+    let randomNum = Math.floor(Math.random() * 5 + 3);
+    $(".image-container").css({ background: "url('../img/background_pattern_" + randomNum + ".png')" });
 }
 
 // Run function when document is ready 
