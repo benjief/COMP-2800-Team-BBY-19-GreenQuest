@@ -285,8 +285,6 @@ function addTaskToDB(imageURLs) {
                 Task_Description: taskDescription,
                 Task_Photos: imageURLs,
                 Task_Notes: $("#task-notes").prop("value"),
-                Task_Approved: false,
-                Task_Rejected: false
             })
                 .then(() => {
                     console.log("Educator task successfully written!");
