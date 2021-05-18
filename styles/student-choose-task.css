@@ -12,7 +12,6 @@
     display: flex;
     justify-content: center;
 
-    max-width: max-content;
     max-height: max-content;
     /* word-wrap: break-word; */
 }
@@ -23,7 +22,7 @@
 }
 
 .modal-footer {
-border: none;
+    border: none;
 }
 
 .btn {
