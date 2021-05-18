@@ -65,7 +65,7 @@ function getStudentsInAClass() {
                 studentsInAClass.push(doc.data().Student_Name);
             });
             getStudents();
-            console.log(studentsInAClass);
+            console.log("Student that have a class are "+ studentsInAClass);
         })
 }
 
@@ -104,7 +104,9 @@ function addStudent() {
         // Get "remove" icon to call removeStudent()
         $(event.target).attr("onclick", "removeStudent()");
         let studentToAdd = studentIDs[index];
-        console.log(studentToAdd);
+        console.log("Student to add"+ studentToAdd);
+        console.log("Student added to class: "+ className);
+        console.log("Student's Educator: "+ currentUser);
         // Update the student's Student_Class attribute
         db.collection("Students").doc(studentToAdd).update({
             Student_Class: className,
@@ -155,9 +157,9 @@ function removeStudent() {
 function onClickSubmit() {
     setTimeout(function () {
         if (!redirectFlag) {
-            location.href = "educator-home.html";
+            location.href = "./educator-home.html";
         } else {
-            location.href = "educator-manage-class.html?classname=" + className;
+            location.href = "./educator-manage-class.html?classname=" + className;
         }
 
     }, 1000);
