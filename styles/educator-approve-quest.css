@@ -1,4 +1,4 @@
-/** CSS for educator-approve-task.html */
+/** CSS for educator-approve-quest.html */
 
 .modal-header {
     border: none;
@@ -34,10 +34,10 @@ border: none;
     grid-template-columns: 100%;
     grid-template-areas: 
         "card-text"
-        "task-submitter"
-        "task-description"
-        "task-notes"
-        "task-points"
+        "quest-submitter"
+        "quest-description"
+        "quest-notes"
+        "quest-points"
         "uploaded-images"
         "approve"
         "reject"
@@ -66,20 +66,20 @@ border: none;
     align-items: flex-start;
 }
 
-#task-submitter-container {
-    grid-area: task-submitter;
+#quest-submitter-container {
+    grid-area: quest-submitter;
 }
 
-#task-description-container {
-    grid-area: task-description;
+#quest-description-container {
+    grid-area: quest-description;
 }
 
-#task-notes-container {
-    grid-area: task-notes;
+#quest-notes-container {
+    grid-area: quest-notes;
 }
 
-#task-points-container {
-    grid-area: task-points;
+#quest-points-container {
+    grid-area: quest-points;
 }
 
 .input-container {
