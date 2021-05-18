@@ -108,7 +108,7 @@ function addStudent() {
         // Update the student's Student_Class attribute
         db.collection("Students").doc(studentToAdd).update({
             Student_Class: className,
-            Student_Educator: userName
+            Student_Educator: currentUser
         })
             .then(() => {
                 console.log("Student successfully added to this class!");
