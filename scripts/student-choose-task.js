@@ -8,6 +8,42 @@ var taskDescription;
 var taskInstructions;
 var taskInfo;
 var bitmojiURL;
+var currentUser;
+
+/* Get the current user's name, class name, educator name, and ID from Firestore. */
+function getCurrentStudent() {
+    firebase.auth().onAuthStateChanged(function (somebody) {
+        if (somebody) {
+            db.collection("Students")
+                .doc(somebody.uid)
+                // Read
+                .get()
+                .then(function (doc) {
+                    // Extract the current student's class name
+                    userName = doc.data().Student_Name;
+                    className = doc.data().Student_Class;
+                    educatorName = doc.data().Student_Educator;
+                    userID = doc.id;
+                    if (className == null) {
+                        // Display a message on the page if the student isn't in a class
+                        $("#main-content-card > .text-container").remove();
+                        $("#main-content-card > .image-container").remove();
+                        let message = "<div class='text-container' id='message-container'><p id='message'>"
+                            + "You haven't been added to a class yet!</p></div>";
+                        $("#main-content-card").append(message);
+                        $(".page-heading").html("No Class!");
+                        $("#message-container").css({ width: "90%", fontWeight: "600", justifySelf: "center" });
+                        $("#card-button-container-2").remove();
+                        $("#accept-button").removeAttr("onclick");
+                        $("#accept-button").attr("href", "./student-home.html");
+                        $("#accept-button").html("Home");
+                        $(".card-button-container").css({ marginBottom: "30px" });
+                    }
+                    getTaskIDs();
+                });
+        }
+    });
+}
 
 /**
  * Write this
@@ -126,14 +162,49 @@ function showVideo(element) {
     }
 }
 
+/**
+ * Write this.
+ */
 function getBitmojiBackground() {
     let randomNum = Math.floor(Math.random() * 5 + 3);
     $(".image-container").css({ background: "url('../img/background_pattern_" + randomNum + ".png')" });
 }
 
+/**
+ * CITE and write this 
+ * (https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript?page=1&tab=votes#tab-top)
+ */
+function pseudorandomID() {
+    let generatedID = Math.random().toString(36).replace(/[^a-z\d]+/g, '').substr(0, 11);
+    console.log(generatedID);
+    return generatedID;
+}
+
+/** 
+ * Write this.
+ */
+function addTaskToDB() {
+    let taskID = pseudorandomID();
+    // Write task to student's task collection
+    db.collection("Students").doc(userID).collection("Tasks").doc(taskID).set({
+        Task_Submitter: userName,
+        Submitter_ID: userID,
+        Task_Description: "Test",
+        Task_Photos: imageURLs,
+        Task_Notes: $("#task-notes").prop("value"),
+        Task_Approved: false
+    })
+        .then(() => {
+            console.log("Student task successfully written!");
+        })
+        .catch((error) => {
+            console.error("Error adding student task: ", error);
+        });
+}
+
 // Run function when document is ready 
 $(document).ready(function () {
-    getTaskIDs();
+    getCurrentStudent();
     // Stops videos from playing once modals are closed */
     $('#videoViewer').on('hide.bs.modal', function () {
         $('.modal-body iframe').attr('src', '');
