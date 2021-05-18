@@ -213,7 +213,7 @@ function writeTask() {
         Task_Submitted: false
     })
         .then(() => {
-            console.log("Task sucessfully written!");
+            console.log("Task successfully written!");
             activateTask();
         })
         .catch((error) => {
