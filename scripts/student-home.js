@@ -1,4 +1,4 @@
-function onClickStudentHome() {
+function onClickMyQuest() {
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {
             db.collection("Students")

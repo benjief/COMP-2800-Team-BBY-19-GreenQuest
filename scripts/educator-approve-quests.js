@@ -73,7 +73,7 @@ function onSelectQuest() {
         let questName = $(event.target).html();
         let  questID = $(event.target).attr("id");
         setTimeout(function () {
-            location.href = "educator-approve-quest.html?questname=" + questName + "&questid=" + questID;
+            location.href = "./educator-approve-quest.html?questname=" + questName + "&questid=" + questID;
         }, 500);
     });
 }
@@ -83,7 +83,7 @@ function onSelectQuest() {
  */
 function onClickBack() {
     setTimeout(function () {
-        location.href = "educator-home.html?";
+        location.href = "./educator-home.html?";
     }, 1000);
 }
 

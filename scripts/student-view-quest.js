@@ -59,15 +59,9 @@ function getCurrentStudent() {
 /**
  * Write this.
  */
-<<<<<<< HEAD
-function getTask() {
-    console.log(taskID);
-    db.collection("Quests").doc(taskID)
-=======
 function getQuest() {
     console.log(questID);
     db.collection("Quests").doc(questID)
->>>>>>> c20fe3a6bca7b78d3d353e365c9e41a3df099d3e
         // Read
         .get()
         .then(function (doc) {
@@ -168,8 +162,6 @@ function getBitmojiBackground() {
     });
 }
 
-<<<<<<< HEAD
-=======
 /**
  * Write this.
  */
@@ -177,16 +169,6 @@ function onClickSubmit() {
     location.href = "./student-submit-quest.html?questid=" + questID + "&userid=" + userID;
 }
 
-// Run function when document is ready 
-$(document).ready(function () {
-    getCurrentStudent();
-    // Stops videos from playing once modals are closed */
-    $('#videoViewer').on('hide.bs.modal', function () {
-        $('.modal-body iframe').attr('src', '');
-    });
-});
-
->>>>>>> c20fe3a6bca7b78d3d353e365c9e41a3df099d3e
 
 function resetQuest() {
     if (confirm("Are you sure?!")) {
@@ -209,14 +191,9 @@ function resetQuest() {
                     });
             });
         })
-<<<<<<< HEAD
-}
-
-/**
- * Write this.
- */
-function onClickSubmit() {
-    location.href = "./student-submit-task.html?taskid=" + taskID + "&userid=" + userID;
+    } else {
+        console.log("Reset quest cancelled");
+    }
 }
 
 // Run function when document is ready 
@@ -227,11 +204,3 @@ $(document).ready(function () {
         $('.modal-body iframe').attr('src', '');
     });
 });
-=======
-    } else {
-        console.log("Reset quest cancelled");
-    }
-    
-
-}
->>>>>>> c20fe3a6bca7b78d3d353e365c9e41a3df099d3e

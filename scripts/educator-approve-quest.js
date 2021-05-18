@@ -14,7 +14,7 @@ var questSubmitter = null;
 var questDescription = null;
 var questNotes = null;
 var questPoints = 0;
-var questApproved = false;
+var questapproved = false;
 
 // Create an empty array to store URLs of images attached to this quest
 var imageURLs = [];
