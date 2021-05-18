@@ -180,7 +180,8 @@ $(document).ready(function () {
 
 
 function resetQuest() {
-    db.collection("Students").doc(userID).collection("Quests")
+    if (confirm("Are you sure?!")) {
+        db.collection("Students").doc(userID).collection("Quests")
         .where("Quest_Submitted", "==", false)
         .get()
         .then((querySnapshot) => {
@@ -199,4 +200,9 @@ function resetQuest() {
                     });
             });
         })
+    } else {
+        console.log("Reset quest cancelled");
+    }
+    
+
 }
