@@ -83,14 +83,15 @@ function getBitmoji() {
 function addInfoToDOM() {
     let title = "<p id='task-title'>" + taskTitle + "</p>";
     $("#task-title-container").append(title);
-    $("#task-description").append(taskDescription);
+    let description = "<p id='task-description'>Your Quest:<br />" + taskDescription + "</p>";
+    $("#task-description-container").append(description);
     let bitmoji = "<img src='" + bitmojiURL + "'>";
     $(".image-container").append(bitmoji);
     let instructions = "<a id='task-instructions' onclick='showVideo(this)'"
-        + "data-bs-toggle='modal' data-bs-target='#videoViewer'>Task Instructions</a>";
+        + "data-bs-toggle='modal' data-bs-target='#videoViewer'>Instructions</a>";
     $("#task-instructions-container").append(instructions);
     let info = "<a id='task-information' onclick='showVideo(this)'"
-        + "data-bs-toggle='modal' data-bs-target='#videoViewer'>Task Information</a>";
+        + "data-bs-toggle='modal' data-bs-target='#videoViewer'>More Information</a>";
     $("#task-information-container").append(info);
 }
 

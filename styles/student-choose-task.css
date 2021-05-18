@@ -46,23 +46,34 @@ border: none;
     display: flex;
     justify-content: center;
     font-size: 15pt;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .text-container p {
     display: flex;
     height: 100%;
     align-items: center;
-    margin: 0;
     text-align: center;
 }
 
 #task-title-container {
     grid-area: title;
+    font-weight: 600;
+    margin-top: 20px;
+    margin-top: 30px;
+    height: 45px;
 }
 
 .image-container {
     grid-area: bitmoji;
-    height: 200px;
+    height: 180px;
+    width: 180px;
+    justify-self: center;
+    border: 2px solid #ff80ee;
+    border-style: dashed;
+    border-radius: 10px;
+    background: url("../img/background_pattern_3.png")
 }
 
 .image-container img {
@@ -73,14 +84,21 @@ border: none;
 
 #task-description-container {
     grid-area: description;
+    margin-bottom: 0;
+    width: 90%;
+    justify-self: center;
 }
 
 #task-instructions-container {
     grid-area: instructions;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 #task-information-container {
     grid-area: more-info;
+    margin-top: 5px;
+    margin-bottom: 35px;
 }
 
 .card-button-container {
@@ -92,16 +110,18 @@ border: none;
     border-radius: 10px;
     font-size: 15pt;
     justify-self: center;
-    margin-top: 20px;
+    margin-top: 10px;
     box-shadow: 5px 5px 5px rgb(116, 103, 103);
 }
 
 #card-button-container-1 {
     grid-area: accept;
+    margin-top: 0;
 }
 
 #card-button-container-2 {
     grid-area: reject;
+    margin-bottom: 30px;
 }
 
 #accept-button {
