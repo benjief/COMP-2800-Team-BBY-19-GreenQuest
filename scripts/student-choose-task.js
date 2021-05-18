@@ -8,7 +8,10 @@ var taskDescription;
 var taskInstructions;
 var taskInfo;
 var bitmojiURL;
-var currentUser;
+var userName;
+var className;
+var educatorName;
+var userID;
 
 /* Get the current user's name, class name, educator name, and ID from Firestore. */
 function getCurrentStudent() {
@@ -183,23 +186,47 @@ function pseudorandomID() {
 /** 
  * Write this.
  */
-function addTaskToDB() {
+function updateStudent() {
+    db.collection("Students").doc(userID).update({
+        Student_Quest: true
+    })
+    .then(() => {
+        console.log("Student successfully updated!");
+        location.href = "./student-view-quest.html";
+    })
+    .catch((error) => {
+        console.error("Error updating student: ", error);
+    });
+}
+
+/** 
+ * Write this.
+ */
+function activateTask() {
     let taskID = pseudorandomID();
     // Write task to student's task collection
     db.collection("Students").doc(userID).collection("Tasks").doc(taskID).set({
         Task_Submitter: userName,
         Submitter_ID: userID,
-        Task_Description: "Test",
-        Task_Photos: imageURLs,
-        Task_Notes: $("#task-notes").prop("value"),
-        Task_Approved: false
+        Task_ID: currentTaskID,
+        Task_Approved: false,
+        Task_Rejected: false,
+        Task_Unread: false
     })
         .then(() => {
-            console.log("Student task successfully written!");
+            console.log("Task is now active!");
+            updateStudent();
         })
         .catch((error) => {
-            console.error("Error adding student task: ", error);
+            console.error("Error activating task: ", error);
         });
+}
+
+/**
+ * Write this.
+ */
+function onClickAccept() {
+    activateTask();
 }
 
 // Run function when document is ready 
