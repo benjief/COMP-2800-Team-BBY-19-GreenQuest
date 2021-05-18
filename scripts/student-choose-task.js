@@ -52,13 +52,12 @@ function getTask(taskID) {
 function addInfoToDOM() {
     let title = "<p id='task-title'>" + taskTitle + "</p>";
     $("#task-title-container").append(title);
-    let description = "<p id='task-description'>" + taskDescription + "</p>";
-    $("#task-description-container").append(description);
+    $("#task-description").append(taskDescription);
     let instructions = "<a id='task-instructions' onclick='showVideo(this)'"
         + "data-bs-toggle='modal' data-bs-target='#videoViewer'>Task Instructions</a>";
     $("#task-instructions-container").append(instructions);
     let info = "<a id='task-information' onclick='showVideo(this)'"
-        + "data-bs-toggle='modal' data-bs-target='#videoViewer'>Task Instructions</a>";
+        + "data-bs-toggle='modal' data-bs-target='#videoViewer'>Task Information</a>";
     $("#task-information-container").append(info);
 }
 
@@ -95,17 +94,11 @@ function showVideo(element) {
 // Run function when document is ready 
 $(document).ready(function () {
     getTaskIDs();
-    /* Taken from https://stackoverflow.com/questions/13799377/twitter-bootstrap-modal-stop-youtube-video - 
-       stops videos from playing once modals are closed */
-    $("#videoViewer").on('hidden.bs.modal', function (e) {
-        $("#videoViewer iframe").attr("src", $("#videoViewer iframe").attr("src"));
+    // Stops videos from playing once modals are closed */
+    $('#videoViewer').on('hide.bs.modal', function () {
+        $('.modal-body iframe').attr('src', '');
     });
 });
-
-//video stops when modal closes
-$('#videoViewer').on('hide.bs.modal', function() {
-    $('.modal-body iframe').attr('src', '');
-  });
 
 
 // // Create empty arrays to store files added to this task and their URLs

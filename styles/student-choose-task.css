@@ -45,14 +45,15 @@ border: none;
 .text-container {
     display: flex;
     justify-content: center;
+    font-size: 15pt;
 }
 
 .text-container p {
     display: flex;
     height: 100%;
     align-items: center;
-    font-size: 15pt;
     margin: 0;
+    text-align: center;
 }
 
 #task-title-container {
@@ -102,4 +103,8 @@ border: none;
     display: flex;
     height: 100%;
     align-items: center;
+}
+
+#task-instructions, #task-information {
+    text-decoration: underline;
 }
