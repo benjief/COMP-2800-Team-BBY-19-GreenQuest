@@ -102,6 +102,10 @@ $(document).ready(function () {
     });
 });
 
+//video stops when modal closes
+$('#videoViewer').on('hide.bs.modal', function() {
+    $('.modal-body iframe').attr('src', '');
+  });
 
 
 // // Create empty arrays to store files added to this task and their URLs
