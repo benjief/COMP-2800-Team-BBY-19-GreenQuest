@@ -1,4 +1,3 @@
-
 // JS for student-view-quest.js
 
 // Pull task ID from URL
@@ -93,11 +92,11 @@ function addInfoToDOM() {
     let bitmoji = "<img src='" + bitmojiURL + "'>";
     $(".image-container").append(bitmoji);
     getBitmojiBackground();
-    let instructions = "<a id='task-instructions' onclick='showVideo(this)'"
-        + "data-bs-toggle='modal' data-bs-target='#videoViewer'>Instructions</a>";
+    let instructions = "<a id='task-instructions' onclick='showVideo(this)'" +
+        "data-bs-toggle='modal' data-bs-target='#videoViewer'>Instructions</a>";
     $("#task-instructions-container").append(instructions);
-    let info = "<a id='task-information' onclick='showVideo(this)'"
-        + "data-bs-toggle='modal' data-bs-target='#videoViewer'>More Information</a>";
+    let info = "<a id='task-information' onclick='showVideo(this)'" +
+        "data-bs-toggle='modal' data-bs-target='#videoViewer'>More Information</a>";
     $("#task-information-container").append(info);
 }
 
@@ -136,7 +135,9 @@ function showVideo(element) {
  */
 function getBitmojiBackground() {
     let randomNum = Math.floor(Math.random() * 5 + 3);
-    $(".image-container").css({ background: "url('../img/background_pattern_" + randomNum + ".png')" });
+    $(".image-container").css({
+        background: "url('../img/background_pattern_" + randomNum + ".png')"
+    });
 }
 
 /**
@@ -155,16 +156,25 @@ $(document).ready(function () {
     });
 });
 
-function onClickNew() {
 
-        db.collection("Students").doc(userID).update({
-            Student_Quest: false
+function resetQuest() {
+    db.collection("Students").doc(userID).collection("Tasks")
+        .where("Task_Submitted", "==", false)
+        .get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                var currentQuestID = doc.id;
+                db.collection("Students").doc(userID).collection("Tasks").doc(currentQuestID).delete()
+                    .then(() => {
+                        console.log("Document successfully deleted!");
+                        db.collection("Students").doc(userID).update({
+                            Student_Quest: false
+                        })
+                        console.log("Student_Quest is now false!");
+                        location.href = "./student-choose-task.html";
+                    }).catch((error) => {
+                        console.error("Error removing document: ", error);
+                    });
+            });
         })
-        .then(() => {
-            console.log("Student quest successfully skipped!");
-            location.href = "./student-choose-task.html";
-        })
-        .catch((error) => {
-            console.error("Error activating task: ", error);
-        });
 }
