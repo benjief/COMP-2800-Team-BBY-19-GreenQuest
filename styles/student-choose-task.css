@@ -11,14 +11,15 @@
 .modal-body {
     display: flex;
     justify-content: center;
-    height: 500px;
+
+    max-width: max-content;
+    max-height: max-content;
     /* word-wrap: break-word; */
 }
 
 .modal-body iframe {
-    max-width: 100%;
-    max-height: auto;
-    object-fit: contain;
+    width: 430px;
+    height: 315px;
 }
 
 .modal-footer {
