@@ -168,8 +168,6 @@ function getBitmojiBackground() {
     });
 }
 
-<<<<<<< HEAD
-=======
 /**
  * Write this.
  */
@@ -186,7 +184,6 @@ $(document).ready(function () {
     });
 });
 
->>>>>>> c20fe3a6bca7b78d3d353e365c9e41a3df099d3e
 
 function resetQuest() {
     if (confirm("Are you sure?!")) {
