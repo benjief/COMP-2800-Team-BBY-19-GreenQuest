@@ -57,7 +57,7 @@ function getCurrentStudent() {
  */
 function getTask() {
     console.log(taskID);
-    db.collection("Tasks").doc(taskID)
+    db.collection("Quests").doc(taskID)
         // Read
         .get()
         .then(function (doc) {
@@ -158,22 +158,6 @@ function getBitmojiBackground() {
     });
 }
 
-/**
- * Write this.
- */
-function onClickSubmit() {
-    location.href = "./student-submit-task.html?taskid=" + taskID + "&userid=" + userID;
-}
-
-// Run function when document is ready 
-$(document).ready(function () {
-    getCurrentStudent();
-    // Stops videos from playing once modals are closed */
-    $('#videoViewer').on('hide.bs.modal', function () {
-        $('.modal-body iframe').attr('src', '');
-    });
-});
-
 
 function resetQuest() {
     db.collection("Students").doc(userID).collection("Tasks")
@@ -196,3 +180,19 @@ function resetQuest() {
             });
         })
 }
+
+/**
+ * Write this.
+ */
+function onClickSubmit() {
+    location.href = "./student-submit-task.html?taskid=" + taskID + "&userid=" + userID;
+}
+
+// Run function when document is ready 
+$(document).ready(function () {
+    getCurrentStudent();
+    // Stops videos from playing once modals are closed */
+    $('#videoViewer').on('hide.bs.modal', function () {
+        $('.modal-body iframe').attr('src', '');
+    });
+});
