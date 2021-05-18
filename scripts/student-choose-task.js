@@ -33,7 +33,7 @@ function getTaskIDs() {
  */
 function getTask(taskID) {
 
-    db.collection("Tasks").doc(currentTaskID)
+    db.collection("Tasks").doc(taskID)
         // Read
         .get()
         .then(function (doc) {
@@ -54,10 +54,10 @@ function addInfoToDOM() {
     $("#task-title-container").append(title);
     let description = "<p id='task-description'>" + taskDescription + "</p>";
     $("#task-description-container").append(description);
-    let instructions = "<a id='task-instructions' onclick='showVideo(this)"
+    let instructions = "<a id='task-instructions' onclick='showVideo(this)'"
         + "data-bs-toggle='modal' data-bs-target='#videoViewer'>Task Instructions</a>";
     $("#task-instructions-container").append(instructions);
-    let info = "<a id='task-information' onclick='showVideo(this)"
+    let info = "<a id='task-information' onclick='showVideo(this)'"
         + "data-bs-toggle='modal' data-bs-target='#videoViewer'>Task Instructions</a>";
     $("#task-information-container").append(info);
 }

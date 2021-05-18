@@ -55,19 +55,19 @@ border: none;
     margin: 0;
 }
 
-.task-title-container {
+#task-title-container {
     grid-area: title;
 }
 
-.task-description-container {
+#task-description-container {
     grid-area: description;
 }
 
-.task-instructions-container {
+#task-instructions-container {
     grid-area: instructions;
 }
 
-.task-information-container {
+#task-information-container {
     grid-area: more-info;
 }
 
@@ -85,11 +85,11 @@ border: none;
 }
 
 #card-button-container-1 {
-    grid-area: submit;
+    grid-area: accept;
 }
 
 #card-button-container-2 {
-    grid-area: home;
+    grid-area: reject;
 }
 
 #accept-button {
