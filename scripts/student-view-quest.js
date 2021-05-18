@@ -1,8 +1,10 @@
 
-// JS for student-choose-task.js
+// JS for student-view-quest.js
 
-var taskIDs = [];
-var currentTaskID = null;
+// Pull task ID from URL
+const parsedUrl = new URL(window.location.href);
+var taskID = parsedUrl.searchParams.get("taskid");
+
 var taskTitle;
 var taskDescription;
 var taskInstructions;
@@ -27,42 +29,21 @@ function getCurrentStudent() {
                     className = doc.data().Student_Class;
                     educatorName = doc.data().Student_Educator;
                     userID = doc.id;
-                    getTaskIDs();
+                    getTask();
                 });
         }
     });
 }
 
 /**
- * Write this
- */
-function getTaskIDs() {
-    db.collection("Tasks")
-        .get()
-        .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                taskIDs.push(doc.id);
-            })
-            let numOfTasks = taskIDs.length;
-            let randomNum = Math.floor(Math.random() * numOfTasks);
-            currentTaskID = taskIDs[randomNum];
-            getTask(currentTaskID);
-        })
-        .catch((error) => {
-            console.log("Error getting task ID: ", error);
-        });
-}
-
-/**
  * Write this.
  */
-function getTask(taskID) {
-
+function getTask() {
+    console.log(taskID);
     db.collection("Tasks").doc(taskID)
         // Read
         .get()
         .then(function (doc) {
-            currentTaskID = doc.id;
             taskTitle = doc.data().title;
             taskDescription = doc.data().description;
             taskInstructions = doc.data().instruction;
