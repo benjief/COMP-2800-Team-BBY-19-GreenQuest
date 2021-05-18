@@ -1,0 +1,116 @@
+/** CSS for student-choose-class.html */
+
+.modal-header {
+    border: none;
+}
+
+.modal-title {
+    font-weight: 600;
+}
+
+.modal-body {
+    display: flex;
+    justify-content: center;
+
+    max-width: max-content;
+    max-height: max-content;
+    /* word-wrap: break-word; */
+}
+
+.modal-body iframe {
+    width: 430px;
+    height: 315px;
+}
+
+.modal-footer {
+border: none;
+}
+
+.btn {
+    background-color: #ff80ee;
+    border: none;
+}
+
+#main-content-card {
+    grid-template-columns: 100%;
+    grid-template-areas: 
+        "title"
+        "description"
+        "instructions"
+        "more-info"
+        "submit"
+        "skip"
+        "homepage";
+    align-items: center;
+}
+
+.text-container {
+    display: flex;
+    justify-content: center;
+    font-size: 15pt;
+}
+
+.text-container p {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    margin: 0;
+    text-align: center;
+}
+
+#task-title-container {
+    grid-area: title;
+}
+
+#task-description-container {
+    grid-area: description;
+}
+
+#task-instructions-container {
+    grid-area: instructions;
+}
+
+#task-information-container {
+    grid-area: more-info;
+}
+
+.card-button-container {
+    display: flex;
+    height: 50px;
+    width: 180px;
+    background-color: #ff80ee;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 15pt;
+    justify-self: center;
+    margin-top: 20px;
+    box-shadow: 5px 5px 5px rgb(116, 103, 103);
+}
+
+#card-button-container-1 {
+    grid-area: submit;
+}
+
+#card-button-container-2 {
+    grid-area: skip;
+}
+
+#card-button-container-3 {
+    grid-area: homepage;
+}
+
+#accept-button {
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+
+#reject-button {
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+
+#task-instructions, #task-information {
+    text-decoration: underline;
+}
