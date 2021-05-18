@@ -1,10 +1,6 @@
 
 // JS for student-view-quest.js
 
-// Pull task ID from URL
-const parsedUrl = new URL(window.location.href);
-var taskID = parsedUrl.searchParams.get("taskid");
-
 var taskTitle;
 var taskDescription;
 var taskInstructions;
@@ -14,6 +10,28 @@ var userName;
 var className;
 var educatorName;
 var userID;
+var taskID;
+
+/**
+ * Write this.
+ */
+ function getTaskID() {
+    console.log(userID);
+    db.collection("Students").doc(userID).collection("Tasks")
+    .where("Task_Submitted", "==", false)
+    .get()
+    .then((querySnapshot) => {
+        // There should only ever be one task at a time
+        querySnapshot.forEach((doc) => {
+            taskID = doc.data().Task_ID;
+        })
+        console.log(taskID);
+        getTask();
+    })
+    .catch((error) => {
+        console.log("Error getting task ID: ", error);
+    });
+}
 
 /* Get the current user's name, class name, educator name, and ID from Firestore. */
 function getCurrentStudent() {
@@ -29,7 +47,7 @@ function getCurrentStudent() {
                     className = doc.data().Student_Class;
                     educatorName = doc.data().Student_Educator;
                     userID = doc.id;
-                    getTask();
+                    getTaskID();
                 });
         }
     });

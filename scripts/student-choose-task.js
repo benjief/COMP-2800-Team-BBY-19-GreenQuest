@@ -192,7 +192,7 @@ function activateTask() {
     })
     .then(() => {
         console.log("Task successfully activated!");
-        location.href = "./student-view-quest.html?taskid=" + currentTaskID;
+        location.href = "./student-view-quest.html";
     })
     .catch((error) => {
         console.error("Error activating task: ", error);
