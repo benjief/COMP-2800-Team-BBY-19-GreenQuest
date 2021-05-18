@@ -228,9 +228,10 @@ function getEducatorID() {
  * Write this.
  */
 function getTaskDescription() {
+    console.log(taskID);
     db.collection("Tasks").doc(taskID)
         .get()
-        .then(() => {
+        .then(function (doc) {
             taskDescription = doc.data().description;
             console.log("Task description successfully retrieved");
         })
