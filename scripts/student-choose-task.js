@@ -75,7 +75,7 @@ function showVideo(element) {
     if (category === "task-instructions") {
         videoURL = taskInstructions;
         videoTitle = "Instructions";
-        
+
     } else {
         videoURL = taskInfo;
         videoTitle = "More Information";
@@ -87,14 +87,19 @@ function showVideo(element) {
         $(".modal-title").html(videoTitle);
         $(".modal-body").html("<iframe src='" + videoURL + "' allowfullscreen>");
     } else {
-            $(".modal-title").html("No video available");
-            $(".modal-body").html("Sorry, we couldn't generate a video for you.");
-        }
+        $(".modal-title").html("No video available");
+        $(".modal-body").html("Sorry, we couldn't generate a video for you.");
+    }
 }
 
 // Run function when document is ready 
 $(document).ready(function () {
     getTaskIDs();
+    /* Taken from https://stackoverflow.com/questions/13799377/twitter-bootstrap-modal-stop-youtube-video - 
+       stops videos from playing once modals are closed */
+    $("#videoViewer").on('hidden.bs.modal', function (e) {
+        $("#videoViewer iframe").attr("src", $("#videoViewer iframe").attr("src"));
+    });
 });
 
 
