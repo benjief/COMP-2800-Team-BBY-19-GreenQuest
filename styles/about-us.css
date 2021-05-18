@@ -1,0 +1,91 @@
+/* CSS for about-us.html */
+
+.header-container {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+#content-card-1, #content-card-2, #content-card-3, #content-card-4, #content-card-5 {
+    display: grid;
+    margin-top: 10px;
+    width: 90%;
+    max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    border-radius: 7px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 40px;
+    font-weight: 600;
+    background: rgba(255, 252, 86, 0.9) !important;
+}
+
+#content-card-1 {
+    margin-bottom: 90px !important;
+}
+
+#about-us-container {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#about-us {
+    margin: 0;
+    border: none;
+    background: none;
+}
+
+.text-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-self: center;
+    width: 90%;
+}
+
+.text-container p {
+    text-align: justify;
+    border: 2px solid #00ff0d;
+    border-style: dashed;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+}
+
+.bio-pic {
+    align-self: center;
+    width: 70%;
+    height: 70%;
+    object-fit: scale-down;
+    border: 2px solid #ff80ee;
+    border-style: dashed;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.card-button-container {
+    display: flex;
+    height: 50px;
+    width: 180px;
+    background-color: #ff80ee;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 15pt;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    box-shadow: 5px 5px 5px rgb(116, 103, 103);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#card-button-container-1 {
+    grid-area: accept;
+}
+
+#home-button {
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
