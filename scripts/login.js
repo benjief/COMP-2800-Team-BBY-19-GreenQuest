@@ -36,7 +36,8 @@ var uiConfig = {
                         Student_Email: user.email,
                         Student_Class: null,
                         Student_Educator: null,
-                        Student_Points: 0
+                        Student_Points: 0,
+                        Student_Quest: false
                     })
                         .then(function () {
                             console.log("New student added to firestore");
@@ -68,7 +69,7 @@ var uiConfig = {
                 if (userType === "educator") {
                     window.location.assign("/html/educator-home.html");
                 } else if (userType === "student") {
-                    window.location.assign("/html/student-home.html?firstvisit=false");
+                    window.location.assign("/html/student-home.html");
                 }
             }
             return true;

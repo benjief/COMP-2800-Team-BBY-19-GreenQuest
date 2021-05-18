@@ -1,11 +1,17 @@
 
 // JS for student-submit-quest.js
 
+// Pull quest and user IDs from URL
+const parsedUrl = new URL(window.location.href);
+var questID = parsedUrl.searchParams.get("questid");
+var userID = parsedUrl.searchParams.get("userid");
+
 var userName;
 var className;
-var userID;
 var educatorName;
 var educatorID;
+var questDescription;
+var uniqueQuestID;
 
 // Create empty arrays to store files added to this quest and their URLs
 var uploadedImageFiles = [];
@@ -169,42 +175,27 @@ function getStorageRef(file, temp) {
 
 /* Get the current user's name, class name, educator name, and ID from Firestore. */
 function getCurrentStudent() {
-    firebase.auth().onAuthStateChanged(function (somebody) {
-        if (somebody) {
-            db.collection("Students")
-                .doc(somebody.uid)
-                // Read
-                .get()
-                .then(function (doc) {
-                    // Extract the current student's class name
-                    userName = doc.data().Student_Name;
-                    className = doc.data().Student_Class;
-                    educatorName = doc.data().Student_Educator;
-                    userID = doc.id;
-                    if (className == null) {
-                        let message = "<div class='text-container'><p class='message'>You haven't been added to a class yet</p></div>"
-                        $(".uploaded-images").append(message);
-                        $("#card-button-container-1").remove();
-                        $("#upload-image-input").attr("disabled", "");
-                        $("#quest-notes").attr("disabled", "");
-                        $("#quest-notes").attr("placeholder", "Ask your teacher to add you to their class to start getting quests");
-                    }
-                    checkNumUploaded();
-                    getEducatorID();
-                    processImage();
-                });
-        }
-    });
-}
-
-/**
- * CITE and write this 
- * (https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript?page=1&tab=votes#tab-top)
- */
-function pseudorandomID() {
-    let generatedID = Math.random().toString(36).replace(/[^a-z\d]+/g, '').substr(0, 11);
-    console.log(generatedID);
-    return generatedID;
+    db.collection("Students").doc(userID)
+        .get()
+        .then(function (doc) {
+            // Extract the current student's class name
+            userName = doc.data().Student_Name;
+            className = doc.data().Student_Class;
+            educatorName = doc.data().Student_Educator;
+            if (className == null) {
+                let message = "<div class='text-container'><p class='message'>You haven't been added to a class yet</p></div>"
+                $(".uploaded-images").append(message);
+                $("#card-button-container-1").remove();
+                $("#upload-image-input").attr("disabled", "");
+                $("#quest-notes").attr("disabled", "");
+                $("#quest-notes").attr("placeholder", "Ask your teacher to add you to their class to start getting quests");
+            }
+            getQuestDescription();
+            getUniqueQuestID();
+            checkNumUploaded();
+            getEducatorID();
+            processImage();
+        });
 }
 
 /**
@@ -225,47 +216,91 @@ function getEducatorID() {
 }
 
 /**
+ * Write this.
+ */
+function getQuestDescription() {
+    console.log(questID);
+    db.collection("Quests").doc(questID)
+        .get()
+        .then(function (doc) {
+            questDescription = doc.data().description;
+            console.log("Quest description successfully retrieved");
+        })
+        .catch((error) => {
+            console.error("Error retrieving quest description: ", error);
+        });
+}
+
+/**
+ * Write this.
+ */
+function getUniqueQuestID() {
+    db.collection("Students").doc(userID).collection("Quests")
+    .where("Quest_Submitted", "==", false)
+    .get()
+    .then((querySnapshot) => {
+        // There should only ever be one quest at a time
+        querySnapshot.forEach((doc) => {
+            uniqueQuestID = doc.id;
+        })
+    })
+    .catch((error) => {
+        console.log("Error getting unique quest ID: ", error);
+    });
+}
+
+
+/**
  * Write this
+ */
+function updateQuestStatus() {
+    db.collection("Students").doc(userID).update({
+        Student_Quest: true
+    })
+        .then(() => {
+            console.log("Student quest status succesfully updated!");
+        })
+        .catch((error) => {
+            console.error("Error updating student quest status: ", error);
+        });
+}
+
+/**
+ * Write this.
  * 
  * @param {*} imageURLs 
  */
 function addQuestToDB(imageURLs) {
-    let questID = pseudorandomID();
-    // Write quest to student's quest collection
-    db.collection("Students").doc(userID).collection("Quests").doc(questID).set({
-        Quest_Submitter: userName,
-        Submitter_ID: userID,
-        Quest_Description: "Test",
-        Quest_Photos: imageURLs,
-        Quest_Notes: $("#quest-notes").prop("value"),
-        Quest_Approved: false
+    // Update quest in student's quest collection
+    db.collection("Students").doc(userID).collection("Quests").doc(uniqueQuestID).update({
+        Quest_Submitted: true
     })
         .then(() => {
-            console.log("Student quest successfully written!");
+            console.log("Student quest successfully updated!");
+            updateQuestStatus();
+            // Write quest to teacher's quest collection
+            db.collection("Educators").doc(educatorID).collection("Quests").doc(uniqueQuestID).set({
+                Quest_Submitter: userName,
+                Submitter_ID: userID,
+                Quest_Description: questDescription,
+                Quest_Photos: imageURLs,
+                Quest_Notes: $("#quest-notes").prop("value"),
+            })
+                .then(() => {
+                    console.log("Educator quest successfully written!");
+                    $("#feedback").html("Success! Please wait...");
+                    $("#feedback").show(0);
+                    $("#feedback").fadeOut(2500);
+                    setTimeout(function () {
+                        location.href = "./student-home.html";
+                    }, 2300);
+                })
+                .catch((error) => {
+                    console.error("Error adding educator quest: ", error);
+                });
         })
         .catch((error) => {
-            console.error("Error adding student quest: ", error);
-        });
-    // Write quest to teacher's quest collection
-    db.collection("Educators").doc(educatorID).collection("Quests").doc(questID).set({
-        Quest_Submitter: userName,
-        Submitter_ID: userID,
-        Quest_Description: "Test",
-        Quest_Photos: imageURLs,
-        Quest_Notes: $("#quest-notes").prop("value"),
-        Quest_Approved: false
-    })
-        .then(() => {
-            console.log("Educator quest successfully written!");
-            $("#feedback").html("Success! Please wait...");
-            $("#feedback").show(0);
-            $("#feedback").fadeOut(2500);
-            setTimeout(function () {
-                location.href = "./student-home.html";
-            }, 2300);
-        })
-        .catch((error) => {
-            console.error("Error adding educator quest: ", error);
+            console.error("Error updating student quest: ", error);
         });
 }
 
