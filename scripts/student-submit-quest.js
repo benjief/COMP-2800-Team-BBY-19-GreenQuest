@@ -1,5 +1,5 @@
 
-// JS for student-submit-task.js
+// JS for student-submit-quest.js
 
 var userName;
 var className;
@@ -7,7 +7,7 @@ var userID;
 var educatorName;
 var educatorID;
 
-// Create empty arrays to store files added to this task and their URLs
+// Create empty arrays to store files added to this quest and their URLs
 var uploadedImageFiles = [];
 var imageURLs = [];
 
@@ -160,7 +160,7 @@ function getStorageRef(file, temp) {
     // Create a storage reference
     let storageRef = storage.ref();
     if (!temp) {
-        storageRef = storageRef.child("images/tasks/" + imageID + ".jpg");
+        storageRef = storageRef.child("images/quests/" + imageID + ".jpg");
     } else {
         storageRef = storageRef.child("images/temp/" + imageID + ".jpg");
     }
@@ -186,8 +186,8 @@ function getCurrentStudent() {
                         $(".uploaded-images").append(message);
                         $("#card-button-container-1").remove();
                         $("#upload-image-input").attr("disabled", "");
-                        $("#task-notes").attr("disabled", "");
-                        $("#task-notes").attr("placeholder", "Ask your teacher to add you to their class to start getting tasks");
+                        $("#quest-notes").attr("disabled", "");
+                        $("#quest-notes").attr("placeholder", "Ask your teacher to add you to their class to start getting quests");
                     }
                     checkNumUploaded();
                     getEducatorID();
@@ -229,34 +229,34 @@ function getEducatorID() {
  * 
  * @param {*} imageURLs 
  */
-function addTaskToDB(imageURLs) {
-    let taskID = pseudorandomID();
-    // Write task to student's task collection
-    db.collection("Students").doc(userID).collection("Tasks").doc(taskID).set({
-        Task_Submitter: userName,
+function addQuestToDB(imageURLs) {
+    let questID = pseudorandomID();
+    // Write quest to student's quest collection
+    db.collection("Students").doc(userID).collection("Quests").doc(questID).set({
+        Quest_Submitter: userName,
         Submitter_ID: userID,
-        Task_Description: "Test",
-        Task_Photos: imageURLs,
-        Task_Notes: $("#task-notes").prop("value"),
-        Task_Approved: false
+        Quest_Description: "Test",
+        Quest_Photos: imageURLs,
+        Quest_Notes: $("#quest-notes").prop("value"),
+        Quest_Approved: false
     })
         .then(() => {
-            console.log("Student task successfully written!");
+            console.log("Student quest successfully written!");
         })
         .catch((error) => {
-            console.error("Error adding student task: ", error);
+            console.error("Error adding student quest: ", error);
         });
-    // Write task to teacher's task collection
-    db.collection("Educators").doc(educatorID).collection("Tasks").doc(taskID).set({
-        Task_Submitter: userName,
+    // Write quest to teacher's quest collection
+    db.collection("Educators").doc(educatorID).collection("Quests").doc(questID).set({
+        Quest_Submitter: userName,
         Submitter_ID: userID,
-        Task_Description: "Test",
-        Task_Photos: imageURLs,
-        Task_Notes: $("#task-notes").prop("value"),
-        Task_Approved: false
+        Quest_Description: "Test",
+        Quest_Photos: imageURLs,
+        Quest_Notes: $("#quest-notes").prop("value"),
+        Quest_Approved: false
     })
         .then(() => {
-            console.log("Educator task successfully written!");
+            console.log("Educator quest successfully written!");
             $("#feedback").html("Success! Please wait...");
             $("#feedback").show(0);
             $("#feedback").fadeOut(2500);
@@ -265,7 +265,7 @@ function addTaskToDB(imageURLs) {
             }, 2300);
         })
         .catch((error) => {
-            console.error("Error adding educator task: ", error);
+            console.error("Error adding educator quest: ", error);
         });
 }
 
@@ -303,10 +303,10 @@ function onClickSubmit() {
                         console.log(url);
                         imageURLs.push(url);
                         console.log(imageURLs);
-                        /* Once list of permanent URLs is complete, create task documents in the student's and 
-                           their teacher's task collection (include array of image URLs as an attribute) */
+                        /* Once list of permanent URLs is complete, create quest documents in the student's and 
+                           their teacher's quest collection (include array of image URLs as an attribute) */
                         if (i == (uploadedImageFiles.length)) {
-                            addTaskToDB(imageURLs);
+                            addQuestToDB(imageURLs);
                         };
                     })
             });

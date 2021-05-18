@@ -1,9 +1,9 @@
 'use-strict'
-var inst = "Tasks";
+var inst = "Quests";
 const myCollections = db.collection(inst);
 
-// var docTask = "recycling"
-// const referenceTask = myCollections.doc(docTask);
+// var docQuest = "recycling"
+// const referenceQuest = myCollections.doc(docQuest);
 
 //random integer generator from MDN webdocs. 
 //source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
@@ -11,38 +11,38 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
-//trying to create an array of current tasks available 
+//trying to create an array of current quests available 
 //to call three? or to call random one
 //calling random index of the list.
-var myListOfTasks = [];
-var referenceTask;
-var docTask;
-var docTask2;
-var docTask3;
+var myListOfQuests = [];
+var referenceQuest;
+var docQuest;
+var docQuest2;
+var docQuest3;
 
 myCollections.get().then((querySnapShot) => {
   querySnapShot.forEach((doc) => {
-    myListOfTasks.push(doc.id);
+    myListOfQuests.push(doc.id);
   });
 
-  //task 1 of 3 on the page
-  docTask = myListOfTasks[getRandomInt(myListOfTasks.length)];
-  referenceTask = myCollections.doc(docTask);
-  taskCardLoadingFromFirebase();
+  //quest 1 of 3 on the page
+  docQuest = myListOfQuests[getRandomInt(myListOfQuests.length)];
+  referenceQuest = myCollections.doc(docQuest);
+  questCardLoadingFromFirebase();
   howToModalAction();
   moreInfoModalAction();
 
-  docTask2 = myListOfTasks[getRandomInt(myListOfTasks.length)];
-  referenceTask = myCollections.doc(docTask2);
+  docQuest2 = myListOfQuests[getRandomInt(myListOfQuests.length)];
+  referenceQuest = myCollections.doc(docQuest2);
 
-  taskCardLoadingFromFirebase2();
+  questCardLoadingFromFirebase2();
   howToModalAction();
   moreInfoModalAction();
 
-  docTask3 = myListOfTasks[getRandomInt(myListOfTasks.length)];
-  referenceTask = myCollections.doc(docTask3);
+  docQuest3 = myListOfQuests[getRandomInt(myListOfQuests.length)];
+  referenceQuest = myCollections.doc(docQuest3);
 
-  taskCardLoadingFromFirebase3();
+  questCardLoadingFromFirebase3();
   howToModalAction();
   moreInfoModalAction();
 });
@@ -50,13 +50,13 @@ myCollections.get().then((querySnapShot) => {
 
 
 
-function taskCardLoadingFromFirebase() {
-  referenceTask.withConverter(taskConverter).get().then((doc) => {
+function questCardLoadingFromFirebase() {
+  referenceQuest.withConverter(questConverter).get().then((doc) => {
     if (doc.exists) {
-      var mytask = doc.data();
-      $("#task-title").text(mytask.getTitle());
-      $("#difficulty").html('Difficulty: ' + mytask.getDifficultyStars());
-      $("#task-description").text(mytask.getDescription());
+      var myquest = doc.data();
+      $("#quest-title").text(myquest.getTitle());
+      $("#difficulty").html('Difficulty: ' + myquest.getDifficultyStars());
+      $("#quest-description").text(myquest.getDescription());
       console.log("converting successful.");
     } else {
       console.log("No such document");
@@ -65,13 +65,13 @@ function taskCardLoadingFromFirebase() {
     });
 }
 
-function taskCardLoadingFromFirebase2() {
-  referenceTask.withConverter(taskConverter).get().then((doc) => {
+function questCardLoadingFromFirebase2() {
+  referenceQuest.withConverter(questConverter).get().then((doc) => {
     if (doc.exists) {
-      var mytask = doc.data();
-      $("#task-title2").text(mytask.getTitle());
-      $("#difficulty2").html('Difficulty: ' + mytask.getDifficultyStars());
-      $("#task-description2").text(mytask.getDescription());
+      var myquest = doc.data();
+      $("#quest-title2").text(myquest.getTitle());
+      $("#difficulty2").html('Difficulty: ' + myquest.getDifficultyStars());
+      $("#quest-description2").text(myquest.getDescription());
       console.log("converting successful.");
     } else {
       console.log("No such document");
@@ -80,13 +80,13 @@ function taskCardLoadingFromFirebase2() {
     });
 }
 
-function taskCardLoadingFromFirebase3() {
-  referenceTask.withConverter(taskConverter).get().then((doc) => {
+function questCardLoadingFromFirebase3() {
+  referenceQuest.withConverter(questConverter).get().then((doc) => {
     if (doc.exists) {
-      var mytask = doc.data();
-      $("#task-title3").text(mytask.getTitle());
-      $("#difficulty3").html('Difficulty: ' + mytask.getDifficultyStars());
-      $("#task-description3").text(mytask.getDescription());
+      var myquest = doc.data();
+      $("#quest-title3").text(myquest.getTitle());
+      $("#difficulty3").html('Difficulty: ' + myquest.getDifficultyStars());
+      $("#quest-description3").text(myquest.getDescription());
       console.log("converting successful.");
     } else {
       console.log("No such document");
@@ -101,7 +101,7 @@ function taskCardLoadingFromFirebase3() {
 // how-to-modal actions.
 function howToModalAction() {
   $('#how-to-modal').on('show.bs.modal', function() {
-    referenceTask.get().then((doc) => {
+    referenceQuest.get().then((doc) => {
           if (doc.exists) {
             var src = doc.data().instruction;
             $('iframe').attr('src', src);
@@ -117,7 +117,7 @@ function howToModalAction() {
 //more-info-modal actions.
 function moreInfoModalAction() {
   $('#more-info-modal').on('show.bs.modal',function() {
-    referenceTask.get().then((doc) => {
+    referenceQuest.get().then((doc) => {
       if (doc.exists) {
         var src = doc.data().moreInfo;
         $('iframe').attr('src', src);

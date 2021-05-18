@@ -15,11 +15,11 @@
     width: 30rem;
     background: rgb(255, 255, 255);
     border-radius: 50px;
-    grid-template-areas: "Task-name" "List-of-tasks";
+    grid-template-areas: "Quest-name" "List-of-quests";
 }
 
-.Task-name {
-    grid-area: Task-name;
+.Quest-name {
+    grid-area: Quest-name;
     padding: 20px;
     display: flex;
     align-items: center;
@@ -27,8 +27,8 @@
     font-family: 'Press Start 2P', Arial, Helvetica, sans-serif;
 }
 
-.List-of-tasks {
-    grid-area: List-of-tasks;
+.List-of-quests {
+    grid-area: List-of-quests;
     padding: 20px 30px 30px 30px;;
     display: flex;
     align-items: center;

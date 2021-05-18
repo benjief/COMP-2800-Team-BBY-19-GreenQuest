@@ -18,7 +18,7 @@ body {
     margin-top: 50px;
 }
 
-.task-page {
+.quest-page {
     display: inline-flex;
     background-image: url('../images/background_pattern.png');
     padding: 50px;
@@ -142,7 +142,7 @@ body {
     .done {
         margin-left: 40px;
 }
-.task-page {
+.quest-page {
         padding: 20px;
        
     }

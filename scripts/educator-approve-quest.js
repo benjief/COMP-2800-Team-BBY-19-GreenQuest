@@ -1,22 +1,22 @@
 
-// JS for educator-approve-task.js
+// JS for educator-approve-quest.js
 
 // Pull class name and ID from URL
 const parsedUrl = new URL(window.location.href);
-var taskName = parsedUrl.searchParams.get("taskname");
-var taskID = parsedUrl.searchParams.get("taskid");
-$(".page-heading").html(taskName);
+var questName = parsedUrl.searchParams.get("questname");
+var questID = parsedUrl.searchParams.get("questid");
+$(".page-heading").html(questName);
 
 var userID;
 var submitterID;
 var submitterPoints;
-var taskSubmitter = null;
-var taskDescription = null;
-var taskNotes = null;
-var taskPoints = 0;
-var taskApproved = false;
+var questSubmitter = null;
+var questDescription = null;
+var questNotes = null;
+var questPoints = 0;
+var questApproved = false;
 
-// Create an empty array to store URLs of images attached to this task
+// Create an empty array to store URLs of images attached to this quest
 var imageURLs = [];
 
 /* Get the current user's ID from Firestore. */
@@ -30,7 +30,7 @@ function getCurrentUser() {
                 .then(function (doc) {
                     // Extract the current user's ID
                     userID = doc.id;
-                    pullTaskInfo();
+                    pullQuestInfo();
                 });
         }
     });
@@ -39,20 +39,20 @@ function getCurrentUser() {
 /**
  * Write this.
  */
-function pullTaskInfo() {
-    db.collection("Educators").doc(userID).collection("Tasks").doc(taskID)
+function pullQuestInfo() {
+    db.collection("Educators").doc(userID).collection("Quests").doc(questID)
         .get()
         .then((doc) => {
-            taskSubmitter = doc.data().Task_Submitter;
+            questSubmitter = doc.data().Quest_Submitter;
             submitterID = doc.data().Submitter_ID;
-            taskDescription = doc.data().Task_Description;
-            taskNotes = doc.data().Task_Notes;
-            imageURLs = doc.data().Task_Photos;
+            questDescription = doc.data().Quest_Description;
+            questNotes = doc.data().Quest_Notes;
+            imageURLs = doc.data().Quest_Photos;
             getSubmitterPoints();
             populateDOM();
         })
         .catch((error) => {
-            console.log("Error getting task: ", error);
+            console.log("Error getting quest: ", error);
         });
 }
 
@@ -75,12 +75,12 @@ function pullTaskInfo() {
  * Write this.
  */
 function populateDOM() {
-    let submitter = "<p id='task-submitter'>" + taskSubmitter + "</p>";
-    $("#task-submitter-container").append(submitter);
-    let description = "<p id='task-description'>" + taskDescription + "</p>";
-    $("#task-description-container").append(description);
-    let notes = "<p id='task-notes'>" + taskNotes + "</p>";
-    $("#task-notes-container").append(notes);
+    let submitter = "<p id='quest-submitter'>" + questSubmitter + "</p>";
+    $("#quest-submitter-container").append(submitter);
+    let description = "<p id='quest-description'>" + questDescription + "</p>";
+    $("#quest-description-container").append(description);
+    let notes = "<p id='quest-notes'>" + questNotes + "</p>";
+    $("#quest-notes-container").append(notes);
     for (var i = 0; i < imageURLs.length; i++) {
         let imageDOM = "<li class='list-item'><a class='uploaded-image' id='"
             + imageURLs[i] + "' data-bs-toggle='modal' data-bs-target='#imagePreview' onclick='showPreview(this)'>Image "
@@ -137,7 +137,7 @@ function getStorageRef(file, temp) {
     // Create a storage reference
     let storageRef = storage.ref();
     if (!temp) {
-        storageRef = storageRef.child("images/tasks/" + imageID + ".jpg");
+        storageRef = storageRef.child("images/quests/" + imageID + ".jpg");
     } else {
         storageRef = storageRef.child("images/temp/" + imageID + ".jpg");
     }
@@ -165,7 +165,7 @@ function deleteStoredImages() {
  * Write this.
  */
 function updateStudentPoints() {
-    let pointsGained = document.getElementById("task-points-input").value;
+    let pointsGained = document.getElementById("quest-points-input").value;
     pointsGained = parseInt(pointsGained);
     console.log(pointsGained);
     let updatedPoints = submitterPoints + pointsGained;
@@ -183,31 +183,31 @@ function updateStudentPoints() {
 /**
  * Write this.
  */
-function approveStudentTask() {
-    db.collection("Students").doc(submitterID).collection("Tasks").doc(taskID).update({
-        Task_Approved: true
+function approveStudentQuest() {
+    db.collection("Students").doc(submitterID).collection("Quests").doc(questID).update({
+        Quest_Approved: true
     })
         .then(() => {
-            console.log("Student task successfully updated!");
+            console.log("Student quest successfully updated!");
             updateStudentPoints();
         })
         .catch((error) => {
-            console.error("Error updating student task: " + error);
+            console.error("Error updating student quest: " + error);
         })
 }
 
 /**
  * Write this.
  */
-function rejectStudentTask() {
-    db.collection("Students").doc(submitterID).collection("Tasks").doc(taskID).update({
-        Task_Rejected: true
+function rejectStudentQuest() {
+    db.collection("Students").doc(submitterID).collection("Quests").doc(questID).update({
+        Quest_Rejected: true
     })
         .then(() => {
-            console.log("Student task successfully updated!");
+            console.log("Student quest successfully updated!");
         })
         .catch((error) => {
-            console.error("Error updating student task: " + error);
+            console.error("Error updating student quest: " + error);
         })
 }
 
@@ -215,10 +215,10 @@ function rejectStudentTask() {
  * Write this
  */
 function onClickApprove() {
-    db.collection("Educators").doc(userID).collection("Tasks").doc(taskID).delete()
+    db.collection("Educators").doc(userID).collection("Quests").doc(questID).delete()
         .then(() => {
-            console.log("Task successfully approved!");
-            approveStudentTask();
+            console.log("Quest successfully approved!");
+            approveStudentQuest();
             // deleteStoredImages();
             $("#feedback").html("Success! Please wait...");
             $("#feedback").show(0);
@@ -228,7 +228,7 @@ function onClickApprove() {
             }, 2300);
         })
         .catch((error) => {
-            console.error("Error approving task: ", error);
+            console.error("Error approving quest: ", error);
         })
 }
 
@@ -236,12 +236,12 @@ function onClickApprove() {
  * Write this
  */
 function onClickReject() {
-    db.collection("Educators").doc(userID).collection("Tasks").doc(taskID).update({
-        Task_Rejected: true
+    db.collection("Educators").doc(userID).collection("Quests").doc(questID).update({
+        Quest_Rejected: true
     })
         .then(() => {
-            console.log("Task successfully rejected!");
-            rejectStudentTask();
+            console.log("Quest successfully rejected!");
+            rejectStudentQuest();
             $("#feedback").html("Success! Please wait...");
             $("#feedback").show(0);
             $("#feedback").fadeOut(2500);
@@ -250,7 +250,7 @@ function onClickReject() {
             }, 2300);
         })
         .catch((error) => {
-            console.error("Error rejecting task: ", error);
+            console.error("Error rejecting quest: ", error);
         })
 }
 

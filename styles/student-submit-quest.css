@@ -59,7 +59,7 @@ border: none;
     justify-content: center;
 }
 
-#task-notes-container {
+#quest-notes-container {
     height: 30px;
 }
 
@@ -108,7 +108,7 @@ border: none;
     margin-bottom: 15px;
 }
 
-.task-notes-container {
+.quest-notes-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -121,7 +121,7 @@ border: none;
     justify-content: center;
 }
 
-#task-notes {
+#quest-notes {
     width: 90%;
 }
 
