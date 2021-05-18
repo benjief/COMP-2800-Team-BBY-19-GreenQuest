@@ -1,11 +1,16 @@
 
 // JS for student-submit-task.js
 
+// Pull task and user IDs from URL
+const parsedUrl = new URL(window.location.href);
+var taskID = parsedUrl.searchParams.get("taskid");
+var userID = parsedUrl.searchParams.get("userid");
+
 var userName;
 var className;
-var userID;
 var educatorName;
 var educatorID;
+var taskDescription;
 
 // Create empty arrays to store files added to this task and their URLs
 var uploadedImageFiles = [];
@@ -169,33 +174,28 @@ function getStorageRef(file, temp) {
 
 /* Get the current user's name, class name, educator name, and ID from Firestore. */
 function getCurrentStudent() {
-    firebase.auth().onAuthStateChanged(function (somebody) {
-        if (somebody) {
-            db.collection("Students")
-                .doc(somebody.uid)
-                // Read
-                .get()
-                .then(function (doc) {
-                    // Extract the current student's class name
-                    userName = doc.data().Student_Name;
-                    className = doc.data().Student_Class;
-                    educatorName = doc.data().Student_Educator;
-                    userID = doc.id;
-                    if (className == null) {
-                        let message = "<div class='text-container'><p class='message'>You haven't been added to a class yet</p></div>"
-                        $(".uploaded-images").append(message);
-                        $("#card-button-container-1").remove();
-                        $("#upload-image-input").attr("disabled", "");
-                        $("#task-notes").attr("disabled", "");
-                        $("#task-notes").attr("placeholder", "Ask your teacher to add you to their class to start getting tasks");
-                    }
-                    checkNumUploaded();
-                    getEducatorID();
-                    processImage();
-                });
-        }
-    });
+    db.collection("Students").doc(userID)
+        .get()
+        .then(function (doc) {
+            // Extract the current student's class name
+            userName = doc.data().Student_Name;
+            className = doc.data().Student_Class;
+            educatorName = doc.data().Student_Educator;
+            if (className == null) {
+                let message = "<div class='text-container'><p class='message'>You haven't been added to a class yet</p></div>"
+                $(".uploaded-images").append(message);
+                $("#card-button-container-1").remove();
+                $("#upload-image-input").attr("disabled", "");
+                $("#task-notes").attr("disabled", "");
+                $("#task-notes").attr("placeholder", "Ask your teacher to add you to their class to start getting tasks");
+            }
+            getTaskDescription();
+            checkNumUploaded();
+            getEducatorID();
+            processImage();
+        });
 }
+
 
 /**
  * CITE and write this 
@@ -225,32 +225,43 @@ function getEducatorID() {
 }
 
 /**
- * Write this
+ * Write this.
+ */
+function getTaskDescription() {
+    db.collection("Tasks").doc(taskID)
+        .get()
+        .then(() => {
+            taskDescription = doc.data().description;
+            console.log("Task description successfully retrieved");
+        })
+        .catch((error) => {
+            console.error("Error retrieving task description: ", error);
+        });
+}
+
+
+/**
+ * Write this.
  * 
  * @param {*} imageURLs 
  */
 function addTaskToDB(imageURLs) {
     let taskID = pseudorandomID();
     // Write task to student's task collection
-    db.collection("Students").doc(userID).collection("Tasks").doc(taskID).set({
-        Task_Submitter: userName,
-        Submitter_ID: userID,
-        Task_Description: "Test",
-        Task_Photos: imageURLs,
-        Task_Notes: $("#task-notes").prop("value"),
-        Task_Approved: false
+    db.collection("Students").doc(userID).collection("Tasks").doc(taskID).update({
+        Task_Submitted: true
     })
         .then(() => {
-            console.log("Student task successfully written!");
+            console.log("Student task successfully updated!");
         })
         .catch((error) => {
-            console.error("Error adding student task: ", error);
+            console.error("Error updating student task: ", error);
         });
     // Write task to teacher's task collection
     db.collection("Educators").doc(educatorID).collection("Tasks").doc(taskID).set({
         Task_Submitter: userName,
         Submitter_ID: userID,
-        Task_Description: "Test",
+        Task_Description: taskDescription,
         Task_Photos: imageURLs,
         Task_Notes: $("#task-notes").prop("value"),
         Task_Approved: false

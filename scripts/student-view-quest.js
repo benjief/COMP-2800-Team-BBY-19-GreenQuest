@@ -139,6 +139,13 @@ function getBitmojiBackground() {
     $(".image-container").css({ background: "url('../img/background_pattern_" + randomNum + ".png')" });
 }
 
+/**
+ * Write this.
+ */
+function onClickSubmit() {
+    location.href = "./student-submit-task.html?taskid=" + taskID + "&userid=" + userID;
+}
+
 // Run function when document is ready 
 $(document).ready(function () {
     getCurrentStudent();
