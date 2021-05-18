@@ -6,9 +6,10 @@
 #main-content-card {
     grid-template-areas: 
         "card-text"
-        "buttons-1"
-        "buttons-2"
-        "buttons-3";
+        "my-class"
+        "my-quest"
+        "completed-quests"
+        "logout";
 }
 
 .card-text-container {
@@ -35,19 +36,24 @@
 }
 
 #card-button-container-1 {
-    grid-area: buttons-1;
+    display: flex;
+    grid-area: my-class;
 }
 
 #card-button-container-2 {
-    grid-area: buttons-2;
+    grid-area: my-quest;
 }
 
 #card-button-container-3 {
-    grid-area: buttons-3;
-    margin-bottom: 35px;
+    grid-area: completed-quests;
 }
 
-.button {
+#card-button-container-4 {
+    grid-area: logout;
+    margin-bottom: 40px;
+}
+
+.card-button-container .button {
     display: flex;
     height: 100%;
     align-items: center;
