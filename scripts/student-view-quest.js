@@ -1,34 +1,38 @@
 // JS for student-view-quest.js
 
-var taskTitle;
-var taskDescription;
-var taskInstructions;
-var taskInfo;
+// Pull quest ID from URL
+const parsedUrl = new URL(window.location.href);
+var questID = parsedUrl.searchParams.get("questid");
+
+var questTitle;
+var questDescription;
+var questInstructions;
+var questInfo;
 var bitmojiURL;
 var userName;
 var className;
 var educatorName;
 var userID;
-var taskID;
+var questID;
 
 /**
  * Write this.
  */
- function getTaskID() {
+ function getQuestID() {
     console.log(userID);
-    db.collection("Students").doc(userID).collection("Tasks")
-    .where("Task_Submitted", "==", false)
+    db.collection("Students").doc(userID).collection("Quests")
+    .where("Quest_Submitted", "==", false)
     .get()
     .then((querySnapshot) => {
-        // There should only ever be one task at a time
+        // There should only ever be one quest at a time
         querySnapshot.forEach((doc) => {
-            taskID = doc.data().Task_ID;
+            questID = doc.data().Quest_ID;
         })
-        console.log(taskID);
-        getTask();
+        console.log(questID);
+        getQuest();
     })
     .catch((error) => {
-        console.log("Error getting task ID: ", error);
+        console.log("Error getting quest ID: ", error);
     });
 }
 
@@ -46,7 +50,7 @@ function getCurrentStudent() {
                     className = doc.data().Student_Class;
                     educatorName = doc.data().Student_Educator;
                     userID = doc.id;
-                    getTaskID();
+                    getQuest();
                 });
         }
     });
@@ -55,16 +59,22 @@ function getCurrentStudent() {
 /**
  * Write this.
  */
+<<<<<<< HEAD
 function getTask() {
     console.log(taskID);
     db.collection("Quests").doc(taskID)
+=======
+function getQuest() {
+    console.log(questID);
+    db.collection("Quests").doc(questID)
+>>>>>>> c20fe3a6bca7b78d3d353e365c9e41a3df099d3e
         // Read
         .get()
         .then(function (doc) {
-            taskTitle = doc.data().title;
-            taskDescription = doc.data().description;
-            taskInstructions = doc.data().instruction;
-            taskInfo = doc.data().moreInfo;
+            questTitle = doc.data().title;
+            questDescription = doc.data().description;
+            questInstructions = doc.data().instruction;
+            questInfo = doc.data().moreInfo;
             getBitmoji();
         });
 }
@@ -103,19 +113,19 @@ function getBitmoji() {
  * Write this.
  */
 function addInfoToDOM() {
-    let title = "<p id='task-title'>" + taskTitle + "</p>";
-    $("#task-title-container").append(title);
-    let description = "<p id='task-description'>Your Quest:<br />" + taskDescription + "</p>";
-    $("#task-description-container").append(description);
+    let title = "<p id='quest-title'>" + questTitle + "</p>";
+    $("#quest-title-container").append(title);
+    let description = "<p id='quest-description'>Your Quest:<br />" + questDescription + "</p>";
+    $("#quest-description-container").append(description);
     let bitmoji = "<img src='" + bitmojiURL + "'>";
     $(".image-container").append(bitmoji);
     getBitmojiBackground();
-    let instructions = "<a id='task-instructions' onclick='showVideo(this)'" +
+    let instructions = "<a id='quest-instructions' onclick='showVideo(this)'" +
         "data-bs-toggle='modal' data-bs-target='#videoViewer'>Instructions</a>";
-    $("#task-instructions-container").append(instructions);
-    let info = "<a id='task-information' onclick='showVideo(this)'" +
+    $("#quest-instructions-container").append(instructions);
+    let info = "<a id='quest-information' onclick='showVideo(this)'" +
         "data-bs-toggle='modal' data-bs-target='#videoViewer'>More Information</a>";
-    $("#task-information-container").append(info);
+    $("#quest-information-container").append(info);
 }
 
 /**
@@ -128,12 +138,12 @@ function showVideo(element) {
     let videoURL = null;
     let videoTitle = null;
 
-    if (category === "task-instructions") {
-        videoURL = taskInstructions;
+    if (category === "quest-instructions") {
+        videoURL = questInstructions;
         videoTitle = "Instructions";
 
     } else {
-        videoURL = taskInfo;
+        videoURL = questInfo;
         videoTitle = "More Information";
     }
 
@@ -158,27 +168,48 @@ function getBitmojiBackground() {
     });
 }
 
+<<<<<<< HEAD
+=======
+/**
+ * Write this.
+ */
+function onClickSubmit() {
+    location.href = "./student-submit-quest.html?questid=" + questID + "&userid=" + userID;
+}
+
+// Run function when document is ready 
+$(document).ready(function () {
+    getCurrentStudent();
+    // Stops videos from playing once modals are closed */
+    $('#videoViewer').on('hide.bs.modal', function () {
+        $('.modal-body iframe').attr('src', '');
+    });
+});
+
+>>>>>>> c20fe3a6bca7b78d3d353e365c9e41a3df099d3e
 
 function resetQuest() {
-    db.collection("Students").doc(userID).collection("Tasks")
-        .where("Task_Submitted", "==", false)
+    if (confirm("Are you sure?!")) {
+        db.collection("Students").doc(userID).collection("Quests")
+        .where("Quest_Submitted", "==", false)
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 var currentQuestID = doc.id;
-                db.collection("Students").doc(userID).collection("Tasks").doc(currentQuestID).delete()
+                db.collection("Students").doc(userID).collection("Quests").doc(currentQuestID).delete()
                     .then(() => {
                         console.log("Document successfully deleted!");
                         db.collection("Students").doc(userID).update({
                             Student_Quest: false
                         })
                         console.log("Student_Quest is now false!");
-                        location.href = "./student-choose-task.html";
+                        location.href = "./student-choose-quest.html";
                     }).catch((error) => {
                         console.error("Error removing document: ", error);
                     });
             });
         })
+<<<<<<< HEAD
 }
 
 /**
@@ -196,3 +227,11 @@ $(document).ready(function () {
         $('.modal-body iframe').attr('src', '');
     });
 });
+=======
+    } else {
+        console.log("Reset quest cancelled");
+    }
+    
+
+}
+>>>>>>> c20fe3a6bca7b78d3d353e365c9e41a3df099d3e
