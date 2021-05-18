@@ -204,14 +204,13 @@ function activateTask() {
  */
 function writeTask() {
     let taskID = pseudorandomID();
-    // Write task to student's task collection
+    // Update student task
     db.collection("Students").doc(userID).collection("Tasks").doc(taskID).set({
-        Task_Submitter: userName,
-        Submitter_ID: userID,
         Task_ID: currentTaskID,
         Task_Approved: false,
         Task_Rejected: false,
-        Task_Unread: false
+        Task_Unread: false,
+        Task_Submitted: false
     })
         .then(() => {
             console.log("Task successfully written!");
