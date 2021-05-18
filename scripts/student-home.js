@@ -11,7 +11,7 @@ function onClickStudentHome() {
                     if (hasQuest == true) {
                         window.location.assign("/html/student-view-quest.html");
                     } else {
-                        window.location.assign("/html/student-choose-task.html");
+                        window.location.assign("/html/student-choose-quest.html");
                     }
                 });
         }
