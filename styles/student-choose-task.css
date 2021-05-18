@@ -11,7 +11,7 @@
 .modal-body {
     display: flex;
     justify-content: center;
-
+    justify-self: center;
     max-width: max-content;
     max-height: max-content;
     /* word-wrap: break-word; */
