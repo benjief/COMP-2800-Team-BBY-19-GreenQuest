@@ -62,12 +62,18 @@ function getBitmoji() {
                 counter++;
             });
             let randomNum = Math.floor(Math.random() * counter);
-            let imageRef = storageRef.child("images/bitmojis/" + randomNum.toString + ".png");
-            bitmojiURL = imageRef;
-            addInfoToDOM();
+            storageRef.child("images/bitmojis/" + randomNum.toString() + ".png").getDownloadURL()
+                .then((url) => {
+                    bitmojiURL = url;
+                    // bitmojiURL = imageRef.getDownloadURL();
+                    addInfoToDOM();
+                })
+                .catch((error) => {
+                    console.error("Error getting url: ", error);
+                })
         })
         .catch((error) => {
-            console.error("Error getting bitmoji: ", error);
+            console.error("Error getting number of bitmojis: ", error);
         });
 }
 
