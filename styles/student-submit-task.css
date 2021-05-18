@@ -36,7 +36,9 @@ border: none;
         "images"
         "input"
         "submit"
+        "reject"
         "home"
+        "back"
         "feedback";
     align-items: center;
 }
@@ -164,6 +166,10 @@ border: none;
 
 #card-button-container-2 {
     grid-area: home;
+}
+
+#card-button-container-3 {
+    grid-area: back;
 }
 
 #submit-button {
