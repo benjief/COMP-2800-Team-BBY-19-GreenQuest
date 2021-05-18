@@ -10,17 +10,6 @@
     background-color: rgba(53, 255, 46, 0.788);
 }
 
-/* We can change the media query width later */
-@media (min-width: 768px) {
-    .navbar-brand.abs
-        {
-            position: absolute;
-            width: 100%;
-            left: 0;
-            text-align: center;
-        }
-    }
-
 /* Body styling */
 body {
     font-family: 'Mali', Arial, Helvetica, sans-serif;
