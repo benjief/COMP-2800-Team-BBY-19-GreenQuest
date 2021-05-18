@@ -7,6 +7,7 @@ var taskTitle;
 var taskDescription;
 var taskInstructions;
 var taskInfo;
+var bitmojiURL;
 
 /**
  * Write this
@@ -42,7 +43,31 @@ function getTask(taskID) {
             taskDescription = doc.data().description;
             taskInstructions = doc.data().instruction;
             taskInfo = doc.data().moreInfo;
+            getBitmoji();
+        });
+}
+
+/**
+ * Write this.
+ * 
+ */
+function getBitmoji() {
+    let counter = 0;
+    let storageRef = storage.ref();
+    folderRef = storageRef.child("images/bitmojis");
+    folderRef.listAll()
+        // Workaround for getting the number of images in the folder
+        .then((res) => {
+            res.items.forEach(() => {
+                counter++;
+            });
+            let randomNum = Math.floor(Math.random() * counter);
+            let imageRef = storageRef.child("images/bitmojis/" + randomNum.toString + ".png");
+            bitmojiURL = imageRef;
             addInfoToDOM();
+        })
+        .catch((error) => {
+            console.error("Error getting bitmoji: ", error);
         });
 }
 
@@ -53,6 +78,8 @@ function addInfoToDOM() {
     let title = "<p id='task-title'>" + taskTitle + "</p>";
     $("#task-title-container").append(title);
     $("#task-description").append(taskDescription);
+    let bitmoji = "<img src='" + bitmojiURL + "'>";
+    $(".image-container").append(bitmoji);
     let instructions = "<a id='task-instructions' onclick='showVideo(this)'"
         + "data-bs-toggle='modal' data-bs-target='#videoViewer'>Task Instructions</a>";
     $("#task-instructions-container").append(instructions);
