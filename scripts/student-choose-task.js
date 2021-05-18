@@ -186,23 +186,23 @@ function pseudorandomID() {
 /** 
  * Write this.
  */
-function updateStudent() {
+function activateTask() {
     db.collection("Students").doc(userID).update({
         Student_Quest: true
     })
     .then(() => {
-        console.log("Student successfully updated!");
+        console.log("Task successfully activated!");
         location.href = "./student-view-quest.html";
     })
     .catch((error) => {
-        console.error("Error updating student: ", error);
+        console.error("Error activating task: ", error);
     });
 }
 
 /** 
  * Write this.
  */
-function activateTask() {
+function writeTask() {
     let taskID = pseudorandomID();
     // Write task to student's task collection
     db.collection("Students").doc(userID).collection("Tasks").doc(taskID).set({
@@ -214,11 +214,11 @@ function activateTask() {
         Task_Unread: false
     })
         .then(() => {
-            console.log("Task is now active!");
-            updateStudent();
+            console.log("Task sucessfully written!");
+            activateTask();
         })
         .catch((error) => {
-            console.error("Error activating task: ", error);
+            console.error("Error writing task: ", error);
         });
 }
 
@@ -226,7 +226,7 @@ function activateTask() {
  * Write this.
  */
 function onClickAccept() {
-    activateTask();
+    writeTask();
 }
 
 // Run function when document is ready 
