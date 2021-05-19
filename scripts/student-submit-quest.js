@@ -282,6 +282,7 @@ function addQuestToDB(imageURLs) {
             db.collection("Educators").doc(educatorID).collection("Quests").doc(uniqueQuestID).set({
                 Quest_Submitter: userName,
                 Submitter_ID: userID,
+                Submitter_Class: className,
                 Quest_Description: questDescription,
                 Quest_Photos: imageURLs,
                 Quest_Notes: $("#quest-notes").prop("value"),

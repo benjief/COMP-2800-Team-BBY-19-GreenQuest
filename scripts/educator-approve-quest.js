@@ -1,7 +1,7 @@
 
 // JS for educator-approve-quest.js
 
-// Pull class name and ID from URL
+// Pull quest name and ID from URL
 const parsedUrl = new URL(window.location.href);
 var questName = parsedUrl.searchParams.get("questname");
 var questID = parsedUrl.searchParams.get("questid");
@@ -10,11 +10,12 @@ $(".page-heading").html(questName);
 var userID;
 var submitterID;
 var submitterPoints;
+var className;
+var classPoints;
 var questSubmitter = null;
 var questDescription = null;
 var questNotes = null;
 var questPoints = 0;
-var questapproved = false;
 
 // Create an empty array to store URLs of images attached to this quest
 var imageURLs = [];
@@ -48,6 +49,7 @@ function pullQuestInfo() {
             questDescription = doc.data().Quest_Description;
             questNotes = doc.data().Quest_Notes;
             imageURLs = doc.data().Quest_Photos;
+            className = doc.data().Submitter_Points;
             getSubmitterPoints();
             populateDOM();
         })
@@ -64,10 +66,25 @@ function pullQuestInfo() {
         .get()
         .then((doc) => {
             submitterPoints = doc.data().Student_Points;
-            console.log(submitterPoints);
+            getClassPoints();
         })
         .catch((error) => {
             console.log("Error getting submitter points: ", error);
+        });
+}
+
+/**
+ * Write this.
+ */
+ function getClassPoints() {
+    db.collection("Classes").doc(className)
+        .get()
+        .then((doc) => {
+            submitterPoints = doc.data().Student_Points;
+            classPoints = doc.data().Class_Points;
+        })
+        .catch((error) => {
+            console.log("Error getting class points: ", error);
         });
 }
 
@@ -174,10 +191,21 @@ function updateStudentPoints() {
     })
     .then(() => {
         console.log("Student points updated successfully!");
+        updateClassPoints();
     })
     .catch((error) => {
         console.error("Error updating student points: ", error);
     });
+}
+
+/**
+ * Write this.
+ */
+function updateClassPoints() {
+    classPoints += submitterPoints;
+    db.collection("Classes").doc(className).update({
+        Class_Points: classPoints
+    })
 }
 
 /**
