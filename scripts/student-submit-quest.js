@@ -263,7 +263,7 @@ function updateQuestStatus() {
         .catch((error) => {
             console.error("Error updating student quest status: ", error);
         });
-}s
+}
 
 /**
  * Write this.
