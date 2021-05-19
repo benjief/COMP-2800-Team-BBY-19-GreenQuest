@@ -21,7 +21,7 @@ var questID;
  function getQuestID() {
     console.log(userID);
     db.collection("Students").doc(userID).collection("Quests")
-    .where("Quest_Submitted", "==", false)
+    .where("Quest_Status", "==", "active")
     .get()
     .then((querySnapshot) => {
         // There should only ever be one quest at a time
@@ -171,9 +171,9 @@ function onClickSubmit() {
 
 
 function resetQuest() {
-    if (confirm("Are you sure?!")) {
+    if (confirm("Are you sure?")) {
         db.collection("Students").doc(userID).collection("Quests")
-        .where("Quest_Submitted", "==", false)
+        .where("Quest_Status", "==", "active")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {

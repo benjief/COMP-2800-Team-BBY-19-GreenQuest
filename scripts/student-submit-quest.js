@@ -236,7 +236,7 @@ function getQuestDescription() {
  */
 function getUniqueQuestID() {
     db.collection("Students").doc(userID).collection("Quests")
-    .where("Quest_Submitted", "==", false)
+    .where("Quest_Status", "==", "active")
     .get()
     .then((querySnapshot) => {
         // There should only ever be one quest at a time
@@ -273,7 +273,7 @@ function updateQuestStatus() {
 function addQuestToDB(imageURLs) {
     // Update quest in student's quest collection
     db.collection("Students").doc(userID).collection("Quests").doc(uniqueQuestID).update({
-        Quest_Submitted: true
+        Quest_Status: "submitted"
     })
         .then(() => {
             console.log("Student quest successfully updated!");
