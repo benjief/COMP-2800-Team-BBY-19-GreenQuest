@@ -31,6 +31,8 @@ function getStudentPoints() {
                 .get()
                 .then(function (doc) {
                     studentPoints = doc.data().Student_Points;
+                    // Taken from https://blog.abelotech.com/posts/number-currency-formatting-javascript/
+                    studentPoints = studentPoints.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
                     postStudentPoints();
                 });
         }
