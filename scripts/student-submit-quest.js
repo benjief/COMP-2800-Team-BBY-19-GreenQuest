@@ -255,7 +255,7 @@ function getUniqueQuestID() {
  */
 function updateQuestStatus() {
     db.collection("Students").doc(userID).update({
-        Student_Quest: true
+        Student_Quest: false
     })
         .then(() => {
             console.log("Student quest status succesfully updated!");
@@ -263,7 +263,7 @@ function updateQuestStatus() {
         .catch((error) => {
             console.error("Error updating student quest status: ", error);
         });
-}
+}s
 
 /**
  * Write this.
