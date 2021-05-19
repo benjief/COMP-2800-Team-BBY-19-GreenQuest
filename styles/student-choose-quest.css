@@ -38,7 +38,8 @@ border: none;
         "instructions"
         "more-info"
         "accept"
-        "reject";
+        "reject"
+        "home";
     align-items: center;
 }
 
@@ -111,6 +112,7 @@ border: none;
     justify-self: center;
     margin-top: 10px;
     box-shadow: 5px 5px 5px rgb(116, 103, 103);
+    align-items: center;
 }
 
 #card-button-container-1 {
@@ -120,19 +122,11 @@ border: none;
 
 #card-button-container-2 {
     grid-area: reject;
+    margin-bottom: 0;
+}
+#card-button-container-3 {
+    grid-area: home;
     margin-bottom: 40px;
-}
-
-#accept-button {
-    display: flex;
-    height: 100%;
-    align-items: center;
-}
-
-#reject-button {
-    display: flex;
-    height: 100%;
-    align-items: center;
 }
 
 #quest-instructions, #quest-information {

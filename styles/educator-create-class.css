@@ -7,6 +7,7 @@
         "input-2"
         "chars-remaining-2"
         "submit"
+        "home"
         "feedback";
 }
 
@@ -78,12 +79,14 @@
     justify-self: center;
     margin-top: 20px;
     box-shadow: 5px 5px 5px rgb(116, 103, 103);
+    align-items: center;
 }
 
-#submit-button {
-    display: flex;
-    height: 100%;
-    align-items: center;
+#card-button-container-1 {
+    grid-area: submit;
+}
+#card-button-container-2 {
+    grid-area: home;
 }
 
 .feedback-placeholder {
