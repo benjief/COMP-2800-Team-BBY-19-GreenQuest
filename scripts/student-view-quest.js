@@ -1,4 +1,4 @@
-// JS for student-view-quest.js
+// JS for student-view-quest.html
 
 // Pull quest ID from URL
 const parsedUrl = new URL(window.location.href);

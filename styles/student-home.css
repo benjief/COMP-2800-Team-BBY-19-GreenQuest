@@ -1,6 +1,31 @@
-/** CSS for educator-new-home.html */
-.page-container {
-    margin-top: 50px;
+/** CSS for student-home.html */
+
+.heading-container {
+    margin-bottom: 10px;
+}
+
+.student-points-container {
+    display: flex;
+    justify-content: center;
+    height: 35px;
+    margin-bottom: 30px;
+}
+
+.student-points-container img{
+    width: 30px;
+    height: 30px;
+    align-self: center;
+}
+
+.student-points-container p {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    font-family: 'Mali', Arial, Helvetica, sans-serif;
+    font-size: 15pt;
+    font-weight: 600;
+    margin-left: 10px;
+    color: #ff8000;
 }
 
 #main-content-card {

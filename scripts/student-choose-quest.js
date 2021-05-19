@@ -1,5 +1,4 @@
-
-// JS for student-choose-quest.js
+// JS for student-choose-quest.html
 
 var questIDs = [];
 var currentQuestID = null;
