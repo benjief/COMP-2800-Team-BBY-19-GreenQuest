@@ -185,9 +185,9 @@ function updateStudentPoints() {
     let pointsGained = document.getElementById("quest-points-input").value;
     pointsGained = parseInt(pointsGained);
     console.log(pointsGained);
-    submitterPoints += pointsGained;
+    let updatedStudentPoints = submitterPoints + pointsGained;
     db.collection("Students").doc(submitterID).update({
-        Student_Points: submitterPoints
+        Student_Points: updatedStudentPoints
     })
     .then(() => {
         console.log("Student points updated successfully!");
@@ -202,9 +202,9 @@ function updateStudentPoints() {
  * Write this.
  */
 function updateClassPoints() {
-    classPoints += submitterPoints;
+    let updatedClassPoints = classPoints + submitterPoints;
     db.collection("Classes").doc(className).update({
-        Class_Points: submitterPoints
+        Class_Points: updatedClassPoints
     })
     .then(() => {
         console.log("Class points successfully updated!");
@@ -221,7 +221,8 @@ function updateClassPoints() {
 function approveStudentQuest() {
     db.collection("Students").doc(submitterID).collection("Quests").doc(questID).update({
         Quest_Status: "approved",
-        Unread: true
+        Unread: true,
+        Quest_Points: questPoints
     })
         .then(() => {
             console.log("Student quest successfully updated!");
