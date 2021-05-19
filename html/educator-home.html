@@ -28,7 +28,8 @@
 
 
 <body>
-    <nav class="navbar navbar-expand-md navbar-dark">
+
+    <body>
         <nav class="navbar navbar-expand-md navbar-dark">
             <div class="container-fluid">
                 <a class="navbar-brand abs" href="#">GreenQuest</a>
@@ -38,7 +39,10 @@
                 </button>
                 <div class="navbar-collapse collapse" id="collapseNavbar">
                     <ul class="navbar-nav">
-                        <li class="nav-item active">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../index.html">Homepage</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="./about-us.html">About</a>
                         </li>
                         <li class="nav-item active">
@@ -49,48 +53,50 @@
             </div>
         </nav>
 
-    <div class="page-container">
-        <div class="heading-container">
-            <p class="page-heading" id="personalized-greeting-established-user"></p>
+        <div class="page-container">
+            <div class="heading-container">
+                <p class="page-heading" id="personalized-greeting-established-user"></p>
+            </div>
+            <div class="card mb-3" id="main-content-card">
+                <div class="card-text-container">
+                    <p class="card-text">Please choose from the following options:</p>
+                </div>
+                <div class="card-button-container" id="card-button-container-1">
+                    <a class="button" id="manage-classes-button" href="./educator-manage-classes.html">Manage
+                        Classes</a>
+                </div>
+                <div class="card-button-container" id="card-button-container-2">
+                    <a class="button" id="approve-quests-button" href="./educator-approve-quests.html">Approve
+                        Quests</a>
+                </div>
+                <div class="card-button-container" id="card-button-container-3">
+                    <a class="button" id="create-a-class-button" href="./educator-create-class.html">Create a Class</a>
+                </div>
+            </div>
+
         </div>
-        <div class="card mb-3" id="main-content-card">
-            <div class="card-text-container">
-                <p class="card-text">Please choose from the following options:</p>
-            </div>
-            <div class="card-button-container" id="card-button-container-1">
-                <a class="button" id="manage-classes-button" href="./educator-manage-classes.html">Manage Classes</a>
-            </div>
-            <div class="card-button-container" id="card-button-container-2">
-                <a class="button" id="approve-quests-button" href="./educator-approve-quests.html">Approve Quests</a>
-            </div>
-            <div class="card-button-container" id="card-button-container-3">
-                <a class="button" id="create-a-class-button" href="./educator-create-class.html">Create a Class</a>
-            </div>
-        </div>
 
-    </div>
+        <!----------------------------------------------->
+        <!-- JS: Boostrap, JQuery, Firebase, API related    -->
+        <!----------------------------------------------->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+            </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
 
-    <!----------------------------------------------->
-    <!-- JS: Boostrap, JQuery, Firebase, API related    -->
-    <!----------------------------------------------->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
-        </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
+        <!-- Link to the api keys for your firebase project -->
+        <script src="/scripts/firebase-api-GreenQuest.js"></script>
 
-    <!-- Link to the api keys for your firebase project -->
-    <script src="/scripts/firebase-api-GreenQuest.js"></script>
+        <!--------------------------------------------------------------------->
+        <!-- JS files: Your own JavaScript functions included here    -->
+        <!--------------------------------------------------------------------->
+        <script src="/scripts/hello-educator.js"></script>
 
-    <!--------------------------------------------------------------------->
-    <!-- JS files: Your own JavaScript functions included here    -->
-    <!--------------------------------------------------------------------->
-    <script src="/scripts/hello-educator.js"></script>
-
-</body>
+    </body>
 
 </html>
