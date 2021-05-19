@@ -1,6 +1,8 @@
 // JS for student-home.html
 
 var studentPoints;
+var userID;
+var questID;
 
 function onClickMyQuest() {
     firebase.auth().onAuthStateChanged(function (somebody) {
@@ -11,9 +13,10 @@ function onClickMyQuest() {
                 .get()
                 .then(function (doc) {
                     // Extract the student's current quest, if it exists
+                    userID = doc.id;
                     hasQuest = doc.data().Student_Quest;
                     if (hasQuest) {
-                        window.location.assign("/html/student-view-quest.html");
+                        getActiveQuest();
                     } else {
                         window.location.assign("/html/student-choose-quest.html");
                     }
@@ -37,6 +40,25 @@ function getStudentPoints() {
                 });
         }
     });
+}
+
+/**
+ * Write this.
+ */
+function getActiveQuest() {
+    db.collection("Students").doc(userID).collection("Quests")
+        .where("Quest_Status", "==", "active")
+        .get()
+        .then((querySnapshot) => {
+            // There should only ever be one quest at a time that's active
+            querySnapshot.forEach((doc) => {
+                questID = doc.data().Quest_ID;
+            })
+            window.location.assign("/html/student-view-quest.html?questid=" + questID);
+        })
+        .catch((error) => {
+            console.log("Error getting quest ID: ", error);
+        });
 }
 
 function postStudentPoints() {

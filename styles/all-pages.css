@@ -6,6 +6,10 @@
     font-size: 13pt;
 }
 
+nav .navbar-nav li a {
+    color: white !important;
+    }
+
 .navbar {
     background-color: rgba(53, 255, 46, 0.9);
 }
