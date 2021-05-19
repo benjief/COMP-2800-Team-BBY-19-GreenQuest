@@ -207,10 +207,7 @@ function writeQuest() {
     // Update student quest
     db.collection("Students").doc(userID).collection("Quests").doc(questID).set({
         Quest_ID: currentQuestID,
-        Quest_Approved: false,
-        Quest_Rejected: false,
-        Quest_Unread: false,
-        Quest_Submitted: false
+        Quest_Status: "active"
     })
         .then(() => {
             console.log("Quest successfully written!");

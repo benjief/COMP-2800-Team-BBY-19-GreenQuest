@@ -47,7 +47,6 @@ function listQuests() {
     });
 }
 
-
 /**
  * Reads quest IDs from Firestore and puts them into an array.
  */

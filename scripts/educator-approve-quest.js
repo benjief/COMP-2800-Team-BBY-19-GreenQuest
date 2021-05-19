@@ -185,7 +185,8 @@ function updateStudentPoints() {
  */
 function approveStudentQuest() {
     db.collection("Students").doc(submitterID).collection("Quests").doc(questID).update({
-        Quest_Approved: true
+        Quest_Approved: true,
+        Unread: true
     })
         .then(() => {
             console.log("Student quest successfully updated!");
@@ -201,7 +202,8 @@ function approveStudentQuest() {
  */
 function rejectStudentQuest() {
     db.collection("Students").doc(submitterID).collection("Quests").doc(questID).update({
-        Quest_Rejected: true
+        Quest_Rejected: true,
+        Unread: true
     })
         .then(() => {
             console.log("Student quest successfully updated!");
