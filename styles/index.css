@@ -3,12 +3,14 @@
 #main-content-card {
     grid-template-areas: 
         "subtext"
+        "bitmoji"
         "break-1"
         "description"
         "break-2"
         "login";
     align-items: center;
     font-size: 15pt;
+    margin-bottom: 20px;
 }
 
 .text-container {
@@ -32,6 +34,14 @@
     font-weight: 600;
 }
 
+#bitmoji {
+    height: 180px;
+    max-width: 100%;
+    max-height: auto;
+    object-fit: contain;
+    justify-self: center;
+}
+
 hr {
     width: 90%;
     justify-self: center;
@@ -42,7 +52,8 @@ hr {
 }
 
 #description-container {
-    height: 250px;
+    height: 200px;
+    text-align: justify;
 }
 
 #description {
