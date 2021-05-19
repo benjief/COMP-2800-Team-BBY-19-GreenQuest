@@ -34,7 +34,7 @@
     align-items: center;
 }
 
-label {
+.form-check-label {
     margin-left: 10px;
 }
 
@@ -58,4 +58,42 @@ label {
     justify-self: center;
     border: 2px solid #ff80ee;
     border-style: dashed;
+    border-radius: 10px;
+}
+
+.firebaseui-container.mdl-card {
+    border-radius: 10px;
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url("/img/background_pattern_2.png");
+}
+
+.firebaseui-title {
+    font-family: 'Mali', Arial, Helvetica, sans-serif;
+}
+
+.firebaseui-label {
+    font-family: 'Mali', Arial, Helvetica, sans-serif;
+}
+
+
+.firebaseui-textfield.mdl-textfield .firebaseui-label::after {
+    background-color: #ff8000;
+}
+
+.mdl-button--primary.mdl-button--primary {
+    font-family: 'Mali', Arial, Helvetica, sans-serif;
+    color: #ff80ee;
+}
+
+.mdl-button--raised.mdl-button--colored {
+    font-family: 'Mali', Arial, Helvetica, sans-serif;
+    background-color: #ff80ee;
+    font-weight: 600;
+}
+
+.mdl-button--raised.mdl-button--colored:hover {
+    background-color: #ff80ee;
+}
+
+.firebaseui-card-footer p {
+    text-align: center;
 }
