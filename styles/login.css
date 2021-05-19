@@ -56,4 +56,6 @@ label {
     margin-bottom: 40px;
     width: 90%;
     justify-self: center;
+    border: 2px solid #ff80ee;
+    border-style: dashed;
 }
