@@ -1,4 +1,4 @@
-// JS for educator-rename-group.js
+// JS for educator-rename-group.html
 
 // Pull group name from URL and display it in the DOM
 const parsedUrl = new URL(window.location.href);
