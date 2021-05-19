@@ -15,7 +15,7 @@ function populateQuestList() {
         $(".quest-list").css({ height: "150px", width: "90%", display: "flex", justifyContent: "center", justifySelf: "center"});
         let backButtonContainer = "<div class='card-button-container'></div>";
         $(".quest-list").append(backButtonContainer);
-        let backButton = "<a class='button' id='back-button' onclick='onClickBack()'>Back</a>";
+        let backButton = "<a class='button' id='back-button' href='#' onclick='onClickHome()'>Home</a>";
         $(".card-button-container").append(backButton);
 
     } else {
@@ -26,6 +26,26 @@ function populateQuestList() {
             $("#quest-container-" + i).append(questName);
         }
     }
+}
+
+/**
+ * Write this
+ */
+function onClickHome() {
+    firebase.auth().onAuthStateChanged(function (somebody) {
+        if (somebody) {
+            db.collection("Educators")
+                .doc(somebody.uid)
+                .get()
+                .then(function (doc) {
+                    if (!doc) {
+                        location.href = "./student-home.html";
+                    } else {
+                        location.href = "./educator-home.html";
+                    }
+                });
+        }
+    });
 }
 
 /**
