@@ -183,10 +183,7 @@ function deleteStoredImages() {
  * Write this.
  */
 function updateStudentPoints() {
-    let pointsGained = document.getElementById("quest-points-input").value;
-    pointsGained = parseInt(pointsGained);
-    console.log(pointsGained);
-    submitterPoints += pointsGained;
+    submitterPoints += questPoints;
     console.log(submitterPoints);
     db.collection("Students").doc(submitterID).update({
         Student_Points: submitterPoints
@@ -203,7 +200,7 @@ function updateStudentPoints() {
  * Write this.
  */
 function updateClassPoints() {
-    classPoints += submitterPoints;
+    classPoints += questPoints;
     console.log(classPoints);
     db.collection("Classes").doc(className).update({
         Class_Points: classPoints
@@ -220,6 +217,8 @@ function updateClassPoints() {
  * Write this.
  */
 function approveStudentQuest() {
+    questPoints = document.getElementById("quest-points-input").value;
+    questPoints = parseInt(questPoints);
     db.collection("Students").doc(submitterID).collection("Quests").doc(questID).update({
         Quest_Status: "approved",
         Unread: true,
@@ -241,7 +240,8 @@ function approveStudentQuest() {
 function rejectStudentQuest() {
     db.collection("Students").doc(submitterID).collection("Quests").doc(questID).update({
         Quest_Status: "rejected",
-        Unread: true
+        Unread: true,
+        Quest_Points: 0
     })
         .then(() => {
             console.log("Student quest successfully updated!");
@@ -276,9 +276,7 @@ function onClickApprove() {
  * Write this
  */
 function onClickReject() {
-    db.collection("Educators").doc(userID).collection("Quests").doc(questID).update({
-        Quest_Rejected: true
-    })
+    db.collection("Educators").doc(userID).collection("Quests").doc(questID).delete()
         .then(() => {
             console.log("Quest successfully rejected!");
             rejectStudentQuest();
