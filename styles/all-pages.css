@@ -19,7 +19,6 @@ body {
     font-family: 'Mali', Arial, Helvetica, sans-serif;
     font-size: 13pt;
     background-image: url('/img/background_clouds.png');
-    background-repeat: repeat-x repeat-y;
 }
 
 
@@ -62,7 +61,7 @@ body {
     border-radius: 7px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 40px;
-    background: url('/img/background_pattern_1.png');
+    background: url('/img/background_pattern.png');
 }
 
 .card-text-container {
