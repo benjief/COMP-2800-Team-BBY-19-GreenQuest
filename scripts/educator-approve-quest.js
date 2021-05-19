@@ -51,6 +51,7 @@ function pullQuestInfo() {
             imageURLs = doc.data().Quest_Photos;
             className = doc.data().Submitter_Class;
             getSubmitterPoints();
+            getClassPoints();
             populateDOM();
         })
         .catch((error) => {
@@ -66,7 +67,7 @@ function pullQuestInfo() {
         .get()
         .then((doc) => {
             submitterPoints = doc.data().Student_Points;
-            getClassPoints();
+            console.log(submitterPoints);
         })
         .catch((error) => {
             console.log("Error getting submitter points: ", error);
@@ -80,8 +81,8 @@ function pullQuestInfo() {
     db.collection("Classes").doc(className)
         .get()
         .then((doc) => {
-            submitterPoints = doc.data().Student_Points;
             classPoints = doc.data().Class_Points;
+            console.log(classPoints);
         })
         .catch((error) => {
             console.log("Error getting class points: ", error);
@@ -185,13 +186,13 @@ function updateStudentPoints() {
     let pointsGained = document.getElementById("quest-points-input").value;
     pointsGained = parseInt(pointsGained);
     console.log(pointsGained);
-    let updatedStudentPoints = submitterPoints + pointsGained;
+    submitterPoints += pointsGained;
+    console.log(submitterPoints);
     db.collection("Students").doc(submitterID).update({
-        Student_Points: updatedStudentPoints
+        Student_Points: submitterPoints
     })
     .then(() => {
         console.log("Student points updated successfully!");
-        updateClassPoints();
     })
     .catch((error) => {
         console.error("Error updating student points: ", error);
@@ -202,13 +203,13 @@ function updateStudentPoints() {
  * Write this.
  */
 function updateClassPoints() {
-    let updatedClassPoints = classPoints + submitterPoints;
+    classPoints += submitterPoints;
+    console.log(classPoints);
     db.collection("Classes").doc(className).update({
-        Class_Points: updatedClassPoints
+        Class_Points: classPoints
     })
     .then(() => {
         console.log("Class points successfully updated!");
-        updateStudentPoints();
     })
     .catch((error) => {
         console.error("Error updating class points: " + error);
@@ -227,6 +228,7 @@ function approveStudentQuest() {
         .then(() => {
             console.log("Student quest successfully updated!");
             updateStudentPoints();
+            updateClassPoints();
         })
         .catch((error) => {
             console.error("Error updating student quest: " + error);
@@ -261,9 +263,9 @@ function onClickApprove() {
             $("#feedback").html("Success! Please wait...");
             $("#feedback").show(0);
             $("#feedback").fadeOut(2500);
-            // setTimeout(function () {
-            //     location.href = "./educator-home.html";
-            // }, 2300);
+            setTimeout(function () {
+                location.href = "./educator-home.html";
+            }, 2300);
         })
         .catch((error) => {
             console.error("Error approving quest: ", error);
