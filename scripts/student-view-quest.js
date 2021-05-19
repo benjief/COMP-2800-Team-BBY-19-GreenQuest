@@ -187,24 +187,26 @@ function updateStudent() {
 /** 
  * Write this.
  */
-db.collection("Students").doc(userID).collection("Quests")
-.where("Quest_Status", "==", "active")
-.get()
-.then((querySnapshot) => {
-    // There should only ever be one active quest
-    querySnapshot.forEach((doc) => {
-        var currentQuestID = doc.id;
-        db.collection("Students").doc(userID).collection("Quests").doc(currentQuestID).delete()
-            .then(() => {
-                console.log("Quest successfully deleted!");
-                db.collection("Students").doc(userID).update({
-                    Student_Quest: false
-                })
-            }).catch((error) => {
-                console.error("Error deleting quest: ", error);
+function deleteQuest() {
+    db.collection("Students").doc(userID).collection("Quests")
+        .where("Quest_Status", "==", "active")
+        .get()
+        .then((querySnapshot) => {
+            // There should only ever be one active quest
+            querySnapshot.forEach((doc) => {
+                var currentQuestID = doc.id;
+                db.collection("Students").doc(userID).collection("Quests").doc(currentQuestID).delete()
+                    .then(() => {
+                        console.log("Quest successfully deleted!");
+                        db.collection("Students").doc(userID).update({
+                            Student_Quest: false
+                        })
+                    }).catch((error) => {
+                        console.error("Error deleting quest: ", error);
+                    });
             });
-    });
-})
+        })
+}
 
 /**
  * Write this.
