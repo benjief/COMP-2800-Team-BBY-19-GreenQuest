@@ -45,10 +45,7 @@
                         <a class="nav-link" href="#" onclick="onClickHome()">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./about-us.html">About</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="./login.html">Logout</a>
+                        <a class="nav-link" href="./html/about-us.html">About</a>
                     </li>
                 </ul>
             </div>
@@ -60,17 +57,18 @@
             <p class="page-heading">Welcome to GreenQuest!</p>
         </div>
         <div class="box" id="main-content-card">
-            <div>
-                <p class="subtext">Come play and </p>
-                <p class="description">GreenQuest is a fun and an
-                    engaging educational platform that will help students
-                    understand how to be more sustainable and reduce
-                    their carbon footprints.</p>
-                <hr>
-                <br>
-                <div class="buttons">
-                    <a class="btn2 btn-primary btn-lg" href="/html/login.html" role="button">Sign up / Login</a>
-                </div>
+            <div class="text-container" id="subtext-container">
+                <p class="subtext">Join us on a quest to save the planet!</p>
+            </div>
+            <hr id="break-1">
+            <div class="text-container" id="description-container">
+                <p class="description">GreenQuest an educational platform that helps students
+                    learn to be more sustainable while also reducing their carbon footprints by
+                    engaging them in ta school-wide, quest-based competition</p>
+            </div>
+            <hr id="break-2">
+            <div class="card-button-container" id="card-button-container-1">
+                <a class="button" id="login-button" href="./login.html">Sign up/Login</a>
             </div>
         </div>
     </div>
@@ -82,12 +80,13 @@
     <!----------------------------------------------->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
-    </script>
+        </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
 
     <!-- Link to the api keys for your firebase project -->
     <script src="../scripts/firebase-api-GreenQuest.js"></script>
