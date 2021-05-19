@@ -18,11 +18,12 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 40px;
     font-weight: 600;
-    background: rgba(255, 252, 86, 0.9) !important;
+    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url("/img/background_pattern_2.png");
 }
 
 #content-card-1 {
     margin-bottom: 90px !important;
+    background: url("/img/background_pattern.png");
 }
 
 #about-us-container {
@@ -46,10 +47,6 @@
 
 .text-container p {
     text-align: justify;
-    border: 2px solid #00ff0d;
-    border-style: dashed;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.8);
     padding: 10px;
 }
 
