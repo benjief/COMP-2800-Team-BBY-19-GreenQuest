@@ -21,6 +21,7 @@ function getCurrentStudent() {
                     if (className == null) {
                         let message = "<p class='message'>You aren't in a class yet!</p>"
                         $(".student-list").append(message);
+                        $(".student-list").css({ height: "100px", display: "flex", justifyContent: "center"})
                     } else {
                         getStudentsInClass();
                     }

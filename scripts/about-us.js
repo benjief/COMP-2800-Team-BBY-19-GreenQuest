@@ -43,14 +43,16 @@ function onClickHome() {
                 .doc(somebody.uid)
                 .get()
                 .then(function (doc) {
-                    if (!doc) {
-                        location.href = "./student-home.html";
-                    } else {
+                    if (doc.data() != null) {
                         location.href = "./educator-home.html";
+                    } else {
+                        location.href = "./student-home.html";
                     }
-                });
+                })
+        } else {
+            location.href = "../index.html";
         }
-    });
+    })
 }
 
 // Run function when document is ready 
