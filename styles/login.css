@@ -80,6 +80,11 @@
     background-color: #ff8000;
 }
 
+.firebaseui-textfield.mdl-textfield .firebaseui-input {
+    font-family: 'Mali', Arial, Helvetica, sans-serif;
+}
+
+
 .mdl-button--primary.mdl-button--primary {
     font-family: 'Mali', Arial, Helvetica, sans-serif;
     color: #ff80ee;

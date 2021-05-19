@@ -42,14 +42,14 @@
 
 #characters-remaining-container-1 {
     display: flex;
-    margin-left: 40px;
+    margin-left: 62px;
     font-size: 10pt;
     grid-area: chars-remaining-1;
 }
 
 #characters-remaining-container-2 {
     display: flex;
-    margin-left: 40px;
+    margin-left: 62px;
     font-size: 10pt;
     grid-area: chars-remaining-2;
 }

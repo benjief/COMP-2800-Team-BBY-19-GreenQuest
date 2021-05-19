@@ -18,22 +18,22 @@ var questID;
 /**
  * Write this.
  */
- function getQuestID() {
+function getQuestID() {
     console.log(userID);
     db.collection("Students").doc(userID).collection("Quests")
-    .where("Quest_Status", "==", "active")
-    .get()
-    .then((querySnapshot) => {
-        // There should only ever be one quest at a time
-        querySnapshot.forEach((doc) => {
-            questID = doc.data().Quest_ID;
+        .where("Quest_Status", "==", "active")
+        .get()
+        .then((querySnapshot) => {
+            // There should only ever be one quest at a time
+            querySnapshot.forEach((doc) => {
+                questID = doc.data().Quest_ID;
+            })
+            console.log(questID);
+            getQuest();
         })
-        console.log(questID);
-        getQuest();
-    })
-    .catch((error) => {
-        console.log("Error getting quest ID: ", error);
-    });
+        .catch((error) => {
+            console.log("Error getting quest ID: ", error);
+        });
 }
 
 /* Get the current user's name, class name, educator name, and ID from Firestore. */
@@ -169,28 +169,49 @@ function onClickSubmit() {
     location.href = "./student-submit-quest.html?questid=" + questID + "&userid=" + userID;
 }
 
+/**
+ * Write this.
+ */
+function updateStudent() {
+    db.collection("Students").doc(userID).update({
+        Student_Quest: false
+    })
+        .then(() => {
+            console.log("Student_Quest successfully deactivated!");
+            deleteQuest()
+        }).catch((error) => {
+            console.error("Error deactivating student quest: ", error);
+        });
+}
 
+/** 
+ * Write this.
+ */
+db.collection("Students").doc(userID).collection("Quests")
+.where("Quest_Status", "==", "active")
+.get()
+.then((querySnapshot) => {
+    // There should only ever be one active quest
+    querySnapshot.forEach((doc) => {
+        var currentQuestID = doc.id;
+        db.collection("Students").doc(userID).collection("Quests").doc(currentQuestID).delete()
+            .then(() => {
+                console.log("Quest successfully deleted!");
+                db.collection("Students").doc(userID).update({
+                    Student_Quest: false
+                })
+            }).catch((error) => {
+                console.error("Error deleting quest: ", error);
+            });
+    });
+})
+
+/**
+ * Write this.
+ */
 function resetQuest() {
     if (confirm("Are you sure?")) {
-        db.collection("Students").doc(userID).collection("Quests")
-        .where("Quest_Status", "==", "active")
-        .get()
-        .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                var currentQuestID = doc.id;
-                db.collection("Students").doc(userID).collection("Quests").doc(currentQuestID).delete()
-                    .then(() => {
-                        console.log("Document successfully deleted!");
-                        db.collection("Students").doc(userID).update({
-                            Student_Quest: false
-                        })
-                        console.log("Student_Quest is now false!");
-                        location.href = "./student-choose-quest.html";
-                    }).catch((error) => {
-                        console.error("Error removing document: ", error);
-                    });
-            });
-        })
+        updateStudent();
     } else {
         console.log("Reset quest cancelled");
     }
