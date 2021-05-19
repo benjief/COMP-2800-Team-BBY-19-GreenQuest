@@ -49,7 +49,7 @@ function pullQuestInfo() {
             questDescription = doc.data().Quest_Description;
             questNotes = doc.data().Quest_Notes;
             imageURLs = doc.data().Quest_Photos;
-            className = doc.data().Submitter_Points;
+            className = doc.data().Submitter_Class;
             getSubmitterPoints();
             populateDOM();
         })
@@ -185,9 +185,9 @@ function updateStudentPoints() {
     let pointsGained = document.getElementById("quest-points-input").value;
     pointsGained = parseInt(pointsGained);
     console.log(pointsGained);
-    let updatedPoints = submitterPoints + pointsGained;
+    submitterPoints += pointsGained;
     db.collection("Students").doc(submitterID).update({
-        Student_Points: updatedPoints
+        Student_Points: submitterPoints
     })
     .then(() => {
         console.log("Student points updated successfully!");
@@ -204,7 +204,14 @@ function updateStudentPoints() {
 function updateClassPoints() {
     classPoints += submitterPoints;
     db.collection("Classes").doc(className).update({
-        Class_Points: classPoints
+        Class_Points: submitterPoints
+    })
+    .then(() => {
+        console.log("Class points successfully updated!");
+        updateStudentPoints();
+    })
+    .catch((error) => {
+        console.error("Error updating class points: " + error);
     })
 }
 
@@ -253,9 +260,9 @@ function onClickApprove() {
             $("#feedback").html("Success! Please wait...");
             $("#feedback").show(0);
             $("#feedback").fadeOut(2500);
-            setTimeout(function () {
-                location.href = "./educator-home.html";
-            }, 2300);
+            // setTimeout(function () {
+            //     location.href = "./educator-home.html";
+            // }, 2300);
         })
         .catch((error) => {
             console.error("Error approving quest: ", error);
