@@ -33,6 +33,26 @@ function easterEgg(element) {
     $(element).attr("src", "/img/" + imageName);
 }
 
+/** 
+ * Write this.
+ */
+function onClickHome() {
+    firebase.auth().onAuthStateChanged(function (somebody) {
+        if (somebody) {
+            db.collection("Educators")
+                .doc(somebody.uid)
+                .get()
+                .then(function (doc) {
+                    if (!doc) {
+                        location.href = "./student-home.html";
+                    } else {
+                        location.href = "./educator-home.html";
+                    }
+                });
+        }
+    });
+}
+
 // Run function when document is ready 
 $(document).ready(function () {
     randomizeBackground();
