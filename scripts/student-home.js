@@ -70,5 +70,3 @@ function postStudentPoints() {
 $(document).ready(function () {
     getStudentPoints();
 });
-
-

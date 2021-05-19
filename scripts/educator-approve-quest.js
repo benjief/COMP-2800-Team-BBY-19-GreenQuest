@@ -1,4 +1,3 @@
-
 // JS for educator-approve-quest.js
 
 // Pull quest name and ID from URL
@@ -62,7 +61,7 @@ function pullQuestInfo() {
 /**
  * Write this.
  */
- function getSubmitterPoints() {
+function getSubmitterPoints() {
     db.collection("Students").doc(submitterID)
         .get()
         .then((doc) => {
@@ -77,7 +76,7 @@ function pullQuestInfo() {
 /**
  * Write this.
  */
- function getClassPoints() {
+function getClassPoints() {
     db.collection("Classes").doc(className)
         .get()
         .then((doc) => {
@@ -100,9 +99,9 @@ function populateDOM() {
     let notes = "<p id='quest-notes'>" + questNotes + "</p>";
     $("#quest-notes-container").append(notes);
     for (var i = 0; i < imageURLs.length; i++) {
-        let imageDOM = "<li class='list-item'><a class='uploaded-image' id='"
-            + imageURLs[i] + "' data-bs-toggle='modal' data-bs-target='#imagePreview' onclick='showPreview(this)'>Image "
-            + (i + 1) + "</li>";
+        let imageDOM = "<li class='list-item'><a class='uploaded-image' id='" +
+            imageURLs[i] + "' data-bs-toggle='modal' data-bs-target='#imagePreview' onclick='showPreview(this)'>Image " +
+            (i + 1) + "</li>";
         $(".uploaded-images").append(imageDOM);
     }
 }
@@ -186,14 +185,14 @@ function updateStudentPoints() {
     submitterPoints += questPoints;
     console.log(submitterPoints);
     db.collection("Students").doc(submitterID).update({
-        Student_Points: submitterPoints
-    })
-    .then(() => {
-        console.log("Student points updated successfully!");
-    })
-    .catch((error) => {
-        console.error("Error updating student points: ", error);
-    });
+            Student_Points: submitterPoints
+        })
+        .then(() => {
+            console.log("Student points updated successfully!");
+        })
+        .catch((error) => {
+            console.error("Error updating student points: ", error);
+        });
 }
 
 /**
@@ -203,14 +202,14 @@ function updateClassPoints() {
     classPoints += questPoints;
     console.log(classPoints);
     db.collection("Classes").doc(className).update({
-        Class_Points: classPoints
-    })
-    .then(() => {
-        console.log("Class points successfully updated!");
-    })
-    .catch((error) => {
-        console.error("Error updating class points: " + error);
-    })
+            Class_Points: classPoints
+        })
+        .then(() => {
+            console.log("Class points successfully updated!");
+        })
+        .catch((error) => {
+            console.error("Error updating class points: " + error);
+        })
 }
 
 /**
@@ -220,10 +219,10 @@ function approveStudentQuest() {
     questPoints = document.getElementById("quest-points-input").value;
     questPoints = parseInt(questPoints);
     db.collection("Students").doc(submitterID).collection("Quests").doc(questID).update({
-        Quest_Status: "approved",
-        Unread: true,
-        Quest_Points: questPoints
-    })
+            Quest_Status: "approved",
+            Unread: true,
+            Quest_Points: questPoints
+        })
         .then(() => {
             console.log("Student quest successfully updated!");
             updateStudentPoints();
@@ -239,10 +238,10 @@ function approveStudentQuest() {
  */
 function rejectStudentQuest() {
     db.collection("Students").doc(submitterID).collection("Quests").doc(questID).update({
-        Quest_Status: "rejected",
-        Unread: true,
-        Quest_Points: 0
-    })
+            Quest_Status: "rejected",
+            Unread: true,
+            Quest_Points: 0
+        })
         .then(() => {
             console.log("Student quest successfully updated!");
         })

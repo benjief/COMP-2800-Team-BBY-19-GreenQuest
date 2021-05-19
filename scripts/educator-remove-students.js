@@ -16,7 +16,11 @@ function populateStudentList() {
     if (currentStudents.length == 0) {
         let message = "<div class='text-container'><p class='message'>There are no students to remove!</p></div>"
         $(".student-list").append(message);
-        $(".student-list").css({ width: "90%", display: "flex", justifyContent: "center" });
+        $(".student-list").css({
+            width: "90%",
+            display: "flex",
+            justifyContent: "center"
+        });
         $("#submit-button").html("Back");
     } else {
         for (var i = 0; i < currentStudents.length; i++) {
@@ -26,16 +30,16 @@ function populateStudentList() {
             $("#student-container-" + i).append(studentName);
             let iconContainer = "<div class='icon-container' id='icon-container-" + i + "'></div>";
             $("#student-container-" + i).append(iconContainer);
-            let plusIcon = "<img src='/img/remove_icon.png' class='icon' id='minus-icon-" + i
-                + "' onclick='removeStudent()'>";
+            let plusIcon = "<img src='/img/remove_icon.png' class='icon' id='minus-icon-" + i +
+                "' onclick='removeStudent()'>";
             $("#icon-container-" + i).append(plusIcon);
         }
     }
 }
 
 /** 
-* Reads students' names and IDs from Firestore and puts them into an array if they are already in this class.
-*/
+ * Reads students' names and IDs from Firestore and puts them into an array if they are already in this class.
+ */
 function getCurrentStudents() {
     db.collection("Students")
         .where("Student_Class", "==", className)
@@ -54,7 +58,7 @@ function getCurrentStudents() {
  * Also changes the "+" icon beside a student to a "-" icon and allows that student to be subsequently
  * added to the class in question.
  */
- function removeStudent() {
+function removeStudent() {
     $(document).click(function (event) {
         let index = $(event.target).attr("id");
         // Extract index from event id
@@ -65,9 +69,9 @@ function getCurrentStudents() {
         $(event.target).attr("onclick", "addStudent()");
         let studentToRemove = studentIDs[index];
         db.collection("Students").doc(studentToRemove).update({
-            Student_Class: null,
-            Student_Educator: null
-        })
+                Student_Class: null,
+                Student_Educator: null
+            })
             .then(() => {
                 console.log("Student successfully added to this class!");
             })
@@ -82,7 +86,7 @@ function getCurrentStudents() {
  * Also changes the "+" icon beside a student to a "-" icon and allows that student to be subsequently
  * removed from the class in question.
  */
- function addStudent() {
+function addStudent() {
     $(document).click(function (event) {
         let index = $(event.target).attr("id");
         // Extract index from event id (CITE THIS CODE)
@@ -94,8 +98,8 @@ function getCurrentStudents() {
         let studentToAdd = studentIDs[index];
         // Update the student's Student_Class attribute
         db.collection("Students").doc(studentToAdd).update({
-            Student_Class: className
-        })
+                Student_Class: className
+            })
             .then(() => {
                 console.log("Student successfully added to this class!");
             })

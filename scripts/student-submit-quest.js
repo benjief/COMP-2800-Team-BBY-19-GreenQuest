@@ -1,4 +1,3 @@
-
 // JS for student-submit-quest.js
 
 // Pull quest and user IDs from URL
@@ -130,10 +129,10 @@ function showPreview(element) {
 function addNamesToDOM() {
     resetDOM();
     for (var i = 0; i < uploadedImageFiles.length; i++) {
-        let imageDOM = "<li class='list-item'><a class='uploaded-image' id='"
-            + uploadedImageFiles[i].name + "' data-bs-toggle='modal' data-bs-target='#imagePreview' onclick='showPreview(this)'>"
-            + uploadedImageFiles[i].name + "</a><img src='/img/remove_icon.png' class='remove-icon' id='delete-"
-            + uploadedImageFiles[i].name + "' onclick='removeImage(this)'></li>";
+        let imageDOM = "<li class='list-item'><a class='uploaded-image' id='" +
+            uploadedImageFiles[i].name + "' data-bs-toggle='modal' data-bs-target='#imagePreview' onclick='showPreview(this)'>" +
+            uploadedImageFiles[i].name + "</a><img src='/img/remove_icon.png' class='remove-icon' id='delete-" +
+            uploadedImageFiles[i].name + "' onclick='removeImage(this)'></li>";
         $(".uploaded-images").append(imageDOM);
     }
     checkNumUploaded();
@@ -236,17 +235,17 @@ function getQuestDescription() {
  */
 function getUniqueQuestID() {
     db.collection("Students").doc(userID).collection("Quests")
-    .where("Quest_Status", "==", "active")
-    .get()
-    .then((querySnapshot) => {
-        // There should only ever be one quest at a time
-        querySnapshot.forEach((doc) => {
-            uniqueQuestID = doc.id;
+        .where("Quest_Status", "==", "active")
+        .get()
+        .then((querySnapshot) => {
+            // There should only ever be one quest at a time
+            querySnapshot.forEach((doc) => {
+                uniqueQuestID = doc.id;
+            })
         })
-    })
-    .catch((error) => {
-        console.log("Error getting unique quest ID: ", error);
-    });
+        .catch((error) => {
+            console.log("Error getting unique quest ID: ", error);
+        });
 }
 
 
@@ -255,8 +254,8 @@ function getUniqueQuestID() {
  */
 function updateQuestStatus() {
     db.collection("Students").doc(userID).update({
-        Student_Quest: false
-    })
+            Student_Quest: false
+        })
         .then(() => {
             console.log("Student quest status succesfully updated!");
         })
@@ -273,20 +272,20 @@ function updateQuestStatus() {
 function addQuestToDB(imageURLs) {
     // Update quest in student's quest collection
     db.collection("Students").doc(userID).collection("Quests").doc(uniqueQuestID).update({
-        Quest_Status: "submitted"
-    })
+            Quest_Status: "submitted"
+        })
         .then(() => {
             console.log("Student quest successfully updated!");
             updateQuestStatus();
             // Write quest to teacher's quest collection
             db.collection("Educators").doc(educatorID).collection("Quests").doc(uniqueQuestID).set({
-                Quest_Submitter: userName,
-                Submitter_ID: userID,
-                Submitter_Class: className,
-                Quest_Description: questDescription,
-                Quest_Photos: imageURLs,
-                Quest_Notes: $("#quest-notes").prop("value"),
-            })
+                    Quest_Submitter: userName,
+                    Submitter_ID: userID,
+                    Submitter_Class: className,
+                    Quest_Description: questDescription,
+                    Quest_Photos: imageURLs,
+                    Quest_Notes: $("#quest-notes").prop("value"),
+                })
                 .then(() => {
                     console.log("Educator quest successfully written!");
                     $("#feedback").html("Success! Please wait...");

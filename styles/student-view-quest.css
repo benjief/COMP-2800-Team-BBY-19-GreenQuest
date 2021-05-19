@@ -21,7 +21,7 @@
 }
 
 .modal-footer {
-border: none;
+    border: none;
 }
 
 .btn {
@@ -31,7 +31,7 @@ border: none;
 
 #main-content-card {
     grid-template-columns: 100%;
-    grid-template-areas: 
+    grid-template-areas:
         "title"
         "bitmoji"
         "description"
@@ -146,6 +146,7 @@ border: none;
     align-items: center;
 }
 
-#quest-instructions, #quest-information {
+#quest-instructions,
+#quest-information {
     text-decoration: underline;
 }

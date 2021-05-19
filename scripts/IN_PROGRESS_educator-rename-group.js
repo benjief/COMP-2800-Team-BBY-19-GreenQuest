@@ -32,9 +32,9 @@ function charCounter(field, field2, maxlimit) {
  */
 function renameGroup(groupName) {
     db.collection("Groups").doc(groupName)
-    .set({
-        id: groupName
-    })
+        .set({
+            id: groupName
+        })
         .then(() => {
             console.log("Group successfully renamed!");
         })

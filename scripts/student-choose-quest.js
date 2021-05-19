@@ -30,16 +30,22 @@ function getCurrentStudent() {
                         // Display a message on the page if the student isn't in a class
                         $("#main-content-card > .text-container").remove();
                         $("#main-content-card > .image-container").remove();
-                        let message = "<div class='text-container' id='message-container'><p id='message'>"
-                            + "You haven't been added to a class yet!</p></div>";
+                        let message = "<div class='text-container' id='message-container'><p id='message'>" +
+                            "You haven't been added to a class yet!</p></div>";
                         $("#main-content-card").append(message);
                         $(".page-heading").html("No Class!");
-                        $("#message-container").css({ width: "90%", fontWeight: "600", justifySelf: "center" });
+                        $("#message-container").css({
+                            width: "90%",
+                            fontWeight: "600",
+                            justifySelf: "center"
+                        });
                         $("#card-button-container-2").remove();
                         $("#accept-button").removeAttr("onclick");
                         $("#accept-button").attr("href", "./student-home.html");
                         $("#accept-button").html("Home");
-                        $(".card-button-container").css({ marginBottom: "30px" });
+                        $(".card-button-container").css({
+                            marginBottom: "30px"
+                        });
                     }
                     getQuestIDs();
                 });
@@ -126,11 +132,11 @@ function addInfoToDOM() {
     let bitmoji = "<img src='" + bitmojiURL + "'>";
     $(".image-container").append(bitmoji);
     getBitmojiBackground();
-    let instructions = "<a id='quest-instructions' onclick='showVideo(this)'"
-        + "data-bs-toggle='modal' data-bs-target='#videoViewer'>Instructions</a>";
+    let instructions = "<a id='quest-instructions' onclick='showVideo(this)'" +
+        "data-bs-toggle='modal' data-bs-target='#videoViewer'>Instructions</a>";
     $("#quest-instructions-container").append(instructions);
-    let info = "<a id='quest-information' onclick='showVideo(this)'"
-        + "data-bs-toggle='modal' data-bs-target='#videoViewer'>More Information</a>";
+    let info = "<a id='quest-information' onclick='showVideo(this)'" +
+        "data-bs-toggle='modal' data-bs-target='#videoViewer'>More Information</a>";
     $("#quest-information-container").append(info);
 }
 
@@ -169,7 +175,9 @@ function showVideo(element) {
  */
 function getBitmojiBackground() {
     let randomNum = Math.floor(Math.random() * 5 + 3);
-    $(".image-container").css({ background: "url('../img/background_pattern_" + randomNum + ".png')" });
+    $(".image-container").css({
+        background: "url('../img/background_pattern_" + randomNum + ".png')"
+    });
 }
 
 /**
@@ -187,15 +195,15 @@ function pseudorandomID() {
  */
 function activateQuest() {
     db.collection("Students").doc(userID).update({
-        Student_Quest: true
-    })
-    .then(() => {
-        console.log("Quest successfully activated!");
-        location.href = "./student-view-quest.html?questid=" + currentQuestID;
-    })
-    .catch((error) => {
-        console.error("Error activating quest: ", error);
-    });
+            Student_Quest: true
+        })
+        .then(() => {
+            console.log("Quest successfully activated!");
+            location.href = "./student-view-quest.html?questid=" + currentQuestID;
+        })
+        .catch((error) => {
+            console.error("Error activating quest: ", error);
+        });
 }
 
 /** 
@@ -205,9 +213,9 @@ function writeQuest() {
     let questID = pseudorandomID();
     // Update student quest
     db.collection("Students").doc(userID).collection("Quests").doc(questID).set({
-        Quest_ID: currentQuestID,
-        Quest_Status: "active"
-    })
+            Quest_ID: currentQuestID,
+            Quest_Status: "active"
+        })
         .then(() => {
             console.log("Quest successfully written!");
             activateQuest();

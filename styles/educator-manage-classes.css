@@ -1,6 +1,6 @@
 /** CSS for educator-manage-classes.html */
 #main-content-card {
-    grid-template-areas: 
+    grid-template-areas:
         "card-text"
         "class-list"
         "break"

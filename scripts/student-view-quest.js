@@ -174,8 +174,8 @@ function onClickSubmit() {
  */
 function updateStudent() {
     db.collection("Students").doc(userID).update({
-        Student_Quest: false
-    })
+            Student_Quest: false
+        })
         .then(() => {
             console.log("Student_Quest successfully deactivated!");
             deleteQuest()

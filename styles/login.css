@@ -1,7 +1,7 @@
 /** CSS for login.html */
 
 #main-content-card {
-    grid-template-areas: 
+    grid-template-areas:
         "card-text"
         "form"
         "login";
@@ -45,7 +45,8 @@
     top: -2px;
 }
 
-#student-radio, #student-radio-label {
+#student-radio,
+#student-radio-label {
     position: relative;
     left: -8px;
 }

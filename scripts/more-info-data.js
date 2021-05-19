@@ -16,37 +16,37 @@ class Quest {
     return this.difficulty;
   }
 
-  getDifficultyStars () {
+  getDifficultyStars() {
     const maxDifficulty = 5;
     const rating = this.difficulty;
     const fullStar = ' <i class="fas fa-star stars"></i>'.repeat(Math.ceil(rating));
-    const noStar = ' <i class="far fa-star stars"></i>'.repeat(Math.floor(maxDifficulty-rating));
+    const noStar = ' <i class="far fa-star stars"></i>'.repeat(Math.floor(maxDifficulty - rating));
     return `${fullStar}${noStar}`;
-}
+  }
 
   getDescription() {
     return this.description;
   }
 
   getInstruction() {
-    
+
   }
 }
 
 // Firestore data converter
 var questConverter = {
-  toFirestore: function(quest) {
-      return {
-          title: quest.title,
-          description: quest.description,
-          difficulty: quest.difficulty,
-          instruction: quest.instruction,
-          moreInfo: quest.moreInfo
-      };
+  toFirestore: function (quest) {
+    return {
+      title: quest.title,
+      description: quest.description,
+      difficulty: quest.difficulty,
+      instruction: quest.instruction,
+      moreInfo: quest.moreInfo
+    };
   },
-  fromFirestore: function(snapshot, options){
-      const data = snapshot.data(options);
-      return new Quest(data.title, data.description, data.difficulty, data.instruction, data.moreInfo);
+  fromFirestore: function (snapshot, options) {
+    const data = snapshot.data(options);
+    return new Quest(data.title, data.description, data.difficulty, data.instruction, data.moreInfo);
   }
 };
 
@@ -58,7 +58,7 @@ const questRef = db.collection("Quests");
 
 //Creating quest objects.
 const recycling = new Quest("recycle", "Throw recyclable bottle in the recycle bin", "1", "https://www.youtube.com/embed/6jQ7y_qQYUA", "https://www.youtube.com/embed/7UuUeoyYmxI");
-const walking = new Quest("walking", "Try walking or biking to places!", "3", "https://www.youtube.com/embed/BWR3DxGHLD4","https://www.youtube.com/embed/IJoAcD0oUww");
+const walking = new Quest("walking", "Try walking or biking to places!", "3", "https://www.youtube.com/embed/BWR3DxGHLD4", "https://www.youtube.com/embed/IJoAcD0oUww");
 const plant_a_seed = new Quest("Plant a seed", "Try a seed to grow something!", "4", "https://www.youtube.com/embed/EsODAlsY4NM", "https://www.youtube.com/embed/ib5uiLMM2wY");
 const plant_a_tree = new Quest("Plant a Tree", "Try planting a tree!", "5", "https://www.youtube.com/embed/N7fIqlLB1eU", "https://www.youtube.com/embed/z_KMN8532co");
 const turn_off_light = new Quest("Turn off Light", "When you leave your room, turn off the light!", "1", "https://www.youtube.com/embed/DfrHBy6YPj0", "https://www.youtube.com/embed/QH9pk7diKjA");

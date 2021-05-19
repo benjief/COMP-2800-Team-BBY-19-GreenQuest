@@ -1,7 +1,7 @@
 /** CSS for student-my-class.html */
 
 #main-content-card {
-    grid-template-areas: 
+    grid-template-areas:
         "card-text"
         "student-list"
         "back";

@@ -13,7 +13,11 @@ function populateClassList() {
     if (userClasses.length == 0) {
         let message = "<div class='text-container><p class='message'>You haven't got any classes!</p></div>"
         $(".class-list").append(message);
-        $(".class-list").css({ width: "90%", display: "flex", justifyContent: "center" });
+        $(".class-list").css({
+            width: "90%",
+            display: "flex",
+            justifyContent: "center"
+        });
         let backButtonContainer = "<div class='card-button-container'></div>";
         $(".class-list").append(backButtonContainer);
         let backButton = "<a class='button' id='back-button' onclick='onClickBack()'>Back</a>";

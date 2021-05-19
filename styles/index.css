@@ -1,7 +1,7 @@
 /** CSS for index.html */
 
 #main-content-card {
-    grid-template-areas: 
+    grid-template-areas:
         "subtext"
         "bitmoji"
         "break-1"
@@ -91,6 +91,7 @@ hr {
     0% {
         transform: translateY(70px);
     }
+
     100% {
         transform: translateY(0);
     }

@@ -12,7 +12,13 @@ function populateQuestList() {
     if (questIDs.length == 0) {
         let message = "<div class='text-container'><p class='message'>You haven't got any quests to approve.</p></div>"
         $(".quest-list").append(message);
-        $(".quest-list").css({ height: "150px", width: "90%", display: "flex", justifyContent: "center", justifySelf: "center"});
+        $(".quest-list").css({
+            height: "150px",
+            width: "90%",
+            display: "flex",
+            justifyContent: "center",
+            justifySelf: "center"
+        });
         let backButtonContainer = "<div class='card-button-container'></div>";
         $(".quest-list").append(backButtonContainer);
         let backButton = "<a class='button' id='back-button' href='#' onclick='onClickHome()'>Home</a>";
@@ -90,7 +96,7 @@ function getQuests() {
 function onSelectQuest() {
     $(document).click(function (event) {
         let questName = $(event.target).html();
-        let  questID = $(event.target).attr("id");
+        let questID = $(event.target).attr("id");
         setTimeout(function () {
             location.href = "./educator-approve-quest.html?questname=" + questName + "&questid=" + questID;
         }, 500);

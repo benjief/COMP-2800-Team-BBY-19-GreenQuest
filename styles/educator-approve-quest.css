@@ -22,7 +22,7 @@
 }
 
 .modal-footer {
-border: none;
+    border: none;
 }
 
 .btn {
@@ -32,7 +32,7 @@ border: none;
 
 #main-content-card {
     grid-template-columns: 100%;
-    grid-template-areas: 
+    grid-template-areas:
         "card-text"
         "quest-submitter"
         "quest-description"
@@ -107,7 +107,7 @@ input {
     padding: 0;
 }
 
-.page-container li {    
+.page-container li {
     list-style: none;
     margin-bottom: 5px;
 }

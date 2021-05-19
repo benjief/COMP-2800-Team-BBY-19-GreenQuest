@@ -6,7 +6,11 @@
     justify-content: center;
 }
 
-#content-card-1, #content-card-2, #content-card-3, #content-card-4, #content-card-5 {
+#content-card-1,
+#content-card-2,
+#content-card-3,
+#content-card-4,
+#content-card-5 {
     display: grid;
     margin-top: 10px;
     width: 90%;

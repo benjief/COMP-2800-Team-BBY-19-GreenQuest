@@ -1,6 +1,6 @@
 /** CSS for educator-manage-quests.html */
 #main-content-card {
-    grid-template-areas: 
+    grid-template-areas:
         "card-text"
         "quest-list";
     margin-bottom: 60px !important;

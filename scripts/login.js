@@ -32,13 +32,13 @@ var uiConfig = {
             if (authResult.additionalUserInfo.isNewUser) { //if new user
                 if (userType === "student") {
                     db.collection("Students").doc(user.uid).set({
-                        Student_Name: user.displayName,
-                        Student_Email: user.email,
-                        Student_Class: null,
-                        Student_Educator: null,
-                        Student_Points: 0,
-                        Student_Quest: false
-                    })
+                            Student_Name: user.displayName,
+                            Student_Email: user.email,
+                            Student_Class: null,
+                            Student_Educator: null,
+                            Student_Points: 0,
+                            Student_Quest: false
+                        })
                         .then(function () {
                             console.log("New student added to firestore");
                             // Re-direct to student-new-home.html after signup
@@ -51,9 +51,9 @@ var uiConfig = {
                         });
                 } else {
                     db.collection("Educators").doc(user.uid).set({
-                        Educator_Name: user.displayName,
-                        Educator_Email: user.email,
-                    })
+                            Educator_Name: user.displayName,
+                            Educator_Email: user.email,
+                        })
                         .then(function () {
                             console.log("New educator added to firestore");
                             // Re-direct to educator-new-home.html after signup

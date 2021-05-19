@@ -8,7 +8,9 @@ function randomizeBackground() {
     let numCards = 5;
     for (var i = 1; i <= numCards; i++) {
         let randomBackground = Math.floor(Math.random() * 4 + 3);
-        $("#bio-pic-" + i).css({ background: "url('/img/background_pattern_" + randomBackground + ".png')" });
+        $("#bio-pic-" + i).css({
+            background: "url('/img/background_pattern_" + randomBackground + ".png')"
+        });
     }
 }
 

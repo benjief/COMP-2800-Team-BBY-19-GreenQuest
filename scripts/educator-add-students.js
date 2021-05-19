@@ -36,7 +36,13 @@ function populateStudentList() {
     if (studentNames.length == 0) {
         let message = "<div class='text-container'><p class='message'>There aren't any students to add!</p></div>"
         $(".student-list").append(message);
-        $(".student-list").css({ height: "100px", width: "90%", display: "flex", justifyContent: "center", justifySelf: "center" });
+        $(".student-list").css({
+            height: "100px",
+            width: "90%",
+            display: "flex",
+            justifyContent: "center",
+            justifySelf: "center"
+        });
         $("#card-button-container-1").remove();
     } else {
         for (var i = 0; i < studentNames.length; i++) {
@@ -46,8 +52,8 @@ function populateStudentList() {
             $("#student-container-" + i).append(studentName);
             let iconContainer = "<div class='icon-container' id='icon-container-" + i + "'></div>";
             $("#student-container-" + i).append(iconContainer);
-            let plusIcon = "<img src='/img/add_icon.png' class='icon' id='plus-icon-" + i
-                + "' onclick='addStudent()'>";
+            let plusIcon = "<img src='/img/add_icon.png' class='icon' id='plus-icon-" + i +
+                "' onclick='addStudent()'>";
             $("#icon-container-" + i).append(plusIcon);
         }
     }
@@ -109,9 +115,9 @@ function addStudent() {
         console.log("Student's Educator: " + currentUser);
         // Update the student's Student_Class attribute
         db.collection("Students").doc(studentToAdd).update({
-            Student_Class: className,
-            Student_Educator: currentUser
-        })
+                Student_Class: className,
+                Student_Educator: currentUser
+            })
             .then(() => {
                 console.log("Student successfully added to this class!");
             })
@@ -138,9 +144,9 @@ function removeStudent() {
         let studentToRemove = studentIDs[index];
         // Update the student's Student_Class attribute
         db.collection("Students").doc(studentToRemove).update({
-            Student_Class: null,
-            Student_Educator: null
-        })
+                Student_Class: null,
+                Student_Educator: null
+            })
             .then(() => {
                 console.log("Student successfully added to this class!");
             })

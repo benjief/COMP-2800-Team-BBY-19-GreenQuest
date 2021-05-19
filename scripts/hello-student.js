@@ -6,7 +6,7 @@ var firstVisit = parsedUrl.searchParams.get("firstvisit");
 
 /* Get the current user's name from Firestore and use it to create personalized greetings
    on student-(new-)home.html */
-   function sayHello() {
+function sayHello() {
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {
             db.collection("Students")
@@ -18,9 +18,9 @@ var firstVisit = parsedUrl.searchParams.get("firstvisit");
                     var name = doc.data().Student_Name.split(" ", 1);
                     if (name) {
                         if (firstVisit) {
-                            $("#personalized-greeting").html( "Welcome, " + name);
+                            $("#personalized-greeting").html("Welcome, " + name);
                         } else {
-                            $("#personalized-greeting").html( "Welcome back, " + name);
+                            $("#personalized-greeting").html("Welcome back, " + name);
                         }
                         // Display a generic message if no name is entered when signing up
                     } else {

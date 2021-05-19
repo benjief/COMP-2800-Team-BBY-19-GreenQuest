@@ -22,7 +22,7 @@
 }
 
 .modal-footer {
-border: none;
+    border: none;
 }
 
 .btn {
@@ -32,7 +32,7 @@ border: none;
 
 #main-content-card {
     grid-template-columns: 100%;
-    grid-template-areas: 
+    grid-template-areas:
         "images"
         "input"
         "submit"
@@ -92,7 +92,7 @@ border: none;
     padding: 0;
 }
 
-.page-container li {    
+.page-container li {
     display: grid;
     grid-template-columns: 90% 10%;
     list-style: none;

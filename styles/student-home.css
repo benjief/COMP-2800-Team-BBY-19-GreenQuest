@@ -11,7 +11,7 @@
     margin-bottom: 30px;
 }
 
-.student-points-container img{
+.student-points-container img {
     width: 30px;
     height: 30px;
     align-self: center;
@@ -30,7 +30,7 @@
 }
 
 #main-content-card {
-    grid-template-areas: 
+    grid-template-areas:
         "card-text"
         "my-class"
         "my-quest"
