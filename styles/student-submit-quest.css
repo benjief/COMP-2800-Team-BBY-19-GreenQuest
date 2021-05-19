@@ -184,6 +184,12 @@ border: none;
     align-items: center;
 }
 
+#back-button {
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+
 .feedback-placeholder {
     display: flex;
     justify-content: center;
