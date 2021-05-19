@@ -7,16 +7,17 @@
 function getBitmoji() {
     let storageRef = storage.ref();
     folderRef = storageRef.child("images/bitmojis");
-    storageRef.child("images/bitmojis/3" + randomNum.toString() + ".png").getDownloadURL()
+    storageRef.child("images/bitmojis/36.png").getDownloadURL()
         .then((url) => {
             bitmojiURL = url;
-            // bitmojiURL = imageRef.getDownloadURL();
-            addInfoToDOM();
+            $("#bitmoji").attr("src", bitmojiURL);
         })
         .catch((error) => {
             console.error("Error getting url: ", error);
         })
-        .catch((error) => {
-            console.error("Error getting number of bitmojis: ", error);
-        });
 }
+
+// Run function when document is ready 
+$(document).ready(function () {
+    getBitmoji();
+});
