@@ -194,13 +194,11 @@ function deleteQuest() {
         .then((querySnapshot) => {
             // There should only ever be one active quest
             querySnapshot.forEach((doc) => {
-                var currentQuestID = doc.id;
+                let currentQuestID = doc.id;
                 db.collection("Students").doc(userID).collection("Quests").doc(currentQuestID).delete()
                     .then(() => {
                         console.log("Quest successfully deleted!");
-                        db.collection("Students").doc(userID).update({
-                            Student_Quest: false
-                        })
+                        location.href = "./student-choose-quest.html";
                     }).catch((error) => {
                         console.error("Error deleting quest: ", error);
                     });
