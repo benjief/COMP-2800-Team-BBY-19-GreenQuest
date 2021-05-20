@@ -19,7 +19,6 @@
 }
 
 .student-list {
-    /* display: grid; */
     justify-content: center;
     justify-self: center;
     grid-area: student-list;
@@ -27,7 +26,7 @@
     width: 85%;
     overflow: scroll;
     overflow-x: hidden;
-    font-size: 12pt;
+    font-size: 11.5pt;
 }
 
 .student-list::-webkit-scrollbar {
@@ -42,7 +41,14 @@
 .student-container {
     display: grid;
     grid-template-rows: 100%;
-    grid-template-columns: 60% 40%;
+    grid-template-columns: 60% 34% 6%;
+}
+
+.student-container img {
+    justify-self: center;
+    align-self: center;
+    width: 15px;
+    height: 15px;
 }
 
 .student-name {

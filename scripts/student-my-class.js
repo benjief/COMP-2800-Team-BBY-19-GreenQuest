@@ -54,6 +54,8 @@ function populateStudentList() {
             $("#student-container-" + i).append(studentName);
             let studentPoints = "<p class='student-points' id='student-points-" + i + "'>" + studentsInClass[i].points + "</p>";
             $("#student-container-" + i).append(studentPoints);
+            let leafIcon = "<img src='/img/leaf_icon.png'>"
+            $("#student-container-" + i).append(leafIcon);
         }
     }
 }
