@@ -4,7 +4,7 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "public": ".",
+    "public": "COMP-2800-TEAM-BBY-19-GREENQUEST",
     "ignore": [
       "firebase.json",
       "**/.*",
