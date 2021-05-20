@@ -31,15 +31,7 @@
 
 #main-content-card {
     grid-template-columns: 100%;
-    grid-template-areas:
-        "title"
-        "bitmoji"
-        "description"
-        "instructions"
-        "more-info"
-        "accept"
-        "reject"
-        "home";
+    grid-template-areas: "title" "bitmoji" "description" "instructions" "more-info" "accept" "reject" "home";
     align-items: center;
 }
 
@@ -130,7 +122,7 @@
     margin-bottom: 40px;
 }
 
-#quest-instructions,
-#quest-information {
+#quest-instructions, #quest-information {
     text-decoration: underline;
+ 
 }

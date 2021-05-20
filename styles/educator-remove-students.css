@@ -82,3 +82,11 @@
     height: 100%;
     cursor:pointer;
 }
+.student-name {
+    background: rgba(226, 214, 214,0.7);
+    width: auto;
+    padding: 7px 0px 7px 15px;
+    border-radius: 15px;
+    box-shadow: 2px 2px 2px rgba(116, 103, 103, 0.7);
+
+}

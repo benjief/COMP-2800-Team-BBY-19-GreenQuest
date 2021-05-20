@@ -118,7 +118,7 @@ function addInfoToDOM() {
         "data-bs-toggle='modal' data-bs-target='#videoViewer'>Instructions</a>";
     $("#quest-instructions-container").append(instructions);
     let info = "<a id='quest-information' onclick='showVideo(this)'" +
-        "data-bs-toggle='modal' data-bs-target='#videoViewer'>More Information</a>";
+        "data-bs-toggle='modal' data-bs-target='#videoViewer'>Learn More</a>";
     $("#quest-information-container").append(info);
 }
 
@@ -138,7 +138,7 @@ function showVideo(element) {
 
     } else {
         videoURL = questInfo;
-        videoTitle = "More Information";
+        videoTitle = "Learn More";
     }
 
     $(".modal-body").html("");

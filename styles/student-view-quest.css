@@ -31,15 +31,7 @@
 
 #main-content-card {
     grid-template-columns: 100%;
-    grid-template-areas:
-        "title"
-        "bitmoji"
-        "description"
-        "instructions"
-        "more-info"
-        "submit-quest"
-        "new-quest"
-        "home";
+    grid-template-areas: "title" "bitmoji" "description" "instructions" "more-info" "submit-quest" "new-quest" "home";
     align-items: center;
 }
 
@@ -116,7 +108,7 @@
 
 #card-button-container-1 {
     grid-area: submit-quest;
-    margin-top: 0;
+    margin-top: -25px;
 }
 
 #card-button-container-2 {
@@ -146,7 +138,27 @@
     align-items: center;
 }
 
-#quest-instructions,
+#quest-instructions {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #ff80ee;
+    width: 180px;
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+    color: white;
+    box-shadow: 5px 5px 5px rgb(116 103 103)
+}
+
 #quest-information {
-    text-decoration: underline;
+    cursor: pointer;
+    padding: 10px;
+    background-color: #ff80ee;
+    width: 180px;
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+    color: white;
+    box-shadow: 5px 5px 5px rgb(116 103 103);
+    margin-top: 5px;
 }
