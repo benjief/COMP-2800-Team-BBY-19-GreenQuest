@@ -39,7 +39,8 @@
         "more-info"
         "accept"
         "reject"
-        "home";
+        "break"
+        "back";
     align-items: center;
 }
 
@@ -122,25 +123,8 @@
 }
 
 #card-button-container-3 {
-    grid-area: home;
-}
-
-#accept-button {
-    display: flex;
-    height: 100%;
-    align-items: center;
-}
-
-#new-quest-button {
-    display: flex;
-    height: 100%;
-    align-items: center;
-}
-
-#home-button {
-    display: flex;
-    height: 100%;
-    align-items: center;
+    grid-area: back;
+    margin-bottom: 40px;
 }
 
 #quest-instructions,

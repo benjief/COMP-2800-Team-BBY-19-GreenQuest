@@ -111,24 +111,6 @@
     margin-bottom: 40px;
 }
 
-#submit-quest-button {
-    display: flex;
-    height: 100%;
-    align-items: center;
-}
-
-#new-quest-button {
-    display: flex;
-    height: 100%;
-    align-items: center;
-}
-
-#home-button {
-    display: flex;
-    height: 100%;
-    align-items: center;
-}
-
 #quest-instructions,
 #quest-information {
     text-decoration: underline;

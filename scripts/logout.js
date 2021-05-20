@@ -12,3 +12,4 @@ function logout() {
         console.log("An error occurred while logging you out: " + error);
     });
 }
+

@@ -3,8 +3,9 @@
     grid-template-areas:
         "card-text"
         "student-list"
+        "break"
         "submit"
-        "home";
+        "back";
     margin-bottom: 60px !important;
 }
 
@@ -85,18 +86,6 @@
 }
 
 #card-button-container-2 {
-    grid-area: home;
-    margin-bottom: 30px;
-}
-
-#submit-button {
-    display: flex;
-    height: 100%;
-    align-items: center;
-}
-
-#home-button {
-    display: flex;
-    height: 100%;
-    align-items: center;
+    grid-area: back;
+    margin-bottom: 40px;
 }
