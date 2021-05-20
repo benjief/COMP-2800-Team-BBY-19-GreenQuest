@@ -109,6 +109,7 @@
     border-radius: 10px;
     font-size: 15pt;
     justify-self: center;
+    align-items: center;
     box-shadow: 5px 5px 5px rgb(116, 103, 103);
 }
 
