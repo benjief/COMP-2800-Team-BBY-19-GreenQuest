@@ -24,7 +24,7 @@
     align-items: center;
     max-height: 300px;
     grid-area: quest-list;
-    grid-row-gap: 5px;
+    grid-row-gap: 15px;
     overflow: scroll;
     overflow-x: hidden;
     padding-bottom: 10px;
