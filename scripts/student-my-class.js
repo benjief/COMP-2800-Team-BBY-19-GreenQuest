@@ -64,6 +64,7 @@ function populateStudentList() {
 function getStudentsInClass() {
     db.collection("Students")
         .where("Student_Class", "==", className)
+        .orderBy("Student_Points", "desc")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
