@@ -10,7 +10,6 @@
 
 .card-text-container {
     margin-top: 20px;
-    margin-bottom: 40px;
     text-align: center;
 }
 
@@ -77,7 +76,7 @@
     border-radius: 10px;
     font-size: 15pt;
     justify-self: center;
-    margin-top: 20px;
+    margin-bottom: 20px;
     box-shadow: 5px 5px 5px rgb(116, 103, 103);
 }
 
@@ -87,7 +86,7 @@
 
 #card-button-container-2 {
     grid-area: home;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 #submit-button {
