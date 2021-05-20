@@ -285,6 +285,7 @@ function addQuestToDB(imageURLs) {
                     Quest_Description: questDescription,
                     Quest_Photos: imageURLs,
                     Quest_Notes: $("#quest-notes").prop("value"),
+                    Date_Submitted: new Date()
                 })
                 .then(() => {
                     console.log("Educator quest successfully written!");
