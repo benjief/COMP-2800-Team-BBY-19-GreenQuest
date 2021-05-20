@@ -20,10 +20,19 @@
 
 .student-list {
     grid-area: student-list;
-    height: 300px;
+    max-height: 300px;
     overflow: scroll;
     overflow-x: hidden;
 }
+
+.student-list::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .student-list {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
 
 .text-container {
     display: flex;
