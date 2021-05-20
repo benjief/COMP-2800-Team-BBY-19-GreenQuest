@@ -1,20 +1,7 @@
-// JS for educator-approve-quest.js
+// JS for student-pending-quests.js
 
-// Pull quest name and ID from URL
-const parsedUrl = new URL(window.location.href);
-var questName = parsedUrl.searchParams.get("questname");
-var questID = parsedUrl.searchParams.get("questid");
-$(".page-heading").html(questName);
-
-var userID;
-var submitterID;
-var submitterPoints;
-var className;
-var classPoints;
-var questSubmitter = null;
-var questDescription = null;
-var questNotes = null;
-var questPoints = 0;
+var questTitle;
+var questDescription;
 
 // Create an empty array to store URLs of images attached to this quest
 var imageURLs = [];
