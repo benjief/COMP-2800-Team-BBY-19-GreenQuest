@@ -162,3 +162,11 @@
     box-shadow: 5px 5px 5px rgb(116 103 103);
     margin-top: 5px;
 }
+
+#quest-instructions:hover {
+    color: #2f5ccc;
+}
+
+#quest-information:hover {
+    color: #2f5ccc;
+}
