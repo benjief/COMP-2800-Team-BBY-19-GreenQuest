@@ -95,13 +95,23 @@ body {
     margin-bottom: 15px;
 }
 
+.card-button-container {
+    transform: translate3D(0, 0, 0);
+    transition: color 0.3s, background-color 0.3s, transform 0.15s;
+    cursor: pointer;
+}
+
 .card-button-container:active {
-    background-color: rgb(245, 96, 250);
+    transform: translate3D(0, 4px, 0);
 }
 
 .card-button-container a {
     padding: 5px;
     align-self: center
+}
+
+.card-button-container a:hover {
+    color: rgb(30, 253, 0);
 }
 
 .break {
