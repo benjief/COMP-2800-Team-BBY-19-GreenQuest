@@ -30,6 +30,15 @@
     padding-bottom: 10px;
 }
 
+.quest-list::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .quest-list {
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
+  }
+
 .quest-container {
     display: flex;
     width: 50%;

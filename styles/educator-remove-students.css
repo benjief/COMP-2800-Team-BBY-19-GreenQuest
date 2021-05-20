@@ -24,6 +24,15 @@
     overflow-x: hidden;
 }
 
+.student-list::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .student-list {
+    -ms-overflow-style: none; 
+    scrollbar-width: none;  
+  }
+
 .student-container {
     display: grid;
     grid-template-columns: 80% 20%;
