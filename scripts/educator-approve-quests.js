@@ -78,6 +78,7 @@ function listQuests() {
  */
 function getQuests() {
     db.collection("Educators").doc(currentUser).collection("Quests")
+        .orderBy("Date_Submitted", "asc")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
