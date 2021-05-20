@@ -4,6 +4,7 @@
 const parsedUrl = new URL(window.location.href);
 var questID = parsedUrl.searchParams.get("questid");
 var uniqueID = parsedUrl.searchParams.get("uniqueid");
+console.log(uniqueID);
 
 var questTitle;
 var questDescription;
@@ -44,6 +45,18 @@ function getQuest() {
             questInfo = doc.data().moreInfo;
             getBitmoji();
         });
+}
+
+/**
+ * Write this.
+ */
+function getBitmoji() {
+    db.collection("Students").doc(userID).collection("Quests").doc(uniqueID)
+    .get()
+    .then(function (doc) {
+        bitmojiURL = doc.data().Quest_Bitmoji;
+        addInfoToDOM();
+    });
 }
 
 /**
