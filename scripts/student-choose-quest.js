@@ -199,7 +199,7 @@ function activateQuest(questID) {
         })
         .then(() => {
             console.log("Quest successfully activated!");
-            location.href = "./student-view-quest.html?questid=" + currentQuestID + "&uniqueid=" + questID;
+            location.href = "./student-view-quest.html?questid=" + currentQuestID;
         })
         .catch((error) => {
             console.error("Error activating quest: ", error);

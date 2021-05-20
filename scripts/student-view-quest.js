@@ -3,8 +3,6 @@
 // Pull quest ID from URL
 const parsedUrl = new URL(window.location.href);
 var questID = parsedUrl.searchParams.get("questid");
-var uniqueID = parsedUrl.searchParams.get("uniqueid");
-console.log(uniqueID);
 
 var questTitle;
 var questDescription;
@@ -24,9 +22,27 @@ function getCurrentStudent() {
                 .then(function (doc) {
                     // Extract the current student's class name
                     userID = doc.id;
-                    getQuest();
+                    getUniqueID();
                 });
         }
+    });
+}
+
+/**
+ * Write this.
+ */
+function getUniqueID() {
+    db.collection("Students").doc(userID).collection("Quests")
+    .where("Quest_Status", "==", "active")
+    .get()
+    .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            uniqueID = doc.id;
+        })
+        getQuest();
+    })
+    .catch((error) => {
+        console.log("Error getting unique quest ID: ", error);
     });
 }
 
