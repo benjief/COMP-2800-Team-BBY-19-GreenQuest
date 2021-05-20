@@ -215,7 +215,9 @@ function writeQuest() {
     db.collection("Students").doc(userID).collection("Quests").doc(questID).set({
             Quest_ID: currentQuestID,
             Quest_Status: "active",
-            Quest_Bitmoji: bitmojiURL
+            Quest_Bitmoji: bitmojiURL,
+            Quest_Title: questTitle,
+            Quest_Description: questDescription
         })
         .then(() => {
             console.log("Quest successfully written!");
