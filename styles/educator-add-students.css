@@ -20,7 +20,7 @@
 
 .student-list {
     grid-area: student-list;
-    height: 300px;
+    max-height: 300px;
     overflow: scroll;
     overflow-x: hidden;
 }

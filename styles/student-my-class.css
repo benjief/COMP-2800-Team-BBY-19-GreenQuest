@@ -19,18 +19,14 @@
 }
 
 .student-list {
-    display: flex;
-    flex-direction: column;
+    /* display: grid; */
     justify-content: center;
     justify-self: center;
     grid-area: student-list;
     max-height: 300px;
-    width: 90%;
+    width: 80%;
     overflow: scroll;
     overflow-x: hidden;
-    border: 1px solid black;
-    border-style: dashed;
-    border-radius: 10px;
     font-size: 12pt;
 }
 
@@ -43,32 +39,24 @@
     scrollbar-width: none;  /* Firefox */
   }
 
-.text-container {
-    display: flex;
-    width: 90%;
-    justify-content: center;
-    align-self: center;
-}
-
-.text-container p {
-    display: flex;
-    height: 100%;
-    align-items: center;
-}
-
 .student-container {
-    display: flex;
-    justify-content: center;
-    height: 30px;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    display: grid;
+    grid-template-rows: 100%;
+    grid-template-columns: 70% 30%;
 }
 
 .student-name {
     display: flex;
     height: 100%;
     align-items: center;
-    grid-area: name;
+    justify-content: flex-start;
+}
+
+.student-points {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .message {

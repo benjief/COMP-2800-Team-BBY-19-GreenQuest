@@ -73,7 +73,15 @@ function getStudentsInClass() {
                 }
             });
             populateStudentList();
+            addHeading();
         })
+}
+
+/**
+ * Write this.
+ */
+function addHeading() {
+    $(".page-heading").html(className);
 }
 
 /**
