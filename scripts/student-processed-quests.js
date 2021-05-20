@@ -14,7 +14,7 @@ function getCurrentUser() {
                 .then(function (doc) {
                     // Extract the current user's ID
                     userID = doc.id;
-                    pullPendingQuests()
+                    pullProcessedQuests()
                 });
         }
     });
