@@ -25,18 +25,29 @@ function getCurrentUser() {
 /**
  * Write this.
  */
+<<<<<<< HEAD
 function pullApprovedQuests() {
+=======
+function pullProcessedQuests() {
+>>>>>>> 07c09343cdf1950c1262b8c81638f4dd9a12ccbe
     db.collection("Students").doc(userID).collection("Quests")
         .where("Quest_Status", "==", "approved")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
+<<<<<<< HEAD
                 let approvedQuest = {
                     "title": doc.data().Quest_Title,
                     "date": doc.data().Date_Processed,
                     "bitmoji": doc.data().Quest_Bitmoji,
                     "points": doc.data().Quest_Points,
                     "status": "approved"
+=======
+                let pendingQuest = {
+                    "title": doc.data().Quest_Title, 
+                    "date": doc.data().Date_Processed, 
+                    "bitmoji": doc.data().Quest_Bitmoji
+>>>>>>> 07c09343cdf1950c1262b8c81638f4dd9a12ccbe
                 };
                 approvedQuests.push(approvedQuest);
             });
