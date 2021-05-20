@@ -270,9 +270,11 @@ function updateQuestStatus() {
  * @param {*} imageURLs 
  */
 function addQuestToDB(imageURLs) {
+    let dateSubmitted = new Date();
     // Update quest in student's quest collection
     db.collection("Students").doc(userID).collection("Quests").doc(uniqueQuestID).update({
-            Quest_Status: "submitted"
+            Quest_Status: "submitted",
+            Date_Submitted: dateSubmitted
         })
         .then(() => {
             console.log("Student quest successfully updated!");
@@ -285,7 +287,7 @@ function addQuestToDB(imageURLs) {
                     Quest_Description: questDescription,
                     Quest_Photos: imageURLs,
                     Quest_Notes: $("#quest-notes").prop("value"),
-                    Date_Submitted: new Date()
+                    Date_Submitted: dateSubmitted
                 })
                 .then(() => {
                     console.log("Educator quest successfully written!");
