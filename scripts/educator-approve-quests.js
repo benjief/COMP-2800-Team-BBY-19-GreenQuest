@@ -13,7 +13,7 @@ function populateQuestList() {
         let message = "<div class='text-container'><p class='message'>You haven't got any quests to approve.</p></div>"
         $(".quest-list").append(message);
         $(".quest-list").css({
-            height: "150px",
+            maxHeight: "150px",
             width: "90%",
             display: "flex",
             justifyContent: "center",
