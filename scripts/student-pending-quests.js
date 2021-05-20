@@ -1,23 +1,20 @@
 // JS for student-pending-quests.js
 
-var questTitle;
-var questDescription;
-
-// Create an empty array to store URLs of images attached to this quest
-var imageURLs = [];
+var pendingQuests = [];
+var userID;
 
 /* Get the current user's ID from Firestore. */
 function getCurrentUser() {
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {
-            db.collection("Educators")
+            db.collection("Students")
                 .doc(somebody.uid)
                 // Read
                 .get()
                 .then(function (doc) {
                     // Extract the current user's ID
                     userID = doc.id;
-                    pullQuestInfo();
+                    pullPendingQuests()
                 });
         }
     });
@@ -26,231 +23,96 @@ function getCurrentUser() {
 /**
  * Write this.
  */
-function pullQuestInfo() {
-    db.collection("Educators").doc(userID).collection("Quests").doc(questID)
+function pullPendingQuests() {
+    db.collection("Students").doc(userID).collection("Quests")
+        .where("Quest_Status", "==", "submitted")
         .get()
-        .then((doc) => {
-            questSubmitter = doc.data().Quest_Submitter;
-            submitterID = doc.data().Submitter_ID;
-            questDescription = doc.data().Quest_Description;
-            questNotes = doc.data().Quest_Notes;
-            imageURLs = doc.data().Quest_Photos;
-            className = doc.data().Submitter_Class;
-            getSubmitterPoints();
-            getClassPoints();
-            populateDOM();
-        })
-        .catch((error) => {
-            console.log("Error getting quest: ", error);
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                let pendingQuest = {
+                    "title": doc.data().Quest_Title, "description": doc.data().Quest_Description,
+                    "date": doc.data().Date_Submitted, "bitmoji": doc.data().Quest_Bitmoji
+                };
+                pendingQuests.push(pendingQuest);
+            });
+            console.log(pendingQuests);
+            if (pendingQuests.length == 0) {
+                let message = "<p class='message'>You haven't got any pending tasks!</p>";
+                $(".quest-list").append(message);
+                $(".quest-list").css({
+                    height: "100px",
+                    display: "flex",
+                    justifyContent: "center"
+                });
+            } else {
+                getTimeElapsed();
+            }
         });
 }
 
-/**
- * Write this.
- */
-function getSubmitterPoints() {
-    db.collection("Students").doc(submitterID)
-        .get()
-        .then((doc) => {
-            submitterPoints = doc.data().Student_Points;
-            console.log(submitterPoints);
-        })
-        .catch((error) => {
-            console.log("Error getting submitter points: ", error);
-        });
-}
 
 /**
- * Write this.
+ * Write this - note that it was taken from your other project.
+ * 
+ * @param {*} store 
  */
-function getClassPoints() {
-    db.collection("Classes").doc(className)
-        .get()
-        .then((doc) => {
-            classPoints = doc.data().Class_Points;
-            console.log(classPoints);
-        })
-        .catch((error) => {
-            console.log("Error getting class points: ", error);
-        });
-}
-
-/**
- * Write this.
- */
-function populateDOM() {
-    let submitter = "<p id='quest-submitter'>" + questSubmitter + "</p>";
-    $("#quest-submitter-container").append(submitter);
-    let description = "<p id='quest-description'>" + questDescription + "</p>";
-    $("#quest-description-container").append(description);
-    let notes = "<p id='quest-notes'>" + questNotes + "</p>";
-    $("#quest-notes-container").append(notes);
-    for (var i = 0; i < imageURLs.length; i++) {
-        let imageDOM = "<li class='list-item'><a class='uploaded-image' id='" +
-            imageURLs[i] + "' data-bs-toggle='modal' data-bs-target='#imagePreview' onclick='showPreview(this)'>Image " +
-            (i + 1) + "</li>";
-        $(".uploaded-images").append(imageDOM);
+function getTimeElapsed() {
+    for (var i = 0; i < pendingQuests.length; i++) {
+        // Get timestamp for quest submission (convert to a date object)
+        var timeSubmitted = pendingQuests[i].date.toDate();
+        // Create a new date to compare timestamp to
+        var currentTime = new Date();
+        // Calculate time difference between latest update and current time in milliseconds
+        var timeDifference = currentTime.getTime() - timeSubmitted.getTime();
+        // Sets the time difference to 0 if it's negative (which happens upon updating a store's headcount for some reason)
+        if (timeDifference < 0) {
+            timeDifference = 0;
+        }
+        // Define variables to convert from milliseconds to other units of time
+        var oneSecond = 1000;
+        var oneMinute = 60 * oneSecond;
+        var oneHour = 60 * oneMinute;
+        var oneDay = 24 * oneHour;
+        var oneYear = 365.25 * oneDay;
+        var unitOfTime;
+        // Get the correct unit of time to post
+        if (timeDifference < oneSecond) {
+            unitOfTime = "milliseconds";
+        } else if (oneSecond <= timeDifference && timeDifference < oneMinute) {
+            unitOfTime = "seconds";
+            timeDifference /= oneSecond;
+        } else if (oneMinute <= timeDifference && timeDifference < oneHour) {
+            unitOfTime = "minutes";
+            timeDifference /= oneMinute;
+        } else if (oneHour <= timeDifference && timeDifference < oneDay) {
+            unitOfTime = "hours";
+            timeDifference /= oneHour;
+        } else if (oneDay <= timeDifference && timeDifference < oneYear) {
+            unitOfTime = "days";
+            timeDifference /= oneDay;
+        } else {
+            unitOfTime = "years";
+            timeDifference /= oneYear;
+        }
+        populateDOM(i, Math.floor(timeDifference), unitOfTime);
     }
 }
 
 /**
  * Write this.
- * 
- * @param {*} element 
  */
-function showPreview(element) {
-    $(".modal-body").html("");
-    let previewName = $(element).text();
-    let previewURL = $(element).attr("id");
-    console.log(previewName);
-    console.log(previewURL);
-    setTimeout(() => {
-        if (previewName) {
-            $(".modal-title").html(previewName);
-            $(".modal-body").html("<img src='" + previewURL + "'>");
-        } else {
-            $(".modal-title").html("No preview available");
-            $(".modal-body").html("Sorry, we couldn't generate a preview for you.");
-        }
-    }, 1000);
-}
-
-/**
- * Write this.
- * 
- */
-function deleteStoredImages() {
-    let storageRef = storage.ref();
-    for (var i = 0; i < imageURLs.length; i++)
-        deleteRef = imageURLs[i].replace("https://firebasestorage.googleapis.com/v0/b/greenquest-"
-            + "5f80c.appspot.com/o/images%2Fquests%2F", "");
-        deleteRef = deleteRef.substr(0, deleteRef.indexOf("?"));
-        deleteRef = storageRef.child("images/quests/" + deleteRef);
-    deleteRef.delete()
-        .then(() => {
-            console.log("Processed image successfully removed from storage!");
-        })
-        .catch((error) => {
-            console.error("Error deleting processed image from storage: ", error);
-        });
-}
-
-/**
- * Write this.
- */
-function updateStudentPoints() {
-    submitterPoints += questPoints;
-    console.log(submitterPoints);
-    db.collection("Students").doc(submitterID).update({
-            Student_Points: submitterPoints
-        })
-        .then(() => {
-            console.log("Student points updated successfully!");
-        })
-        .catch((error) => {
-            console.error("Error updating student points: ", error);
-        });
-}
-
-/**
- * Write this.
- */
-function updateClassPoints() {
-    classPoints += questPoints;
-    console.log(classPoints);
-    db.collection("Classes").doc(className).update({
-            Class_Points: classPoints
-        })
-        .then(() => {
-            console.log("Class points successfully updated!");
-        })
-        .catch((error) => {
-            console.error("Error updating class points: " + error);
-        })
-}
-
-/**
- * Write this.
- */
-function approveStudentQuest() {
-    questPoints = document.getElementById("quest-points-input").value;
-    questPoints = parseInt(questPoints);
-    db.collection("Students").doc(submitterID).collection("Quests").doc(questID).update({
-            Quest_Status: "approved",
-            Unread: true,
-            Quest_Points: questPoints,
-            Date_Processed: new Date(),
-            Quest_Likes: 0
-        })
-        .then(() => {
-            console.log("Student quest successfully updated!");
-            updateStudentPoints();
-            updateClassPoints();
-        })
-        .catch((error) => {
-            console.error("Error updating student quest: " + error);
-        })
-}
-
-/**
- * Write this.
- */
-function rejectStudentQuest() {
-    db.collection("Students").doc(submitterID).collection("Quests").doc(questID).update({
-            Quest_Status: "rejected",
-            Unread: true,
-            Quest_Points: 0,
-            Date_Processed: new Date(),
-            Quest_Likes: 0
-        })
-        .then(() => {
-            console.log("Student quest successfully updated!");
-        })
-        .catch((error) => {
-            console.error("Error updating student quest: " + error);
-        })
-}
-
-/**
- * Write this
- */
-function onClickApprove() {
-    db.collection("Educators").doc(userID).collection("Quests").doc(questID).delete()
-        .then(() => {
-            console.log("Quest successfully approved!");
-            approveStudentQuest();
-            deleteStoredImages();
-            $("#feedback").html("Success! Please wait...");
-            $("#feedback").show(0);
-            $("#feedback").fadeOut(2500);
-            setTimeout(function () {
-                location.href = "./educator-home.html";
-            }, 2300);
-        })
-        .catch((error) => {
-            console.error("Error approving quest: ", error);
-        })
-}
-
-/**
- * Write this
- */
-function onClickReject() {
-    db.collection("Educators").doc(userID).collection("Quests").doc(questID).delete()
-        .then(() => {
-            console.log("Quest successfully rejected!");
-            rejectStudentQuest();
-            deleteStoredImages();
-            $("#feedback").html("Success! Please wait...");
-            $("#feedback").show(0);
-            $("#feedback").fadeOut(2500);
-            setTimeout(function () {
-                location.href = "./educator-home.html";
-            }, 2300);
-        })
-        .catch((error) => {
-            console.error("Error rejecting quest: ", error);
-        })
+function populateDOM(i, timeDifference, unitOfTime) {
+    let questContainer = "<div class='quest-container' id='quest-container-" + i + "'></div>";
+    $(".quest-list").append(questContainer);
+    let questTitle = "<p class='quest-title' id='quest-title-" + i + "'>" + pendingQuests[i].title + "</p>";
+    $("#quest-container-" + i).append(questTitle);
+    let questDescription = "<p class='quest-description' id='quest-description-" + i + "'>" + pendingQuests[i].description + "</p>";
+    $("#quest-container-" + i).append(questDescription);
+    let elapsedTime = "<p class='quest-date' id='elapsed-time-" + i + "'>Submitted " + timeDifference + " "
+        + unitOfTime + " ago</p>";
+    $("#quest-container-" + i).append(elapsedTime);
+    let questBitmoji = "<img src='" + pendingQuests[i].bitmoji + "'>";
+    $("#quest-container-" + i).append(questBitmoji);
 }
 
 // Run function when document is ready 
