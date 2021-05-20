@@ -1,6 +1,7 @@
-/** CSS for educator-remove-students.html */
+/** CSS for student-my-class.html */
+
 #main-content-card {
-    grid-template-areas: 
+    grid-template-areas:
         "card-text"
         "student-list"
         "back";
@@ -18,37 +19,50 @@
 }
 
 .student-list {
+    justify-content: center;
+    justify-self: center;
     grid-area: student-list;
-    height: 300px;
+    max-height: 300px;
+    width: 85%;
     overflow: scroll;
     overflow-x: hidden;
+    font-size: 11.5pt;
 }
 
-.text-container {
-    display: flex;
-    width: 90%;
-    height: 80px;
-    justify-content: center;
-    align-self: center;
-}
-
-.text-container p {
-    display: flex;
-    height: 100%;
-    align-items: center;
-}
+.student-list::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .student-list {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
 
 .student-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
+    display: grid;
+    grid-template-rows: 100%;
+    grid-template-columns: 60% 34% 6%;
+}
+
+.student-container img {
+    justify-self: center;
+    align-self: center;
+    width: 15px;
+    height: 15px;
 }
 
 .student-name {
     display: flex;
     height: 100%;
     align-items: center;
-    grid-area: name;
+    justify-content: flex-start;
+}
+
+.student-points {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .message {

@@ -27,13 +27,13 @@ function charCounter(field, field2, maxlimit) {
  */
 function addClass(description, nickname) {
     db.collection("Classes").doc(nickname).set({
-        Class_Name: description,
-        Class_Nickname: nickname, 
-        Class_Owner: firebase.auth().currentUser.displayName,
-        Owner_Email: firebase.auth().currentUser.email,
-        Class_Points: 0,
-        Date_Created: firebase.firestore.FieldValue.serverTimestamp()
-    })
+            Class_Name: description,
+            Class_Nickname: nickname,
+            Class_Owner: firebase.auth().currentUser.displayName,
+            Owner_Email: firebase.auth().currentUser.email,
+            Class_Points: 0,
+            Date_Created: firebase.firestore.FieldValue.serverTimestamp()
+        })
         .then(() => {
             console.log("Class successfully written!");
         })
@@ -77,7 +77,7 @@ function onClickSubmit() {
         $(feedback).show(0);
         $(feedback).fadeOut(2500);
         setTimeout(function () {
-            location.href = "educator-add-students.html?classname=" + nickname;
+            location.href = "./educator-add-students.html?classname=" + nickname;
         }, 2300);
     }
 }

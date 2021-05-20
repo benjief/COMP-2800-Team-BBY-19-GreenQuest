@@ -1,12 +1,13 @@
 /** CSS for educator-create-class.html */
 #main-content-card {
-    grid-template-areas: 
+    grid-template-areas:
         "card-text"
         "input-1"
         "chars-remaining-1"
         "input-2"
         "chars-remaining-2"
         "submit"
+        "home"
         "feedback";
 }
 
@@ -32,7 +33,8 @@
     grid-area: input-2;
 }
 
-#class-nickname, #class-description {
+#class-nickname,
+#class-description {
     border: 1px solid black;
     border-radius: 5px;
     padding: 7px;
@@ -41,24 +43,26 @@
 
 #characters-remaining-container-1 {
     display: flex;
-    margin-left: 40px;
+    margin-left: 62px;
     font-size: 10pt;
     grid-area: chars-remaining-1;
 }
 
 #characters-remaining-container-2 {
     display: flex;
-    margin-left: 40px;
+    margin-left: 62px;
     font-size: 10pt;
     grid-area: chars-remaining-2;
 }
 
-#characters-remaining-1, #characters-remaining-2 {
+#characters-remaining-1,
+#characters-remaining-2 {
     display: flex;
     height: 100%;
 }
 
-#counter-1, #counter-2 {
+#counter-1,
+#counter-2 {
     display: flex;
     border: none;
     background-color: transparent;
@@ -78,12 +82,15 @@
     justify-self: center;
     margin-top: 20px;
     box-shadow: 5px 5px 5px rgb(116, 103, 103);
+    align-items: center;
 }
 
-#submit-button {
-    display: flex;
-    height: 100%;
-    align-items: center;
+#card-button-container-1 {
+    grid-area: submit;
+}
+
+#card-button-container-2 {
+    grid-area: home;
 }
 
 .feedback-placeholder {

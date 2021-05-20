@@ -1,6 +1,7 @@
-/** CSS for educator-new-home.html */
+/** CSS for login.html */
+
 #main-content-card {
-    grid-template-areas: 
+    grid-template-areas:
         "card-text"
         "form"
         "login";
@@ -33,7 +34,7 @@
     align-items: center;
 }
 
-label {
+.form-check-label {
     margin-left: 10px;
 }
 
@@ -44,7 +45,8 @@ label {
     top: -2px;
 }
 
-#student-radio, #student-radio-label {
+#student-radio,
+#student-radio-label {
     position: relative;
     left: -8px;
 }
@@ -55,4 +57,50 @@ label {
     margin-bottom: 40px;
     width: 90%;
     justify-self: center;
+    border: 2px solid #ff80ee;
+    border-style: dashed;
+    border-radius: 10px;
+}
+
+.firebaseui-container.mdl-card {
+    border-radius: 10px;
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url("/img/background_pattern_2.png");
+}
+
+.firebaseui-title {
+    text-align: center;
+    font-family: 'Mali', Arial, Helvetica, sans-serif;
+}
+
+.firebaseui-label {
+    font-family: 'Mali', Arial, Helvetica, sans-serif;
+}
+
+
+.firebaseui-textfield.mdl-textfield .firebaseui-label::after {
+    background-color: #ff8000;
+}
+
+.firebaseui-textfield.mdl-textfield .firebaseui-input {
+    font-family: 'Mali', Arial, Helvetica, sans-serif;
+}
+
+
+.mdl-button--primary.mdl-button--primary {
+    font-family: 'Mali', Arial, Helvetica, sans-serif;
+    color: #ff80ee;
+}
+
+.mdl-button--raised.mdl-button--colored {
+    font-family: 'Mali', Arial, Helvetica, sans-serif;
+    background-color: #ff80ee;
+    font-weight: 600;
+}
+
+.mdl-button--raised.mdl-button--colored:hover {
+    background-color: #ff80ee;
+}
+
+.firebaseui-card-footer p {
+    text-align: center;
 }

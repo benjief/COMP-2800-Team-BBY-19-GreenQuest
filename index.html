@@ -34,7 +34,7 @@
 <body>
     <nav class="navbar navbar-expand-md navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand abs" href="#">GreenQuest</a>
+            <a class="navbar-brand abs">GreenQuest</a>
             <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapseNavbar">
                 <span class="navbar-toggler-icon"></span>
@@ -45,10 +45,7 @@
                         <a class="nav-link" href="#" onclick="onClickHome()">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./about-us.html">About</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="./login.html">Logout</a>
+                        <a class="nav-link" href="./html/about-us.html?usertype=none">About Us</a>
                     </li>
                 </ul>
             </div>
@@ -60,17 +57,18 @@
             <p class="page-heading">Welcome to GreenQuest!</p>
         </div>
         <div class="box" id="main-content-card">
-            <div>
-                <p class="subtext">Come play and </p>
-                <p class="description">GreenQuest is a fun and an
-                    engaging educational platform that will help students
-                    understand how to be more sustainable and reduce
-                    their carbon footprints.</p>
-                <hr>
-                <br>
-                <div class="buttons">
-                    <a class="btn2 btn-primary btn-lg" href="/html/login.html" role="button">Sign up / Login</a>
-                </div>
+            <div class="text-container" id="subtext-container">
+                <p class="subtext">Join us on a quest to save the planet!</p>
+            </div>
+            <img id="bitmoji">
+            <hr id="break-1">
+            <div class="text-container" id="description-container">
+                <p class="description">GreenQuest is an educational platform that helps students
+                    learn to act more sustainably by engaging them in a school-wide, quest-based competition.</p>
+            </div>
+            <hr id="break-2">
+            <div class="card-button-container" id="card-button-container-1">
+                <a class="button" id="login-button" href="./html/login.html">Sign up / Login</a>
             </div>
         </div>
     </div>
@@ -88,6 +86,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
 
     <!-- Link to the api keys for your firebase project -->
     <script src="../scripts/firebase-api-GreenQuest.js"></script>
@@ -95,8 +94,7 @@
     <!--------------------------------------------------------------------->
     <!-- JS files: Your own JavaScript functions included here - REMEMBER TO ADD YOUR PAGE-SPECIFIC JS FILES HERE  -->
     <!--------------------------------------------------------------------->
-
-    <!-- more-info-page-modal -->
+    <script src="../scripts/index.js"></script>
 
 
 </body>

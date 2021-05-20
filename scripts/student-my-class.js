@@ -21,6 +21,11 @@ function getCurrentStudent() {
                     if (className == null) {
                         let message = "<p class='message'>You aren't in a class yet!</p>"
                         $(".student-list").append(message);
+                        $(".student-list").css({
+                            height: "100px",
+                            display: "flex",
+                            justifyContent: "center"
+                        })
                     } else {
                         getStudentsInClass();
                     }
@@ -36,32 +41,50 @@ function populateStudentList() {
     if (studentsInClass.length == 0) {
         let message = "<div class='text-container'><p class='message'>There are no other students in your class!</p></div>"
         $(".student-list").append(message);
-        $(".student-list").css({ height: "100px", display: "flex", justifyContent: "center"})
+        $(".student-list").css({
+            height: "100px",
+            display: "flex",
+            justifyContent: "center"
+        })
     } else {
         for (var i = 0; i < studentsInClass.length; i++) {
             let studentContainer = "<div class='student-container' id='student-container-" + i + "'></div>";
             $(".student-list").append(studentContainer);
-            let studentName = "<p class='student-name' id='student-name-" + i + "'>" + studentsInClass[i] + "</p>";
+            let studentName = "<p class='student-name' id='student-name-" + i + "'>" + studentsInClass[i].name + "</p>";
             $("#student-container-" + i).append(studentName);
+            let studentPoints = "<p class='student-points' id='student-points-" + i + "'>" + studentsInClass[i].points + "</p>";
+            $("#student-container-" + i).append(studentPoints);
+            let leafIcon = "<img src='/img/leaf_icon.png'>"
+            $("#student-container-" + i).append(leafIcon);
         }
     }
 }
 
 /** 
-* Reads other students' names from Firestore and puts them into an array if they are in this student's class.
-*/
+ * Reads other students' names and scores from Firestore and puts them into an array if they are in this student's class.
+ */
 function getStudentsInClass() {
     db.collection("Students")
         .where("Student_Class", "==", className)
+        .orderBy("Student_Points", "desc")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 if (doc.data().Student_Name != currentStudent) {
-                    studentsInClass.push(doc.data().Student_Name);
+                    let studentObject = {"name":doc.data().Student_Name, "points":doc.data().Student_Points.toString()};
+                    studentsInClass.push(studentObject);
                 }
             });
             populateStudentList();
+            addHeading();
         })
+}
+
+/**
+ * Write this.
+ */
+function addHeading() {
+    $(".page-heading").html(className);
 }
 
 /**

@@ -34,10 +34,16 @@ function getCurrentUser() {
  */
 function populateStudentList() {
     if (studentNames.length == 0) {
-        let message = "<div class='text-container'><p class='message'>There are no more students to add!</p></div>"
+        let message = "<div class='text-container'><p class='message'>There aren't any students to add!</p></div>"
         $(".student-list").append(message);
-        $(".student-list").css({ width: "90%", display: "flex", justifyContent: "center" });
-        $("#submit-button").html("Back");
+        $(".student-list").css({
+            height: "100px",
+            width: "90%",
+            display: "flex",
+            justifyContent: "center",
+            justifySelf: "center"
+        });
+        $("#card-button-container-1").remove();
     } else {
         for (var i = 0; i < studentNames.length; i++) {
             let studentContainer = "<div class='student-container' id='student-container-" + i + "'></div>";
@@ -46,8 +52,8 @@ function populateStudentList() {
             $("#student-container-" + i).append(studentName);
             let iconContainer = "<div class='icon-container' id='icon-container-" + i + "'></div>";
             $("#student-container-" + i).append(iconContainer);
-            let plusIcon = "<img src='/img/add_icon.png' class='icon' id='plus-icon-" + i
-                + "' onclick='addStudent()'>";
+            let plusIcon = "<img src='/img/add_icon.png' class='icon' id='plus-icon-" + i +
+                "' onclick='addStudent()'>";
             $("#icon-container-" + i).append(plusIcon);
         }
     }
@@ -65,7 +71,7 @@ function getStudentsInAClass() {
                 studentsInAClass.push(doc.data().Student_Name);
             });
             getStudents();
-            console.log(studentsInAClass);
+            console.log("Student that have a class are " + studentsInAClass);
         })
 }
 
@@ -104,12 +110,14 @@ function addStudent() {
         // Get "remove" icon to call removeStudent()
         $(event.target).attr("onclick", "removeStudent()");
         let studentToAdd = studentIDs[index];
-        console.log(studentToAdd);
+        console.log("Student to add" + studentToAdd);
+        console.log("Student added to class: " + className);
+        console.log("Student's Educator: " + currentUser);
         // Update the student's Student_Class attribute
         db.collection("Students").doc(studentToAdd).update({
-            Student_Class: className,
-            Student_Educator: userName
-        })
+                Student_Class: className,
+                Student_Educator: currentUser
+            })
             .then(() => {
                 console.log("Student successfully added to this class!");
             })
@@ -136,9 +144,9 @@ function removeStudent() {
         let studentToRemove = studentIDs[index];
         // Update the student's Student_Class attribute
         db.collection("Students").doc(studentToRemove).update({
-            Student_Class: null,
-            Student_Educator: null
-        })
+                Student_Class: null,
+                Student_Educator: null
+            })
             .then(() => {
                 console.log("Student successfully added to this class!");
             })
@@ -155,9 +163,9 @@ function removeStudent() {
 function onClickSubmit() {
     setTimeout(function () {
         if (!redirectFlag) {
-            location.href = "educator-home.html";
+            location.href = "./educator-home.html";
         } else {
-            location.href = "educator-manage-class.html?classname=" + className;
+            location.href = "./educator-manage-class.html?classname=" + className;
         }
 
     }, 1000);

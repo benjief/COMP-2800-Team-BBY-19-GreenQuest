@@ -4,7 +4,7 @@
 }
 
 #main-content-card {
-    grid-template-areas: 
+    grid-template-areas:
         "card-text"
         "buttons-1"
         "buttons-2"

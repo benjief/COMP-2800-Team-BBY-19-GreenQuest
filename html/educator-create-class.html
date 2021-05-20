@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>GreenQuest - Educator Create Class Page</title>
+    <title>GreenQuest - Create a Class</title>
 
     <!-- Bootstrap for Mobile-first, and JQuery -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -26,24 +26,23 @@
 
 
 <body>
-    <nav class="navbar navbar-expand-md">
+    <nav class="navbar navbar-expand-md navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand abs" href="/html/educator-home.html">GreenQuest</a>
-            <button class="navbar-toggler ms-auto hamburger" type="button" data-bs-toggle="collapse"
+            <a class="navbar-brand abs">GreenQuest</a>
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapseNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-collapse collapse" id="collapseNavbar">
                 <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./educator-home.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./about-us.html?usertype=educator">About Us</a>
+                    </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="/html/educator-home.html">Home</a>
-                    </li>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/html/educator-about-us.html">About us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" ref="../index.html">Log Out</a>
+                        <a class="nav-link" href="./login.html" onclick="logout()">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -67,15 +66,18 @@
                 <input disabled id="counter-1" maxlength="3" size="3" value="100">
             </div>
             <div id="input-container-2">
-                <input type="text" id="class-nickname" maxlength="50" placeholder="Enter Class Nickname"
-                    onkeyup="charCounter(this,'counter-2',50)"></input>
+                <input type="text" id="class-nickname" maxlength="20" placeholder="Enter Class Nickname"
+                    onkeyup="charCounter(this,'counter-2',20)"></input>
             </div>
             <div id="characters-remaining-container-2">
                 <p id="characters-remaining-2">Characters Remaining:</p>
-                <input disabled id="counter-2" maxlength="3" size="3" value="50">
+                <input disabled id="counter-2" maxlength="3" size="3" value="20">
             </div>
-            <div class="card-button-container">
-                <a class="button" id="submit-button" href="#" onclick="onClickSubmit()">Submit</a>
+            <div class="card-button-container" id="card-button-container-1">
+                <a class="button" href="#" onclick="onClickSubmit()">Submit</a>
+            </div>
+            <div class="card-button-container" id="card-button-container-2">
+                <a class="button" href="./educator-home.html">Home</a>
             </div>
             <div class="feedback-placeholder">
                 <p id="feedback"></p>
@@ -89,7 +91,7 @@
     <!----------------------------------------------->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
-        </script>
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
@@ -102,6 +104,7 @@
     <!--------------------------------------------------------------------->
     <!-- JS files: Your own JavaScript functions included here    -->
     <!--------------------------------------------------------------------->
+    <script src="/scripts/logout.js"></script>
     <script src="/scripts/educator-create-class.js"></script>
 
 </body>

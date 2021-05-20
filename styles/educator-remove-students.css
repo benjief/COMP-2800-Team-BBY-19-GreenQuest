@@ -1,6 +1,6 @@
 /** CSS for educator-remove-students.html */
 #main-content-card {
-    grid-template-areas: 
+    grid-template-areas:
         "card-text"
         "student-list"
         "submit";
@@ -27,7 +27,7 @@
 .student-container {
     display: grid;
     grid-template-columns: 80% 20%;
-    grid-template-areas: 
+    grid-template-areas:
         "name icon";
     margin-bottom: 10px;
 }
