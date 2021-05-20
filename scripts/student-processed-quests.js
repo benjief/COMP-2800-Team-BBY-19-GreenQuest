@@ -1,4 +1,4 @@
-// JS for student-pending-quests.js
+// JS for student-processed-quests.js
 
 var pendingQuests = [];
 var userID;

@@ -1,4 +1,5 @@
-/** CSS for student-pending-quests.html */
+/** CSS for student-processed-quests.html */
+
 #main-content-card {
     grid-template-areas:
         "quest-list"
