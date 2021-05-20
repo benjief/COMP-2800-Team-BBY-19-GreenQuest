@@ -19,10 +19,6 @@ function populateQuestList() {
             justifyContent: "center",
             justifySelf: "center"
         });
-        let backButtonContainer = "<div class='card-button-container'></div>";
-        $(".quest-list").append(backButtonContainer);
-        let backButton = "<a class='button' id='back-button' href='#' onclick='onClickHome()'>Home</a>";
-        $(".card-button-container").append(backButton);
 
     } else {
         for (var i = 0; i < questIDs.length; i++) {
