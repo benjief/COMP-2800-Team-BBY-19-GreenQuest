@@ -11,7 +11,7 @@
 .quest-list {
     /* display: flex; */
     width: 90%;
-    max-height: 300px;
+    max-height: 600px;
     grid-area: quest-list;
     overflow: scroll;
     overflow-x: hidden;
@@ -35,11 +35,11 @@
 .quest-container {
     display: grid;
     grid-template-columns: 36% 64%;
-    grid-template-rows: repeat(2, 50px);
+    grid-template-rows: repeat(3, 33.3px);
     grid-template-areas: 
         "quest-bitmoji quest-title"
-        "quest-bitmoji quest-date";
-    /* height: 50px; */
+        "quest-bitmoji quest-points"
+        'quest-bitmoji quest-date';
     /* background-color: rgb(255, 241, 254); */
     background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url("/img/background_pattern_8.png");
     border-radius: 10px;
@@ -47,8 +47,9 @@
     /* margin-bottom: 15px; */
     box-shadow: 5px 5px 5px rgb(116, 103, 103);
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     position: relative;
+    margin-bottom: 15px;
 }
 
 .quest-title {
@@ -62,8 +63,8 @@
     /* margin-left: 10px; */
 }
 
-.quest-description {
-    grid-area: quest-description;
+.quest-points {
+    grid-area: quest-points;
     /* justify-self: center; */
     margin: 0;
 }
@@ -76,11 +77,13 @@
 
 img {
     grid-area: quest-bitmoji;
-    height: 80%;
+    height: 85px;
+    width: 85px;
     border: 1px solid #ff7b00;
     border-style: dashed;
     border-radius: 10px;
     justify-self: center;
+    object-fit: scale-down;
 }
 
 .message {
