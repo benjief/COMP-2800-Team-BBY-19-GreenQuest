@@ -96,7 +96,7 @@ hr {
     justify-self: center;
 }
 
-.card-button-container {
+/* .card-button-container {
     display: flex;
     height: 50px;
     width: 180px;
@@ -109,6 +109,10 @@ hr {
     margin-top: 8px;
     margin-bottom: 40px;
     box-shadow: 5px 5px 5px rgb(116, 103, 103);
+} */
+
+#card-button-container-1 {
+    margin-bottom: 40px;
 }
 
 #home-button {
