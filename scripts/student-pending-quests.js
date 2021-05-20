@@ -26,6 +26,7 @@ function getCurrentUser() {
 function pullPendingQuests() {
     db.collection("Students").doc(userID).collection("Quests")
         .where("Quest_Status", "==", "submitted")
+        .orderBy("Quest_Submitted", "desc")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {

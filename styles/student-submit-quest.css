@@ -195,6 +195,7 @@
     justify-content: center;
     grid-area: feedback;
     height: 20px;
+    margin-bottom: 20px;
 }
 
 #feedback {
