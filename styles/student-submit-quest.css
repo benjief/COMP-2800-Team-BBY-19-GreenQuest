@@ -170,6 +170,7 @@
 
 #card-button-container-3 {
     grid-area: back;
+    margin-bottom: 40px;
 }
 
 #submit-button {
