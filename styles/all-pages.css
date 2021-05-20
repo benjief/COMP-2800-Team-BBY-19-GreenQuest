@@ -85,3 +85,7 @@ body {
 .card-button-container:active {
     background-color: rgb(245, 96, 250);
 }
+
+.card-button-container {
+    margin-bottom: 20px;
+}
