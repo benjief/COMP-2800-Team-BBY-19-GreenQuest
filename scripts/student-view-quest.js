@@ -22,6 +22,7 @@ function getCurrentStudent() {
                 .then(function (doc) {
                     // Extract the current student's class name
                     userID = doc.id;
+                    console.log(userID)
                     getUniqueID();
                 });
         }

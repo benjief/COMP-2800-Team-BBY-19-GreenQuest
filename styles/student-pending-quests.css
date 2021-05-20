@@ -10,7 +10,7 @@
 .quest-list {
     /* display: flex; */
     width: 90%;
-    max-height: 300px;
+    max-height: 600px;
     grid-area: quest-list;
     overflow: scroll;
     overflow-x: hidden;
@@ -43,7 +43,7 @@
     background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url("/img/background_pattern_8.png");
     border-radius: 10px;
     align-items: center;
-    /* margin-bottom: 15px; */
+    margin-bottom: 15px;
     box-shadow: 5px 5px 5px rgb(116, 103, 103);
     width: 100%;
     position: relative;
@@ -60,12 +60,6 @@
     /* margin-left: 10px; */
 }
 
-.quest-description {
-    grid-area: quest-description;
-    /* justify-self: center; */
-    margin: 0;
-}
-
 .quest-date {
     grid-area: quest-date;
     /* justify-self: center; */
@@ -74,16 +68,19 @@
 
 img {
     grid-area: quest-bitmoji;
-    height: 80%;
+    height: 85px;
+    width: 85px;
     border: 1px solid #ff7b00;
     border-style: dashed;
     border-radius: 10px;
     justify-self: center;
+    object-fit: scale-down;
 }
 
 .message {
     text-align: center;
     font-weight: 600;
+    font-size: 12pt;
 }
 
 hr {
