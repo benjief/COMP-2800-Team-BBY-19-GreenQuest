@@ -18,8 +18,10 @@ function populateStudentList() {
         $(".student-list").append(message);
         $(".student-list").css({
             width: "90%",
+            height: "100px",
             display: "flex",
-            justifyContent: "center"
+            justifyContent: "center",
+            justifySelf: "center"
         });
         $("#submit-button").html("Back");
     } else {

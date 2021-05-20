@@ -6,9 +6,9 @@
 #main-content-card {
     grid-template-areas:
         "card-text"
-        "buttons-1"
-        "buttons-2"
-        "buttons-3";
+        "add-students"
+        "remove-students"
+        "home";
 }
 
 .card-text-container {
@@ -23,7 +23,7 @@
 
 .card-button-container {
     display: flex;
-    height: 50px;
+    min-height: 50px;
     width: 180px;
     background-color: #ff80ee;
     justify-content: center;
@@ -35,21 +35,29 @@
 }
 
 #card-button-container-1 {
-    grid-area: buttons-1;
+    grid-area: add-students;
 }
 
 #card-button-container-2 {
-    grid-area: buttons-2;
+    grid-area: remove-students;
     /* margin-bottom: 35px; */
 }
 
 #card-button-container-3 {
-    grid-area: buttons-3;
+    grid-area: home;
     margin-bottom: 35px;
 }
 
 .button {
     display: flex;
     height: 100%;
+    width: 90%;
     align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+#remove-students-button {
+    position: relative;
+    top: -2px;
 }
