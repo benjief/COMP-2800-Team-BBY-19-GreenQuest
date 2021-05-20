@@ -1,5 +1,9 @@
 // JS for about-us.html
 
+// Pull user type from URL
+const parsedUrl = new URL(window.location.href);
+var userType = parsedUrl.searchParams.get("usertype");
+
 const numEggs = 4;
 var eggPositions = [1, 1, 1, 1];
 
@@ -39,22 +43,13 @@ function easterEgg(element) {
  * Write this.
  */
 function onClickHome() {
-    firebase.auth().onAuthStateChanged(function (somebody) {
-        if (somebody) {
-            db.collection("Educators")
-                .doc(somebody.uid)
-                .get()
-                .then(function (doc) {
-                    if (doc.data() != null) {
-                        location.href = "./educator-home.html";
-                    } else {
-                        location.href = "./student-home.html";
-                    }
-                })
-        } else {
-            location.href = "../index.html";
-        }
-    })
+    if (userType === "educator") {
+        location.href = "./educator-home.html";
+    } else if (userType === "student") {
+        location.href = "./student-home.html";
+    } else {
+        location.href = "../index.html";
+    }
 }
 
 // Run function when document is ready 
