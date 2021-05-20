@@ -1,0 +1,95 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    filter: drop-shadow(4px 10px 5px #444444);
+}
+
+.title {
+    font-family: 'Press Start 2P', Arial, Helvetica, sans-serif;
+    font-size: 25pt;
+    color: rgb(72, 143, 102);
+}
+
+.box {
+    background-color: white;
+    animation: Slide_Up 1.5s ease;
+    height: 30rem;
+    width: 30rem;
+    display: flex;
+    padding: 50px;
+    border-radius: 30px;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.subtext {
+    color: black;
+    font-size: 15pt;
+    font-weight: 400;
+}
+
+.description {
+    color: black;
+    font-size: 15pt;
+    font-weight: 200;
+}
+
+.btn2 {
+    border-radius: 5px;
+    background-color: rgb(72, 143, 102);
+    color: rgb(255, 255, 255);
+}
+.btn2:hover {
+    background-color: rgb(122, 173, 144);
+}
+
+@media screen and (max-width: 700px) {
+    .title {
+        font-size: 15pt;
+        color: rgb(72, 143, 102);
+    }
+    .description {
+        font-size: 12pt;
+    }
+    .buttons {
+        height: 40px;
+        width: auto;
+        display: flex;
+        align-items: center;
+    }
+    .box {
+        width: 20rem;
+    }
+    .btn2 {
+        font-size: 13pt;
+    }
+}
+
+@keyframes Slide_Up {
+    0% {
+        transform: translateY(70px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+
+
+@keyframes Slide_Up {
+    0% {
+        transform: translateY(70px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
