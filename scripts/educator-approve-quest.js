@@ -193,6 +193,7 @@ function approveStudentQuest() {
             Unread: true,
             Quest_Points: questPoints,
             Date_Processed: new Date(),
+            Date_Submitted: firebase.firestore.FieldValue.delete(),
             Quest_Likes: 0
         })
         .then(() => {
@@ -214,6 +215,7 @@ function rejectStudentQuest() {
             Unread: true,
             Quest_Points: 0,
             Date_Processed: new Date(),
+            Date_Submitted: firebase.firestore.FieldValue.delete(),
             Quest_Likes: 0
         })
         .then(() => {
