@@ -1,4 +1,4 @@
-/** CSS for educator-new-home.html */
+/** CSS for educator-manage-class.html */
 .page-container {
     margin-top: 50px;
 }
@@ -6,14 +6,15 @@
 #main-content-card {
     grid-template-areas:
         "card-text"
-        "buttons-1"
-        "buttons-2"
-        "buttons-3";
+        "processed-quests"
+        "pending-quests"
+        "break"
+        "home";
 }
 
 .card-text-container {
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     text-align: center;
 }
 
@@ -23,7 +24,7 @@
 
 .card-button-container {
     display: flex;
-    height: 50px;
+    min-height: 50px;
     width: 180px;
     background-color: #ff80ee;
     justify-content: center;
@@ -35,20 +36,35 @@
 }
 
 #card-button-container-1 {
-    grid-area: buttons-1;
+    grid-area: processed-quests;
+}
+
+hr {
+    grid-area: break;
+    width: 90%;
+    justify-self: center;
 }
 
 #card-button-container-2 {
-    grid-area: buttons-2;
+    grid-area: pending-quests;
+    margin-bottom: 0;
 }
 
 #card-button-container-3 {
-    grid-area: buttons-3;
-    margin-bottom: 35px;
+    grid-area: home;
+    margin-bottom: 40px;
 }
 
 .button {
     display: flex;
     height: 100%;
+    width: 90%;
     align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+#processed-quests-button {
+    position: relative;
+    top: -2px;
 }

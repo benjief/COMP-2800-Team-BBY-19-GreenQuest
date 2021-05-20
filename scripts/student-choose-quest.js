@@ -193,7 +193,7 @@ function pseudorandomID() {
 /** 
  * Write this.
  */
-function activateQuest() {
+function activateQuest(questID) {
     db.collection("Students").doc(userID).update({
             Student_Quest: true
         })
@@ -214,11 +214,13 @@ function writeQuest() {
     // Update student quest
     db.collection("Students").doc(userID).collection("Quests").doc(questID).set({
             Quest_ID: currentQuestID,
-            Quest_Status: "active"
+            Quest_Status: "active",
+            Quest_Bitmoji: bitmojiURL,
+            Quest_Title: questTitle
         })
         .then(() => {
             console.log("Quest successfully written!");
-            activateQuest();
+            activateQuest(questID);
         })
         .catch((error) => {
             console.error("Error writing quest: ", error);

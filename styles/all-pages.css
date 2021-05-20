@@ -76,4 +76,16 @@ body {
 .button {
     color: white;
     text-decoration: none;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.card-button-container:active {
+    background-color: rgb(245, 96, 250);
+}
+
+.card-button-container {
+    margin-bottom: 20px;
 }
