@@ -39,9 +39,9 @@
         "quest-notes"
         "quest-points"
         "uploaded-images"
+        "feedback"
         "approve"
-        "reject"
-        "feedback";
+        "reject";
     align-items: center;
 }
 
@@ -121,7 +121,7 @@ input {
     border-radius: 10px;
     font-size: 15pt;
     justify-self: center;
-    margin-top: 20px;
+    /* margin-top: 20px; */
     box-shadow: 5px 5px 5px rgb(116, 103, 103);
 }
 
@@ -131,6 +131,7 @@ input {
 
 #card-button-container-2 {
     grid-area: reject;
+    margin-bottom: 40px;
 }
 
 #approve-button {
@@ -149,7 +150,8 @@ input {
     display: flex;
     justify-content: center;
     grid-area: feedback;
-    height: 70px;
+    height: 20px;
+    margin-bottom: 20px;
 }
 
 #feedback {

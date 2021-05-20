@@ -10,7 +10,6 @@
 
 .card-text-container {
     margin-top: 20px;
-    margin-bottom: 40px;
     text-align: center;
 }
 
@@ -24,6 +23,15 @@
     overflow: scroll;
     overflow-x: hidden;
 }
+
+.student-list::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .student-list {
+    -ms-overflow-style: none; 
+    scrollbar-width: none;  
+  }
 
 .student-container {
     display: grid;
@@ -68,7 +76,7 @@
     border-radius: 10px;
     font-size: 15pt;
     justify-self: center;
-    margin-top: 20px;
+    margin-bottom: 20px;
     box-shadow: 5px 5px 5px rgb(116, 103, 103);
 }
 
@@ -78,7 +86,7 @@
 
 #card-button-container-2 {
     grid-area: home;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 #submit-button {

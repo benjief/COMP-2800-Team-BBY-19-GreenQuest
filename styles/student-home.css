@@ -85,3 +85,7 @@
     height: 100%;
     align-items: center;
 }
+
+#home-message {
+    margin-bottom: 20px;
+}

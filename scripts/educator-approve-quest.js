@@ -129,52 +129,22 @@ function showPreview(element) {
 }
 
 /**
- * Write this
- */
-function removeImage(element) {
-    let imageName = $(element).attr("id");
-    imageName = imageName.replace("delete-", "");
-    let index = null;
-    for (var i = 0; i < uploadedImageFiles.length; i++) {
-        if (uploadedImageFiles[i].name === imageName) {
-            index = i;
-        }
-    }
-    if (index >= 0) {
-        uploadedImageFiles.splice(index, 1);
-    }
-    addNamesToDOM();
-}
-
-/**
- * CITE and write
- */
-function getStorageRef(file, temp) {
-    let imageID = file.lastModified;
-    // Create a storage reference
-    let storageRef = storage.ref();
-    if (!temp) {
-        storageRef = storageRef.child("images/quests/" + imageID + ".jpg");
-    } else {
-        storageRef = storageRef.child("images/temp/" + imageID + ".jpg");
-    }
-    return storageRef;
-}
-
-/**
  * Write this.
  * 
  */
 function deleteStoredImages() {
     let storageRef = storage.ref();
     for (var i = 0; i < imageURLs.length; i++)
-        deleteRef = storageRef.child(imageURLs[i]);
+        deleteRef = imageURLs[i].replace("https://firebasestorage.googleapis.com/v0/b/greenquest-"
+            + "5f80c.appspot.com/o/images%2Fquests%2F", "");
+        deleteRef = deleteRef.substr(0, deleteRef.indexOf("?"));
+        deleteRef = storageRef.child("images/quests/" + deleteRef);
     deleteRef.delete()
         .then(() => {
-            console.log("Approved image successfully removed from storage!");
+            console.log("Processed image successfully removed from storage!");
         })
         .catch((error) => {
-            console.error("Error deleting approved image from storage: ", error);
+            console.error("Error deleting processed image from storage: ", error);
         });
 }
 
@@ -222,7 +192,8 @@ function approveStudentQuest() {
             Quest_Status: "approved",
             Unread: true,
             Quest_Points: questPoints,
-            Date_Approved: new Date(),
+            Date_Processed: new Date(),
+            Date_Submitted: firebase.firestore.FieldValue.delete(),
             Quest_Likes: 0
         })
         .then(() => {
@@ -242,7 +213,10 @@ function rejectStudentQuest() {
     db.collection("Students").doc(submitterID).collection("Quests").doc(questID).update({
             Quest_Status: "rejected",
             Unread: true,
-            Quest_Points: 0
+            Quest_Points: 0,
+            Date_Processed: new Date(),
+            Date_Submitted: firebase.firestore.FieldValue.delete(),
+            Quest_Likes: 0
         })
         .then(() => {
             console.log("Student quest successfully updated!");
@@ -260,7 +234,7 @@ function onClickApprove() {
         .then(() => {
             console.log("Quest successfully approved!");
             approveStudentQuest();
-            // deleteStoredImages();
+            deleteStoredImages();
             $("#feedback").html("Success! Please wait...");
             $("#feedback").show(0);
             $("#feedback").fadeOut(2500);
@@ -281,6 +255,7 @@ function onClickReject() {
         .then(() => {
             console.log("Quest successfully rejected!");
             rejectStudentQuest();
+            deleteStoredImages();
             $("#feedback").html("Success! Please wait...");
             $("#feedback").show(0);
             $("#feedback").fadeOut(2500);

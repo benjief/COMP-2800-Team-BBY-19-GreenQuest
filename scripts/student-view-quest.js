@@ -9,32 +9,7 @@ var questDescription;
 var questInstructions;
 var questInfo;
 var bitmojiURL;
-var userName;
-var className;
-var educatorName;
 var userID;
-var questID;
-
-/**
- * Write this.
- */
-function getQuestID() {
-    console.log(userID);
-    db.collection("Students").doc(userID).collection("Quests")
-        .where("Quest_Status", "==", "active")
-        .get()
-        .then((querySnapshot) => {
-            // There should only ever be one quest at a time
-            querySnapshot.forEach((doc) => {
-                questID = doc.data().Quest_ID;
-            })
-            console.log(questID);
-            getQuest();
-        })
-        .catch((error) => {
-            console.log("Error getting quest ID: ", error);
-        });
-}
 
 /* Get the current user's name, class name, educator name, and ID from Firestore. */
 function getCurrentStudent() {
@@ -46,13 +21,29 @@ function getCurrentStudent() {
                 .get()
                 .then(function (doc) {
                     // Extract the current student's class name
-                    userName = doc.data().Student_Name;
-                    className = doc.data().Student_Class;
-                    educatorName = doc.data().Student_Educator;
                     userID = doc.id;
-                    getQuest();
+                    console.log(userID)
+                    getUniqueID();
                 });
         }
+    });
+}
+
+/**
+ * Write this.
+ */
+function getUniqueID() {
+    db.collection("Students").doc(userID).collection("Quests")
+    .where("Quest_Status", "==", "active")
+    .get()
+    .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            uniqueID = doc.id;
+        })
+        getQuest();
+    })
+    .catch((error) => {
+        console.log("Error getting unique quest ID: ", error);
     });
 }
 
@@ -75,32 +66,14 @@ function getQuest() {
 
 /**
  * Write this.
- * 
  */
 function getBitmoji() {
-    let counter = 0;
-    let storageRef = storage.ref();
-    folderRef = storageRef.child("images/bitmojis");
-    folderRef.listAll()
-        // Workaround for getting the number of images in the folder
-        .then((res) => {
-            res.items.forEach(() => {
-                counter++;
-            });
-            let randomNum = Math.floor(Math.random() * counter + 1);
-            storageRef.child("images/bitmojis/" + randomNum.toString() + ".png").getDownloadURL()
-                .then((url) => {
-                    bitmojiURL = url;
-                    // bitmojiURL = imageRef.getDownloadURL();
-                    addInfoToDOM();
-                })
-                .catch((error) => {
-                    console.error("Error getting url: ", error);
-                })
-        })
-        .catch((error) => {
-            console.error("Error getting number of bitmojis: ", error);
-        });
+    db.collection("Students").doc(userID).collection("Quests").doc(uniqueID)
+    .get()
+    .then(function (doc) {
+        bitmojiURL = doc.data().Quest_Bitmoji;
+        addInfoToDOM();
+    });
 }
 
 /**
@@ -188,22 +161,14 @@ function updateStudent() {
  * Write this.
  */
 function deleteQuest() {
-    db.collection("Students").doc(userID).collection("Quests")
-        .where("Quest_Status", "==", "active")
-        .get()
-        .then((querySnapshot) => {
-            // There should only ever be one active quest
-            querySnapshot.forEach((doc) => {
-                let currentQuestID = doc.id;
-                db.collection("Students").doc(userID).collection("Quests").doc(currentQuestID).delete()
-                    .then(() => {
-                        console.log("Quest successfully deleted!");
-                        location.href = "./student-choose-quest.html";
-                    }).catch((error) => {
-                        console.error("Error deleting quest: ", error);
-                    });
-            });
-        })
+    db.collection("Students").doc(userID).collection("Quests").doc(uniqueID)
+        .delete()
+        .then(() => {
+            console.log("Quest successfully deleted!");
+            location.href = "./student-choose-quest.html";
+        }).catch((error) => {
+            console.error("Error deleting quest: ", error);
+        });
 }
 
 /**
