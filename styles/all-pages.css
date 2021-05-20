@@ -76,5 +76,8 @@ body {
 .button {
     color: white;
     text-decoration: none;
+}
 
+.card-button-container:active {
+    background-color: rgb(245, 96, 250);
 }
