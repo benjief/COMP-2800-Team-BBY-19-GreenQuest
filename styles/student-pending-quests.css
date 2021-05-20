@@ -43,6 +43,7 @@
     background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url("/img/background_pattern_8.png");
     border-radius: 10px;
     align-items: center;
+    margin-bottom: 10px;
     /* margin-bottom: 15px; */
     box-shadow: 5px 5px 5px rgb(116, 103, 103);
     width: 100%;
