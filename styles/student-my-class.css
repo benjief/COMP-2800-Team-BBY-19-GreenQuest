@@ -19,10 +19,19 @@
 }
 
 .student-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-self: center;
     grid-area: student-list;
     max-height: 300px;
+    width: 90%;
     overflow: scroll;
     overflow-x: hidden;
+    border: 1px solid black;
+    border-style: dashed;
+    border-radius: 10px;
+    font-size: 12pt;
 }
 
 .student-list::-webkit-scrollbar {
@@ -37,7 +46,6 @@
 .text-container {
     display: flex;
     width: 90%;
-    height: 80px;
     justify-content: center;
     align-self: center;
 }
@@ -51,7 +59,9 @@
 .student-container {
     display: flex;
     justify-content: center;
-    margin-bottom: 10px;
+    height: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .student-name {

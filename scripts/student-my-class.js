@@ -50,14 +50,16 @@ function populateStudentList() {
         for (var i = 0; i < studentsInClass.length; i++) {
             let studentContainer = "<div class='student-container' id='student-container-" + i + "'></div>";
             $(".student-list").append(studentContainer);
-            let studentName = "<p class='student-name' id='student-name-" + i + "'>" + studentsInClass[i] + "</p>";
+            let studentName = "<p class='student-name' id='student-name-" + i + "'>" + studentsInClass[i].name + "</p>";
             $("#student-container-" + i).append(studentName);
+            let studentPoints = "<p class='student-points' id='student-points-" + i + "'>" + studentsInClass[i].points + "</p>";
+            $("#student-container-" + i).append(studentPoints);
         }
     }
 }
 
 /** 
- * Reads other students' names from Firestore and puts them into an array if they are in this student's class.
+ * Reads other students' names and scores from Firestore and puts them into an array if they are in this student's class.
  */
 function getStudentsInClass() {
     db.collection("Students")
@@ -66,7 +68,8 @@ function getStudentsInClass() {
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 if (doc.data().Student_Name != currentStudent) {
-                    studentsInClass.push(doc.data().Student_Name);
+                    let studentObject = {"name":doc.data().Student_Name, "points":doc.data().Student_Points.toString()};
+                    studentsInClass.push(studentObject);
                 }
             });
             populateStudentList();
