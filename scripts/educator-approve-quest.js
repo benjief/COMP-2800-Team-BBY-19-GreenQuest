@@ -222,7 +222,7 @@ function approveStudentQuest() {
             Quest_Status: "approved",
             Unread: true,
             Quest_Points: questPoints,
-            Date_Approved: new Date(),
+            Date_Processed: new Date(),
             Quest_Likes: 0
         })
         .then(() => {
@@ -242,7 +242,9 @@ function rejectStudentQuest() {
     db.collection("Students").doc(submitterID).collection("Quests").doc(questID).update({
             Quest_Status: "rejected",
             Unread: true,
-            Quest_Points: 0
+            Quest_Points: 0,
+            Date_Processed: new Date(),
+            Quest_Likes: 0
         })
         .then(() => {
             console.log("Student quest successfully updated!");
