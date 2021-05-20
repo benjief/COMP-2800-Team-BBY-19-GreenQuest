@@ -23,15 +23,15 @@ function getCurrentUser() {
 /**
  * Write this.
  */
-function pullPendingQuests() {
+function pullProcessedQuests() {
     db.collection("Students").doc(userID).collection("Quests")
-        .where("Quest_Status", "==", "submitted")
+        .where("Quest_Status", "==", "approved")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 let pendingQuest = {
                     "title": doc.data().Quest_Title, 
-                    "date": doc.data().Date_Submitted, 
+                    "date": doc.data().Date_Processed, 
                     "bitmoji": doc.data().Quest_Bitmoji
                 };
                 pendingQuests.push(pendingQuest);
