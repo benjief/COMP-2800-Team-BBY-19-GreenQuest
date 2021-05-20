@@ -47,8 +47,6 @@
     display: flex;
     justify-content: center;
     font-size: 15pt;
-    margin-top: 20px;
-    margin-bottom: 20px;
 }
 
 .text-container p {
@@ -62,7 +60,7 @@
     grid-area: title;
     font-weight: 600;
     margin-top: 20px;
-    margin-top: 30px;
+    margin-bottom: 10px;
     height: 45px;
 }
 
@@ -84,21 +82,19 @@
 
 #quest-description-container {
     grid-area: description;
-    margin-bottom: 0;
+    margin-top: 20px;
     width: 90%;
     justify-self: center;
 }
 
 #quest-instructions-container {
     grid-area: instructions;
-    margin-top: 0;
-    margin-bottom: 0;
+    margin-bottom: 10px;
 }
 
 #quest-information-container {
     grid-area: more-info;
-    margin-top: 5px;
-    margin-bottom: 35px;
+    margin-bottom: 20px;
 }
 
 .card-button-container {
@@ -110,7 +106,6 @@
     border-radius: 10px;
     font-size: 15pt;
     justify-self: center;
-    margin-top: 10px;
     box-shadow: 5px 5px 5px rgb(116, 103, 103);
 }
 
@@ -125,7 +120,7 @@
 
 #card-button-container-3 {
     grid-area: home;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 #submit-quest-button {
