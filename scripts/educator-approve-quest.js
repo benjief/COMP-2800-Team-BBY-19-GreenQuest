@@ -141,10 +141,10 @@ function deleteStoredImages() {
         deleteRef = storageRef.child("images/quests/" + deleteRef);
     deleteRef.delete()
         .then(() => {
-            console.log("Approved image successfully removed from storage!");
+            console.log("Processed image successfully removed from storage!");
         })
         .catch((error) => {
-            console.error("Error deleting approved image from storage: ", error);
+            console.error("Error deleting processed image from storage: ", error);
         });
 }
 
@@ -253,6 +253,7 @@ function onClickReject() {
         .then(() => {
             console.log("Quest successfully rejected!");
             rejectStudentQuest();
+            deleteStoredImages();
             $("#feedback").html("Success! Please wait...");
             $("#feedback").show(0);
             $("#feedback").fadeOut(2500);
