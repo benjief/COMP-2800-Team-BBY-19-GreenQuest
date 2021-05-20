@@ -6,8 +6,8 @@
  */
 function getBitmoji() {
     let storageRef = storage.ref();
-    folderRef = storageRef.child("images/bitmojis");
-    storageRef.child("images/bitmojis/36.png").getDownloadURL()
+    folderRef = storageRef.child("/images/bitmojis");
+    storageRef.child("/images/bitmojis/36.png").getDownloadURL()
         .then((url) => {
             bitmojiURL = url;
             $("#bitmoji").attr("src", bitmojiURL);
