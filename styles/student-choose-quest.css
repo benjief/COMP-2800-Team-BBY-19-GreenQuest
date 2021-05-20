@@ -62,7 +62,6 @@
     grid-area: title;
     font-weight: 600;
     margin-top: 20px;
-    margin-top: 30px;
     height: 45px;
 }
 
@@ -97,8 +96,8 @@
 
 #quest-information-container {
     grid-area: more-info;
-    margin-top: 5px;
-    margin-bottom: 35px;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .card-button-container {
@@ -110,24 +109,20 @@
     border-radius: 10px;
     font-size: 15pt;
     justify-self: center;
-    margin-top: 10px;
     box-shadow: 5px 5px 5px rgb(116, 103, 103);
     align-items: center;
 }
 
 #card-button-container-1 {
     grid-area: accept;
-    margin-top: 0;
 }
 
 #card-button-container-2 {
     grid-area: reject;
-    margin-bottom: 0;
 }
 
 #card-button-container-3 {
     grid-area: home;
-    margin-bottom: 40px;
 }
 
 #quest-instructions,

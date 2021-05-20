@@ -35,11 +35,12 @@
     grid-template-areas:
         "images"
         "input"
+        "feedback"
         "submit"
         "reject"
         "home"
         "back"
-        "feedback";
+        ;
     align-items: center;
 }
 
@@ -130,7 +131,6 @@
 #characters-remaining-container {
     display: flex;
     margin-left: 20px;
-    margin-bottom: 20px;
     font-size: 10pt;
     grid-area: chars-remaining;
 }
@@ -194,7 +194,7 @@
     display: flex;
     justify-content: center;
     grid-area: feedback;
-    height: 70px;
+    height: 20px;
 }
 
 #feedback {
