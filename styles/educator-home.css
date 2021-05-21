@@ -6,8 +6,9 @@
 #main-content-card {
     grid-template-areas:
         "card-text"
-        "manage-classes"
+        "feedback"
         "approve-quests"
+        "manage-classes"
         "create-class"
         "break"
         "logout";
@@ -15,7 +16,6 @@
 
 .card-text-container {
     margin-top: 20px;
-    margin-bottom: 20px;
     text-align: center;
 }
 
@@ -57,4 +57,22 @@
     display: flex;
     height: 100%;
     align-items: center;
+}
+
+.feedback-placeholder {
+    display: flex;
+    justify-content: center;
+    grid-area: feedback;
+    height: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#feedback {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    text-align: center;
+    font-weight: 600;
+    color: red;
 }
