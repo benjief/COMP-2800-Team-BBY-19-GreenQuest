@@ -41,7 +41,8 @@
         "uploaded-images"
         "feedback"
         "approve"
-        "reject";
+        "reject"
+        "back";
     align-items: center;
 }
 
@@ -131,7 +132,11 @@ input {
 
 #card-button-container-2 {
     grid-area: reject;
-    margin-bottom: 40px;
+}
+
+#card-button-container-3 {
+    grid-area: back;
+    margin-bottom: 30px;
 }
 
 #approve-button {
