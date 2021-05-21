@@ -150,7 +150,7 @@ function disableQuestHistory() {
 function disableMyQuest() {
     $("#card-button-container-2").css({ backgroundColor: "rgb(200, 200, 200)" });
     $("#card-button-container-2").css({ transform: "none" });
-    $("#card-button-container-2 a").removeAttr("href");
+    $("#card-button-container-2 a").removeAttr("onclick");
 }
 
 // Run function when document is ready 
