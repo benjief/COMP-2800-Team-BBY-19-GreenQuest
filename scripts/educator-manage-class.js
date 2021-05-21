@@ -38,8 +38,9 @@ function onClick() {
  * Write this.
  */
  function checkRemoveStudents() {
+    console.log(className);
     db.collection("Students")
-    .where("Class_Name", "==", className)
+    .where("Student_Class", "==", className)
     .get()
     .then((querySnapshot) => {
         let numStudents = querySnapshot.size;
