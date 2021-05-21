@@ -14,6 +14,8 @@ var questDescription = null;
 var questNotes = null;
 var questPoints = 0;
 
+var validInput = false;
+
 // Create an empty array to store URLs of images attached to this quest
 var imageURLs = [];
 
@@ -96,12 +98,16 @@ function populateDOM() {
     $("#quest-description-container").append(description);
     let notes = "<p id='quest-notes'>" + questNotes + "</p>";
     $("#quest-notes-container").append(notes);
-    for (var i = 0; i < imageURLs.length; i++) {
-        let imageDOM = "<li class='list-item'><a class='uploaded-image' id='" +
-            imageURLs[i] + "' data-bs-toggle='modal' data-bs-target='#imagePreview' onclick='showPreview(this)'>Image " +
-            (i + 1) + "</li>";
-        $(".uploaded-images").append(imageDOM);
+    if (imageURLs.length == 0) {
+        var imageDOM = "<li class='list-item'>none</li>";
+    } else {
+        for (var i = 0; i < imageURLs.length; i++) {
+            var imageDOM = "<li class='list-item'><a class='uploaded-image' id='" +
+                imageURLs[i] + "' data-bs-toggle='modal' data-bs-target='#imagePreview' onclick='showPreview(this)'>Image " +
+                (i + 1) + "</li>";
+        }
     }
+    $(".uploaded-images").append(imageDOM);
 }
 
 /**
@@ -135,8 +141,8 @@ function deleteStoredImages() {
     for (var i = 0; i < imageURLs.length; i++)
         deleteRef = imageURLs[i].replace("https://firebasestorage.googleapis.com/v0/b/greenquest-"
             + "5f80c.appspot.com/o/images%2Fquests%2F", "");
-        deleteRef = deleteRef.substr(0, deleteRef.indexOf("?"));
-        deleteRef = storageRef.child("images/quests/" + deleteRef);
+    deleteRef = deleteRef.substr(0, deleteRef.indexOf("?"));
+    deleteRef = storageRef.child("images/quests/" + deleteRef);
     deleteRef.delete()
         .then(() => {
             console.log("Processed image successfully removed from storage!");
@@ -153,8 +159,8 @@ function updateStudentPoints() {
     submitterPoints += questPoints;
     console.log(submitterPoints);
     db.collection("Students").doc(submitterID).update({
-            Student_Points: submitterPoints
-        })
+        Student_Points: submitterPoints
+    })
         .then(() => {
             console.log("Student points updated successfully!");
         })
@@ -170,8 +176,8 @@ function updateClassPoints() {
     classPoints += questPoints;
     console.log(classPoints);
     db.collection("Classes").doc(className).update({
-            Class_Points: classPoints
-        })
+        Class_Points: classPoints
+    })
         .then(() => {
             console.log("Class points successfully updated!");
         })
@@ -187,13 +193,13 @@ function approveStudentQuest() {
     questPoints = document.getElementById("quest-points-input").value;
     questPoints = parseInt(questPoints);
     db.collection("Students").doc(submitterID).collection("Quests").doc(questID).update({
-            Quest_Status: "approved",
-            Unread: true,
-            Quest_Points: questPoints,
-            Date_Processed: new Date(),
-            Date_Submitted: firebase.firestore.FieldValue.delete(),
-            Quest_Likes: 0
-        })
+        Quest_Status: "approved",
+        Unread: true,
+        Quest_Points: questPoints,
+        Date_Processed: new Date(),
+        Date_Submitted: firebase.firestore.FieldValue.delete(),
+        Quest_Likes: 0
+    })
         .then(() => {
             console.log("Student quest successfully updated!");
             updateStudentPoints();
@@ -209,13 +215,13 @@ function approveStudentQuest() {
  */
 function rejectStudentQuest() {
     db.collection("Students").doc(submitterID).collection("Quests").doc(questID).update({
-            Quest_Status: "rejected",
-            Unread: true,
-            Quest_Points: 0,
-            Date_Processed: new Date(),
-            Date_Submitted: firebase.firestore.FieldValue.delete(),
-            Quest_Likes: 0
-        })
+        Quest_Status: "rejected",
+        Unread: true,
+        Quest_Points: 0,
+        Date_Processed: new Date(),
+        Date_Submitted: firebase.firestore.FieldValue.delete(),
+        Quest_Likes: 0
+    })
         .then(() => {
             console.log("Student quest successfully updated!");
         })
@@ -225,26 +231,46 @@ function rejectStudentQuest() {
 }
 
 /**
+ * Make sure the user has entered a point value for an approved task.
+ * 
+ */
+function checkInput() {
+    if ($(".input-container").prop("value") == null || $(".input-container").prop("value").isEmpty()) {
+        $("#feedback").html("Enter a point value");
+        $("#feedback").css({
+            color: "red"
+        });
+        $("#feedback").show(0);
+        $("#feedback").fadeOut(2500);
+    } else {
+        validInput = true;
+    }
+}
+
+/**
  * Write this
  */
 function onClickApprove() {
-    db.collection("Educators").doc(userID).collection("Quests").doc(questID).delete()
-        .then(() => {
-            console.log("Quest successfully approved!");
-            approveStudentQuest();
-            if (imageURLs.length != 0) {
-                deleteStoredImages();
-            }
-            $("#feedback").html("Success! Please wait...");
-            $("#feedback").show(0);
-            $("#feedback").fadeOut(2500);
-            setTimeout(function () {
-                location.reload();
-            }, 2300);
-        })
-        .catch((error) => {
-            console.error("Error approving quest: ", error);
-        })
+    checkInput();
+    if (validInput) {
+        db.collection("Educators").doc(userID).collection("Quests").doc(questID).delete()
+            .then(() => {
+                console.log("Quest successfully approved!");
+                approveStudentQuest();
+                if (imageURLs.length != 0) {
+                    deleteStoredImages();
+                }
+                $("#feedback").html("Success! Please wait...");
+                $("#feedback").show(0);
+                $("#feedback").fadeOut(2500);
+                setTimeout(function () {
+                    location.reload();
+                }, 2300);
+            })
+            .catch((error) => {
+                console.error("Error approving quest: ", error);
+            })
+    }
 }
 
 /**
@@ -273,7 +299,7 @@ function onClickReject() {
 /**
  * Write this
  */
- function listQuests() {
+function listQuests() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             db.collection("Educators")
@@ -283,7 +309,7 @@ function onClickReject() {
                 .then(function (doc) {
                     currentUser = doc.id;
                     console.log("Your firebase user ID is " + currentUser);
-                    getQuests(); 
+                    getQuests();
                 });
         }
     });
