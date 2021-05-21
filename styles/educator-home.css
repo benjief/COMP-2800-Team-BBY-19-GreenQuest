@@ -8,7 +8,8 @@
         "card-text"
         "buttons-1"
         "buttons-2"
-        "buttons-3";
+        "buttons-3"
+        "buttons-4";
 }
 
 .card-text-container {
@@ -44,6 +45,10 @@
 
 #card-button-container-3 {
     grid-area: buttons-3;
+}
+
+#card-button-container-4 {
+    grid-area: buttons-4;
     margin-bottom: 35px;
 }
 
