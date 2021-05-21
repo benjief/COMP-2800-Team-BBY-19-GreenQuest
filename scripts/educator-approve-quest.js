@@ -235,7 +235,7 @@ function rejectStudentQuest() {
  * 
  */
 function checkInput() {
-    if ($("input").prop("value") == null) {
+    if ($("#quest-points-input").prop("value") == null || $("#quest-points-input").prop("value").length == 0) {
         $("#feedback").html("Enter a point value");
         $("#feedback").css({
             color: "red"
@@ -261,6 +261,9 @@ function onClickApprove() {
                     deleteStoredImages();
                 }
                 $("#feedback").html("Success! Please wait...");
+                $("#feedback").css({
+                    color: "green"
+                });
                 $("#feedback").show(0);
                 $("#feedback").fadeOut(2500);
                 setTimeout(function () {

@@ -6,7 +6,6 @@
 #main-content-card {
     grid-template-areas:
         "card-text"
-        "break"
         "create-a-class";
 }
 

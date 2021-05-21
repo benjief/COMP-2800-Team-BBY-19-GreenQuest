@@ -13,7 +13,8 @@ function getCurrentUser() {
                 .then(function (doc) {
                     // Extract the current user's ID
                     userID = doc.id;
-                    checkUnreadQuests();
+                    checkProcessedQuests();
+                    checkPendingQuests();
                 });
         }
     });
@@ -48,7 +49,60 @@ function addAlert() {
     $("#card-button-container-1").append(notificationBell);
 }
 
+/**
+ * Write this.
+ */
+ function checkProcessedQuests() {
+    db.collection("Students").doc(userID).collection("Quests")
+    .where("Quest_Points", "!=", null)
+    .get()
+    .then((querySnapshot) => {
+        let numQuests = querySnapshot.size;
+        if (numQuests == 0) {
+            disableProcessedQuests();
+        } else {
+            checkUnreadQuests();
+        }
+    })
+    .catch((error) => {
+        console.log("Error getting processed quests: ", error);
+    });
+}
+
+/**
+ * Write this.
+ */
+ function checkPendingQuests() {
+    db.collection("Students").doc(userID).collection("Quests")
+    .where("Quest_Status", "==", "submitted")
+    .get()
+    .then((querySnapshot) => {
+        let numQuests = querySnapshot.size;
+        if (numQuests == 0) {
+            disablePendingQuests();
+        }
+    })
+    .catch((error) => {
+        console.log("Error getting pending quests: ", error);
+    });
+}
+
+/** Write this. */
+function disableProcessedQuests() {
+    $("#card-button-container-1").css({ backgroundColor: "rgb(200, 200, 200)" });
+    $("#card-button-container-1").css({ transform: "none" });
+    $("#card-button-container-1 a").removeAttr("href");
+}
+
+/** Write this. */
+function disablePendingQuests() {
+    $("#card-button-container-2").css({ backgroundColor: "rgb(200, 200, 200)" });
+    $("#card-button-container-2").css({ transform: "none" });
+    $("#card-button-container-2 a").removeAttr("href");
+}
+
 // Run function when document is ready 
 $(document).ready(function () {
     getCurrentUser();
+    
 });
