@@ -39,7 +39,8 @@
         "more-info"
         "submit-quest"
         "new-quest"
-        "home";
+        "break"
+        "back";
     align-items: center;
 }
 
@@ -104,10 +105,11 @@
 
 #card-button-container-2 {
     grid-area: new-quest;
+    margin-bottom: 0;
 }
 
 #card-button-container-3 {
-    grid-area: home;
+    grid-area: back;
     margin-bottom: 40px;
 }
 
