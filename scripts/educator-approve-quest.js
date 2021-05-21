@@ -296,6 +296,9 @@ function getQuests() {
             querySnapshot.forEach((doc) => {
                 questIDs.push(doc.id);
             });
+            if (questIDs[0] == null) {
+                location.href = "./educator-home.html";
+            }
             console.log(questIDs[0]);
             questID = questIDs[0];
             console.log(questID)
