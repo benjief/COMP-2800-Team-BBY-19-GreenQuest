@@ -1,10 +1,13 @@
+// JS for educator-home.html
+
 var questIDs = [];
 var currentUser = null;
 
-// JS for personalized greetings (educator homepage)
 
-/* Get the current user's name from Firestore and use it to create personalized greetings
-   on educator-(new-)home.html */
+/**
+ * Get the current user's name from Firestore and use it to create a personalized greeting. 
+ * Also assigns current user's ID to currentUser.
+ */
 function sayHello() {
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {
@@ -13,8 +16,9 @@ function sayHello() {
                 // Read
                 .get()
                 .then(function (doc) {
-                    // Extract the first name of the user
-                    console.log(somebody.uid);
+                    // Extract the user's name (and ID)
+                    currentUser = doc.id;
+                    checkQuests();
                     var name = doc.data().Educator_Name.split(" ", 1);
                     if (name) {
                         $("#personalized-greeting-new-user").html("Welcome, " + name);
@@ -28,71 +32,36 @@ function sayHello() {
         }
     });
 }
-sayHello();
 
-
-// WORK IN PROGRESS
-function hasUnmarkedQuest() {
-    if (questIDs.length == 0) {
-        console.log("no quest to mark " + questIDs);
-        let message = "<div class='text-container'><p class='message'>You haven't got any quests to approve.</p></div>"
-        $("#feedback").html(message);
-        $("#feedback").show(0);
-        $("#feedback").fadeOut(2000);
-    } else {
-        console.log("There are quests to mark " + questIDs);
-        let questName = $(event.target).html();
-        let questID = $(event.target).attr("id");
-        setTimeout(function () {
-            location.href = "./educator-approve-quest.html?questname=" + questName + "&questid=" + questID;
-        }, 500);
-    }
+/**
+ * Write this - CITE https://stackoverflow.com/questions/47997748/is-possible-to-check-if-a-collection-or-sub-collection-exists.
+ */
+function checkQuests() {
+    console.log(currentUser);
+    db.collection("Educators").doc(currentUser).collection("Quests")
+        .get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                questIDs.push(doc.id);
+            })
+            console.log(questIDs.length);
+            if (questIDs.length == 0) {
+                disableApproveQuests();
+            }
+        })
+        .catch((error) => {
+            console.log("Error getting quest IDs: ", error);
+        });
 }
 
-// function listQuests() {
-//     firebase.auth().onAuthStateChanged(function (user) {
-//         if (user) {
-//             db.collection("Educators")
-//                 .doc(user.uid)
-//                 // Read
-//                 .get()
-//                 .then(function (doc) {
-//                     currentUser = doc.id;
-//                     console.log(currentUser);
-//                     getQuests();
-//                 });
-//         }
-//     });
-// }
+/** Write this. */
+function disableApproveQuests() {
+    console.log("hello");
+    $("#card-button-container-2").css({ backgroundColor: "rgb(200, 200, 200)" });
+    $("#card-button-container-2 a").removeAttr("href");
+}
 
-// function getQuests() {
-//     db.collection("Educators").doc(currentUser).collection("Quests")
-//         .orderBy("Date_Submitted", "asc")
-//         .get()
-//         .then((querySnapshot) => {
-//             querySnapshot.forEach((doc) => {
-//                 questIDs.push(doc.id);
-//             });
-//             hasUnmarkedQuest();
-//         })
-//         .catch((error) => {
-//             console.log("Error getting quests: ", error);
-//         });
-// }
-
-// function onSelectQuest() {
-//     $(document).click(function (event) {
-//         let questName = $(event.target).html();
-//         let questID = $(event.target).attr("id");
-//         setTimeout(function () {
-//             location.href = "./educator-approve-quest.html?questname=" + questName + "&questid=" + questID;
-//         }, 500);
-//     });
-// }
-
-// /**
-//  * Call functions when the page is ready .
-//  */
-// $(document).ready(function () {
-//     listQuests();
-// });
+// Run function when document is ready 
+$(document).ready(function () {
+    sayHello();
+});

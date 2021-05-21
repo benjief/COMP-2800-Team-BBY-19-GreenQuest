@@ -119,6 +119,8 @@ body {
     width: 90%;
     justify-self: center;
     box-shadow: 0 0 2px rgb(0, 83, 56);
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .extra-break {
@@ -127,4 +129,3 @@ body {
     justify-self: center;
     box-shadow: 0 0 4px rgb(0, 83, 56);
 }
-
