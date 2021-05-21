@@ -28,7 +28,7 @@
     overflow-x: hidden;
 }
 
-/* .class-container {
+.class-container {
     display: flex;
     width: 50%;
     height: 100%;
@@ -39,7 +39,7 @@
     background-color: #ff80ee;
     box-shadow: 5px 5px 5px rgb(116, 103, 103);
     text-align: center;
-} */
+}
 
 .class-name {
     display: flex;
