@@ -294,6 +294,7 @@ function addQuestToDB(imageURLs) {
             })
                 .then(() => {
                     console.log("Educator quest successfully written!");
+                    $("#feedback").css({ color: "green" });
                     $("#feedback").html("Success! Please wait...");
                     $("#feedback").show(0);
                     $("#feedback").fadeOut(2500);
@@ -339,7 +340,8 @@ function deleteTempImages(redirectLink) {
  * @param nickname - String containing the name of the class to be created
  */
 function checkInput() {
-    if ($("#quest-notes").prop("value") == null || $("#quest-notes").prop("value") === "" || imageURLs.length == 0) {
+    console.log(uploadedImageFiles.length);
+    if (($("#quest-notes").prop("value") == null || $("#quest-notes").prop("value") === "") && uploadedImageFiles.length == 0) {
         $("#feedback").html("Attach a photo or enter quest notes");
         $("#feedback").css({
             color: "red"
@@ -356,6 +358,7 @@ function checkInput() {
  */
 function onClickSubmit() {
     checkInput();
+    console.log(validInput);
     if (validInput) {
         // Generate image URLs and add them to an array
         for (var i = 0; i < uploadedImageFiles.length; i++) {

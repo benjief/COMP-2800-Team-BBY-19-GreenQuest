@@ -43,7 +43,9 @@ function getCurrentUser() {
  * Write this.
  */
 function addAlert() {
-    $("#processed-quests-button").html($("#processed-quests-button").html() + "<br /> &#128276;");
+    // $("#processed-quests-button").html($("#processed-quests-button").html() + "<br /> &#128276;");
+    let notificationBell = "<img class='notification' src='/img/notification_icon.png'>";
+    $("#card-button-container-1").append(notificationBell);
 }
 
 // Run function when document is ready 
