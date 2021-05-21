@@ -48,7 +48,8 @@
     border-radius: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
-    /* background: linear-gradient(rgba(255, 191, 119, 0.7), rgba(255, 191, 119, 0.7)); */
+    background: linear-gradient(rgba(254, 255, 168, 0.7), rgba(254, 255, 168, 0.7)), url("/img/background_pattern_2.png");
+    font-weight: 600;
 }
 
 .student-container:first-child {
