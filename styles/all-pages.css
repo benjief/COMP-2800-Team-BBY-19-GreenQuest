@@ -97,7 +97,7 @@ body {
 
 .card-button-container {
     transform: translate3D(0, 0, 0);
-    transition: color 0.3s, background-color 0.3s, transform 0.15s;
+    transition: color 0.3s, transform 0.15s;
     cursor: pointer;
 }
 
@@ -111,7 +111,7 @@ body {
 }
 
 .card-button-container a:hover {
-    color: rgb(30, 253, 0);
+    color: white;
 }
 
 .break {
