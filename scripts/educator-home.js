@@ -33,7 +33,6 @@ function sayHello() {
     });
 }
 
-<<<<<<< HEAD
 /**
  * Write this - CITE https://stackoverflow.com/questions/47997748/is-possible-to-check-if-a-collection-or-sub-collection-exists.
  */
@@ -65,60 +64,4 @@ function disableApproveQuests() {
 // Run function when document is ready 
 $(document).ready(function () {
     sayHello();
-=======
-// WORK IN PROGRESS
-function markQuest() {
-    if (questIDs.length == 0) {
-        console.log("no quest to mark " + questIDs);
-        let message = "<div class='text-container'><p class='message'>You haven't got any quests to approve.</p></div>"
-        $("#feedback").html(message);
-        $("#feedback").show(0);
-        $("#feedback").fadeOut(2000);
-    } else {
-        location.href = "./educator-approve-quest.html";
-    }
-}
-
-/**
- * Write this
- */
- function listQuests() {
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-            db.collection("Educators")
-                .doc(user.uid)
-                // Read
-                .get()
-                .then(function (doc) {
-                    currentUser = doc.id;
-                    console.log(currentUser);
-                    getQuests();
-                });
-        }
-    });
-}
-
-/**
- * Reads quest IDs from Firestore and puts them into an array.
- */
- function getQuests() {
-    db.collection("Educators").doc(currentUser).collection("Quests")
-        .orderBy("Date_Submitted", "asc")
-        .get()
-        .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                questIDs.push(doc.id);
-            });
-        })
-        .catch((error) => {
-            console.log("Error getting quests: ", error);
-        });
-}
-
-/**
- * Call functions when the page is ready .
- */
-$(document).ready(function () {
-    listQuests();
->>>>>>> 932c05f6b5a52b67d6005b40cfafffb7f8c6ac05
 });
