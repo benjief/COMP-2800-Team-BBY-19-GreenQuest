@@ -118,11 +118,13 @@ body {
     grid-area: break;
     width: 90%;
     justify-self: center;
+    box-shadow: 0 0 2px rgb(0, 83, 56);
 }
 
 .extra-break {
     grid-area: extra-break;
     width: 90%;
     justify-self: center;
+    box-shadow: 0 0 4px rgb(0, 83, 56);
 }
 

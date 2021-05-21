@@ -12,6 +12,7 @@
 
 .card-text-container {
     margin-top: 20px;
+    margin-bottom: 20px;
     text-align: center;
 }
 
@@ -104,4 +105,12 @@
 #card-button-container-2 {
     grid-area: back;
     margin-bottom: 40px;
+}
+
+.student-name {
+    background: rgba(215, 226, 214, 0.7);
+    width: auto;
+    padding: 7px 0px 7px 15px;
+    border-radius: 15px;
+    box-shadow: 2px 2px 2px rgba(106, 116, 103, 0.7);
 }
