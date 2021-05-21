@@ -68,6 +68,7 @@ function checkQuestHistory() {
 function checkIfInClass(doc) {
     if (doc.data().Student_Class == null) {
         disableMyClass();
+        disableMyQuest();
     }
 }
 
@@ -143,6 +144,13 @@ function disableQuestHistory() {
     $("#card-button-container-3").css({ backgroundColor: "rgb(200, 200, 200)" });
     $("#card-button-container-3").css({ transform: "none" });
     $("#card-button-container-3 a").removeAttr("href");
+}
+
+/** Write this. */
+function disableMyQuest() {
+    $("#card-button-container-2").css({ backgroundColor: "rgb(200, 200, 200)" });
+    $("#card-button-container-2").css({ transform: "none" });
+    $("#card-button-container-2 a").removeAttr("href");
 }
 
 // Run function when document is ready 
