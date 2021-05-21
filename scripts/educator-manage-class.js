@@ -15,3 +15,60 @@ function onClick() {
         $(event.target).attr("href", redirectLink);
     });
 }
+
+/**
+ * Write this.
+ */
+ function checkAddStudents() {
+    db.collection("Students")
+    .where("Student_Class", "==", null)
+    .get()
+    .then((querySnapshot) => {
+        let numStudents = querySnapshot.size;
+        if (numStudents == 0) {
+            disableAddStudents();
+        }
+    })
+    .catch((error) => {
+        console.log("Error getting students not in a class: ", error);
+    });
+}
+
+/**
+ * Write this.
+ */
+ function checkRemoveStudents() {
+    db.collection("Students")
+    .where("Class_Name", "==", className)
+    .get()
+    .then((querySnapshot) => {
+        let numStudents = querySnapshot.size;
+        if (numStudents == 0) {
+            disableRemoveStudents();
+        }
+    })
+    .catch((error) => {
+        console.log("Error getting students in class: ", error);
+    });
+}
+
+/** Write this. */
+function disableAddStudents() {
+    $("#card-button-container-1").css({ backgroundColor: "rgb(200, 200, 200)" });
+    $("#card-button-container-1").css({ transform: "none" });
+    $("#card-button-container-1 a").removeAttr("href");
+}
+
+/** Write this. */
+function disableRemoveStudents() {
+    $("#card-button-container-2").css({ backgroundColor: "rgb(200, 200, 200)" });
+    $("#card-button-container-2").css({ transform: "none" });
+    $("#card-button-container-2 a").removeAttr("onclick");
+    $("#card-button-container-2 a").removeAttr("href");
+}
+
+// Run function when document is ready 
+$(document).ready(function () {
+    checkAddStudents();
+    checkRemoveStudents();
+});
