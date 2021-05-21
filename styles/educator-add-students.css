@@ -3,8 +3,9 @@
     grid-template-areas:
         "card-text"
         "student-list"
+        "break"
         "submit"
-        "home";
+        "back";
     margin-bottom: 60px !important;
 }
 
@@ -67,7 +68,7 @@
     font-weight: 600;
 }
 
-.card-button-container {
+/* .card-button-container {
     display: flex;
     height: 50px;
     width: 180px;
@@ -78,25 +79,13 @@
     justify-self: center;
     margin-bottom: 20px;
     box-shadow: 5px 5px 5px rgb(116, 103, 103);
-}
+} */
 
 #card-button-container-1 {
     grid-area: submit;
 }
 
 #card-button-container-2 {
-    grid-area: home;
-    margin-bottom: 30px;
-}
-
-#submit-button {
-    display: flex;
-    height: 100%;
-    align-items: center;
-}
-
-#home-button {
-    display: flex;
-    height: 100%;
-    align-items: center;
+    grid-area: back;
+    margin-bottom: 40px;
 }

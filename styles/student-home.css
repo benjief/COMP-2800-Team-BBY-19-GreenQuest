@@ -49,7 +49,7 @@
     height: 100%;
 }
 
-.card-button-container {
+/* .card-button-container {
     display: flex;
     height: 50px;
     width: 180px;
@@ -60,7 +60,7 @@
     justify-self: center;
     margin-bottom: 20px;
     box-shadow: 5px 5px 5px rgb(116, 103, 103);
-}
+} */
 
 #card-button-container-1 {
     display: flex;

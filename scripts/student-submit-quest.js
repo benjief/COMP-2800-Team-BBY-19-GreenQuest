@@ -12,6 +12,9 @@ var educatorID;
 var questDescription;
 var uniqueQuestID;
 
+var validInput = false;
+var tempImagesDeleted = false;
+
 // Create empty arrays to store files added to this quest and their URLs
 var uploadedImageFiles = [];
 var imageURLs = [];
@@ -254,8 +257,8 @@ function getUniqueQuestID() {
  */
 function updateQuestStatus() {
     db.collection("Students").doc(userID).update({
-            Student_Quest: false
-        })
+        Student_Quest: false
+    })
         .then(() => {
             console.log("Student quest status succesfully updated!");
         })
@@ -273,30 +276,28 @@ function addQuestToDB(imageURLs) {
     let dateSubmitted = new Date();
     // Update quest in student's quest collection
     db.collection("Students").doc(userID).collection("Quests").doc(uniqueQuestID).update({
-            Quest_Status: "submitted",
-            Date_Submitted: dateSubmitted
-        })
+        Quest_Status: "submitted",
+        Date_Submitted: dateSubmitted
+    })
         .then(() => {
             console.log("Student quest successfully updated!");
             updateQuestStatus();
             // Write quest to teacher's quest collection
             db.collection("Educators").doc(educatorID).collection("Quests").doc(uniqueQuestID).set({
-                    Quest_Submitter: userName,
-                    Submitter_ID: userID,
-                    Submitter_Class: className,
-                    Quest_Description: questDescription,
-                    Quest_Photos: imageURLs,
-                    Quest_Notes: $("#quest-notes").prop("value"),
-                    Date_Submitted: dateSubmitted
-                })
+                Quest_Submitter: userName,
+                Submitter_ID: userID,
+                Submitter_Class: className,
+                Quest_Description: questDescription,
+                Quest_Photos: imageURLs,
+                Quest_Notes: $("#quest-notes").prop("value"),
+                Date_Submitted: dateSubmitted
+            })
                 .then(() => {
                     console.log("Educator quest successfully written!");
                     $("#feedback").html("Success! Please wait...");
                     $("#feedback").show(0);
                     $("#feedback").fadeOut(2500);
-                    setTimeout(function () {
-                        location.href = "./student-home.html";
-                    }, 2300);
+                    deleteTempImages("./student-home.html");
                 })
                 .catch((error) => {
                     console.error("Error adding educator quest: ", error);
@@ -310,8 +311,9 @@ function addQuestToDB(imageURLs) {
 /**
  * Write this.
  * 
+ * @param {*} link 
  */
-function deleteTempImages() {
+function deleteTempImages(redirectLink) {
     let storageRef = storage.ref();
     deleteRef = storageRef.child("images/temp");
     deleteRef.listAll()
@@ -319,6 +321,12 @@ function deleteTempImages() {
             res.items.forEach((itemRef) => {
                 itemRef.delete();
             });
+            tempImagesDeleted = true;
+            if (redirectLink != null || redirectLink != "") {
+                setTimeout(function () {
+                    location.href = redirectLink;
+                }, 1000);
+            }
         })
         .catch((error) => {
             console.error("Error deleting temp images: ", error);
@@ -326,44 +334,59 @@ function deleteTempImages() {
 }
 
 /**
- * CITE and write this
+ * Make sure the user has attached either photos or a note to their submission.
+ * 
+ * @param nickname - String containing the name of the class to be created
  */
-function onClickSubmit() {
-    // Generate image URLs and add them to an array
-    for (var i = 0; i < uploadedImageFiles.length; i++) {
-        let storageRef = getStorageRef(uploadedImageFiles[i], false);
-        console.log(storageRef);
-        storageRef.put(uploadedImageFiles[i])
-            .then(function () {
-                console.log('Uploaded to Cloud storage');
-                storageRef.getDownloadURL()
-                    .then(function (url) {
-                        console.log(url);
-                        imageURLs.push(url);
-                        console.log(imageURLs);
-                        /* Once list of permanent URLs is complete, create quest documents in the student's and 
-                           their teacher's quest collection (include array of image URLs as an attribute) */
-                        if (i == (uploadedImageFiles.length)) {
-                            addQuestToDB(imageURLs);
-                        };
-                    })
-            });
-        console.log(uploadedImageFiles[i]);
-        // deleteTempImages(uploadedImageFiles[i]);
+function checkInput() {
+    if ($("#quest-notes").prop("value") == null || $("#quest-notes").prop("value") === "" || imageURLs.length == 0) {
+        $("#feedback").html("Attach a photo or enter quest notes");
+        $("#feedback").css({
+            color: "red"
+        });
+        $("#feedback").show(0);
+        $("#feedback").fadeOut(2500);
+    } else {
+        validInput = true;
     }
-    deleteTempImages();
 }
 
 /**
  * CITE and write this
  */
-function onClickHome() {
-    // for (var i = 0; i < uploadedImageFiles.length; i++) {
-    //     deleteTempImages(uploadedImageFiles[i]);
-    // }
-    deleteTempImages();
-    location.href = "./student-home.html";
+function onClickSubmit() {
+    checkInput();
+    if (validInput) {
+        // Generate image URLs and add them to an array
+        for (var i = 0; i < uploadedImageFiles.length; i++) {
+            let storageRef = getStorageRef(uploadedImageFiles[i], false);
+            console.log(storageRef);
+            storageRef.put(uploadedImageFiles[i])
+                .then(function () {
+                    console.log('Uploaded to Cloud storage');
+                    storageRef.getDownloadURL()
+                        .then(function (url) {
+                            console.log(url);
+                            imageURLs.push(url);
+                            console.log(imageURLs);
+                            /* Once list of permanent URLs is complete, create quest documents in the student's and 
+                               their teacher's quest collection (include array of image URLs as an attribute) */
+                            if (i == (uploadedImageFiles.length)) {
+                                addQuestToDB(imageURLs);
+                            };
+                        })
+                });
+        }
+    }
 }
+
+/**
+ * Write this.
+ */
+function onClickHome() {
+    deleteTempImages("./student-home.html");
+}
+
 
 // Run function when document is ready 
 $(document).ready(function () {

@@ -4,6 +4,7 @@
     grid-template-areas:
         "card-text"
         "student-list"
+        "break"
         "back";
     margin-bottom: 60px !important;
 }
@@ -31,12 +32,12 @@
 
 .student-list::-webkit-scrollbar {
     display: none;
-  }
+}
   
-  .student-list {
+.student-list {
     -ms-overflow-style: none;  
     scrollbar-width: none;  
-  }
+}
 
 .student-container {
     display: grid;
@@ -71,7 +72,7 @@
     color: rgb(0, 0, 0);
 }
 
-.card-button-container {
+/* .card-button-container {
     display: flex;
     height: 50px;
     width: 180px;
@@ -84,6 +85,10 @@
     margin-top: 20px;
     margin-bottom: 40px;
     box-shadow: 5px 5px 5px rgb(116, 103, 103);
+} */
+
+#card-button-container-1 {
+    margin-bottom: 40px;
 }
 
 #back-button {

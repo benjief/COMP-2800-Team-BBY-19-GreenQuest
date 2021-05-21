@@ -3,8 +3,9 @@
     grid-template-areas:
         "card-text"
         "student-list"
+        "break"
         "submit"
-        "home";
+        "back";
     margin-bottom: 60px !important;
 }
 
@@ -19,7 +20,7 @@
 
 .student-list {
     grid-area: student-list;
-    height: 300px;
+    max-height: 300px;
     overflow: scroll;
     overflow-x: hidden;
 }
@@ -67,25 +68,11 @@
     font-weight: 600;
 }
 
-.card-button-container {
-    display: flex;
-    height: 50px;
-    width: 180px;
-    background-color: #ff80ee;
-    justify-content: center;
-    border-radius: 10px;
-    font-size: 15pt;
-    justify-self: center;
-    box-shadow: 5px 5px 5px rgb(116, 103, 103);
-    align-items: center;
-}
-
 #card-button-container-1 {
     grid-area: submit;
-    margin-top: 20px;
 }
 
 #card-button-container-2 {
-    grid-area: home;
-    margin-bottom: 30px;
+    grid-area: back;
+    margin-bottom: 40px;
 }
