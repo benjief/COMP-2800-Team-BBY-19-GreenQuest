@@ -235,7 +235,7 @@ function rejectStudentQuest() {
  * 
  */
 function checkInput() {
-    if ($(".input-container").prop("value") == null) {
+    if ($("input").prop("value") == null) {
         $("#feedback").html("Enter a point value");
         $("#feedback").css({
             color: "red"
