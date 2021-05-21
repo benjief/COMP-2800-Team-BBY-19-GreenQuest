@@ -37,7 +37,7 @@ function getCurrentStudent() {
 /**
  * Appends a list of student names (along with a "+" icon) to the DOM.
  */
-function populateStudentList() {
+function populateStudentList(currentStudent) {
     if (studentsInClass.length == 0) {
         let message = "<div class='text-container'><p class='message'>There are no other students in your class!</p></div>"
         $(".student-list").append(message);
@@ -52,6 +52,11 @@ function populateStudentList() {
             $(".student-list").append(studentContainer);
             let studentName = "<p class='student-name' id='student-name-" + i + "'>" + studentsInClass[i].name + "</p>";
             $("#student-container-" + i).append(studentName);
+            
+            //different container color for current student. 
+            if (studentsInClass[i].name == currentStudent) {
+                $("#student-container-" + i).addClass("currentStudent-container");
+            }
             let studentPoints = "<p class='student-points' id='student-points-" + i + "'>" + studentsInClass[i].points + "</p>";
             $("#student-container-" + i).append(studentPoints);
             let leafIcon = "<img src='/img/leaf_icon.png'>"
@@ -73,7 +78,7 @@ function getStudentsInClass() {
                 let studentObject = {"name":doc.data().Student_Name, "points":doc.data().Student_Points.toString()};
                 studentsInClass.push(studentObject);
             });
-            populateStudentList();
+            populateStudentList(currentStudent);
             addHeading();
         })
 }
