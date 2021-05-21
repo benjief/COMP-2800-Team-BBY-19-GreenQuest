@@ -6,7 +6,9 @@ var className;
 // Create a variable to house the names of students who are also in this class
 var studentsInClass = [];
 
-/* Get the current user's name and class name from Firestore. */
+/**
+ * Get the current user's name and class name from Firestore.
+ */
 function getCurrentStudent() {
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {

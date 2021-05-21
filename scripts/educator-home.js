@@ -1,10 +1,12 @@
-var questIDs = [];
-var currentUser = null;
+// JS for educator-home.html
 
-// JS for personalized greetings (educator homepage)
+var currentUser;
+var userEmail;
 
-/* Get the current user's name from Firestore and use it to create personalized greetings
-   on educator-(new-)home.html */
+/**
+ * Get the current user's name from Firestore and use it to create a personalized greeting. 
+ * Also assigns current user's ID to currentUser and their ID to userEmail.
+ */
 function sayHello() {
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {
@@ -13,8 +15,11 @@ function sayHello() {
                 // Read
                 .get()
                 .then(function (doc) {
-                    // Extract the first name of the user
-                    console.log(somebody.uid);
+                    // Extract the user's ID, email and name
+                    currentUser = doc.id;
+                    checkNumQuests();
+                    userEmail = doc.data().Educator_Email;
+                    checkNumClasses();
                     var name = doc.data().Educator_Name.split(" ", 1);
                     if (name) {
                         $("#personalized-greeting-new-user").html("Welcome, " + name);
@@ -28,61 +33,59 @@ function sayHello() {
         }
     });
 }
-sayHello();
-
-
-// WORK IN PROGRESS
-function markQuest() {
-    if (questIDs.length == 0) {
-        console.log("no quest to mark " + questIDs);
-        let message = "<div class='text-container'><p class='message'>You haven't got any quests to approve.</p></div>"
-        $("#feedback").html(message);
-        $("#feedback").show(0);
-        $("#feedback").fadeOut(2000);
-    } else {
-        location.href = "./educator-approve-quest.html";
-    }
-}
 
 /**
  * Write this
  */
- function listQuests() {
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-            db.collection("Educators")
-                .doc(user.uid)
-                // Read
-                .get()
-                .then(function (doc) {
-                    currentUser = doc.id;
-                    console.log(currentUser);
-                    getQuests();
-                });
-        }
-    });
-}
-
-/**
- * Reads quest IDs from Firestore and puts them into an array.
- */
- function getQuests() {
+function checkNumQuests() {
+    console.log(currentUser);
     db.collection("Educators").doc(currentUser).collection("Quests")
-        .orderBy("Date_Submitted", "asc")
         .get()
         .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                questIDs.push(doc.id);
-            });
+            let numQuests = querySnapshot.size;
+            if (numQuests == 0) {
+                disableApproveQuests();
+            }
         })
         .catch((error) => {
-            console.log("Error getting quests: ", error);
+            console.log("Error getting quest IDs: ", error);
         });
 }
 
 /**
- * Call functions when the page is ready .
+ * Write this 
  */
+ function checkNumClasses() {
+    console.log(userEmail);
+    db.collection("Classes")
+        .where("Owner_Email", "==", userEmail)
+        .get()
+        .then((querySnapshot) => {
+            let numClasses = querySnapshot.size;
+            if (numClasses == 0) {
+                disableManageClasses();
+            }
+        })
+        .catch((error) => {
+            console.log("Error getting classes: ", error);
+        });
+}
+
+/** Write this. */
+function disableApproveQuests() {
+    $("#card-button-container-2").css({ backgroundColor: "rgb(200, 200, 200)" });
+    $("#card-button-container-2").css({ transform: "none" });
+    $("#card-button-container-2 a").removeAttr("href");
+}
+
+/** Write this. */
+function disableManageClasses() {
+    $("#card-button-container-1").css({ backgroundColor: "rgb(200, 200, 200)" });
+    $("#card-button-container-1").css({ transform: "none" });
+    $("#card-button-container-1 a").removeAttr("href");
+}
+
+// Run function when document is ready 
 $(document).ready(function () {
-    listQuests();
+    sayHello();
 });
