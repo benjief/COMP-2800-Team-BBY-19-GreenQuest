@@ -65,14 +65,24 @@ function populateStudentList(currentStudent) {
             $("#student-container-" + i).append(leafIcon);
             classTotalPoints += parseInt(studentsInClass[i].points);
         }
-        $("#before-class-total").after(
-            "<div class='student-container' id='class-total-container'>");
-        $("#class-total-container").append("<p class='student-name'>Class Total:</p>");
-        let totalPoints = "<p class='student-points'>" + classTotalPoints + "</p>";
-        $("#class-total-container").append(totalPoints);
-        let leafIcon = "<img src='/img/leaf_icon.png'>";
-        $("#class-total-container").append(leafIcon);
+
+        populateClassTotalScore(classTotalPoints);
     }
+}
+
+/**
+ * Prints the total point for the class
+ * 
+ * @param {*} classTotalPoints 
+ */
+function populateClassTotalScore(classTotalPoints) {
+    $("#before-class-total").after(
+        "<div class='student-container' id='class-total-container'>");
+    $("#class-total-container").append("<p class='student-name'>Class Total:</p>");
+    let totalPoints = "<p class='student-points'>" + classTotalPoints + "</p>";
+    $("#class-total-container").append(totalPoints);
+    let leafIcon = "<img src='/img/leaf_icon.png'>";
+    $("#class-total-container").append(leafIcon);
 }
 
 /** 
