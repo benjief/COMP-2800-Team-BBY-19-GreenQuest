@@ -232,7 +232,9 @@ function onClickApprove() {
         .then(() => {
             console.log("Quest successfully approved!");
             approveStudentQuest();
-            deleteStoredImages();
+            if (imageURLs.length != 0) {
+                deleteStoredImages();
+            }
             $("#feedback").html("Success! Please wait...");
             $("#feedback").show(0);
             $("#feedback").fadeOut(2500);
@@ -253,7 +255,9 @@ function onClickReject() {
         .then(() => {
             console.log("Quest successfully rejected!");
             rejectStudentQuest();
-            deleteStoredImages();
+            if (imageURLs.length != 0) {
+                deleteStoredImages();
+            }
             $("#feedback").html("Success! Please wait...");
             $("#feedback").show(0);
             $("#feedback").fadeOut(2500);
