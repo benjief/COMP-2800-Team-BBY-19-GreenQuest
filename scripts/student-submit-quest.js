@@ -354,6 +354,31 @@ function checkInput() {
 }
 
 /**
+ * Write this.
+ */
+function generateImageURLs() {
+    for (var i = 0; i < uploadedImageFiles.length; i++) {
+        let storageRef = getStorageRef(uploadedImageFiles[i], false);
+        console.log(storageRef);
+        storageRef.put(uploadedImageFiles[i])
+            .then(function () {
+                console.log('Uploaded to Cloud storage');
+                storageRef.getDownloadURL()
+                    .then(function (url) {
+                        console.log(url);
+                        imageURLs.push(url);
+                        console.log(imageURLs);
+                        /* Once list of permanent URLs is complete, create quest documents in the student's and 
+                           their teacher's quest collection (include array of image URLs as an attribute) */
+                        if (i == (uploadedImageFiles.length)) {
+                            addQuestToDB(imageURLs);
+                        };
+                    })
+            });
+    }
+}
+
+/**
  * CITE and write this
  */
 function onClickSubmit() {
@@ -364,25 +389,7 @@ function onClickSubmit() {
             addQuestToDB(imageURLs);
         } else {
             // Generate image URLs and add them to an array
-            for (var i = 0; i < uploadedImageFiles.length; i++) {
-                let storageRef = getStorageRef(uploadedImageFiles[i], false);
-                console.log(storageRef);
-                storageRef.put(uploadedImageFiles[i])
-                    .then(function () {
-                        console.log('Uploaded to Cloud storage');
-                        storageRef.getDownloadURL()
-                            .then(function (url) {
-                                console.log(url);
-                                imageURLs.push(url);
-                                console.log(imageURLs);
-                                /* Once list of permanent URLs is complete, create quest documents in the student's and 
-                                   their teacher's quest collection (include array of image URLs as an attribute) */
-                                if (i == (uploadedImageFiles.length)) {
-                                    addQuestToDB(imageURLs);
-                                };
-                            })
-                    });
-            }
+            generateImageURLs();
         }
     }
 }
