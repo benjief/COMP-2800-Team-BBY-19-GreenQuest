@@ -44,13 +44,29 @@
     display: grid;
     grid-template-rows: 100%;
     grid-template-columns: 60% 34% 6%;
-    border: 1px solid #ff7b00;
-    border-style: dashed;
+    border: 1px dashed #ff7b00;
     border-radius: 10px;
     background: linear-gradient(rgba(254, 255, 168, 0.7), rgba(254, 255, 168, 0.7)), url("/img/background_pattern_2.png");
     font-weight: 600;
     margin-bottom: 10px;
-    
+}
+
+#class-total-container {
+    display: grid;
+    width: 85%;
+    grid-template-rows: 100%;
+    grid-template-columns: 60% 34% 6%;
+    border: 1px dashed #ff7b00;
+    border-radius: 10px;
+    background: linear-gradient(rgba(137, 255, 225, 0.7), rgba(137, 255, 225, 0.7)), url("/img/background_pattern_2.png");
+    font-weight: 600;
+    margin: 0px auto;
+    margin-bottom: 10px;
+}
+
+.currentStudent-container {
+    border: 2px dashed darkcyan;
+    background: linear-gradient(rgba(254, 255, 168, 0.7), rgba(254, 255, 168, 0.7)), url("/img/background_pattern_2.png");
 }
 
 .student-container:last-child {
