@@ -138,6 +138,7 @@ function getTimeElapsed() {
         }
         populateDOM(i, Math.floor(timeDifference), unitOfTime);
     }
+    setUnreadToFalse();
 }
 
 /**
@@ -157,9 +158,14 @@ function populateDOM(i, timeDifference, unitOfTime) {
     } else {
         var elapsedTime = "<p class='quest-date' id='elapsed-time-" + i + "'><span class='rejected'>Rejected</span> " + timeDifference + " "
             + unitOfTime + " ago</p>";
-        if (processedQuests[i].unread) {
-            var notification = "<img class='notification' src='/img/rejected_icon.png'>";
-        }
+        var notification = "<img class='notification' src='/img/rejected_icon.png'>";
+    }
+    if (processedQuests[i].unread) {
+        console.log("quest-container-")
+        $("#quest-container-" + i).css({
+            background: "linear-gradient(rgba(242, 175, 255, 0.7), rgba(238, 238, 238, 0.7)), url('/img/background_pattern_8.png')"
+        });
+        console.log("wtf");
     }
     $("#quest-container-" + i).append(elapsedTime);
     if (processedQuests[i].unread) {
@@ -185,13 +191,15 @@ function getBitmojiBackground() {
 /**
  * Write this.
  */
-function readQuests() {
+function setUnreadToFalse() {
     db.collection("Students").doc(userID).collection("Quests")
-        .where("Unread", "==", "true")
+        .where("Unread", "==", true)
         .get()
         .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                doc.data().unread = false;
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update({
+                    Unread: false
+                });
             });
         });
 }
