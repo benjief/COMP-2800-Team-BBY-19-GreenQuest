@@ -8,7 +8,7 @@ function checkLoggedIn() {
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (!somebody) {
             db.collection("Students")
-                location.href = "../404.html";
+                location.href = "./login.html";
         }
     });
 }
