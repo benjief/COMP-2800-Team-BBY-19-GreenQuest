@@ -61,6 +61,7 @@
 
 #card-button-container-3 {
     grid-area: completed-quests;
+    margin-bottom: 0;
 }
 
 #card-button-container-4 {
