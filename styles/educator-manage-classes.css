@@ -41,6 +41,16 @@
     text-align: center;
 }
 
+.class-container {
+    transform: translate3D(0, 0, 0);
+    transition: color 0.3s, transform 0.15s;
+    cursor: pointer;
+}
+
+.class-container:active {
+    transform: translate3D(0, 4px, 0);
+}
+
 .class-name {
     display: flex;
     height: 100%;

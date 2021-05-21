@@ -36,6 +36,7 @@
         "my-class"
         "my-quest"
         "completed-quests"
+        "break"
         "logout";
 }
 
@@ -49,19 +50,6 @@
     height: 100%;
 }
 
-.card-button-container {
-    display: flex;
-    height: 50px;
-    width: 180px;
-    background-color: #ff80ee;
-    justify-content: center;
-    border-radius: 10px;
-    font-size: 15pt;
-    justify-self: center;
-    margin-bottom: 20px;
-    box-shadow: 5px 5px 5px rgb(116, 103, 103);
-}
-
 #card-button-container-1 {
     display: flex;
     grid-area: my-class;
@@ -73,6 +61,7 @@
 
 #card-button-container-3 {
     grid-area: completed-quests;
+    margin-bottom: 0;
 }
 
 #card-button-container-4 {

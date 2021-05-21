@@ -148,18 +148,6 @@
     height: 21px;
 }
 
-.card-button-container {
-    display: flex;
-    height: 50px;
-    width: 180px;
-    background-color: #ff80ee;
-    justify-content: center;
-    border-radius: 10px;
-    font-size: 15pt;
-    justify-self: center;
-    box-shadow: 5px 5px 5px rgb(116, 103, 103);
-}
-
 #card-button-container-1 {
     grid-area: submit;
 }
@@ -205,5 +193,4 @@
     align-items: center;
     text-align: center;
     font-weight: 600;
-    color: green;
 }

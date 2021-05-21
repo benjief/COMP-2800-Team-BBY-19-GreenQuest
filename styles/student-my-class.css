@@ -3,14 +3,16 @@
 #main-content-card {
     grid-template-areas:
         "card-text"
+        "extra-break"
         "student-list"
+        "break"
         "back";
     margin-bottom: 60px !important;
 }
 
 .card-text-container {
+    display: block;
     margin-top: 20px;
-    margin-bottom: 10px;
     text-align: center;
 }
 
@@ -31,17 +33,44 @@
 
 .student-list::-webkit-scrollbar {
     display: none;
-  }
+}
   
-  .student-list {
+.student-list {
     -ms-overflow-style: none;  
     scrollbar-width: none;  
-  }
+}
 
 .student-container {
     display: grid;
     grid-template-rows: 100%;
     grid-template-columns: 60% 34% 6%;
+    border: 1px dashed #ff7b00;
+    border-radius: 10px;
+    background: linear-gradient(rgba(254, 255, 168, 0.7), rgba(254, 255, 168, 0.7)), url("/img/background_pattern_2.png");
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+#class-total-container {
+    display: grid;
+    width: 85%;
+    grid-template-rows: 100%;
+    grid-template-columns: 60% 34% 6%;
+    border: 1px dashed #ff7b00;
+    border-radius: 10px;
+    background: linear-gradient(rgba(137, 255, 225, 0.7), rgba(137, 255, 225, 0.7)), url("/img/background_pattern_2.png");
+    font-weight: 600;
+    margin: 0px auto;
+    margin-bottom: 10px;
+}
+
+.currentStudent-container {
+    border: 2px dashed darkcyan;
+    background: linear-gradient(rgba(254, 255, 168, 0.7), rgba(254, 255, 168, 0.7)), url("/img/background_pattern_2.png");
+}
+
+.student-container:last-child {
+    margin-bottom: 0;
 }
 
 .student-container img {
@@ -49,6 +78,12 @@
     align-self: center;
     width: 15px;
     height: 15px;
+    position: relative;
+    right: 5px;
+}
+
+.student-container:last-child {
+    margin: 0;
 }
 
 .student-name {
@@ -56,6 +91,7 @@
     height: 100%;
     align-items: center;
     justify-content: flex-start;
+    padding-left: 5px;
 }
 
 .student-points {
@@ -63,6 +99,7 @@
     height: 100%;
     align-items: center;
     justify-content: flex-end;
+    padding-right: 5px;
 }
 
 .message {
@@ -71,7 +108,7 @@
     color: rgb(0, 0, 0);
 }
 
-.card-button-container {
+/* .card-button-container {
     display: flex;
     height: 50px;
     width: 180px;
@@ -84,6 +121,10 @@
     margin-top: 20px;
     margin-bottom: 40px;
     box-shadow: 5px 5px 5px rgb(116, 103, 103);
+} */
+
+#card-button-container-1 {
+    margin-bottom: 40px;
 }
 
 #back-button {

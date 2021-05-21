@@ -1,8 +1,9 @@
-// JS for personalized greetings (educator homepage)
+// JS for educator-new-home.html
 
-/* Get the current user's name from Firestore and use it to create personalized greetings
-   on educator-(new-)home.html */
-function sayHello() {
+/**
+ * Get the current user's name from Firestore and use it to create a personalized greeting. 
+ */
+   function sayHello() {
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {
             db.collection("Educators")
@@ -10,7 +11,7 @@ function sayHello() {
                 // Read
                 .get()
                 .then(function (doc) {
-                    // Extract the first name of the user
+                    // Extract the user's name (and ID)
                     console.log(somebody.uid);
                     var name = doc.data().Educator_Name.split(" ", 1);
                     if (name) {

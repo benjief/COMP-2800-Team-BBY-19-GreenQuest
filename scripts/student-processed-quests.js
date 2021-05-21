@@ -36,6 +36,7 @@ function pullApprovedQuests() {
                     "date": doc.data().Date_Processed,
                     "bitmoji": doc.data().Quest_Bitmoji,
                     "points": doc.data().Quest_Points,
+                    "unread": doc.data().Unread,
                     "status": "approved"
                 };
                 approvedQuests.push(approvedQuest);
@@ -59,6 +60,7 @@ function pullRejectedQuests() {
                     "date": doc.data().Date_Processed,
                     "bitmoji": doc.data().Quest_Bitmoji,
                     "points": doc.data().Quest_Points,
+                    "unread": doc.data().Unread,
                     "status": "rejected"
                 };
                 rejectedQuests.push(rejectedQuest);
@@ -136,6 +138,7 @@ function getTimeElapsed() {
         }
         populateDOM(i, Math.floor(timeDifference), unitOfTime);
     }
+    setUnreadToFalse();
 }
 
 /**
@@ -149,28 +152,58 @@ function populateDOM(i, timeDifference, unitOfTime) {
     let questPoints = "<p class='quest-points' id='quest-points-" + i + "'>" + processedQuests[i].points + " points</p>";
     $("#quest-container-" + i).append(questPoints);
     if (processedQuests[i].status === "approved") {
-        var elapsedTime = "<p class='quest-date' id='elapsed-time-" + i + "'>Approved " + timeDifference + " "
+        var elapsedTime = "<p class='quest-date' id='elapsed-time-" + i + "'><span class='approved'>Approved</span> " + timeDifference + " "
             + unitOfTime + " ago</p>";
+        var notification = "<img class='notification' src='/img/approved_icon.png'>";
     } else {
-        var elapsedTime = "<p class='quest-date' id='elapsed-time-" + i + "'>Rejected " + timeDifference + " "
+        var elapsedTime = "<p class='quest-date' id='elapsed-time-" + i + "'><span class='rejected'>Rejected</span> " + timeDifference + " "
             + unitOfTime + " ago</p>";
+        var notification = "<img class='notification' src='/img/rejected_icon.png'>";
+    }
+    if (processedQuests[i].unread) {
+        console.log("quest-container-")
+        $("#quest-container-" + i).css({
+            background: "linear-gradient(rgba(242, 175, 255, 0.7), rgba(238, 238, 238, 0.7)), url('/img/background_pattern_8.png')"
+        });
+        console.log("wtf");
     }
     $("#quest-container-" + i).append(elapsedTime);
-    let questBitmoji = "<img src='" + processedQuests[i].bitmoji + "'>";
+    if (processedQuests[i].unread) {
+        $("#quest-container-" + i).append(notification);
+    }
+    let questBitmoji = "<img class='bitmoji' src='" + processedQuests[i].bitmoji + "'>";
     $("#quest-container-" + i).append(questBitmoji);
     getBitmojiBackground();
 }
-
 
 /**
  * Write this.
  */
 function getBitmojiBackground() {
-    let randomNum = Math.floor(Math.random() * 5 + 3);
-    $("img").css({
-        background: "url('../img/background_pattern_" + randomNum + ".png')"
-    });
+    for (var i = 0; i < processedQuests.length; i++) {
+        let randomNum = Math.floor(Math.random() * 5 + 3);
+        $("#bitmoji-" + i).css({
+            background: "url('../img/background_pattern_" + randomNum + ".png')"
+        });
+    }
 }
+
+/**
+ * Write this.
+ */
+function setUnreadToFalse() {
+    db.collection("Students").doc(userID).collection("Quests")
+        .where("Unread", "==", true)
+        .get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update({
+                    Unread: false
+                });
+            });
+        });
+}
+
 
 // Run function when document is ready 
 $(document).ready(function () {

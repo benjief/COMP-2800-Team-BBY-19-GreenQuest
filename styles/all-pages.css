@@ -82,10 +82,50 @@ body {
     text-align: center;
 }
 
-.card-button-container:active {
-    background-color: rgb(245, 96, 250);
+.card-button-container {
+    display: flex;
+    min-height: 50px;
+    width: 180px;
+    background-color: #ff80ee;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 15pt;
+    justify-self: center;
+    box-shadow: 5px 5px 5px rgb(116, 103, 103);
+    margin-bottom: 15px;
 }
 
 .card-button-container {
+    transform: translate3D(0, 0, 0);
+    transition: color 0.3s, transform 0.15s;
+    cursor: pointer;
+}
+
+.card-button-container:active {
+    transform: translate3D(0, 4px, 0);
+}
+
+.card-button-container a {
+    padding: 5px;
+    align-self: center
+}
+
+.card-button-container a:hover {
+    color: white;
+}
+
+.break {
+    grid-area: break;
+    width: 90%;
+    justify-self: center;
+    box-shadow: 0 0 2px rgb(0, 83, 56);
+    margin-top: 20px;
     margin-bottom: 20px;
+}
+
+.extra-break {
+    grid-area: extra-break;
+    width: 90%;
+    justify-self: center;
+    box-shadow: 0 0 4px rgb(0, 83, 56);
 }

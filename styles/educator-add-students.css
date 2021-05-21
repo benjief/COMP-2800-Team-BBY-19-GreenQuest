@@ -2,14 +2,17 @@
 #main-content-card {
     grid-template-areas:
         "card-text"
+        "extra-break"
         "student-list"
+        "break"
         "submit"
-        "home";
+        "back";
     margin-bottom: 60px !important;
 }
 
 .card-text-container {
     margin-top: 20px;
+    margin-bottom: 20px;
     text-align: center;
 }
 
@@ -26,19 +29,35 @@
 
 .student-list::-webkit-scrollbar {
     display: none;
-  }
+}
   
-  .student-list {
+.student-list {
     -ms-overflow-style: none; 
     scrollbar-width: none;  
-  }
+    width: 90%;
+    justify-self: center;
+}
 
 .student-container {
     display: grid;
     grid-template-columns: 80% 20%;
     grid-template-areas:
         "name icon";
+    border: 1px solid #ff7b00;
+    border-style: dashed;
+    border-radius: 10px;
+    margin-top: 10px;
     margin-bottom: 10px;
+    background: linear-gradient(rgba(254, 255, 168, 0.7), rgba(254, 255, 168, 0.7)), url("/img/background_pattern_2.png");
+    font-weight: 600;
+}
+
+.student-container:first-child {
+    margin-top: 0;
+}
+
+.student-container:last-child {
+    margin-bottom: 0;
 }
 
 .student-name {
@@ -67,36 +86,11 @@
     font-weight: 600;
 }
 
-.card-button-container {
-    display: flex;
-    height: 50px;
-    width: 180px;
-    background-color: #ff80ee;
-    justify-content: center;
-    border-radius: 10px;
-    font-size: 15pt;
-    justify-self: center;
-    margin-bottom: 20px;
-    box-shadow: 5px 5px 5px rgb(116, 103, 103);
-}
-
 #card-button-container-1 {
     grid-area: submit;
 }
 
 #card-button-container-2 {
-    grid-area: home;
-    margin-bottom: 30px;
-}
-
-#submit-button {
-    display: flex;
-    height: 100%;
-    align-items: center;
-}
-
-#home-button {
-    display: flex;
-    height: 100%;
-    align-items: center;
+    grid-area: back;
+    margin-bottom: 40px;
 }

@@ -6,7 +6,9 @@ var className;
 // Create a variable to house the names of students who are also in this class
 var studentsInClass = [];
 
-/* Get the current user's name and class name from Firestore. */
+/**
+ * Get the current user's name and class name from Firestore.
+ */
 function getCurrentStudent() {
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {
@@ -37,7 +39,8 @@ function getCurrentStudent() {
 /**
  * Appends a list of student names (along with a "+" icon) to the DOM.
  */
-function populateStudentList() {
+function populateStudentList(currentStudent) {
+    var classTotalPoints = 0;
     if (studentsInClass.length == 0) {
         let message = "<div class='text-container'><p class='message'>There are no other students in your class!</p></div>"
         $(".student-list").append(message);
@@ -52,16 +55,38 @@ function populateStudentList() {
             $(".student-list").append(studentContainer);
             let studentName = "<p class='student-name' id='student-name-" + i + "'>" + studentsInClass[i].name + "</p>";
             $("#student-container-" + i).append(studentName);
+            //different container color for current student. 
+            if (studentsInClass[i].name == currentStudent) {
+                $("#student-container-" + i).addClass("currentStudent-container");
+            }
             let studentPoints = "<p class='student-points' id='student-points-" + i + "'>" + studentsInClass[i].points + "</p>";
             $("#student-container-" + i).append(studentPoints);
             let leafIcon = "<img src='/img/leaf_icon.png'>"
             $("#student-container-" + i).append(leafIcon);
+            classTotalPoints += parseInt(studentsInClass[i].points);
         }
+
+        populateClassTotalScore(classTotalPoints);
     }
 }
 
+/**
+ * Prints the total point for the class
+ * 
+ * @param {*} classTotalPoints 
+ */
+function populateClassTotalScore(classTotalPoints) {
+    $("#before-class-total").after(
+        "<div class='student-container' id='class-total-container'>");
+    $("#class-total-container").append("<p class='student-name'>Class Total:</p>");
+    let totalPoints = "<p class='student-points'>" + classTotalPoints + "</p>";
+    $("#class-total-container").append(totalPoints);
+    let leafIcon = "<img src='/img/leaf_icon.png'>";
+    $("#class-total-container").append(leafIcon);
+}
+
 /** 
- * Reads other students' names and scores from Firestore and puts them into an array if they are in this student's class.
+ * Reads the students' names and scores from Firestore and puts them into an array if they are in this student's class.
  */
 function getStudentsInClass() {
     db.collection("Students")
@@ -70,12 +95,10 @@ function getStudentsInClass() {
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                if (doc.data().Student_Name != currentStudent) {
-                    let studentObject = {"name":doc.data().Student_Name, "points":doc.data().Student_Points.toString()};
-                    studentsInClass.push(studentObject);
-                }
+                let studentObject = {"name":doc.data().Student_Name, "points":doc.data().Student_Points.toString()};
+                studentsInClass.push(studentObject);
             });
-            populateStudentList();
+            populateStudentList(currentStudent);
             addHeading();
         })
 }

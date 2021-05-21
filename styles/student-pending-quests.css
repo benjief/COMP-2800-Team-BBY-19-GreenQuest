@@ -14,7 +14,7 @@
     grid-area: quest-list;
     overflow: scroll;
     overflow-x: hidden;
-    padding-top: 50px;
+    padding-top: 25px;
     padding-bottom: 10px;
     font-size: 10pt;
     justify-self: center;
@@ -40,13 +40,16 @@
         "quest-bitmoji quest-date";
     /* height: 50px; */
     /* background-color: rgb(255, 241, 254); */
-    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url("/img/background_pattern_8.png");
+    background: linear-gradient(rgba(216, 233, 255, 0.7), rgba(238, 238, 238, 0.7)), url("/img/background_pattern_8.png");
     border-radius: 10px;
     align-items: center;
     margin-bottom: 15px;
     box-shadow: 5px 5px 5px rgb(116, 103, 103);
     width: 100%;
-    position: relative;
+}
+
+.quest-container:last-child {
+    margin-bottom: 0;
 }
 
 .quest-title {
@@ -89,19 +92,8 @@ hr {
     justify-self: center;
 }
 
-.card-button-container {
-    display: flex;
-    height: 50px;
-    width: 180px;
-    grid-area: home;
-    background-color: #ff80ee;
-    justify-content: center;
-    border-radius: 10px;
-    font-size: 15pt;
-    justify-self: center;
-    margin-top: 8px;
+#card-button-container-1 {
     margin-bottom: 40px;
-    box-shadow: 5px 5px 5px rgb(116, 103, 103);
 }
 
 #home-button {

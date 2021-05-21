@@ -31,8 +31,8 @@ function pullPendingQuests() {
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 let pendingQuest = {
-                    "title": doc.data().Quest_Title, 
-                    "date": doc.data().Date_Submitted, 
+                    "title": doc.data().Quest_Title,
+                    "date": doc.data().Date_Submitted,
                     "bitmoji": doc.data().Quest_Bitmoji
                 };
                 pendingQuests.push(pendingQuest);
@@ -111,7 +111,7 @@ function populateDOM(i, timeDifference, unitOfTime) {
     let elapsedTime = "<p class='quest-date' id='elapsed-time-" + i + "'>Submitted " + timeDifference + " "
         + unitOfTime + " ago</p>";
     $("#quest-container-" + i).append(elapsedTime);
-    let questBitmoji = "<img src='" + pendingQuests[i].bitmoji + "'>";
+    let questBitmoji = "<img id='bitmoji-" + i + "'src='" + pendingQuests[i].bitmoji + "'>";
     $("#quest-container-" + i).append(questBitmoji);
     getBitmojiBackground();
 }
@@ -119,11 +119,13 @@ function populateDOM(i, timeDifference, unitOfTime) {
 /**
  * Write this.
  */
- function getBitmojiBackground() {
-    let randomNum = Math.floor(Math.random() * 5 + 3);
-    $("img").css({
-        background: "url('../img/background_pattern_" + randomNum + ".png')"
-    });
+function getBitmojiBackground() {
+    for (var i = 0; i < pendingQuests.length; i++) {
+        let randomNum = Math.floor(Math.random() * 5 + 3);
+        $("#bitmoji-" + i).css({
+            background: "url('../img/background_pattern_" + randomNum + ".png')"
+        });
+    }
 }
 
 // Run function when document is ready 

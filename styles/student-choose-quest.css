@@ -39,7 +39,8 @@
         "more-info"
         "accept"
         "reject"
-        "home";
+        "break"
+        "back";
     align-items: center;
 }
 
@@ -100,7 +101,7 @@
     margin-bottom: 20px;
 }
 
-.card-button-container {
+/* .card-button-container {
     display: flex;
     height: 50px;
     width: 180px;
@@ -111,7 +112,7 @@
     justify-self: center;
     align-items: center;
     box-shadow: 5px 5px 5px rgb(116, 103, 103);
-}
+} */
 
 #card-button-container-1 {
     grid-area: accept;
@@ -122,25 +123,8 @@
 }
 
 #card-button-container-3 {
-    grid-area: home;
-}
-
-#accept-button {
-    display: flex;
-    height: 100%;
-    align-items: center;
-}
-
-#new-quest-button {
-    display: flex;
-    height: 100%;
-    align-items: center;
-}
-
-#home-button {
-    display: flex;
-    height: 100%;
-    align-items: center;
+    grid-area: back;
+    margin-bottom: 40px;
 }
 
 #quest-instructions,

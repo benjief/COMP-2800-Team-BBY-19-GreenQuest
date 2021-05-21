@@ -22,21 +22,21 @@
     height: 100%;
 }
 
-.card-button-container {
-    display: flex;
-    min-height: 50px;
-    width: 180px;
-    background-color: #ff80ee;
-    justify-content: center;
-    border-radius: 10px;
-    font-size: 15pt;
-    justify-self: center;
-    margin-bottom: 20px;
-    box-shadow: 5px 5px 5px rgb(116, 103, 103);
+#card-button-container-1 {
+    display: grid;
+    grid-template-columns: 100% 0%;
+    grid-template-areas: 
+        "processed-quests notification";
+    grid-area: processed-quests;
 }
 
-#card-button-container-1 {
-    grid-area: processed-quests;
+.notification {
+    grid-area: notification;
+    width: 17px;
+    height: 17px;
+    position: relative;
+    left: -25px;
+    top: 10px;
 }
 
 hr {
@@ -65,6 +65,8 @@ hr {
 }
 
 #processed-quests-button {
+    grid-area: processed-quests;
     position: relative;
     top: -2px;
+    justify-self: center;
 }

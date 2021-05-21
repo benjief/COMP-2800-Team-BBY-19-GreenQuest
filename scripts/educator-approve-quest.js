@@ -1,11 +1,9 @@
 // JS for educator-approve-quest.js
 
-// Pull quest name and ID from URL
-const parsedUrl = new URL(window.location.href);
-var questName = parsedUrl.searchParams.get("questname");
-var questID = parsedUrl.searchParams.get("questid");
-$(".page-heading").html(questName);
 
+var questIDs = [];
+var currentUser = null;
+var questID;
 var userID;
 var submitterID;
 var submitterPoints;
@@ -234,12 +232,14 @@ function onClickApprove() {
         .then(() => {
             console.log("Quest successfully approved!");
             approveStudentQuest();
-            deleteStoredImages();
+            if (imageURLs.length != 0) {
+                deleteStoredImages();
+            }
             $("#feedback").html("Success! Please wait...");
             $("#feedback").show(0);
             $("#feedback").fadeOut(2500);
             setTimeout(function () {
-                location.href = "./educator-home.html";
+                location.reload();
             }, 2300);
         })
         .catch((error) => {
@@ -255,12 +255,14 @@ function onClickReject() {
         .then(() => {
             console.log("Quest successfully rejected!");
             rejectStudentQuest();
-            deleteStoredImages();
+            if (imageURLs.length != 0) {
+                deleteStoredImages();
+            }
             $("#feedback").html("Success! Please wait...");
             $("#feedback").show(0);
             $("#feedback").fadeOut(2500);
             setTimeout(function () {
-                location.href = "./educator-home.html";
+                location.reload();
             }, 2300);
         })
         .catch((error) => {
@@ -268,7 +270,50 @@ function onClickReject() {
         })
 }
 
+/**
+ * Write this
+ */
+ function listQuests() {
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            db.collection("Educators")
+                .doc(user.uid)
+                // Read
+                .get()
+                .then(function (doc) {
+                    currentUser = doc.id;
+                    console.log("Your firebase user ID is " + currentUser);
+                    getQuests(); 
+                });
+        }
+    });
+}
+
+/**
+ * Reads quest IDs from Firestore and puts them into an array.
+ */
+function getQuests() {
+    db.collection("Educators").doc(currentUser).collection("Quests")
+        .orderBy("Date_Submitted", "asc")
+        .get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                questIDs.push(doc.id);
+            });
+            if (questIDs[0] == null) {
+                location.href = "./educator-home.html";
+            }
+            console.log(questIDs[0]);
+            questID = questIDs[0];
+            console.log(questID)
+            getCurrentUser();
+        })
+        .catch((error) => {
+            console.log("Error getting quests: ", error);
+        });
+}
+
 // Run function when document is ready 
 $(document).ready(function () {
-    getCurrentUser();
+    listQuests();
 });
