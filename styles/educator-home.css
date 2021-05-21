@@ -6,10 +6,11 @@
 #main-content-card {
     grid-template-areas:
         "card-text"
-        "buttons-1"
-        "buttons-2"
-        "buttons-3"
-        "buttons-4";
+        "manage-classes"
+        "approve-quests"
+        "create-class"
+        "break"
+        "logout";
 }
 
 .card-text-container {
@@ -36,15 +37,19 @@
 } */
 
 #card-button-container-1 {
-    grid-area: buttons-1;
+    grid-area: manage-classes;
 }
 
 #card-button-container-2 {
-    grid-area: buttons-2;
+    grid-area: approve-quests;
 }
 
 #card-button-container-3 {
-    grid-area: buttons-3;
+    grid-area: create-class;
+}
+
+#card-button-container-4 {
+    grid-area: logout;
     margin-bottom: 40px;
 }
 
