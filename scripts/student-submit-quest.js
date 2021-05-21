@@ -336,8 +336,6 @@ function deleteTempImages(redirectLink) {
 
 /**
  * Make sure the user has attached either photos or a note to their submission.
- * 
- * @param nickname - String containing the name of the class to be created
  */
 function checkInput() {
     console.log(uploadedImageFiles.length);
