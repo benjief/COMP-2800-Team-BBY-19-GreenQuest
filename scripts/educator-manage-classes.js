@@ -18,10 +18,6 @@ function populateClassList() {
             display: "flex",
             justifyContent: "center"
         });
-        let backButtonContainer = "<div class='card-button-container'></div>";
-        $(".class-list").append(backButtonContainer);
-        let backButton = "<a class='button' id='back-button' onclick='onClickBack()'>Back</a>";
-        $(".card-button-container").append(backButton);
 
     } else {
         for (var i = 0; i < userClasses.length; i++) {
