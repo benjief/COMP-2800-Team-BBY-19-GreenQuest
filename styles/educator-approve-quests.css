@@ -85,8 +85,6 @@ hr {
     box-shadow: 5px 5px 5px rgb(116, 103, 103);
 } */
 
-#home-button {
-    display: flex;
-    height: 100%;
-    align-items: center;
+#card-button-container-1 {
+    margin-bottom: 40px;
 }

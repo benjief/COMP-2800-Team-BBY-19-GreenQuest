@@ -2,6 +2,7 @@
 #main-content-card {
     grid-template-areas:
         "card-text"
+        "extra-break"
         "student-list"
         "break"
         "submit"
@@ -23,23 +24,38 @@
     max-height: 300px;
     overflow: scroll;
     overflow-x: hidden;
+    width: 90%;
+    justify-self: center;
 }
 
 .student-list::-webkit-scrollbar {
     display: none;
   }
   
-  .student-list {
+.student-list {
     -ms-overflow-style: none; 
     scrollbar-width: none;  
-  }
+}
 
 .student-container {
     display: grid;
     grid-template-columns: 80% 20%;
     grid-template-areas:
         "name icon";
+    border: 1px solid #ff7b00;
+    border-style: dashed;
+    border-radius: 10px;
+    margin-top: 10px;
     margin-bottom: 10px;
+    /* background: linear-gradient(rgba(255, 191, 119, 0.7), rgba(255, 191, 119, 0.7)); */
+}
+
+.student-container:first-child {
+    margin-top: 0;
+}
+
+.student-container:last-child {
+    margin-bottom: 0;
 }
 
 .student-name {

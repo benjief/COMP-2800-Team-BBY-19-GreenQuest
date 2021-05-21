@@ -120,3 +120,9 @@ body {
     justify-self: center;
 }
 
+.extra-break {
+    grid-area: extra-break;
+    width: 90%;
+    justify-self: center;
+}
+
