@@ -1,10 +1,7 @@
 // JS for educator-home.html
 
-var questIDs = [];
-var userClasses = [];
 var currentUser;
 var userEmail;
-
 
 /**
  * Get the current user's name from Firestore and use it to create a personalized greeting. 
@@ -45,11 +42,8 @@ function checkNumQuests() {
     db.collection("Educators").doc(currentUser).collection("Quests")
         .get()
         .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                questIDs.push(doc.id);
-            })
-            console.log(questIDs.length);
-            if (questIDs.length == 0) {
+            let numQuests = querySnapshot.size;
+            if (numQuests == 0) {
                 disableApproveQuests();
             }
         })
@@ -67,16 +61,13 @@ function checkNumQuests() {
         .where("Owner_Email", "==", userEmail)
         .get()
         .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                userClasses.push(doc.id);
-            })
-            console.log(userClasses.length);
-            if (userClasses.length == 0) {
+            let numClasses = querySnapshot.size;
+            if (numClasses == 0) {
                 disableManageClasses();
             }
         })
         .catch((error) => {
-            console.log("Error getting quest IDs: ", error);
+            console.log("Error getting classes: ", error);
         });
 }
 

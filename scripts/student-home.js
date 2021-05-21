@@ -9,9 +9,9 @@ const parsedUrl = new URL(window.location.href);
 var firstVisit = parsedUrl.searchParams.get("firstvisit");
 
 /**
- * Gets the current user's name from Firestore and use it to create personalized greetings
-   on student-(new-)home.html.
- */
+ * Gets the current user's name and from Firestore and use it to create a personalized greeting.
+ * Also assigns the user's ID to userID.
+*/
 function sayHello() {
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {
@@ -20,6 +20,10 @@ function sayHello() {
                 // Read
                 .get()
                 .then(function (doc) {
+                    userID = doc.id;
+                    getStudentPoints();
+                    checkIfInClass(doc);
+                    checkQuestHistory();
                     // Extract the first name of the user
                     var name = doc.data().Student_Name.split(" ", 1);
                     if (name) {
@@ -37,27 +41,53 @@ function sayHello() {
         }
     });
 }
-sayHello();
 
-function onClickMyQuest() {
-    firebase.auth().onAuthStateChanged(function (somebody) {
-        if (somebody) {
-            db.collection("Students")
-                .doc(somebody.uid)
-                // Read
-                .get()
-                .then(function (doc) {
-                    // Extract the student's current quest, if it exists
-                    userID = doc.id;
-                    hasQuest = doc.data().Student_Quest;
-                    if (hasQuest) {
-                        getActiveQuest();
-                    } else {
-                        window.location.assign("/html/student-choose-quest.html");
-                    }
-                });
+/**
+ * Write this.
+ */
+function checkQuestHistory() {
+    db.collection("Students").doc(userID).collection("Quests")
+    .where("Quest_Status", "!=", "active")
+    .get()
+    .then((querySnapshot) => {
+        let numQuests = querySnapshot.size;
+        if (numQuests == 0) {
+            disableQuestHistory();
         }
+    })
+    .catch((error) => {
+        console.log("Error getting quest history: ", error);
     });
+}
+
+/**
+ * Write this.
+ * 
+ * @param {*} doc 
+ */
+function checkIfInClass(doc) {
+    if (doc.data().Student_Class == null) {
+        disableMyClass();
+    }
+}
+
+/**
+ * Write this.
+ */
+function onClickMyQuest() {
+    db.collection("Students").doc(userID)
+        .get()
+        .then(function (doc) {
+            // Extract the student's current quest, if it exists
+            userID = doc.id;
+            hasQuest = doc.data().Student_Quest;
+            if (hasQuest) {
+                getActiveQuest();
+            } else {
+                window.location.assign("/html/student-choose-quest.html");
+            }
+        });
+
 }
 
 function getStudentPoints() {
@@ -101,8 +131,21 @@ function postStudentPoints() {
     $("#student-points").html(studentPoints);
 }
 
-// Run functions when document is ready 
+/** Write this. */
+function disableMyClass() {
+    $("#card-button-container-1").css({ backgroundColor: "rgb(200, 200, 200)" });
+    $("#card-button-container-1").css({ transform: "none" });
+    $("#card-button-container-1 a").removeAttr("href");
+}
+
+/** Write this. */
+function disableQuestHistory() {
+    $("#card-button-container-3").css({ backgroundColor: "rgb(200, 200, 200)" });
+    $("#card-button-container-3").css({ transform: "none" });
+    $("#card-button-container-3 a").removeAttr("href");
+}
+
+// Run function when document is ready 
 $(document).ready(function () {
     sayHello();
-    getStudentPoints();
 });
