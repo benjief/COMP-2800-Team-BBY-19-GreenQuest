@@ -1,12 +1,14 @@
 // JS for educator-home.html
 
 var questIDs = [];
-var currentUser = null;
+var userClasses = [];
+var currentUser;
+var userEmail;
 
 
 /**
  * Get the current user's name from Firestore and use it to create a personalized greeting. 
- * Also assigns current user's ID to currentUser.
+ * Also assigns current user's ID to currentUser and their ID to userEmail.
  */
 function sayHello() {
     firebase.auth().onAuthStateChanged(function (somebody) {
@@ -16,9 +18,11 @@ function sayHello() {
                 // Read
                 .get()
                 .then(function (doc) {
-                    // Extract the user's name (and ID)
+                    // Extract the user's ID, email and name
                     currentUser = doc.id;
-                    checkQuests();
+                    checkNumQuests();
+                    userEmail = doc.data().Educator_Email;
+                    checkNumClasses();
                     var name = doc.data().Educator_Name.split(" ", 1);
                     if (name) {
                         $("#personalized-greeting-new-user").html("Welcome, " + name);
@@ -34,9 +38,9 @@ function sayHello() {
 }
 
 /**
- * Write this - CITE https://stackoverflow.com/questions/47997748/is-possible-to-check-if-a-collection-or-sub-collection-exists.
+ * Write this
  */
-function checkQuests() {
+function checkNumQuests() {
     console.log(currentUser);
     db.collection("Educators").doc(currentUser).collection("Quests")
         .get()
@@ -54,11 +58,40 @@ function checkQuests() {
         });
 }
 
+/**
+ * Write this 
+ */
+ function checkNumClasses() {
+    console.log(userEmail);
+    db.collection("Classes")
+        .where("Owner_Email", "==", userEmail)
+        .get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                userClasses.push(doc.id);
+            })
+            console.log(userClasses.length);
+            if (userClasses.length == 0) {
+                disableManageClasses();
+            }
+        })
+        .catch((error) => {
+            console.log("Error getting quest IDs: ", error);
+        });
+}
+
 /** Write this. */
 function disableApproveQuests() {
-    console.log("hello");
     $("#card-button-container-2").css({ backgroundColor: "rgb(200, 200, 200)" });
+    $("#card-button-container-2").css({ transform: "none" });
     $("#card-button-container-2 a").removeAttr("href");
+}
+
+/** Write this. */
+function disableManageClasses() {
+    $("#card-button-container-1").css({ backgroundColor: "rgb(200, 200, 200)" });
+    $("#card-button-container-1").css({ transform: "none" });
+    $("#card-button-container-1 a").removeAttr("href");
 }
 
 // Run function when document is ready 
