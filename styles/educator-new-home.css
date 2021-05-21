@@ -6,7 +6,8 @@
 #main-content-card {
     grid-template-areas:
         "card-text"
-        "buttons";
+        "break"
+        "create-a-class";
 }
 
 .card-text-container {
@@ -19,8 +20,8 @@
     height: 100%;
 }
 
-#create-a-class-button {
-    display: flex;
-    height: 100%;
-    align-items: center;
+.card-button-container-1 {
+    grid-area: create-a-class;
+    margin-bottom: 40px;
+    justify-self: center;
 }
