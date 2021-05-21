@@ -61,7 +61,7 @@ function populateStudentList() {
 }
 
 /** 
- * Reads other students' names and scores from Firestore and puts them into an array if they are in this student's class.
+ * Reads the students' names and scores from Firestore and puts them into an array if they are in this student's class.
  */
 function getStudentsInClass() {
     db.collection("Students")
@@ -70,10 +70,8 @@ function getStudentsInClass() {
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                if (doc.data().Student_Name != currentStudent) {
-                    let studentObject = {"name":doc.data().Student_Name, "points":doc.data().Student_Points.toString()};
-                    studentsInClass.push(studentObject);
-                }
+                let studentObject = {"name":doc.data().Student_Name, "points":doc.data().Student_Points.toString()};
+                studentsInClass.push(studentObject);
             });
             populateStudentList();
             addHeading();
