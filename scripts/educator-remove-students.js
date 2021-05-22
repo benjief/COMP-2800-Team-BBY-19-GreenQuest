@@ -31,16 +31,15 @@ function getCurrentUser() {
  */
 function populateStudentList() {
     if (currentStudents.length == 0) {
-        let message = "<div class='text-container'><p class='message'>There are no students to remove!</p></div>"
+        let message = "<div class='message-container'><img src='/img/slow_down.png'>"
+            + "<p class='message'>Slow down - add some students to remove!</p></div>";
         $(".student-list").append(message);
         $(".student-list").css({
-            width: "90%",
-            height: "100px",
+            height: "300px",
             display: "flex",
-            justifyContent: "center",
-            justifySelf: "center"
+            justifyContent: "center"
         });
-        $("#submit-button").html("Back");
+        $("#card-button-container-1").remove();
     } else {
         for (var i = 0; i < currentStudents.length; i++) {
             let studentContainer = "<div class='student-container' id='student-container-" + i + "'></div>";
@@ -88,9 +87,9 @@ function removeStudent() {
         $(event.target).attr("onclick", "addStudent()");
         let studentToRemove = studentIDs[index];
         db.collection("Students").doc(studentToRemove).update({
-                Student_Class: null,
-                Student_Educator: null
-            })
+            Student_Class: null,
+            Student_Educator: null
+        })
             .then(() => {
                 console.log("Student successfully added to this class!");
             })
@@ -117,9 +116,9 @@ function addStudent() {
         let studentToAdd = studentIDs[index];
         // Update the student's Student_Class attribute
         db.collection("Students").doc(studentToAdd).update({
-                Student_Class: className,
-                Student_Educator: currentUser
-            })
+            Student_Class: className,
+            Student_Educator: currentUser
+        })
             .then(() => {
                 console.log("Student successfully added to this class!");
             })
