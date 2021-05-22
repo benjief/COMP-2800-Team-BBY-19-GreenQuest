@@ -75,8 +75,6 @@ function pullRejectedQuests() {
  */
 function mergeProcessedQuests() {
     processedQuests = approvedQuests.concat(rejectedQuests);
-    console.log(processedQuests[0].date);
-    console.log(processedQuests[1].date);
     // Sorting code taken from https://flaviocopes.com/how-to-sort-array-of-objects-by-property-javascript/
     processedQuests.sort((a, b) => (a.date > b.date) ? -1 : 1);
     // Append a message to the DOM if there are no quests to display
