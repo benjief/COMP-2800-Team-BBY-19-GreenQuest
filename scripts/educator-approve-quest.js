@@ -96,7 +96,11 @@ function populateDOM() {
     $("#quest-submitter-container").append(submitter);
     let description = "<p id='quest-description'>" + questDescription + "</p>";
     $("#quest-description-container").append(description);
-    let notes = "<p id='quest-notes'>" + questNotes + "</p>";
+    if (questNotes.isEmpty() || questNotes === "" || questNotes == null) {
+        var notes = "<p id='quest-notes'>none</p>";
+    } else {
+        var notes = "<p id='quest-notes'>" + questNotes + "</p>";
+    }
     $("#quest-notes-container").append(notes);
     if (imageURLs.length == 0) {
         var imageDOM = "<li class='list-item'>none</li>";
