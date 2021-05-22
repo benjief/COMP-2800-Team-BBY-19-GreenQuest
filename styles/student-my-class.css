@@ -104,18 +104,24 @@
     padding-right: 5px;
 }
 
-.message {
-    text-align: center;
-    font-weight: 600;
-    color: rgb(0, 0, 0);
-}
-
 #card-button-container-1 {
     margin-bottom: 40px;
 }
 
-#back-button {
-    display: flex;
-    height: 100%;
-    align-items: center;
+.message-container {
+    text-align: center;
+    height: 84%;
+    align-self: center;
+}
+
+.message-container img {
+    border: none;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+}
+
+.message {
+    font-weight: 600;
+    font-size: 12pt;
 }

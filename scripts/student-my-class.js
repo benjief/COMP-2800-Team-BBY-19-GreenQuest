@@ -21,13 +21,15 @@ function getCurrentStudent() {
                     currentStudent = doc.data().Student_Name;
                     className = doc.data().Student_Class;
                     if (className == null) {
-                        let message = "<p class='message'>You aren't in a class yet!</p>"
+                        let message = "<div class='message-container'><img src='/img/slow_down.png'>"
+                            + "<p class='message'>Slow down - ask your teacher to add you to their class!</p></div>";
                         $(".student-list").append(message);
                         $(".student-list").css({
-                            height: "100px",
+                            height: "300px",
                             display: "flex",
                             justifyContent: "center"
                         })
+                        $("#before-class-total").css({ marginBottom: "15px" });
                     } else {
                         getStudentsInClass();
                     }
@@ -41,31 +43,20 @@ function getCurrentStudent() {
  */
 function populateStudentList(currentStudent) {
     var classTotalPoints = 0;
-    if (studentsInClass.length == 0) {
-        let message = "<div class='text-container'><p class='message'>There are no other students in your class!</p></div>"
-        $(".student-list").append(message);
-        $(".student-list").css({
-            height: "100px",
-            display: "flex",
-            justifyContent: "center"
-        })
-    } else {
-        for (var i = 0; i < studentsInClass.length; i++) {
-            let studentContainer = "<div class='student-container' id='student-container-" + i + "'></div>";
-            $(".student-list").append(studentContainer);
-            let studentName = "<p class='student-name' id='student-name-" + i + "'>" + studentsInClass[i].name + "</p>";
-            $("#student-container-" + i).append(studentName);
-            //different container color for current student. 
-            if (studentsInClass[i].name == currentStudent) {
-                $("#student-container-" + i).addClass("current-student-container");
-            }
-            let studentPoints = "<p class='student-points' id='student-points-" + i + "'>" + studentsInClass[i].points + "</p>";
-            $("#student-container-" + i).append(studentPoints);
-            let leafIcon = "<img src='/img/leaf_icon.png'>"
-            $("#student-container-" + i).append(leafIcon);
-            classTotalPoints += parseInt(studentsInClass[i].points);
+    for (var i = 0; i < studentsInClass.length; i++) {
+        let studentContainer = "<div class='student-container' id='student-container-" + i + "'></div>";
+        $(".student-list").append(studentContainer);
+        let studentName = "<p class='student-name' id='student-name-" + i + "'>" + studentsInClass[i].name + "</p>";
+        $("#student-container-" + i).append(studentName);
+        //different container color for current student. 
+        if (studentsInClass[i].name == currentStudent) {
+            $("#student-container-" + i).addClass("current-student-container");
         }
-
+        let studentPoints = "<p class='student-points' id='student-points-" + i + "'>" + studentsInClass[i].points + "</p>";
+        $("#student-container-" + i).append(studentPoints);
+        let leafIcon = "<img src='/img/leaf_icon.png'>"
+        $("#student-container-" + i).append(leafIcon);
+        classTotalPoints += parseInt(studentsInClass[i].points);
         populateClassTotalScore(classTotalPoints);
     }
 }
@@ -95,7 +86,7 @@ function getStudentsInClass() {
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                let studentObject = {"name":doc.data().Student_Name, "points":doc.data().Student_Points.toString()};
+                let studentObject = { "name": doc.data().Student_Name, "points": doc.data().Student_Points.toString() };
                 studentsInClass.push(studentObject);
             });
             populateStudentList(currentStudent);
