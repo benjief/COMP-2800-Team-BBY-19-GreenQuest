@@ -81,11 +81,6 @@
     width: 24px;
 }
 
-.message {
-    text-align: center;
-    font-weight: 600;
-}
-
 #card-button-container-1 {
     grid-area: submit;
 }
@@ -93,4 +88,22 @@
 #card-button-container-2 {
     grid-area: back;
     margin-bottom: 40px;
+}
+
+.message-container {
+    text-align: center;
+    height: 80%;
+    align-self: center;
+}
+
+.message-container img {
+    border: none;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+}
+
+.message {
+    font-weight: 600;
+    font-size: 12pt;
 }

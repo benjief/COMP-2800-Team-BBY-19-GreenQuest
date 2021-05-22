@@ -34,14 +34,13 @@ function getCurrentUser() {
  */
 function populateStudentList() {
     if (studentNames.length == 0) {
-        let message = "<div class='text-container'><p class='message'>There aren't any students to add!</p></div>"
+        let message = "<div class='message-container'><img src='/img/slow_down.png'>"
+            + "<p class='message'>Sorry, there aren't any classless students left to add!</p></div>";
         $(".student-list").append(message);
         $(".student-list").css({
-            height: "100px",
-            width: "90%",
+            height: "300px",
             display: "flex",
-            justifyContent: "center",
-            justifySelf: "center"
+            justifyContent: "center"
         });
         $("#card-button-container-1").remove();
     } else {
