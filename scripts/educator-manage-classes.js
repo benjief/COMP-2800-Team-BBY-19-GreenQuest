@@ -11,14 +11,14 @@ var currentUser = null;
  */
 function populateClassList() {
     if (userClasses.length == 0) {
-        let message = "<div class='text-container><p class='message'>You haven't got any classes!</p></div>"
+        let message = "<div class='message-container'><img src='/img/slow_down.png'>"
+            + "<p class='message'>Slow down - create a class if you want one to manage!</p></div>";
         $(".class-list").append(message);
         $(".class-list").css({
-            width: "90%",
+            height: "300px",
             display: "flex",
             justifyContent: "center"
         });
-
     } else {
         for (var i = 0; i < userClasses.length; i++) {
             let classContainer = "<table class='class-container' id='class-container-" + i + "'></table>";

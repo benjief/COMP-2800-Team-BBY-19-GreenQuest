@@ -68,11 +68,6 @@
     font-size: 15pt;
 }
 
-.message {
-    text-align: center;
-    font-weight: 600;
-}
-
 #break {
     grid-area: break;
     width: 80%;
@@ -82,4 +77,22 @@
 
 #card-button-container-1 {
     margin-bottom: 40px;
+}
+
+.message-container {
+    text-align: center;
+    height: 93%;
+    align-self: center;
+}
+
+.message-container img {
+    border: none;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+}
+
+.message {
+    font-weight: 600;
+    font-size: 12pt;
 }
