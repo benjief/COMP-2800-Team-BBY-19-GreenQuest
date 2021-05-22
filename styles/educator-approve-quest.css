@@ -42,6 +42,7 @@
         "feedback"
         "approve"
         "reject"
+        "break"
         "back";
     align-items: center;
 }
@@ -55,6 +56,7 @@
 .text-container {
     display: grid;
     margin-left: 10px;
+    margin-right: 10px;
 }
 
 .text-container p {
@@ -113,30 +115,18 @@ input {
     margin-bottom: 5px;
 }
 
-/* .card-button-container {
-    display: flex;
-    height: 50px;
-    width: 180px;
-    background-color: #ff80ee;
-    justify-content: center;
-    border-radius: 10px;
-    font-size: 15pt;
-    justify-self: center; */
-    /* margin-top: 20px; */
-    /* box-shadow: 5px 5px 5px rgb(116, 103, 103);
-} */
-
 #card-button-container-1 {
     grid-area: approve;
 }
 
 #card-button-container-2 {
     grid-area: reject;
+    margin: 0;
 }
 
 #card-button-container-3 {
     grid-area: back;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 
 #approve-button {

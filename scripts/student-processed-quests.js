@@ -75,8 +75,6 @@ function pullRejectedQuests() {
  */
 function mergeProcessedQuests() {
     processedQuests = approvedQuests.concat(rejectedQuests);
-    console.log(processedQuests[0].date);
-    console.log(processedQuests[1].date);
     // Sorting code taken from https://flaviocopes.com/how-to-sort-array-of-objects-by-property-javascript/
     processedQuests.sort((a, b) => (a.date > b.date) ? -1 : 1);
     // Append a message to the DOM if there are no quests to display
@@ -171,7 +169,7 @@ function populateDOM(i, timeDifference, unitOfTime) {
     if (processedQuests[i].unread) {
         $("#quest-container-" + i).append(notification);
     }
-    let questBitmoji = "<img class='bitmoji' src='" + processedQuests[i].bitmoji + "'>";
+    let questBitmoji = "<img class='bitmoji' id='bitmoji-" + i + "' src='" + processedQuests[i].bitmoji + "'>";
     $("#quest-container-" + i).append(questBitmoji);
     getBitmojiBackground();
 }

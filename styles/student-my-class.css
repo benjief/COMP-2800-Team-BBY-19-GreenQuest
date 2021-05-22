@@ -56,17 +56,19 @@
     width: 85%;
     grid-template-rows: 100%;
     grid-template-columns: 60% 34% 6%;
-    border: 1px dashed #ff7b00;
-    border-radius: 10px;
-    background: linear-gradient(rgba(137, 255, 225, 0.7), rgba(137, 255, 225, 0.7)), url("/img/background_pattern_2.png");
+    border: none;
+    background: none;
     font-weight: 600;
     margin: 0px auto;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
-.currentStudent-container {
-    border: 2px dashed darkcyan;
-    background: linear-gradient(rgba(254, 255, 168, 0.7), rgba(254, 255, 168, 0.7)), url("/img/background_pattern_2.png");
+.break {
+    margin-bottom: 0;
+}
+
+.current-student-container {
+    background: linear-gradient(rgba(255, 227, 251, 0.7), rgba(255, 227, 251, 0.7)), url("/img/background_pattern_2.png");
 }
 
 .student-container:last-child {
@@ -107,21 +109,6 @@
     font-weight: 600;
     color: rgb(0, 0, 0);
 }
-
-/* .card-button-container {
-    display: flex;
-    height: 50px;
-    width: 180px;
-    grid-area: back;
-    background-color: #ff80ee;
-    justify-content: center;
-    border-radius: 10px;
-    font-size: 15pt;
-    justify-self: center;
-    margin-top: 20px;
-    margin-bottom: 40px;
-    box-shadow: 5px 5px 5px rgb(116, 103, 103);
-} */
 
 #card-button-container-1 {
     margin-bottom: 40px;

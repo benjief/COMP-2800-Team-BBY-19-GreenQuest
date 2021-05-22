@@ -8,12 +8,13 @@
         "card-text"
         "add-students"
         "remove-students"
-        "home";
+        "break"
+        "back";
 }
 
 .card-text-container {
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     text-align: center;
 }
 
@@ -21,31 +22,18 @@
     height: 100%;
 }
 
-/* .card-button-container {
-    display: flex;
-    min-height: 50px;
-    width: 180px;
-    background-color: #ff80ee;
-    justify-content: center;
-    border-radius: 10px;
-    font-size: 15pt;
-    justify-self: center;
-    margin-bottom: 20px;
-    box-shadow: 5px 5px 5px rgb(116, 103, 103);
-} */
-
 #card-button-container-1 {
     grid-area: add-students;
 }
 
 #card-button-container-2 {
     grid-area: remove-students;
-    /* margin-bottom: 35px; */
+    margin-bottom: 0;
 }
 
 #card-button-container-3 {
-    grid-area: home;
-    margin-bottom: 35px;
+    grid-area: back;
+    margin-bottom: 40px;
 }
 
 .button {

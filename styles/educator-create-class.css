@@ -8,12 +8,13 @@
         "chars-remaining-2"
         "feedback"
         "submit"
-        "home";
+        "break"
+        "back";
 }
 
 .card-text-container {
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     text-align: center;
 }
 
@@ -70,28 +71,13 @@
     height: 21px;
 }
 
-/* .card-button-container {
-    display: flex;
-    height: 50px;
-    width: 180px;
-    grid-area: submit;
-    background-color: #ff80ee;
-    justify-content: center;
-    border-radius: 10px;
-    font-size: 15pt;
-    justify-self: center;
-    margin-bottom: 20px;
-    box-shadow: 5px 5px 5px rgb(116, 103, 103);
-    align-items: center;
-} */
-
 #card-button-container-1 {
     grid-area: submit;
 }
 
 #card-button-container-2 {
-    grid-area: home;
-    margin-bottom: 30px;
+    grid-area: back;
+    margin-bottom: 40px;
 }
 
 .feedback-placeholder {
@@ -99,12 +85,14 @@
     justify-content: center;
     grid-area: feedback;
     height: 20px;
+    margin-bottom: 20px;
 }
 
 #feedback {
     display: flex;
     height: 100%;
     align-items: center;
+    font-weight: 600;
     text-align: center;
     color: green;
 }

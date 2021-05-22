@@ -6,12 +6,12 @@
 #main-content-card {
     grid-template-areas:
         "card-text"
-        "buttons";
+        "create-a-class";
 }
 
 .card-text-container {
     margin-top: 20px;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     text-align: center;
 }
 
@@ -19,22 +19,8 @@
     height: 100%;
 }
 
-/* .card-button-container {
-    display: flex;
-    height: 50px;
-    width: 180px;
-    grid-area: buttons;
-    background-color: #ff80ee;
-    justify-content: center;
-    border-radius: 10px;
-    font-size: 15pt;
-    justify-self: center;
+.card-button-container-1 {
+    grid-area: create-a-class;
     margin-bottom: 40px;
-    box-shadow: 5px 5px 5px rgb(116, 103, 103);
-} */
-
-#create-a-class-button {
-    display: flex;
-    height: 100%;
-    align-items: center;
+    justify-self: center;
 }
