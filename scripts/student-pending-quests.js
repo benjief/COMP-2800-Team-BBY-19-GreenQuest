@@ -39,10 +39,11 @@ function pullPendingQuests() {
             });
             console.log(pendingQuests);
             if (pendingQuests.length == 0) {
-                let message = "<p class='message'>You haven't got any pending tasks!</p>";
+                let message = "<div class='message-container'><img src='/img/slow_down.png'>"
+                    + "<p class='message'>Slow down - you haven't got any pending quests!</p></div>";
                 $(".quest-list").append(message);
                 $(".quest-list").css({
-                    height: "100px",
+                    height: "300px",
                     display: "flex",
                     justifyContent: "center"
                 });

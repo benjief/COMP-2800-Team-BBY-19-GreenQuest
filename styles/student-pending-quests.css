@@ -96,8 +96,16 @@ hr {
     margin-bottom: 40px;
 }
 
-#home-button {
-    display: flex;
-    height: 100%;
-    align-items: center;
+.message-container {
+    text-align: center;
+    height: 84%;
+    align-self: center;
 }
+
+.message-container img {
+    border: none;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+}
+
