@@ -65,7 +65,6 @@ function populateStudentList(currentStudent) {
             $("#student-container-" + i).append(leafIcon);
             classTotalPoints += parseInt(studentsInClass[i].points);
         }
-
         populateClassTotalScore(classTotalPoints);
     }
 }
