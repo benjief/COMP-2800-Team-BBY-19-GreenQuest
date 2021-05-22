@@ -4,9 +4,9 @@
     grid-template-areas:
         "subtext"
         "bitmoji"
-        "break-1"
+        "extra-break"
         "description"
-        "break-2"
+        "break"
         "login";
     align-items: center;
     font-size: 15pt;
