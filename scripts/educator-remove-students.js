@@ -1,5 +1,7 @@
 // JS for educator-remove-students.js
 
+var currentUser = null;
+
 // Create empty lists to house student names and IDs
 var currentStudents = [];
 var studentIDs = [];
@@ -8,6 +10,21 @@ var studentIDs = [];
 const parsedUrl = new URL(window.location.href);
 var className = parsedUrl.searchParams.get("classname");
 $(".page-heading").html("Remove Students from " + className);
+
+
+function getCurrentUser() {
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            db.collection("Educators")
+                .doc(user.uid)
+                // Read
+                .get()
+                .then(function (doc) {
+                    currentUser = doc.data().Educator_Name;
+                });
+        }
+    });
+}
 
 /**
  * Appends a list of student names (along with a "+" icon) to the DOM.
@@ -100,7 +117,8 @@ function addStudent() {
         let studentToAdd = studentIDs[index];
         // Update the student's Student_Class attribute
         db.collection("Students").doc(studentToAdd).update({
-                Student_Class: className
+                Student_Class: className,
+                Student_Educator: currentUser
             })
             .then(() => {
                 console.log("Student successfully added to this class!");
@@ -124,5 +142,6 @@ function onClickSubmit() {
  * Call function when the page is ready.
  */
 $(document).ready(function () {
+    getCurrentUser();
     getCurrentStudents();
 });
