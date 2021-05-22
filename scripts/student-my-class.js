@@ -57,7 +57,7 @@ function populateStudentList(currentStudent) {
             $("#student-container-" + i).append(studentName);
             //different container color for current student. 
             if (studentsInClass[i].name == currentStudent) {
-                $("#student-container-" + i).addClass("currentStudent-container");
+                $("#student-container-" + i).addClass("current-student-container");
             }
             let studentPoints = "<p class='student-points' id='student-points-" + i + "'>" + studentsInClass[i].points + "</p>";
             $("#student-container-" + i).append(studentPoints);

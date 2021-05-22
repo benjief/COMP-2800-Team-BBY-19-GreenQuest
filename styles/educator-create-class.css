@@ -8,7 +8,8 @@
         "chars-remaining-2"
         "feedback"
         "submit"
-        "home";
+        "break"
+        "back";
 }
 
 .card-text-container {
@@ -75,8 +76,8 @@
 }
 
 #card-button-container-2 {
-    grid-area: home;
-    margin-bottom: 30px;
+    grid-area: back;
+    margin-bottom: 40px;
 }
 
 .feedback-placeholder {

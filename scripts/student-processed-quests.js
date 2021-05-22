@@ -169,7 +169,7 @@ function populateDOM(i, timeDifference, unitOfTime) {
     if (processedQuests[i].unread) {
         $("#quest-container-" + i).append(notification);
     }
-    let questBitmoji = "<img class='bitmoji' src='" + processedQuests[i].bitmoji + "'>";
+    let questBitmoji = "<img class='bitmoji' id='bitmoji-" + i + "' src='" + processedQuests[i].bitmoji + "'>";
     $("#quest-container-" + i).append(questBitmoji);
     getBitmojiBackground();
 }
