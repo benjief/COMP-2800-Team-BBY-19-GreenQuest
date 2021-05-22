@@ -104,23 +104,24 @@
     width: 18px;
 }
 
-.message {
-    text-align: center;
-    font-weight: 600;
-}
-
-hr {
-    grid-area: break;
-    width: 90%;
-    justify-self: center;
-}
-
 #card-button-container-1 {
     margin-bottom: 40px;
 }
 
-#home-button {
-    display: flex;
-    height: 100%;
-    align-items: center;
+.message-container {
+    text-align: center;
+    height: 84%;
+    align-self: center;
+}
+
+.message-container img {
+    border: none;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+}
+
+.message {
+    font-weight: 600;
+    font-size: 12pt;
 }

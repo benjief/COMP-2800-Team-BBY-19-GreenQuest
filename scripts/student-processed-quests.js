@@ -79,7 +79,8 @@ function mergeProcessedQuests() {
     processedQuests.sort((a, b) => (a.date > b.date) ? -1 : 1);
     // Append a message to the DOM if there are no quests to display
     if (processedQuests.length == 0) {
-        let message = "<p class='message'>You haven't got any processed tasks!</p>";
+        let message = "<div class='message-container'><img src='/img/slow_down.png'>"
+        + "<p class='message'>Slow down - you haven't got any processed quests!</p></div>";
         $(".quest-list").append(message);
         $(".quest-list").css({
             height: "100px",
