@@ -57,8 +57,8 @@ function populateStudentList(currentStudent) {
         let leafIcon = "<img src='/img/leaf_icon.png'>"
         $("#student-container-" + i).append(leafIcon);
         classTotalPoints += parseInt(studentsInClass[i].points);
-        populateClassTotalScore(classTotalPoints);
     }
+    populateClassTotalScore(classTotalPoints);
 }
 
 /**
