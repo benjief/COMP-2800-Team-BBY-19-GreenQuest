@@ -34,6 +34,7 @@
 #content-card-1 {
     margin-bottom: 90px !important;
     background: url("/img/background_pattern.png");
+    border: 4px solid rgb(255, 0, 242);
 }
 
 #about-us-container {
