@@ -96,7 +96,7 @@ function populateDOM() {
     $("#quest-submitter-container").append(submitter);
     let description = "<p id='quest-description'>" + questDescription + "</p>";
     $("#quest-description-container").append(description);
-    if (questNotes.isEmpty() || questNotes === "" || questNotes == null) {
+    if (questNotes === "" || questNotes == null) {
         var notes = "<p id='quest-notes'>none</p>";
     } else {
         var notes = "<p id='quest-notes'>" + questNotes + "</p>";
