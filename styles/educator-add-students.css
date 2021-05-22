@@ -23,6 +23,8 @@
 .student-list {
     grid-area: student-list;
     max-height: 300px;
+    width: 90%;
+    justify-self: center;
     overflow: scroll;
     overflow-x: hidden;
 }
@@ -34,8 +36,6 @@
 .student-list {
     -ms-overflow-style: none; 
     scrollbar-width: none;  
-    width: 90%;
-    justify-self: center;
 }
 
 .student-container {

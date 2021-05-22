@@ -21,9 +21,9 @@ function populateClassList() {
 
     } else {
         for (var i = 0; i < userClasses.length; i++) {
-            let classContainer = "<div class='class-container' id='class-container-" + i + "'></div>";
+            let classContainer = "<table class='class-container' id='class-container-" + i + "'></table>";
             $(".class-list").append(classContainer);
-            let className = "<p class='class-name' id='class-name-" + i + "' + ' onclick='onSelectClass()'>" + userClasses[i] + "</p>";
+            let className = "<tr><td class='class-name' id='class-name-" + i + "' + ' onclick='onSelectClass()'>" + userClasses[i] + "</td></tr>";
             $("#class-container-" + i).append(className);
         }
     }
