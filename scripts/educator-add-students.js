@@ -24,6 +24,7 @@ function getCurrentUser() {
                 .get()
                 .then(function (doc) {
                     currentUser = doc.data().Educator_Name;
+                    getStudents();
                 });
         }
     });
@@ -42,6 +43,7 @@ function populateStudentList() {
             display: "flex",
             justifyContent: "center"
         });
+        $("#student-filter").remove();
         $("#card-button-container-1").remove();
     } else {
         for (var i = 0; i < studentNames.length; i++) {
@@ -58,34 +60,17 @@ function populateStudentList() {
     }
 }
 
-/** 
- * Gets the names of students who are already in a class.
- */
-function getStudentsInAClass() {
-    db.collection("Students")
-        .where("Student_Class", "!=", "null")
-        .get()
-        .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                studentsInAClass.push(doc.data().Student_Name);
-            });
-            getStudents();
-            console.log("Student that have a class are " + studentsInAClass);
-        })
-}
-
 /**
  * Reads students' names from the Students collection and puts them into an array if they aren't already in ANY class.
  */
 function getStudents() {
     db.collection("Students")
+        .where("Student_Class", "==", null)
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                if (!studentsInAClass.includes(doc.data().Student_Name)) {
-                    studentNames.push(doc.data().Student_Name);
-                    studentIDs.push(doc.id);
-                }
+                studentNames.push(doc.data().Student_Name);
+                studentIDs.push(doc.id);
             });
             populateStudentList();
         })
@@ -114,9 +99,9 @@ function addStudent() {
         console.log("Student's Educator: " + currentUser);
         // Update the student's Student_Class attribute
         db.collection("Students").doc(studentToAdd).update({
-                Student_Class: className,
-                Student_Educator: currentUser
-            })
+            Student_Class: className,
+            Student_Educator: currentUser
+        })
             .then(() => {
                 console.log("Student successfully added to this class!");
             })
@@ -143,9 +128,9 @@ function removeStudent() {
         let studentToRemove = studentIDs[index];
         // Update the student's Student_Class attribute
         db.collection("Students").doc(studentToRemove).update({
-                Student_Class: null,
-                Student_Educator: null
-            })
+            Student_Class: null,
+            Student_Educator: null
+        })
             .then(() => {
                 console.log("Student successfully added to this class!");
             })
@@ -170,10 +155,34 @@ function onClickSubmit() {
     }, 1000);
 }
 
+function filterByName() {
+    let filter = $("#student-filter").toLowerCase();
+    for (var i = 0; i < studentNames.length; i++) {
+        if (studentNames[i].toLowerCase().indexOf(filter) <= -1) {
+            $("#student-container-" + i).css({ display: "none" });
+        }
+    }
+}
+
+
 /**
  * Call functions when the page is ready .
  */
 $(document).ready(function () {
     getCurrentUser();
-    getStudentsInAClass();
+
+    /**
+     * Write this.
+     * Adapted from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_filter_list
+     */
+    $("#student-filter").on("keyup", function () {
+        let filter = $("#student-filter").prop("value").toLowerCase();
+        for (var i = 0; i < studentNames.length; i++) {
+            if (studentNames[i].toLowerCase().indexOf(filter) <= -1) {
+                $("#student-container-" + i).css({ display: "none" });
+            } else {
+                $("#student-container-" + i).css({ display: "" });
+            }
+        }
+    })
 });

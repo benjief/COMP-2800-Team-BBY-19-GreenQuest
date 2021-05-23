@@ -105,8 +105,11 @@ function keepSelection() {
 
 $(document).ready(function () {
     var selection = sessionStorage.getItem("selection");
-    if (JSON.parse(selection).studentRadio == "checked") {
-        $("#student-radio").attr("checked", "checked");
-        $("#educator-radio").attr("checked", "");
-    } 
+    if (selection) {
+        if (JSON.parse(selection).studentRadio == "checked") {
+            $("#student-radio").attr("checked", "checked");
+            $("#educator-radio").attr("checked", "");
+        } 
+    }
+
 });
