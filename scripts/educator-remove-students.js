@@ -21,6 +21,7 @@ function getCurrentUser() {
                 .get()
                 .then(function (doc) {
                     currentUser = doc.data().Educator_Name;
+                    getCurrentStudents();
                 });
         }
     });
@@ -142,5 +143,19 @@ function onClickSubmit() {
  */
 $(document).ready(function () {
     getCurrentUser();
-    getCurrentStudents();
+
+/**
+ * Write this.
+ * Adapted from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_filter_list
+ */
+    $("#student-filter").on("keyup", function () {
+        let filter = $("#student-filter").prop("value").toLowerCase();
+        for (var i = 0; i < currentStudents.length; i++) {
+            if (currentStudents[i].toLowerCase().indexOf(filter) <= -1) {
+                $("#student-container-" + i).css({ display: "none" });
+            } else {
+                $("#student-container-" + i).css({ display: "" });
+            }
+        }
+    })
 });
