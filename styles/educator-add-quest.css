@@ -10,6 +10,7 @@
         "chars-remaining-3"
         "input-4"
         "chars-remaining-4"
+        "more-info"
         "feedback"
         "submit"
         "break"
@@ -36,7 +37,6 @@
     display: flex;
     justify-content: center;
     grid-area: input-2;
-    height: 100px;
 }
 
 #input-container-3 {
@@ -51,24 +51,23 @@
     grid-area: input-4;
 }
 
-#quest-title,
-#quest-instructions,
-#quest-info {
+#quest-title {
     width: 90%;
     border: 1px solid rgb(160, 160, 160);
     border-radius: 5px;
     padding: 5px;
 }
 
-#quest-description {
+.form-control {
     width: 90%;
     border: 1px solid rgb(180, 180, 180);
     border-radius: 5px;
     font-size: 13pt;
     padding: 5px;
+    height: 100px;
 }
 
-#quest-description::placeholder {
+.form-control::placeholder {
     color: rgb(180, 180, 180);
 }
 
@@ -130,6 +129,15 @@ input::placeholder {
 #card-button-container-2 {
     grid-area: back;
     margin-bottom: 40px;
+}
+
+#more-info {
+    grid-area: more-info;
+    color: black;
+    border-bottom: 1px solid black;
+    border-bottom-style: dotted;
+    text-decoration: none;
+    /* text-decoration-style: dashed; */
 }
 
 .feedback-placeholder {

@@ -66,28 +66,31 @@
                 <input disabled id="counter-1" maxlength="3" size="3" value="40">
             </div>
             <div id="input-container-2">
-                <textarea class="form-control" id="quest-description" rows="1" maxlength="200"
-                    placeholder="Enter Description" onkeyup="charCounter(this,'counter-2',200)"></textarea>
+                <textarea class="form-control" id="quest-description" maxlength="200" placeholder="Enter Description" 
+                onkeyup="charCounter(this,'counter-2',200)"></textarea>
             </div>
             <div id="characters-remaining-container-2">
                 <p id="characters-remaining-2">Characters Remaining:</p>
                 <input disabled id="counter-2" maxlength="3" size="3" value="200">
             </div>
             <div id="input-container-3">
-                <input type="text" id="quest-instructions" maxlength="200" placeholder="Enter Instructions LINK"
-                    onkeyup="charCounter(this,'counter-2',100)"></input>
+                <textarea class="form-control" maxlength="200" placeholder="Enter Instructions LINK"
+                    onkeyup="charCounter(this,'counter-3',100)"></textarea>
             </div>
             <div id="characters-remaining-container-3">
                 <p id="characters-remaining-3">Characters Remaining:</p>
                 <input disabled id="counter-3" maxlength="3" size="3" value="100">
             </div>
             <div id="input-container-4">
-                <input type="text" id="quest-info" maxlength="100" placeholder="Enter Info LINK"
-                    onkeyup="charCounter(this,'counter-4',100)"></input>
+                <textarea class="form-control" id="quest-info" maxlength="100" placeholder="Enter Info LINK"
+                    onkeyup="charCounter(this,'counter-4',100)"></textarea>
             </div>
             <div id="characters-remaining-container-4">
                 <p id="characters-remaining-4">Characters Remaining:</p>
                 <input disabled id="counter-4" maxlength="3" size="3" value="100">
+            </div>
+            <div class="text-container">
+                <a id="more-info" href="#" onclick="showMoreInfo()">More Info</a>
             </div>
             <div class="card-button-container" id="card-button-container-1">
                 <a class="button" href="#" onclick="onClickSubmit()">Submit</a>

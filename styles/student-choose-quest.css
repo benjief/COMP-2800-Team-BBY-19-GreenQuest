@@ -117,5 +117,7 @@
 
 #quest-instructions,
 #quest-information {
-    text-decoration: underline;
+    border-bottom: 1px solid black;
+    border-bottom-style: dotted;
+    text-decoration: none;
 }

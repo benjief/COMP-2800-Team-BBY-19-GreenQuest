@@ -21,6 +21,11 @@
     height: 100%;
 }
 
+
+input::placeholder {
+    color: rgb(180, 180, 180);
+}
+
 #student-filter {
     grid-area: filter;
     margin-bottom: 15px;

@@ -3,13 +3,17 @@
 // Set up a user type variable to store the type of user signing up or logging in
 var userType = "educator";
 
-$("#educator-radio").click(function () {
-    userType = "educator";
-})
+/**
+ * Write this.
+ */
+function checkUserType() {
+    if ($("#educator-radio").attr("checked") == "checked") {
+        userType = "educator";
+    } else {
+        userType = "student";
+    }
 
-$("#student-radio").click(function () {
-    userType = "student";
-})
+}
 
 // Initialize the FirebaseUI Widget using Firebase.
 var ui = new firebaseui.auth.AuthUI(firebase.auth());
@@ -122,5 +126,5 @@ $(document).ready(function () {
             $("#student-radio").removeAttr("checked");
         }
     }
-
+    checkUserType();
 });
