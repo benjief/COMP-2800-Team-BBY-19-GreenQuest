@@ -21,6 +21,7 @@ var imageURLs = [];
 
 /**
  * CITE - Implement a character limit counter.
+ * Taken from https://www.sitepoint.com/community/t/javascript-form-elements-character-countdown-loop-through-form-elements/342603.
  * 
  * @param {*} field - DOM-element that characters are being counted in
  * @param {*} field2 - ID of the DOM-element displaying the number of characters remaining

@@ -28,7 +28,7 @@
     justify-self: center;
     border: 1px solid rgb(160, 160, 160);
     /* border-style: dashed; */
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 5px;
 }
 
@@ -36,7 +36,7 @@
     outline-width: 0;
     border: 1px solid teal;
     /* border-style: dashed; */
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .student-list {

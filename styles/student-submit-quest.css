@@ -126,6 +126,13 @@
 
 #quest-notes {
     width: 90%;
+    border: 1px solid rgb(180, 180, 180);
+    border-radius: 5px;
+    font-size: 13pt;
+}
+
+#quest-notes::placeholder {
+    color: rgb(180, 180, 180);
 }
 
 #characters-remaining-container {
