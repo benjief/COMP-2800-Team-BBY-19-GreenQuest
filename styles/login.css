@@ -88,7 +88,6 @@ input::placeholder {
     align-items: center;
     font-weight: 600;
     text-align: center;
-    color: green;
 }
 
 #card-button-container-1 {
@@ -113,6 +112,7 @@ input::placeholder {
 }
 
 .firebaseui-container.mdl-card {
+    border: none;
     border-radius: 10px;
     background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url("/img/background_pattern_2.png");
 }

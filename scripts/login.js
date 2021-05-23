@@ -72,6 +72,8 @@ var uiConfig = {
             return true;
         },
     },
+    // Get rid of page reload when a user signs in with email
+    credentialHelper: firebaseui.auth.CredentialHelper.NONE,
     // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
     signInFlow: 'popup',
     signInSuccessUrl: "#",
@@ -99,7 +101,7 @@ function hideKeyElements() {
     $("#input-container").css({ display: "none" });
     $("#feedback-placeholder").css({ display: "none" });
     $("#card-button-container-1").css({ display: "none" });
-    $("#firebaseui-auth-container").css({ display: "" });
+    $("#firebaseui-auth-container").css({ display: "", paddingTop: "none" });
 }
 
 /**
@@ -122,6 +124,8 @@ function showKeyElements() {
  * Write this.
  */
 function checkUserType() {
+    var keyStatus = sessionStorage.getItem("key");
+    console.log(keyStatus);
     if ($("#educator-radio").attr("checked") == "checked") {
         userType = "educator";
         if (validKey == false) {
@@ -211,7 +215,7 @@ $(".button").click(function (event) {
  * Write this.
  */
 $(document).ready(function () {
-    sessionStorage.setItem("keyStatus", JSON.stringify({ "key": "invalid" }));
+    // sessionStorage.setItem("keyStatus", JSON.stringify({ "key": "invalid" }));
     var selection = sessionStorage.getItem("selection");
     if (selection) {
         if (JSON.parse(selection).studentRadio == "checked") {
