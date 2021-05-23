@@ -99,8 +99,16 @@ ui.start('#firebaseui-auth-container', uiConfig);
  * Write this. 
  * Taken from: https://stackoverflow.com/questions/47935571/how-to-keep-the-radio-button-remain-checked-after-the-refresh
  */
-function keepSelection() {
-    sessionStorage.setItem("selection", JSON.stringify({"studentRadio": "checked"}));
+function educatorSelected() {
+    sessionStorage.setItem("selection", JSON.stringify({ "studentRadio": "unchecked" }));
+}
+
+/**
+ * Write this. 
+ * Taken from: https://stackoverflow.com/questions/47935571/how-to-keep-the-radio-button-remain-checked-after-the-refresh
+ */
+function studentSelected() {
+    sessionStorage.setItem("selection", JSON.stringify({ "studentRadio": "checked" }));
 }
 
 $(document).ready(function () {
@@ -108,8 +116,11 @@ $(document).ready(function () {
     if (selection) {
         if (JSON.parse(selection).studentRadio == "checked") {
             $("#student-radio").attr("checked", "checked");
-            $("#educator-radio").attr("checked", "");
-        } 
+            $("#educator-radio").removeAttr("checked");
+        } else {
+            $("#educator-radio").attr("checked", "checked");
+            $("#student-radio").removeAttr("checked");
+        }
     }
 
 });
