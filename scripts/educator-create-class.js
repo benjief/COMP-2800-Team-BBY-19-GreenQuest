@@ -1,6 +1,6 @@
 // JS for educator-create-class.js
 
-var noInput = false;
+var validInput = false;
 
 /**
  * Implement a character limit counter.
@@ -50,7 +50,6 @@ function addClass(description, nickname) {
  */
 function checkInput(description, nickname) {
     if (description == null || nickname == null || description === "" || nickname === "") {
-        noInput = true;
         $("#feedback").html("Please enter a class description and nickname");
         $("#feedback").css({
             color: "red"
@@ -58,7 +57,7 @@ function checkInput(description, nickname) {
         $("#feedback").show(0);
         $("#feedback").fadeOut(2500);
     } else {
-        noInput = false;
+        validInput = true;
     }
 }
 
@@ -69,12 +68,14 @@ function onClickSubmit() {
     let description = document.getElementById("class-description").value;
     let nickname = document.getElementById("class-nickname").value;
     checkInput(description, nickname);
-    if (noInput == false) {
+    if (validInput) {
         // Add class to Firestore
         addClass(description, nickname);
         // Display success message and direct users back to the main page
-        let feedback = document.getElementById("feedback");
-        feedback.innerHTML = "Success! Please wait...";
+        $("#feedback").html("Success! Please wait...");
+        $("#feedback").css({
+            color: "green"
+        });
         $(feedback).show(0);
         $(feedback).fadeOut(2500);
         setTimeout(function () {

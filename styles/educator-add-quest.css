@@ -58,6 +58,10 @@
     padding: 5px;
 }
 
+input::placeholder {
+    color: rgb(180, 180, 180);
+}
+
 .form-control {
     width: 90%;
     border: 1px solid rgb(180, 180, 180);
@@ -68,10 +72,6 @@
 }
 
 .form-control::placeholder {
-    color: rgb(180, 180, 180);
-}
-
-input::placeholder {
     color: rgb(180, 180, 180);
 }
 
@@ -160,7 +160,6 @@ input::placeholder {
     align-items: center;
     font-weight: 600;
     text-align: center;
-    color: green;
 }
 
 .popover-body {

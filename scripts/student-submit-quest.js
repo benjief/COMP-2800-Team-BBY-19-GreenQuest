@@ -295,8 +295,8 @@ function addQuestToDB(imageURLs) {
             })
                 .then(() => {
                     console.log("Educator quest successfully written!");
-                    $("#feedback").css({ color: "green" });
                     $("#feedback").html("Success! Please wait...");
+                    $("#feedback").css({ color: "green" });
                     $("#feedback").show(0);
                     $("#feedback").fadeOut(1000);
                     deleteTempImages("./student-home.html");
@@ -404,7 +404,7 @@ function onClickHome() {
  * Write this.
  * Taken from https://stackoverflow.com/questions/3252730/how-to-prevent-a-click-on-a-link-from-jumping-to-top-of-page
  */
- $(".button").click(function (event) {
+$(".button").click(function (event) {
     event.preventDefault();
 })
 

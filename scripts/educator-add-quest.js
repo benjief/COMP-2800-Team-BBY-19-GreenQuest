@@ -45,8 +45,10 @@ function addQuest(title, description, instructions, info) {
         .then(() => {
             console.log("Quest successfully written!");
             // Display success message and direct users back to the main page
-            let feedback = document.getElementById("feedback");
-            feedback.innerHTML = "Success! Please wait...";
+            ("#feedback").html("Success! Please wait...");
+            $("#feedback").css({
+                color: "green"
+            });
             $(feedback).show(0);
             $(feedback).fadeOut(1000);
             setTimeout(function () {
@@ -96,9 +98,12 @@ function showFeedback(feedback) {
 }
 
 /**
- * Make sure the user has input a class name.
+ * Write this.
  * 
- * @param nickname - String containing the name of the class to be created
+ * @param {*} title 
+ * @param {*} description 
+ * @param {*} instructions 
+ * @param {*} info 
  */
 function checkInput(title, description, instructions, info) {
     if (title == null || description == null || instructions == null || info == null
@@ -115,13 +120,13 @@ function checkInput(title, description, instructions, info) {
 /**
  * Deal with submission click in the appropriate manner.
  */
-function onClickSubmit(event) {
+function onClickSubmit() {
     let title = document.getElementById("quest-title").value;
     let description = document.getElementById("quest-description").value;
     let instructions = document.getElementById("quest-instructions").value;
     let info = document.getElementById("quest-info").value;
     checkInput(title, description, instructions, info);
-    if (validInput == true) {
+    if (validInput) {
         // Add quest to Firestore
         addQuest(title, description, instructions, info);
     }
