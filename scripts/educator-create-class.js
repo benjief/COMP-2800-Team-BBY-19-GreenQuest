@@ -82,3 +82,11 @@ function onClickSubmit() {
         }, 2300);
     }
 }
+
+/**
+ * Write this.
+ * Taken from https://stackoverflow.com/questions/3252730/how-to-prevent-a-click-on-a-link-from-jumping-to-top-of-page
+ */
+ $(".button").click(function (event) {
+    event.preventDefault();
+})

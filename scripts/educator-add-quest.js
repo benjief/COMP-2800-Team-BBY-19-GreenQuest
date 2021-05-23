@@ -115,7 +115,7 @@ function checkInput(title, description, instructions, info) {
 /**
  * Deal with submission click in the appropriate manner.
  */
-function onClickSubmit() {
+function onClickSubmit(event) {
     let title = document.getElementById("quest-title").value;
     let description = document.getElementById("quest-description").value;
     let instructions = document.getElementById("quest-instructions").value;
@@ -126,3 +126,11 @@ function onClickSubmit() {
         addQuest(title, description, instructions, info);
     }
 }
+
+/**
+ * Write this.
+ * Taken from https://stackoverflow.com/questions/3252730/how-to-prevent-a-click-on-a-link-from-jumping-to-top-of-page
+ */
+$(".button").click(function (event) {
+    event.preventDefault();
+})

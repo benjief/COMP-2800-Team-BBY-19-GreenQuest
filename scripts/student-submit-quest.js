@@ -400,6 +400,14 @@ function onClickHome() {
     deleteTempImages("./student-home.html");
 }
 
+/**
+ * Write this.
+ * Taken from https://stackoverflow.com/questions/3252730/how-to-prevent-a-click-on-a-link-from-jumping-to-top-of-page
+ */
+ $(".button").click(function (event) {
+    event.preventDefault();
+})
+
 
 // Run function when document is ready 
 $(document).ready(function () {
