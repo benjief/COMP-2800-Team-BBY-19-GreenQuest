@@ -58,7 +58,7 @@
                 <p class="card-text">Enter your quest's information below:</p>
             </div>
             <div id="input-container-1">
-                <input type="text" id="quest-title" maxlength="40" placeholder="Enter Title"
+                <input class="input" type="text" id="quest-title" maxlength="40" placeholder="Enter Title"
                     onkeyup="charCounter(this,'counter-1',40)"></input>
             </div>
             <div id="characters-remaining-container-1">
@@ -66,31 +66,32 @@
                 <input disabled id="counter-1" maxlength="3" size="3" value="40">
             </div>
             <div id="input-container-2">
-                <textarea class="form-control" id="quest-description" maxlength="200" placeholder="Enter Description" 
-                onkeyup="charCounter(this,'counter-2',200)"></textarea>
+                <textarea class="form-control" id="quest-description" maxlength="200" placeholder="Enter Description" required
+                    onkeyup="charCounter(this,'counter-2',200)"></textarea>
             </div>
             <div id="characters-remaining-container-2">
                 <p id="characters-remaining-2">Characters Remaining:</p>
                 <input disabled id="counter-2" maxlength="3" size="3" value="200">
             </div>
             <div id="input-container-3">
-                <textarea class="form-control" maxlength="200" placeholder="Enter Instructions LINK"
-                    onkeyup="charCounter(this,'counter-3',100)"></textarea>
+                <input class="input" id="quest-instructions" maxlength="200" placeholder="Enter Instructions Link" type="url" required
+                    onkeyup="charCounter(this,'counter-3',100)"></input>
             </div>
             <div id="characters-remaining-container-3">
                 <p id="characters-remaining-3">Characters Remaining:</p>
                 <input disabled id="counter-3" maxlength="3" size="3" value="100">
             </div>
             <div id="input-container-4">
-                <textarea class="form-control" id="quest-info" maxlength="100" placeholder="Enter Info LINK"
-                    onkeyup="charCounter(this,'counter-4',100)"></textarea>
+                <input class="input" id="quest-info" maxlength="100" placeholder="Enter Info Link" type="url" 
+                    onkeyup="charCounter(this,'counter-4',100)"></input>
             </div>
             <div id="characters-remaining-container-4">
                 <p id="characters-remaining-4">Characters Remaining:</p>
                 <input disabled id="counter-4" maxlength="3" size="3" value="100">
             </div>
             <div class="text-container">
-                <a id="more-info" href="#" onclick="showMoreInfo()">More Info</a>
+                <a tabindex="0" role="button" id="more-info" data-bs-container="body" data-bs-toggle="popover"
+                    onclick="populateText()" data-bs-html="true">More Info</a>
             </div>
             <div class="card-button-container" id="card-button-container-1">
                 <a class="button" href="#" onclick="onClickSubmit()">Submit</a>

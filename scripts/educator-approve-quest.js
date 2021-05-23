@@ -245,7 +245,7 @@ function checkInput() {
             color: "red"
         });
         $("#feedback").show(0);
-        $("#feedback").fadeOut(2500);
+        $("#feedback").fadeOut(2000);
     } else {
         validInput = true;
     }
@@ -269,7 +269,7 @@ function onClickApprove() {
                     color: "green"
                 });
                 $("#feedback").show(0);
-                $("#feedback").fadeOut(2500);
+                $("#feedback").fadeOut(1000);
                 setTimeout(function () {
                     location.reload();
                 }, 2300);

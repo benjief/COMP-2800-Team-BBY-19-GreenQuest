@@ -298,7 +298,7 @@ function addQuestToDB(imageURLs) {
                     $("#feedback").css({ color: "green" });
                     $("#feedback").html("Success! Please wait...");
                     $("#feedback").show(0);
-                    $("#feedback").fadeOut(2500);
+                    $("#feedback").fadeOut(1000);
                     deleteTempImages("./student-home.html");
                 })
                 .catch((error) => {
@@ -346,7 +346,7 @@ function checkInput() {
             color: "red"
         });
         $("#feedback").show(0);
-        $("#feedback").fadeOut(2500);
+        $("#feedback").fadeOut(2000);
     } else {
         validInput = true;
     }
