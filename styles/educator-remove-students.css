@@ -3,6 +3,7 @@
     grid-template-areas:
         "card-text"
         "extra-break"
+        "filter"
         "student-list"
         "break"
         "submit"
@@ -18,6 +19,24 @@
 
 .card-text {
     height: 100%;
+}
+
+#student-filter {
+    grid-area: filter;
+    margin-bottom: 15px;
+    width: 80%;
+    justify-self: center;
+    border: 1px solid rgb(160, 160, 160);
+    /* border-style: dashed; */
+    border-radius: 10px;
+    padding: 5px;
+}
+
+#student-filter:focus {
+    outline-width: 0;
+    border: 1px solid teal;
+    /* border-style: dashed; */
+    border-radius: 10px;
 }
 
 .student-list {
