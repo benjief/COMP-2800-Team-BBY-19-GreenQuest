@@ -3,9 +3,10 @@
 // Pull quest and user IDs from URL
 const parsedUrl = new URL(window.location.href);
 var questID = parsedUrl.searchParams.get("questid");
-var userID = parsedUrl.searchParams.get("userid");
+var userIDs = [];
+userIDs.push(parsedUrl.searchParams.get("userid"));
 
-var userName;
+var userNames = [];
 var className;
 var educatorName;
 var educatorID;
@@ -44,7 +45,10 @@ function charCounter(field, field2, maxlimit) {
 function checkNumUploaded() {
     const maxImages = 3;
     if (className) {
-        let message = "<div class='text-container'><p class='message'>You haven't uploaded any images</p></div>"
+        let message = "<div class='text-container'><p class='message'>You haven't uploaded any "
+            + "images</p><img src='/img/question_icon.png' tabindex='0' role='button' id='image-info' data-bs-toggle='popover' "
+            + "data-bs-content='Add up to 3 images that prove youve completed this task.' data-bs-container='body'>"
+            + "</div>"
         if (uploadedImageFiles.length == maxImages) {
             $("#upload-image-input").attr("disabled", "");
         } else if (uploadedImageFiles.length == 0) {
@@ -56,6 +60,11 @@ function checkNumUploaded() {
             }
         }
     }
+    // Popover code (taken from https://getbootstrap.com/docs/5.0/components/popovers/)
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl)
+    })
 }
 /**
  * Write this.
@@ -178,11 +187,11 @@ function getStorageRef(file, temp) {
 
 /* Get the current user's name, class name, educator name, and ID from Firestore. */
 function getCurrentStudent() {
-    db.collection("Students").doc(userID)
+    db.collection("Students").doc(userIDs[0])
         .get()
         .then(function (doc) {
             // Extract the current student's class name
-            userName = doc.data().Student_Name;
+            userNames.push(doc.data().Student_Name);
             className = doc.data().Student_Class;
             educatorName = doc.data().Student_Educator;
             if (className == null) {
@@ -198,11 +207,25 @@ function getCurrentStudent() {
             checkNumUploaded();
             getEducatorID();
             processImage();
+            addSubmittersToDOM();
         });
 }
 
 /**
- * Write this
+ * Write this.
+ */
+function addSubmittersToDOM() {
+    for (var i = 0; i < userNames.length; i++) {
+        if (i == 0) {
+            let submitterName = "<li id='submitter->" + i + "'><p>" + userNames[i] + "</p>"
+                + "<img src='/img/remove_icon_grey.png' class='remove-icon'></li>";
+            $("#submitter-list").append(submitterName);
+        }
+    }
+}
+
+/**
+ * Write this.
  */
 function getEducatorID() {
     db.collection("Educators")
@@ -238,7 +261,7 @@ function getQuestDescription() {
  * Write this.
  */
 function getUniqueQuestID() {
-    db.collection("Students").doc(userID).collection("Quests")
+    db.collection("Students").doc(userIDs[0]).collection("Quests")
         .where("Quest_Status", "==", "active")
         .get()
         .then((querySnapshot) => {
@@ -257,7 +280,7 @@ function getUniqueQuestID() {
  * Write this
  */
 function updateQuestStatus() {
-    db.collection("Students").doc(userID).update({
+    db.collection("Students").doc(userIDs[0]).update({
         Student_Quest: false
     })
         .then(() => {
@@ -276,7 +299,7 @@ function updateQuestStatus() {
 function addQuestToDB(imageURLs) {
     let dateSubmitted = new Date();
     // Update quest in student's quest collection
-    db.collection("Students").doc(userID).collection("Quests").doc(uniqueQuestID).update({
+    db.collection("Students").doc(userID[0]).collection("Quests").doc(uniqueQuestID).update({
         Quest_Status: "submitted",
         Date_Submitted: dateSubmitted
     })
@@ -285,8 +308,8 @@ function addQuestToDB(imageURLs) {
             updateQuestStatus();
             // Write quest to teacher's quest collection
             db.collection("Educators").doc(educatorID).collection("Quests").doc(uniqueQuestID).set({
-                Quest_Submitter: userName,
-                Submitter_ID: userID,
+                Quest_Submitters: userNames,
+                Submitter_IDs: userIDs,
                 Submitter_Class: className,
                 Quest_Description: questDescription,
                 Quest_Photos: imageURLs,

@@ -101,7 +101,7 @@ function hideKeyElements() {
     $("#input-container").css({ display: "none" });
     $("#feedback-placeholder").css({ display: "none" });
     $("#card-button-container-1").css({ display: "none" });
-    $("#firebaseui-auth-container").css({ display: "", paddingTop: "none" });
+    $("#firebaseui-auth-container").css({ display: "" });
 }
 
 /**

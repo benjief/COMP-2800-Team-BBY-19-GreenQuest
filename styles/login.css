@@ -107,7 +107,6 @@ input::placeholder {
 }
 
 #firebaseui-auth-container {
-    padding-top: 15px;
     background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url("/img/background_pattern_2.png");
 }
 
