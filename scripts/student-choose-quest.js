@@ -217,7 +217,8 @@ function writeQuest() {
             Quest_Status: "active",
             Quest_Bitmoji: bitmojiURL,
             Quest_Title: questTitle,
-            Quest_Participants: [userName]
+            Quest_Participants: [userName],
+            Quest_Participant_IDs: [userId]
         })
         .then(() => {
             console.log("Quest successfully written!");
