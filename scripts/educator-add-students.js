@@ -79,6 +79,8 @@ function getStudents() {
         });
 }
 
+var test
+
 /**
  * Updates the student's Student_Class and Student_Educator attributes to the class they're being added to.
  * Also changes the "+" icon beside a student to a "-" icon and allows that student to be subsequently

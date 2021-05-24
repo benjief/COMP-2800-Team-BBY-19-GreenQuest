@@ -1,29 +1,27 @@
 // JS for student-add-friends.js
 
+// Pull quest IDs from URL
+const parsedUrl = new URL(window.location.href);
+var questID = parsedUrl.searchParams.get("questid");
+var uniquequestID = parsedUrl.searchParams.get("uniquequestid");
+
 var currentUser = null;
 
-// Create empty lists to house student names and IDs
-var studentNames = [];
-var studentIDs = [];
-var studentsInAClass = [];
+var allStudents = [];
+var studentsToAdd = [];
+var IDsToAdd = [];
 
-// Pull class name from URL and display it in the DOM
-const parsedUrl = new URL(window.location.href);
-var className = parsedUrl.searchParams.get("classname");
-$(".page-heading").html("Add Students to " + className);
-
-// Pull redirect flag from URL
-var redirectFlag = parsedUrl.searchParams.get("redirectflag");
+const maxStudentsToAdd = 3;
 
 function getCurrentUser() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
-            db.collection("Educators")
+            db.collection("Students")
                 .doc(user.uid)
                 // Read
                 .get()
                 .then(function (doc) {
-                    currentUser = doc.data().Educator_Name;
+                    currentUser = doc.id;
                     getStudents();
                 });
         }
@@ -34,9 +32,9 @@ function getCurrentUser() {
  * Appends a list of student names (along with a "+" icon) to the DOM.
  */
 function populateStudentList() {
-    if (studentNames.length == 0) {
+    if (allStudents.length == 0) {
         let message = "<div class='message-container'><img src='/img/slow_down.png'>"
-            + "<p class='message'>Sorry, there aren't any classless students left to add!</p></div>";
+            + "<p class='message'>Sorry, there aren't any other students currently in classes!</p></div>";
         $(".student-list").append(message);
         $(".student-list").css({
             height: "300px",
@@ -46,31 +44,31 @@ function populateStudentList() {
         $("#student-filter").remove();
         $("#card-button-container-1").remove();
     } else {
-        for (var i = 0; i < studentNames.length; i++) {
+        for (var i = 0; i < allStudents.length; i++) {
             let studentContainer = "<div class='student-container' id='student-container-" + i + "'></div>";
             $(".student-list").append(studentContainer);
-            let studentName = "<p class='student-name' id='student-name-" + i + "'>" + studentNames[i] + "</p>";
+            let studentName = "<p class='student-name' id='student-name-" + i + "'>" + allStudents[i].name + "</p>";
             $("#student-container-" + i).append(studentName);
             let iconContainer = "<div class='icon-container' id='icon-container-" + i + "'></div>";
             $("#student-container-" + i).append(iconContainer);
-            let plusIcon = "<img src='/img/add_icon.png' class='icon' id='plus-icon-" + i +
-                "' onclick='addStudent()'>";
+            let plusIcon = "<img role='button' src='/img/add_icon.png' class='plus-icon' id='plus-icon-" + i + "'>";
             $("#icon-container-" + i).append(plusIcon);
         }
     }
 }
 
 /**
- * Reads students' names from the Students collection and puts them into an array if they aren't already in ANY class.
+ * Reads other students' names from the Students collection and puts them into an array.
  */
 function getStudents() {
     db.collection("Students")
-        .where("Student_Class", "==", null)
+        .where(firebase.firestore.FieldPath.documentId(), "!=", currentUser)
         .get()
+
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                studentNames.push(doc.data().Student_Name);
-                studentIDs.push(doc.id);
+                let student = { "name": doc.data().Student_Name, "id": doc.id };
+                allStudents.push(student);
             });
             populateStudentList();
         })
@@ -80,78 +78,96 @@ function getStudents() {
 }
 
 /**
- * Updates the student's Student_Class and Student_Educator attributes to the class they're being added to.
- * Also changes the "+" icon beside a student to a "-" icon and allows that student to be subsequently
- * removed from the class in question.
+ * Write this.
  */
-function addStudent() {
-    $(document).click(function (event) {
-        let index = $(event.target).attr("id");
-        // Extract index from event id (CITE THIS CODE)
-        index = index.match(/\d+/);
-        // Replace "add" icon with a "remove" icon
-        $(event.target).attr("src", "/img/remove_icon.png");
-        // Get "remove" icon to call removeStudent()
-        $(event.target).attr("onclick", "removeStudent()");
-        let studentToAdd = studentIDs[index];
-        console.log("Student to add" + studentToAdd);
-        console.log("Student added to class: " + className);
-        console.log("Student's Educator: " + currentUser);
-        // Update the student's Student_Class attribute
-        db.collection("Students").doc(studentToAdd).update({
-            Student_Class: className,
-            Student_Educator: currentUser
-        })
-            .then(() => {
-                console.log("Student successfully added to this class!");
-            })
-            .catch((error) => {
-                console.error("Error adding student to this class: ", error);
-            });
-    });
+function checkNumAdded() {
+    if (studentsToAdd.length == maxStudentsToAdd) {
+        for (var i = 0; i < allStudents.length; i++) {
+            if ($("#plus-icon-" + i).attr("class") === "plus-icon") {
+                console.log("wtf");
+                $("#plus-icon-" + i).attr("onclick", "");
+                $("#plus-icon-" + i).attr("src", "/img/add_icon_grey.png");
+            }
+        }
+    } else {
+        for (var i = 0; i < allStudents.length; i++) {
+            if ($("#plus-icon-" + i).attr("src") === "/img/add_icon_grey.png") {
+                console.log("wtf");
+                $("#plus-icon-" + i).attr("onclick", "addStudent()");
+            }
+        }
+    }
 }
 
 /**
- * Updates the student's Student_Class and Student_Educator attributes to null.
- * Also changes the "+" icon beside a student to a "-" icon and allows that student to be subsequently
- * added to the class in question.
+ * Adds the student's name to the studentsToAdd array and their ID to the IDsToAdd array. 
+ * Also changes the "+" icon beside a student to a "-" icon and allows that student's name/ID to be 
+ * subsequently removed from the aforementioned arrays.
  */
-function removeStudent() {
-    $(document).click(function (event) {
-        let index = $(event.target).attr("id");
-        // Extract index from event id
-        index = index.match(/\d+/);
-        // Replace "remove" icon with an "add" icon
-        $(event.target).attr("src", "/img/add_icon.png");
-        // Get "add" icon to call addStudent()
-        $(event.target).attr("onclick", "addStudent()");
-        let studentToRemove = studentIDs[index];
-        // Update the student's Student_Class attribute
-        db.collection("Students").doc(studentToRemove).update({
-            Student_Class: null,
-            Student_Educator: null
+$(document.body).on("click", ".plus-icon", function (event) {
+    let index = $(event.target).attr("id");
+    // Extract index from event id (CITE THIS CODE)
+    index = index.match(/\d+/);
+    // Replace "add" icon with a "remove" icon
+    $(event.target).attr("src", "/img/remove_icon.png");
+    $(event.target).attr("class", "minus-icon");
+    // Get "remove" icon to call removeStudent()
+    // $(event.target).attr("onclick", "removeStudent()");
+    studentsToAdd.push(allStudents[index].name);
+    console.log(studentsToAdd);
+    IDsToAdd.push(allStudents[index].id);
+    console.log(studentsToAdd.length);
+    console.log("add");
+    checkNumAdded();
+});
+
+/**
+ * Removes the student's name from the studentsToAdd array and their ID to the IDsToAdd array. 
+ * Also changes the "-" icon beside a student to a "+" icon and allows that student's name/ID to be 
+ * subsequently added back to the aforementioned arrays.
+ */
+$(document.body).on("click", ".minus-icon", function (event) {
+    console.log("remove");
+    let index = $(event.target).attr("id");
+    // Extract index from event id
+    index = index.match(/\d+/);
+    let indexOfStudent = studentsToAdd.indexOf(allStudents[index].name);
+    // console.log(in/dexOfStudent);
+    studentsToAdd.splice(indexOfStudent, 1);
+    console.log(studentsToAdd);
+    // Get "add" icon to call addStudent()
+    $(event.target).removeAttr("onclick");
+    // Replace "remove" icon with an "add" icon
+    $(event.target).attr("src", "/img/add_icon.png");
+    $(event.target).attr("class", "plus-icon");
+    console.log(studentsToAdd.length);
+    checkNumAdded();
+});
+
+/**
+ * Write this.
+ */
+function updateQuest() {
+    // Update the student's quest document
+    db.collection("Students").doc(currentUser).collection("Quests").doc(questID).update({
+        Quest_Participants: studentsToAdd,
+        Quest_Participant_IDs: IDsToAdd
+    })
+        .then(() => {
+            console.log("Quest participants successfully updated!");
         })
-            .then(() => {
-                console.log("Student successfully added to this class!");
-            })
-            .catch((error) => {
-                console.error("Error adding student to this class: ", error);
-            });
-    });
+        .catch((error) => {
+            console.error("Error updating quest participants ", error);
+        });
 }
 
 /**
- * Redirects users back to the main page (or the manage class page) once they've finished adding students. 
- * Redirection depends on whether or not users are adding students to their class for the first time.
+ * Write this.
  */
 function onClickSubmit() {
+    updateQuest();
     setTimeout(function () {
-        if (!redirectFlag) {
-            location.href = "./educator-home.html";
-        } else {
-            location.href = "./educator-manage-class.html?classname=" + className;
-        }
-
+        window.location.assign("./student-submit-quest.html");
     }, 1000);
 }
 
@@ -177,8 +193,8 @@ $(document).ready(function () {
      */
     $("#student-filter").on("keyup", function () {
         let filter = $("#student-filter").prop("value").toLowerCase();
-        for (var i = 0; i < studentNames.length; i++) {
-            if (studentNames[i].toLowerCase().indexOf(filter) <= -1) {
+        for (var i = 0; i < allStudents.length; i++) {
+            if (allStudents[i].name.toLowerCase().indexOf(filter) <= -1) {
                 $("#student-container-" + i).css({ display: "none" });
             } else {
                 $("#student-container-" + i).css({ display: "" });

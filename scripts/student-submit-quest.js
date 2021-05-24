@@ -401,6 +401,16 @@ function generateImageURLs() {
 }
 
 /**
+ * Write this.
+ *  * Adapted from: https://stackoverflow.com/questions/47935571/how-to-keep-the-radio-button-remain-checked-after-the-refresh
+ */
+function onClickAddFriends() {
+    sessionStorage.setItem("previousData", JSON.stringify({ "imageURLs": imageURLs }));
+    sessionStorage.setItem("previousData", JSON.stringify({ "notes": $("#quest-notes").prop("value") }));
+    window.location.assign("./student-add-friends.html?questid=" + questID + "&uniquequestid=" + uniqueQuestID);
+}
+
+/**
  * CITE and write this
  */
 function onClickSubmit() {
@@ -432,7 +442,17 @@ $(".button").click(function (event) {
 })
 
 
-// Run function when document is ready 
+/**
+ * Write this.
+ */
 $(document).ready(function () {
     getCurrentStudent();
+    var previousData = sessionStorage.getItem("previousData");
+    if (previousData.imageURLs !== null) {
+        imageURLs = JSON.parse(existingURLs).imageURLs;
+    }
+    if (previousData.notes !== null) {
+        $("#quest-notes").prop("value", JSON.parse(previousData).notes);
+    }
+    sessionStorage.clear();
 });
