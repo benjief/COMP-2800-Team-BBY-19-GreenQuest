@@ -12,6 +12,7 @@ var studentsToAdd = [];
 var IDsToAdd = [];
 
 const maxStudentsToAdd = 3;
+var maxStudentsReached = false;
 
 function getCurrentUser() {
     firebase.auth().onAuthStateChanged(function (user) {
@@ -82,21 +83,33 @@ function getStudents() {
  */
 function checkNumAdded() {
     if (studentsToAdd.length == maxStudentsToAdd) {
+        maxStudentsReached = true;
+        deactivateAddButton();
         for (var i = 0; i < allStudents.length; i++) {
             if ($("#plus-icon-" + i).attr("class") === "plus-icon") {
-                console.log("wtf");
-                $("#plus-icon-" + i).attr("onclick", "");
                 $("#plus-icon-" + i).attr("src", "/img/add_icon_grey.png");
             }
         }
     } else {
-        for (var i = 0; i < allStudents.length; i++) {
-            if ($("#plus-icon-" + i).attr("src") === "/img/add_icon_grey.png") {
-                console.log("wtf");
-                $("#plus-icon-" + i).attr("onclick", "addStudent()");
+        console.log('ok');
+        console.log(maxStudentsReached);
+        if (maxStudentsReached) {
+            maxStudentsReached = false;
+            activateAddButton();
+            for (var i = 0; i < allStudents.length; i++) {
+                if ($("#plus-icon-" + i).attr("src") === "/img/add_icon_grey.png") {
+                    $("#plus-icon-" + i).attr("src", "/img/add_icon.png");
+                }
             }
         }
     }
+}
+
+/**
+ * Write this.
+ */
+function deactivateAddButton() {
+    $(document.body).off("click", ".plus-icon");
 }
 
 /**
@@ -104,45 +117,49 @@ function checkNumAdded() {
  * Also changes the "+" icon beside a student to a "-" icon and allows that student's name/ID to be 
  * subsequently removed from the aforementioned arrays.
  */
-$(document.body).on("click", ".plus-icon", function (event) {
-    let index = $(event.target).attr("id");
-    // Extract index from event id (CITE THIS CODE)
-    index = index.match(/\d+/);
-    // Replace "add" icon with a "remove" icon
-    $(event.target).attr("src", "/img/remove_icon.png");
-    $(event.target).attr("class", "minus-icon");
-    // Get "remove" icon to call removeStudent()
-    // $(event.target).attr("onclick", "removeStudent()");
-    studentsToAdd.push(allStudents[index].name);
-    console.log(studentsToAdd);
-    IDsToAdd.push(allStudents[index].id);
-    console.log(studentsToAdd.length);
-    console.log("add");
-    checkNumAdded();
-});
+function activateAddButton() {
+    $(document.body).on("click", ".plus-icon", function (event) {
+        let index = $(event.target).attr("id");
+        // Extract index from event id (CITE THIS CODE)
+        index = index.match(/\d+/);
+        // Replace "add" icon with a "remove" icon
+        $(event.target).attr("src", "/img/remove_icon.png");
+        $(event.target).attr("class", "minus-icon");
+        // Get "remove" icon to call removeStudent()
+        studentsToAdd.push(allStudents[index].name);
+        console.log(studentsToAdd);
+        IDsToAdd.push(allStudents[index].id);
+        console.log(studentsToAdd.length);
+        console.log("add");
+        checkNumAdded();
+    });
+}
+
 
 /**
  * Removes the student's name from the studentsToAdd array and their ID to the IDsToAdd array. 
  * Also changes the "-" icon beside a student to a "+" icon and allows that student's name/ID to be 
  * subsequently added back to the aforementioned arrays.
  */
-$(document.body).on("click", ".minus-icon", function (event) {
-    console.log("remove");
-    let index = $(event.target).attr("id");
-    // Extract index from event id
-    index = index.match(/\d+/);
-    let indexOfStudent = studentsToAdd.indexOf(allStudents[index].name);
-    // console.log(in/dexOfStudent);
-    studentsToAdd.splice(indexOfStudent, 1);
-    console.log(studentsToAdd);
-    // Get "add" icon to call addStudent()
-    $(event.target).removeAttr("onclick");
-    // Replace "remove" icon with an "add" icon
-    $(event.target).attr("src", "/img/add_icon.png");
-    $(event.target).attr("class", "plus-icon");
-    console.log(studentsToAdd.length);
-    checkNumAdded();
-});
+function activateRemoveButton() {
+    $(document.body).on("click", ".minus-icon", function (event) {
+        console.log("remove");
+        let index = $(event.target).attr("id");
+        // Extract index from event id
+        index = index.match(/\d+/);
+        let indexOfStudent = studentsToAdd.indexOf(allStudents[index].name);
+        // console.log(in/dexOfStudent);
+        studentsToAdd.splice(indexOfStudent, 1);
+        console.log(studentsToAdd);
+        // Get "add" icon to call addStudent()
+        // Replace "remove" icon with an "add" icon
+        $(event.target).attr("src", "/img/add_icon.png");
+        $(event.target).attr("class", "plus-icon");
+        console.log(studentsToAdd.length);
+        checkNumAdded();
+    });
+
+}
 
 /**
  * Write this.
@@ -186,7 +203,8 @@ function filterByName() {
  */
 $(document).ready(function () {
     getCurrentUser();
-
+    activateAddButton();
+    activateRemoveButton();
     /**
      * Write this.
      * Adapted from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_filter_list
