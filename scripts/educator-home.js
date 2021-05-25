@@ -45,7 +45,7 @@ function checkNumQuests() {
         .then((querySnapshot) => {
             let numClasses = querySnapshot.size;
             if (numClasses == 0) {
-                disableManageClasses();
+                disableApproveQuests();
             }
         })
         .catch((error) => {
