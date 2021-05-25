@@ -1,17 +1,15 @@
 // JS for educator-approve-quest.js
 
 var questIDs = [];
-var currentUser = null;
 var questID;
 var userID;
-var submitterID;
-var submitterPoints;
 var className;
 var classPoints;
 var questSubmitters = null;
 var questDescription = null;
 var questNotes = null;
 var questPoints = 0;
+var classList = [];
 
 var validInput = false;
 
@@ -42,8 +40,8 @@ function pullQuestInfo(id) {
     db.collection("Student_Quests").doc(id)
         .get()
         .then((doc) => {
-            questSubmitters = doc.data().Quest_Submitters;
-            submitterIDs = doc.data().Submitter_IDs;
+            questSubmitters = doc.data().Quest_Participants;
+            submitterIDs = doc.data().Quest_Participant_IDs;
             questDescription = doc.data().Quest_Description;
             questNotes = doc.data().Quest_Notes;
             imageURLs = doc.data().Quest_Images;
@@ -51,39 +49,10 @@ function pullQuestInfo(id) {
             // getSubmitterPoints();
             // getClassPoints();
             populateDOM();
+            getClassList();
         })
         .catch((error) => {
             console.log("Error getting quest: ", error);
-        });
-}
-
-/**
- * Write this.
- */
-function getSubmitterPoints() {
-    db.collection("Students").doc(submitterID)
-        .get()
-        .then((doc) => {
-            submitterPoints = doc.data().Student_Points;
-            console.log(submitterPoints);
-        })
-        .catch((error) => {
-            console.log("Error getting submitter points: ", error);
-        });
-}
-
-/**
- * Write this.
- */
-function getClassPoints() {
-    db.collection("Classes").doc(className)
-        .get()
-        .then((doc) => {
-            classPoints = doc.data().Class_Points;
-            console.log(classPoints);
-        })
-        .catch((error) => {
-            console.log("Error getting class points: ", error);
         });
 }
 
@@ -160,17 +129,59 @@ function deleteStoredImages() {
 /**
  * Write this.
  */
-function updateStudentPoints() {
-    for (var i = 0; i < submitterIDs.length; i++) {
-        db.collection("Students").doc(submitterIDs[i]).update({
-            Student_Points: doc.data().Student_Points + questPoints
+function updateStudentPoints(id) {
+    console.log(id);
+    console.log(id === "68KLrNzUySUsHchhyhiD0zlqRih1");
+    db.collection("Students").doc(id)
+        .get()
+        .then(function (doc) {
+            let updatedStudentPoints = doc.data().Student_Points + questPoints;
+            db.collection("Students").doc(id).update({
+                Student_Points: updatedStudentPoints
+            })
+                .then(() => {
+                    console.log("Student points updated successfully!");
+                })
+                .catch((error) => {
+                    console.error("Error updating student points: ", error);
+                });
+        })
+}
+
+/**
+ * Write this.
+ * Taken from https://stackoverflow.com/questions/37365512/count-the-number-of-times-a-same-value-appears-in-a-javascript-array
+ * 
+ * @param {*} array 
+ * @param {*} value 
+ * @returns 
+ */
+function getOccurrence(array, value) {
+    return array.filter((v) => (v === value)).length;
+}
+
+/**
+ * Write this.
+ */
+function updateClassPoints() {
+    let classPointsList = [];
+    for (var i = 0; i < classList.length; i++) {
+        let points = getOccurrence(classList, classList[i]) * questPoints;
+        let classPoints = { "name": classList[i], "points": points };
+        if (!classPointsList.includes(classPoints)) {
+            classPointsList.push(classPoints);
+        }
+    }
+
+    for (var i = 0; i < classPointsList.length; i++) {
+        db.collection("Classes").doc(classPointsList[i].name).update({
+            Class_Points: classPointsList[i].points
         })
             .then(() => {
-                console.log("Student points updated successfully!");
-                updateClassPoints(submitterIDs[i]);
+                console.log("Class points successfully updated!");
             })
             .catch((error) => {
-                console.error("Error updating student points: ", error);
+                console.error("Error updating class points: " + error);
             });
     }
 }
@@ -178,22 +189,17 @@ function updateStudentPoints() {
 /**
  * Write this.
  */
-function updateClassPoints(id) {
-    db.collection("Students").doc(id)
-        .get()
-        .then(function (doc) {
-            let className = doc.data().Student_Class;
-            db.collection("Classes").doc(className).update({
-                Class_Points: doc.data().Class_Points + questPoints
-            })
-                .then(() => {
-                    console.log("Class points successfully updated!");
-                })
-                .catch((error) => {
-                    console.error("Error updating class points: " + error);
-                })
-        });
+function getClassList() {
+    for (var i = 0; i < submitterIDs.length; i++) {
+        db.collection("Students").doc(submitterIDs[i])
+            .get()
+            .then(function (doc) {
+                let className = doc.data().Student_Class;
+                classList.push(className);
+            });
+    }
 }
+
 
 /**
  * Write this.
@@ -202,16 +208,18 @@ function approveStudentQuest() {
     questPoints = document.getElementById("quest-points-input").value;
     questPoints = parseInt(questPoints);
     db.collection("Student_Quests").doc(questID).update({
-        Quest_Status: "approved",
-        Quest_Unread: true,
-        Quest_Points: questPoints,
-        Date_Processed: new Date(),
-        Date_Submitted: firebase.firestore.FieldValue.delete(),
+        // Quest_Status: "approved",
+        // Quest_Unread: true,
+        // Quest_Points: questPoints,
+        // Date_Processed: new Date(),
+        // Date_Submitted: firebase.firestore.FieldValue.delete(),
         // Quest_Likes: 0
     })
         .then(() => {
             console.log("Student quest successfully updated!");
-            updateStudentPoints();
+            for (var i = 0; i < submitterIDs.length; i++) {
+                // updateStudentPoints(submitterIDs[i]);
+            }
             updateClassPoints();
         })
         .catch((error) => {
@@ -293,8 +301,8 @@ function displaySuccessMessage() {
     $("#feedback").fadeOut(1000);
     setTimeout(function () {
         // Refresh the page (will be redirected if there are no more quests to approve)
-        location.reload();
-    }, 2300);
+        // location.reload();
+    }, 1000);
 }
 
 /**
@@ -331,7 +339,8 @@ function getQuests() {
                 }
             });
             if (questIDs[0] == null) {
-                location.href = "./educator-home.html";
+                console.log("no more quests to process");
+                // location.href = "./educator-home.html";
             }
             questID = questIDs[0];
             for (var i = 0; i < questIDs.length; i++) {
@@ -353,5 +362,5 @@ $(".button").click(function (event) {
 
 // Run function when document is ready 
 $(document).ready(function () {
-    getQuests();
+    getCurrentUser();
 });
