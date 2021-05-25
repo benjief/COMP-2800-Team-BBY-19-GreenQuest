@@ -53,7 +53,8 @@ function checkNumUploaded() {
     if (className) {
         let message = "<div class='text-container' id='message'><p id='no-images'>You haven't uploaded any "
             + "images</p><img src='/img/question_icon.png' tabindex='0' role='button' id='image-info' data-bs-toggle='popover' "
-            + "data-bs-content='Add up to 3 images that prove youve completed this task.' data-bs-container='body'>"
+            + "data-bs-content='Add up to 3 images that prove youve completed this task. If you worked with friends, submit a "
+            + "group shot and add them to your submission below. You'll all get points!' data-bs-container='body'>"
             + "</div>"
         if (uploadedImageFiles.length == maxImages) {
             $("#upload-image-input").attr("disabled", "");

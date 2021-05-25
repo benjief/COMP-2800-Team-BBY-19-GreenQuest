@@ -45,7 +45,7 @@ function sayHello() {
  * Write this.
  */
 function checkQuestHistory() {
-    db.collection("Students").doc(userID).collection("Quests")
+    db.collection("Student_Quests")
         .where("Quest_Status", "!=", "active")
         .get()
         .then((querySnapshot) => {

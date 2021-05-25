@@ -40,7 +40,7 @@ function sayHello() {
 function checkNumQuests() {
     console.log(userID);
     db.collection("Student_Quests")
-        .where("Quest_Approver", "==", userID)
+        .where("Quest_Approver_ID", "==", userID)
         .get()
         .then((querySnapshot) => {
             let numClasses = querySnapshot.size;

@@ -208,17 +208,17 @@ function approveStudentQuest() {
     questPoints = document.getElementById("quest-points-input").value;
     questPoints = parseInt(questPoints);
     db.collection("Student_Quests").doc(questID).update({
-        // Quest_Status: "approved",
-        // Quest_Unread: true,
-        // Quest_Points: questPoints,
-        // Date_Processed: new Date(),
-        // Date_Submitted: firebase.firestore.FieldValue.delete(),
-        // Quest_Likes: 0
+        Quest_Status: "approved",
+        Quest_Unread: true,
+        Quest_Points: questPoints,
+        Date_Processed: new Date(),
+        Date_Submitted: firebase.firestore.FieldValue.delete(),
+        Quest_Likes: 0
     })
         .then(() => {
             console.log("Student quest successfully updated!");
             for (var i = 0; i < submitterIDs.length; i++) {
-                // updateStudentPoints(submitterIDs[i]);
+                updateStudentPoints(submitterIDs[i]);
             }
             updateClassPoints();
         })
@@ -301,7 +301,7 @@ function displaySuccessMessage() {
     $("#feedback").fadeOut(1000);
     setTimeout(function () {
         // Refresh the page (will be redirected if there are no more quests to approve)
-        // location.reload();
+        location.reload();
     }, 1000);
 }
 
@@ -340,7 +340,7 @@ function getQuests() {
             });
             if (questIDs[0] == null) {
                 console.log("no more quests to process");
-                // location.href = "./educator-home.html";
+                location.href = "./educator-home.html";
             }
             questID = questIDs[0];
             for (var i = 0; i < questIDs.length; i++) {
