@@ -3,15 +3,18 @@
 // Pull quest IDs from URL
 const parsedUrl = new URL(window.location.href);
 var questID = parsedUrl.searchParams.get("questid");
-var uniquequestID = parsedUrl.searchParams.get("uniquequestid");
 
-var currentUser = null;
+var currentUser;
+var currentUserID;
 
 var allStudents = [];
 var studentsToAdd = [];
 var IDsToAdd = [];
 
-const maxStudentsToAdd = 3;
+var questParticipants;
+var questParticipantIDs;
+
+var maxStudentsToAdd = 3;
 var maxStudentsReached = false;
 
 function getCurrentUser() {
@@ -22,8 +25,9 @@ function getCurrentUser() {
                 // Read
                 .get()
                 .then(function (doc) {
-                    currentUser = doc.id;
-                    getStudents();
+                    currentUser = doc.data().Student_Name,
+                        currentUserID = doc.id;
+                    getQuestParticipantInfo();
                 });
         }
     });
@@ -63,13 +67,14 @@ function populateStudentList() {
  */
 function getStudents() {
     db.collection("Students")
-        .where(firebase.firestore.FieldPath.documentId(), "!=", currentUser)
+        .where("Student_Educator", "!=", null)
         .get()
-
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                let student = { "name": doc.data().Student_Name, "id": doc.id };
-                allStudents.push(student);
+                if (doc.id != currentUserID && !questParticipantIDs.includes(doc.id)) {
+                    let student = { "name": doc.data().Student_Name, "id": doc.id };
+                    allStudents.push(student);
+                }
             });
             populateStudentList();
         })
@@ -121,7 +126,7 @@ function activateAddButton() {
     $(document.body).on("click", ".plus-icon", function (event) {
         let index = $(event.target).attr("id");
         // Extract index from event id (CITE THIS CODE)
-        index = index.match(/\d+/);
+        index = parseInt(index.match(/(\d+)/));
         // Replace "add" icon with a "remove" icon
         $(event.target).attr("src", "/img/remove_icon.png");
         $(event.target).attr("class", "minus-icon");
@@ -129,8 +134,7 @@ function activateAddButton() {
         studentsToAdd.push(allStudents[index].name);
         console.log(studentsToAdd);
         IDsToAdd.push(allStudents[index].id);
-        console.log(studentsToAdd.length);
-        console.log("add");
+        console.log(studentsToAdd);
         checkNumAdded();
     });
 }
@@ -146,7 +150,7 @@ function activateRemoveButton() {
         console.log("remove");
         let index = $(event.target).attr("id");
         // Extract index from event id
-        index = index.match(/\d+/);
+        index = parseInt(index.match(/(\d+)/));
         let indexOfStudent = studentsToAdd.indexOf(allStudents[index].name);
         // console.log(in/dexOfStudent);
         studentsToAdd.splice(indexOfStudent, 1);
@@ -162,16 +166,36 @@ function activateRemoveButton() {
 }
 
 /**
+ * Write this
+ */
+function getQuestParticipantInfo() {
+    db.collection("Student_Quests").doc(questID)
+        .get()
+        .then(function (doc) {
+            questParticipants = doc.data().Quest_Participants;
+            questParticipantIDs = doc.data().Quest_Participant_IDs;
+            maxStudentsToAdd = 3 - (questParticipants.length - 1);
+            $("#card-header").html("Add up to " + maxStudentsToAdd + " friends from the list below:");
+            getStudents();
+        });
+}
+
+/**
  * Write this.
  */
 function updateQuest() {
-    // Update the student's quest document
-    db.collection("Students").doc(currentUser).collection("Quests").doc(questID).update({
-        Quest_Participants: studentsToAdd,
-        Quest_Participant_IDs: IDsToAdd
+    let updatedQuestParticipants = questParticipants.concat(studentsToAdd);
+    let updatedQuestParticipantIDs = questParticipantIDs.concat(IDsToAdd);
+    // Update the quest document
+    db.collection("Student_Quests").doc(questID).update({
+        Quest_Participants: updatedQuestParticipants,
+        Quest_Participant_IDs: updatedQuestParticipantIDs
     })
         .then(() => {
             console.log("Quest participants successfully updated!");
+            setTimeout(function () {
+                window.location.assign("./student-submit-quest.html?questid=" + questID + "&redirectflag=true");
+            }, 1000);
         })
         .catch((error) => {
             console.error("Error updating quest participants ", error);
@@ -183,9 +207,6 @@ function updateQuest() {
  */
 function onClickSubmit() {
     updateQuest();
-    setTimeout(function () {
-        window.location.assign("./student-submit-quest.html");
-    }, 1000);
 }
 
 function filterByName() {

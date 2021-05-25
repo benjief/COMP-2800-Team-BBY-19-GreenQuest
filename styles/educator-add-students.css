@@ -100,7 +100,7 @@ input::placeholder {
     margin-left: 10px;
 }
 
-.icon {
+.plus-icon, .minus-icon {
     height: 24px;
     width: 24px;
 }

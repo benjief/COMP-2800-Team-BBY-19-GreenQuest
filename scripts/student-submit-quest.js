@@ -3,15 +3,21 @@
 // Pull quest and user IDs from URL
 const parsedUrl = new URL(window.location.href);
 var questID = parsedUrl.searchParams.get("questid");
-var userIDs = [];
-userIDs.push(parsedUrl.searchParams.get("userid"));
+var dataToRetrieve = parsedUrl.searchParams.get("redirectflag");
+
+const maxStudents = 4;
+var maxStudentsReached = false;
+
+// var userIDs = [];
+// var userID = parsedUrl.searchParams.get("userid");
+// userIDs.push(userID);
+
 
 var userNames = [];
 var className;
 var educatorName;
-var educatorID;
+// var educatorID;
 var questDescription;
-var uniqueQuestID;
 
 var validInput = false;
 var tempImagesDeleted = false;
@@ -45,7 +51,7 @@ function charCounter(field, field2, maxlimit) {
 function checkNumUploaded() {
     const maxImages = 3;
     if (className) {
-        let message = "<div class='text-container'><p class='message'>You haven't uploaded any "
+        let message = "<div class='text-container' id='message'><p id='no-images'>You haven't uploaded any "
             + "images</p><img src='/img/question_icon.png' tabindex='0' role='button' id='image-info' data-bs-toggle='popover' "
             + "data-bs-content='Add up to 3 images that prove youve completed this task.' data-bs-container='body'>"
             + "</div>"
@@ -55,8 +61,8 @@ function checkNumUploaded() {
             $(".uploaded-images").append(message);
         } else {
             $("#upload-image-input").removeAttr("disabled");
-            if ($(".message")) {
-                $(".message").remove();
+            if ($("#message")) {
+                $("#message").remove();
             }
         }
     }
@@ -91,15 +97,20 @@ function processImage() {
     imageInput.addEventListener('change', function (event) {
         console.log(event.target.files[0]);
         uploadedImageFiles.push(event.target.files[0]);
+        // const reader = new FileReader();
+        // reader.readAsDataURL(uploadedImageFiles[0]);
+        // reader.addEventListener("load", () => {
+        //     console.log(reader.result);
+        // });
         storeTemporaryImage(event.target.files[0]);
-        addNamesToDOM();
+        addImageNamesToDOM();
     });
 }
 
 /**
  * Write this
  */
-function resetDOM() {
+function resetImageDOM() {
     var uploadedImages = document.getElementsByClassName('list-item');
     while (uploadedImages[0]) {
         uploadedImages[0].parentNode.removeChild(uploadedImages[0]);
@@ -139,12 +150,12 @@ function showPreview(element) {
 /**
  * Write this
  */
-function addNamesToDOM() {
-    resetDOM();
+function addImageNamesToDOM() {
+    resetImageDOM();
     for (var i = 0; i < uploadedImageFiles.length; i++) {
         let imageDOM = "<li class='list-item'><a class='uploaded-image' id='" +
             uploadedImageFiles[i].name + "' data-bs-toggle='modal' data-bs-target='#imagePreview' onclick='showPreview(this)'>" +
-            uploadedImageFiles[i].name + "</a><img src='/img/remove_icon.png' class='remove-icon' id='delete-" +
+            "Image " + (i + 1) + "</a><img src='/img/remove_icon.png' class='minus-icon-active' id='delete-image-" +
             uploadedImageFiles[i].name + "' onclick='removeImage(this)'></li>";
         $(".uploaded-images").append(imageDOM);
     }
@@ -167,7 +178,7 @@ function removeImage(element) {
     if (index >= 0) {
         uploadedImageFiles.splice(index, 1);
     }
-    addNamesToDOM();
+    addImageNamesToDOM();
 }
 
 /**
@@ -186,15 +197,20 @@ function getStorageRef(file, temp) {
 }
 
 /* Get the current user's name, class name, educator name, and ID from Firestore. */
-function getCurrentStudent() {
-    db.collection("Students").doc(userIDs[0])
+function getQuestParticipants() {
+    db.collection("Student_Quests").doc(questID)
         .get()
         .then(function (doc) {
-            // Extract the current student's class name
-            userNames.push(doc.data().Student_Name);
-            className = doc.data().Student_Class;
-            educatorName = doc.data().Student_Educator;
-            if (className == null) {
+            userIDs = doc.data().Quest_Participant_IDs;
+            userNames = doc.data().Quest_Participants;
+            console.log(userNames);
+            // getQuestDescription();
+            // getUniqueQuestID();
+            checkNumUploaded();
+            // getEducatorID();
+            processImage();
+            addSubmittersToDOM();
+            if (!doc) {
                 let message = "<div class='text-container'><p class='message'>You haven't been added to a class yet</p></div>"
                 $(".uploaded-images").append(message);
                 $("#card-button-container-1").remove();
@@ -202,92 +218,152 @@ function getCurrentStudent() {
                 $("#quest-notes").attr("disabled", "");
                 $("#quest-notes").attr("placeholder", "Ask your teacher to add you to their class to start getting quests");
             }
-            getQuestDescription();
-            getUniqueQuestID();
-            checkNumUploaded();
-            getEducatorID();
-            processImage();
-            addSubmittersToDOM();
-        });
+
+        })
+    // db.collection("Students").doc(userIDs[0])
+    //     .get()
+    //     .then(function (doc) {
+    //         // Extract the current student's class name
+    //         userNames.push(doc.data().Student_Name);
+    //         className = doc.data().Student_Class;
+    //         if (className == null) {
+    //             let message = "<div class='text-container'><p class='message'>You haven't been added to a class yet</p></div>"
+    //             $(".uploaded-images").append(message);
+    //             $("#card-button-container-1").remove();
+    //             $("#upload-image-input").attr("disabled", "");
+    //             $("#quest-notes").attr("disabled", "");
+    //             $("#quest-notes").attr("placeholder", "Ask your teacher to add you to their class to start getting quests");
+    //         }
+    // });
 }
 
 /**
  * Write this.
  */
 function addSubmittersToDOM() {
+    checkNumAdded();
+    resetSubmitterDOM();
     for (var i = 0; i < userNames.length; i++) {
         if (i == 0) {
-            let submitterName = "<li id='submitter->" + i + "'><p>" + userNames[i] + "</p>"
-                + "<img src='/img/remove_icon_grey.png' class='remove-icon'></li>";
+            let submitterName = "<li class='submitter-name'><p>" + userNames[i] + "</p>"
+                + "<img src='/img/remove_icon_grey.png' class='minus-icon-inactive'></li>";
+            $("#submitter-list").append(submitterName);
+        } else {
+            let submitterName = "<li class='submitter-name'><p>" + userNames[i] + "</p>"
+                + "<img src='/img/remove_icon.png' class='minus-icon-active' id='submitter-" + i + "'></li>";
             $("#submitter-list").append(submitterName);
         }
     }
 }
 
 /**
- * Write this.
+ * Write this
  */
-function getEducatorID() {
-    db.collection("Educators")
-        .where("Educator_Name", "==", educatorName)
-        .get()
-        .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                educatorID = doc.id;
-            })
-        })
-        .catch((error) => {
-            console.log("Error getting educator ID: ", error);
-        });
-}
-
-/**
- * Write this.
- */
-function getQuestDescription() {
-    console.log(questID);
-    db.collection("Quests").doc(questID)
-        .get()
-        .then(function (doc) {
-            questDescription = doc.data().description;
-            console.log("Quest description successfully retrieved");
-        })
-        .catch((error) => {
-            console.error("Error retrieving quest description: ", error);
-        });
-}
-
-/**
- * Write this.
- */
-function getUniqueQuestID() {
-    db.collection("Students").doc(userIDs[0]).collection("Quests")
-        .where("Quest_Status", "==", "active")
-        .get()
-        .then((querySnapshot) => {
-            // There should only ever be one quest at a time
-            querySnapshot.forEach((doc) => {
-                uniqueQuestID = doc.id;
-            })
-        })
-        .catch((error) => {
-            console.log("Error getting unique quest ID: ", error);
-        });
+function resetSubmitterDOM() {
+    var questSubmitters = document.getElementsByClassName('submitter-name');
+    while (questSubmitters[0]) {
+        questSubmitters[0].parentNode.removeChild(questSubmitters[0]);
+    }
 }
 
 
 /**
  * Write this
  */
-function updateQuestStatus() {
-    db.collection("Students").doc(userIDs[0]).update({
-        Student_Quest: false
+$(document.body).on("click", ".minus-icon-active", function (event) {
+    // Extract index from event id
+    let index = $(event.target).attr("id");
+    console.log(index);
+    // Extract index from event id - 
+    // taken from https://www.geeksforgeeks.org/extract-a-number-from-a-string-using-javascript/#:~:text=The%20number%20from%20a%20string,(%5Cd%2B)%2F)
+    index = parseInt(index.match(/(\d+)/));
+    // console.log(userNames);
+    console.log(index);
+    console.log(index == 1);
+    // Remove student from quest
+    // var test = userNames;
+    // console.log(test[1]);
+    // test.splice(index, 1);
+    // console.log(test);
+    userNames.splice(index, 1);
+    console.log(userNames);
+    userIDs.splice(index, 1);
+    db.collection("Student_Quests").doc(questID).update({
+        Quest_Participants: userNames,
+        Quest_Participant_IDs: userIDs
     })
         .then(() => {
-            console.log("Student quest status succesfully updated!");
+            console.log("Student successfully removed from quest!");
+            addSubmittersToDOM();
         })
         .catch((error) => {
-            console.error("Error updating student quest status: ", error);
+            console.error("Error removing student from quest: ", error);
+        });
+});
+
+// /**
+//  * Write this.
+//  */
+// function getEducatorID() {
+//     db.collection("Educators")
+//         .where("Educator_Name", "==", educatorName)
+//         .get()
+//         .then((querySnapshot) => {
+//             querySnapshot.forEach((doc) => {
+//                 educatorID = doc.id;
+//             })
+//         })
+//         .catch((error) => {
+//             console.log("Error getting educator ID: ", error);
+//         });
+// }
+
+// /**
+//  * Write this.
+//  */
+// function getQuestDescription() {
+//     db.collection("Student_Quests").doc(questID)
+//         .get()
+//         .then(function (doc) {
+//             questDescription = doc.data().description;
+//             console.log("Quest description successfully retrieved");
+//         })
+//         .catch((error) => {
+//             console.error("Error retrieving quest description: ", error);
+//         });
+// }
+
+// /**
+//  * Write this.
+//  */
+// function getUniqueQuestID() {
+//     db.collection("Students").doc(userIDs[0]).collection("Quests")
+//         .where("Quest_Status", "==", "active")
+//         .get()
+//         .then((querySnapshot) => {
+//             // There should only ever be one quest at a time
+//             querySnapshot.forEach((doc) => {
+//                 uniqueQuestID = doc.id;
+//             })
+//         })
+//         .catch((error) => {
+//             console.log("Error getting unique quest ID: ", error);
+//         });
+// }
+
+
+/**
+ * Write this
+ */
+function updateStudentQuest() {
+    db.collection("Students").doc(userIDs[0]).update({
+        Student_Quest: null
+    })
+        .then(() => {
+            console.log("Student quest succesfully updated!");
+        })
+        .catch((error) => {
+            console.error("Error updating student quest: ", error);
         });
 }
 
@@ -298,35 +374,45 @@ function updateQuestStatus() {
  */
 function addQuestToDB(imageURLs) {
     let dateSubmitted = new Date();
-    // Update quest in student's quest collection
-    db.collection("Students").doc(userID[0]).collection("Quests").doc(uniqueQuestID).update({
+    // Update quest status and add attributes required for approval and further retrieval
+    db.collection("Student_Quests").doc(questID).update({
         Quest_Status: "submitted",
+        Quest_Participants: userNames,
+        Quest_Participant_IDs: userIDs,
+        Quest_Images: imageURLs,
+        Quest_Notes: $("#quest-notes").prop("value"),
         Date_Submitted: dateSubmitted
     })
         .then(() => {
-            console.log("Student quest successfully updated!");
-            updateQuestStatus();
-            // Write quest to teacher's quest collection
-            db.collection("Educators").doc(educatorID).collection("Quests").doc(uniqueQuestID).set({
-                Quest_Submitters: userNames,
-                Submitter_IDs: userIDs,
-                Submitter_Class: className,
-                Quest_Description: questDescription,
-                Quest_Photos: imageURLs,
-                Quest_Notes: $("#quest-notes").prop("value"),
-                Date_Submitted: dateSubmitted
-            })
-                .then(() => {
-                    console.log("Educator quest successfully written!");
-                    $("#feedback").html("Success! Please wait...");
-                    $("#feedback").css({ color: "green" });
-                    $("#feedback").show(0);
-                    $("#feedback").fadeOut(1000);
-                    deleteTempImages("./student-home.html");
-                })
-                .catch((error) => {
-                    console.error("Error adding educator quest: ", error);
-                });
+            console.log("Quest successfully updated!");
+            updateStudentQuest();
+            $("#feedback").html("Success! Please wait...");
+            $("#feedback").css({ color: "green" });
+            $("#feedback").show(0);
+            $("#feedback").fadeOut(1000);
+            deleteTempImages("./student-home.html");
+            sessionStorage.clear();
+            // // Write quest to teacher's quest collection
+            // db.collection("Educators").doc(educatorID).collection("Quests").doc(uniqueQuestID).set({
+            //     Quest_Submitters: userNames,
+            //     Submitter_IDs: userIDs,
+            //     Submitter_Class: className,
+            //     Quest_Description: questDescription,
+            //     Quest_Photos: imageURLs,
+            //     Quest_Notes: $("#quest-notes").prop("value"),
+            //     Date_Submitted: dateSubmitted
+            // })
+            //     .then(() => {
+            //         console.log("Educator quest successfully written!");
+            //         $("#feedback").html("Success! Please wait...");
+            //         $("#feedback").css({ color: "green" });
+            //         $("#feedback").show(0);
+            //         $("#feedback").fadeOut(1000);
+            //         deleteTempImages("./student-home.html");
+            //     })
+            //     .catch((error) => {
+            //         console.error("Error adding educator quest: ", error);
+            //     });
         })
         .catch((error) => {
             console.error("Error updating student quest: ", error);
@@ -402,12 +488,72 @@ function generateImageURLs() {
 
 /**
  * Write this.
- *  * Adapted from: https://stackoverflow.com/questions/47935571/how-to-keep-the-radio-button-remain-checked-after-the-refresh
+ */
+function deactivateAddFriends() {
+    $("#add-friends").removeAttr("onclick");
+    $("#add-friends").css({ color: "rgb(180, 180, 180)", textDecoration: "none" });
+}
+
+/**
+ * Write this.
+ */
+function activateAddFriends() {
+    $("#add-friends").attr("onclick", "onClickAddFriends()");
+    $("#add-friends").css({ color: "black", textDecoration: "underline" });
+}
+
+/**
+ * Write this.
+ */
+function checkNumAdded() {
+    if (userNames.length == maxStudents) {
+        maxStudentsReached = true;
+        deactivateAddFriends();
+    } else {
+        if (maxStudentsReached) {
+            maxStudentsReached = false;
+            activateAddFriends();
+        }
+    }
+}
+
+/**
+ * Write this.
+ * Adapted from: https://stackoverflow.com/questions/47935571/how-to-keep-the-radio-button-remain-checked-after-the-refresh (sessionStorage code)
+ * and https://www.youtube.com/watch?v=8K2ihr3NC40&ab_channel=dcode (FileReader-related code)
+ */
+function readImage(image, index) {
+    let reader = new FileReader();
+    reader.addEventListener("load", () => {
+        // console.log(reader.result);
+        sessionStorage.setItem("uploaded-image-" + index, reader.result);
+    });
+    reader.readAsDataURL(image);
+}
+
+/**
+ * Write this.
+ * Adapted from: https://stackoverflow.com/questions/47935571/how-to-keep-the-radio-button-remain-checked-after-the-refresh (sessionStorage code)
  */
 function onClickAddFriends() {
-    sessionStorage.setItem("previousData", JSON.stringify({ "imageURLs": imageURLs }));
-    sessionStorage.setItem("previousData", JSON.stringify({ "notes": $("#quest-notes").prop("value") }));
-    window.location.assign("./student-add-friends.html?questid=" + questID + "&uniquequestid=" + uniqueQuestID);
+    if (uploadedImageFiles.length > 0) {
+        sessionStorage.setItem("numImageFilesUploaded", uploadedImageFiles.length);
+        for (var i = 0; i < uploadedImageFiles.length; i++) {
+            readImage(uploadedImageFiles[i], i);
+            // console.log(i);
+            // let reader = new FileReader();
+            // reader.addEventListener("load", () => {
+            //     // console.log(reader.result);
+            //     sessionStorage.setItem("uploaded-image-" + i, reader.result);
+            // });
+            // reader.readAsDataURL(uploadedImageFiles[i]);
+        }
+    }
+    if ($("#quest-notes").prop("value") != null && ($("#quest-notes").prop("value") != "")) {
+        sessionStorage.setItem("previouslyInputNotes", $("#quest-notes").prop("value"));
+    }
+    console.log(sessionStorage);
+    window.location.assign("./student-add-friends.html?questid=" + questID);
 }
 
 /**
@@ -430,29 +576,87 @@ function onClickSubmit() {
  * Write this.
  */
 function onClickHome() {
-    deleteTempImages("./student-home.html");
+    deletfeTempImages("./student-home.html");
 }
 
 /**
  * Write this.
  * Taken from https://stackoverflow.com/questions/3252730/how-to-prevent-a-click-on-a-link-from-jumping-to-top-of-page
  */
-$(".button").click(function (event) {
+$(".button", "a").click(function (event) {
     event.preventDefault();
 })
 
+/**
+ * Write this.
+ * Taken from https://stackoverflow.com/questions/22578530/failed-to-execute-atob-on-window
+ */
+function dataURLtoFile(dataurl, filename) {
+    var arr = dataurl.split(','),
+        mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]),
+        n = bstr.length,
+        u8arr = new Uint8Array(n);
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+}
+
+/** 
+ * Write this.
+ */
+function retrieveData() {
+    if (dataToRetrieve) {
+        var numImageFilesUploaded = parseInt(sessionStorage.getItem("numImageFilesUploaded"));
+        if (numImageFilesUploaded) {
+            console.log(sessionStorage);
+            for (var i = 0; i < numImageFilesUploaded; i++) {
+                let base64ImageString = sessionStorage.getItem("uploaded-image-" + i);
+                // let imageType = base64ImageString.substring(5, base64ImageString.indexOf(";"));
+                // console.log(imageType);
+                // console.log(base64ImageString);
+                let testFile = dataURLtoFile(base64ImageString, 'Image ' + (i + 1));
+                console.log(testFile);
+                uploadedImageFiles.push(testFile);
+                storeTemporaryImage(testFile);
+                // console.log(blobURL);
+                // let imageFile = new File([blobURL], "image-" + i);
+                // console.log(imageFile);
+                // uploadedImageFiles.push(imageFile);
+                // console.log(uploadedImageFiles);
+                // addImageNamesToDOM();
+            }
+            addImageNamesToDOM();
+        }
+        var previouslyInputNotes = sessionStorage.getItem("previouslyInputNotes");
+        if (previouslyInputNotes != null && previouslyInputNotes !== "") {
+            $("#quest-notes").prop("value", previouslyInputNotes);
+        }
+    } else {
+        sessionStorage.clear();
+    }
+}
 
 /**
  * Write this.
  */
 $(document).ready(function () {
-    getCurrentStudent();
-    var previousData = sessionStorage.getItem("previousData");
-    if (previousData.imageURLs !== null) {
-        imageURLs = JSON.parse(existingURLs).imageURLs;
-    }
-    if (previousData.notes !== null) {
-        $("#quest-notes").prop("value", JSON.parse(previousData).notes);
-    }
-    sessionStorage.clear();
+    getQuestParticipants();
+    retrieveData();
+
+    // if (previousData !== null) {
+    //     console.log(previousData);
+    //     if (previousData.imageURLs && previousData.imageURLs != null) {
+    //         imageURLs = JSON.parse(imageURLs).imageURLs;
+    //     } else {
+    //         console.log("ham");
+    //     }
+    //     if (previousData.notes && previousData.notes !== null) {
+    //         $("#quest-notes").prop("value", JSON.parse(previousData).notes);
+    //         console.log("#quest-notes").prop("value");
+    //     } else if (previousData.notes == null) {
+    //         console.log(previousData.notes);
+    //     }
+    // }
 });

@@ -79,7 +79,7 @@
     margin-top: 20px;
 }
 
-.message {
+#no-images {
     font-weight: 600;
     text-align: center;
 }
@@ -109,7 +109,7 @@
     margin-bottom: 5px;
 }
 
-.remove-icon {
+.minus-icon-active, .minus-icon-inactive {
     width: 24px;
     height: 24px;
 }

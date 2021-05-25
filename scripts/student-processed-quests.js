@@ -26,22 +26,25 @@ function getCurrentUser() {
  * Write this.
  */
 function pullApprovedQuests() {
-    db.collection("Students").doc(userID).collection("Quests")
+    db.collection("Student_Quests")
+        // This is going to be slow, but I don't know how to combine where clauses
         .where("Quest_Status", "==", "approved")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                let approvedQuest = {
-                    "title": doc.data().Quest_Title,
-                    "date": doc.data().Date_Processed,
-                    "bitmoji": doc.data().Quest_Bitmoji,
-                    "points": doc.data().Quest_Points,
-                    "unread": doc.data().Unread,
-                    "status": "approved"
-                };
-                approvedQuests.push(approvedQuest);
+                if (doc.data().Quest_Participant_IDs.includes(userID)) {
+                    let approvedQuest = {
+                        "title": doc.data().Quest_Title,
+                        "date": doc.data().Date_Processed,
+                        "bitmoji": doc.data().Quest_Bitmoji,
+                        "points": doc.data().Quest_Points,
+                        "unread": doc.data().Unread,
+                        "status": "approved"
+                    };
+                    approvedQuests.push(approvedQuest);
+                }
             });
-            console.log(approvedQuests);
+            // console.log(approvedQuests);
             pullRejectedQuests();
         });
 }
@@ -50,22 +53,25 @@ function pullApprovedQuests() {
  * Write this.
  */
 function pullRejectedQuests() {
-    db.collection("Students").doc(userID).collection("Quests")
+    db.collection("Student_Quests")
+        // This is going to be slow, but I don't know how to combine where clauses
         .where("Quest_Status", "==", "rejected")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                let rejectedQuest = {
-                    "title": doc.data().Quest_Title,
-                    "date": doc.data().Date_Processed,
-                    "bitmoji": doc.data().Quest_Bitmoji,
-                    "points": doc.data().Quest_Points,
-                    "unread": doc.data().Unread,
-                    "status": "rejected"
-                };
-                rejectedQuests.push(rejectedQuest);
+                if (doc.data().Quest_Participant_IDs.includes(userID)) {
+                    let rejectedQuest = {
+                        "title": doc.data().Quest_Title,
+                        "date": doc.data().Date_Processed,
+                        "bitmoji": doc.data().Quest_Bitmoji,
+                        "points": doc.data().Quest_Points,
+                        "unread": doc.data().Unread,
+                        "status": "rejected"
+                    };
+                    rejectedQuests.push(rejectedQuest);
+                }
             });
-            console.log(rejectedQuests);
+            // console.log(rejectedQuests);
             mergeProcessedQuests();
         });
 }
@@ -80,7 +86,7 @@ function mergeProcessedQuests() {
     // Append a message to the DOM if there are no quests to display
     if (processedQuests.length == 0) {
         let message = "<div class='message-container'><img src='/img/slow_down.png'>"
-        + "<p class='message'>Slow down - you haven't got any processed quests!</p></div>";
+            + "<p class='message'>Slow down - you haven't got any processed quests!</p></div>";
         $(".quest-list").append(message);
         $(".quest-list").css({
             height: "100px",
@@ -191,14 +197,17 @@ function getBitmojiBackground() {
  * Write this.
  */
 function setUnreadToFalse() {
-    db.collection("Students").doc(userID).collection("Quests")
+    db.collection(Quests)
+        // This is going to be slow, but I don't know how to combine where clauses
         .where("Unread", "==", true)
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach(function (doc) {
-                doc.ref.update({
-                    Unread: false
-                });
+                if (doc.data().Quest_Participant_IDs.includes(userID)) {
+                    doc.ref.update({
+                        Unread: false
+                    });
+                }
             });
         });
 }

@@ -23,19 +23,19 @@ function getCurrentUser() {
 /**
  * Write this.
  */
- function checkUnreadQuests() {
+function checkUnreadQuests() {
     let counter = 0;
-    db.collection("Students").doc(userID).collection("Quests")
-        .where("Unread", "==", true)
+    db.collection("Student_Quests")
+        .where("Quest_Participant_IDs", "array-contains", userID)
         .get()
         .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                counter++;
-                console.log(doc.data());
-            });
-            console.log(counter);
-            if (counter > 0) {
-                addAlert();
+            if (doc.data().Unread == true) {
+                querySnapshot.forEach((doc) => {
+                    counter++;
+                });
+                if (counter > 0) {
+                    addAlert();
+                }
             }
         });
 }
@@ -52,39 +52,45 @@ function addAlert() {
 /**
  * Write this.
  */
- function checkProcessedQuests() {
-    db.collection("Students").doc(userID).collection("Quests")
-    .where("Quest_Points", "!=", null)
-    .get()
-    .then((querySnapshot) => {
-        let numQuests = querySnapshot.size;
-        if (numQuests == 0) {
-            disableProcessedQuests();
-        } else {
-            checkUnreadQuests();
-        }
-    })
-    .catch((error) => {
-        console.log("Error getting processed quests: ", error);
-    });
+function checkProcessedQuests() {
+    db.collection("Student_Quests")
+        // The Quest_Points attribute is unique to processed quests
+        .where("Quest_Points", "!=", null)
+        .get()
+        .then((querySnapshot) => {
+            let numQuests = querySnapshot.size;
+            if (numQuests == 0) {
+                disableProcessedQuests();
+            } else {
+                checkUnreadQuests();
+            }
+        })
+        .catch((error) => {
+            console.log("Error getting processed quests: ", error);
+        });
 }
 
 /**
  * Write this.
  */
- function checkPendingQuests() {
-    db.collection("Students").doc(userID).collection("Quests")
-    .where("Quest_Status", "==", "submitted")
-    .get()
-    .then((querySnapshot) => {
-        let numQuests = querySnapshot.size;
-        if (numQuests == 0) {
-            disablePendingQuests();
-        }
-    })
-    .catch((error) => {
-        console.log("Error getting pending quests: ", error);
-    });
+function checkPendingQuests() {
+    let counter = 0;
+    db.collection("Student_Quests")
+        .where("Quest_Status", "==", "submitted")
+        .get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                if (doc.data().Quest_Submitter_IDs.includes(userID)) {
+                    counter++;
+                }
+            })
+            if (counter == 0) {
+                disablePendingQuests();
+            }
+        })
+        .catch((error) => {
+            console.log("Error getting pending quests: ", error);
+        });
 }
 
 /** Write this. */
@@ -104,5 +110,5 @@ function disablePendingQuests() {
 // Run function when document is ready 
 $(document).ready(function () {
     getCurrentUser();
-    
+
 });

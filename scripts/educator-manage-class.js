@@ -6,12 +6,12 @@ var className = parsedUrl.searchParams.get("classname");
 $(".page-heading").html("Add Students to " + className);
 
 /**
- * Adds the current class, along with a redirect flag, to the link address of the selected option.
+ * Adds the current class to the link address of the selected option.
  */
 function onClick() {
     $(document).click(function (event) {
         let redirectLink = $(event.target).attr("href");
-        redirectLink += "?classname=" + className + "&redirectflag=true";
+        redirectLink += "?classname=" + className;
         $(event.target).attr("href", redirectLink);
     });
 }

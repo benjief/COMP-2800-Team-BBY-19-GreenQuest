@@ -32,7 +32,7 @@ var uiConfig = {
                         Student_Class: null,
                         Student_Educator: null,
                         Student_Points: 0,
-                        Student_Quest: false,
+                        Student_Quest: null,
                         User_Type: "student"
                     })
                         .then(function () {
@@ -49,7 +49,7 @@ var uiConfig = {
                     db.collection("Educators").doc(user.uid).set({
                         Educator_Name: user.displayName,
                         Educator_Email: user.email,
-                        User_Type: educator
+                        User_Type: "educator"
                     })
                         .then(function () {
                             console.log("New educator added to firestore");
