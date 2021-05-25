@@ -433,7 +433,7 @@ function deleteTempImages(redirectLink) {
                 itemRef.delete();
             });
             tempImagesDeleted = true;
-            if (redirectLink != null || redirectLink != "") {
+            if (redirectLink != null && redirectLink != "") {
                 setTimeout(function () {
                     location.href = redirectLink;
                 }, 1000);
@@ -576,14 +576,18 @@ function onClickSubmit() {
  * Write this.
  */
 function onClickHome() {
-    deletfeTempImages("./student-home.html");
+    deleteTempImages("./student-home.html");
 }
 
 /**
  * Write this.
  * Taken from https://stackoverflow.com/questions/3252730/how-to-prevent-a-click-on-a-link-from-jumping-to-top-of-page
  */
-$(".button", "a").click(function (event) {
+$(".button").click(function (event) {
+    event.preventDefault();
+})
+
+$("a").click(function (event) {
     event.preventDefault();
 })
 

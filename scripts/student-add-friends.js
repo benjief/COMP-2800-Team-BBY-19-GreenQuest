@@ -135,6 +135,7 @@ function activateAddButton() {
         console.log(studentsToAdd);
         IDsToAdd.push(allStudents[index].id);
         console.log(studentsToAdd);
+        console.log(IDsToAdd);
         checkNumAdded();
     });
 }
@@ -154,7 +155,9 @@ function activateRemoveButton() {
         let indexOfStudent = studentsToAdd.indexOf(allStudents[index].name);
         // console.log(in/dexOfStudent);
         studentsToAdd.splice(indexOfStudent, 1);
+        IDsToAdd.splice(indexOfStudent, 1);
         console.log(studentsToAdd);
+        console.log(IDsToAdd);
         // Get "add" icon to call addStudent()
         // Replace "remove" icon with an "add" icon
         $(event.target).attr("src", "/img/add_icon.png");
@@ -207,6 +210,15 @@ function updateQuest() {
  */
 function onClickSubmit() {
     updateQuest();
+}
+
+/**
+ * Write this.
+ */
+function onClickBack() {
+    setTimeout(function () {
+        window.location.assign("./student-submit-quest.html?questid=" + questID + "&redirectflag=true");
+    }, 1000);
 }
 
 function filterByName() {

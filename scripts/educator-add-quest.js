@@ -45,7 +45,7 @@ function addQuest(title, description, instructions, info) {
         .then(() => {
             console.log("Quest successfully written!");
             // Display success message and direct users back to the main page
-            ("#feedback").html("Success! Please wait...");
+            $("#feedback").html("Success! Please wait...");
             $("#feedback").css({
                 color: "green"
             });
