@@ -48,7 +48,12 @@ function getProfileInfo() {
             profileClass = doc.data().Student_Class;
             populateDOM();
             populateHeading();
-            activateSecondaryInput();
+            if (userID == profileID) {
+                let newProfilePicInput = "<input type='file' accept='image/*' id='upload-new-image-input'></input>";
+                let label = "<label for='upload-new-image-input' id='upload-new-image-label'>Upload New Image</label>";
+                $(".modal-footer").append(newProfilePicInput, label);
+                activateSecondaryInput();
+            }
             if (profilePic == null) {
                 if (userID === profileID) {
                     getBitmoji();
