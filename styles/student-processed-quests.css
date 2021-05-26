@@ -39,7 +39,8 @@
     grid-template-areas: 
         "quest-bitmoji quest-title notification"
         "quest-bitmoji quest-points quest-points"
-        "quest-bitmoji quest-date quest-date";
+        "quest-bitmoji quest-date quest-date"
+        "share share share";
     /* background-color: rgb(255, 241, 254); */
     background: linear-gradient(rgba(216, 233, 255, 0.7), rgba(238, 238, 238, 0.7)), url("/img/background_pattern_8.png");
     border-radius: 10px;
@@ -49,10 +50,10 @@
     width: 100%;
     margin-bottom: 15px;
 }
-#my-inline-buttons {
+
+.sharethis-inline-share-buttons {
     grid-area: share;
 }
-
 .quest-container:last-child {
     margin-bottom: 0;
 }

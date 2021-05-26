@@ -85,7 +85,7 @@ function mergeProcessedQuests() {
     processedQuests.sort((a, b) => (a.date > b.date) ? -1 : 1);
     // Append a message to the DOM if there are no quests to display
     if (processedQuests.length == 0) {
-        let message = "<div class='message-container'><img src='/img/slow_down.png'>"
+        let message = "<div class='message-container' id='my-inline-button'><img src='/img/slow_down.png'>"
             + "<p class='message'>Slow down - you haven't got any processed quests!</p></div>";
         $(".quest-list").append(message);
         $(".quest-list").css({
@@ -219,10 +219,8 @@ function getBitmojiBackground() {
 // }
 
 
-
-
 // Run function when document is ready 
 $(document).ready(function () {
     getCurrentUser();
+    __sharethis__.initialize();
 });
-
