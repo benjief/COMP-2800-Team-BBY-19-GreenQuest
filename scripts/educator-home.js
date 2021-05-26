@@ -1,11 +1,11 @@
 // JS for educator-home.html
 
-var currentUser;
+var userID;
 var userEmail;
 
 /**
  * Get the current user's name from Firestore and use it to create a personalized greeting. 
- * Also assigns current user's ID to currentUser and their ID to userEmail.
+ * Also assigns current user's ID to userID and their ID to userEmail.
  */
 function sayHello() {
     firebase.auth().onAuthStateChanged(function (somebody) {
@@ -16,7 +16,7 @@ function sayHello() {
                 .get()
                 .then(function (doc) {
                     // Extract the user's ID, email and name
-                    currentUser = doc.id;
+                    userID = doc.id;
                     checkNumQuests();
                     userEmail = doc.data().Educator_Email;
                     checkNumClasses();
@@ -38,17 +38,18 @@ function sayHello() {
  * Write this
  */
 function checkNumQuests() {
-    console.log(currentUser);
-    db.collection("Educators").doc(currentUser).collection("Quests")
+    console.log(userID);
+    db.collection("Student_Quests")
+        .where("Quest_Approver_ID", "==", userID)
         .get()
         .then((querySnapshot) => {
-            let numQuests = querySnapshot.size;
-            if (numQuests == 0) {
+            let numClasses = querySnapshot.size;
+            if (numClasses == 0) {
                 disableApproveQuests();
             }
         })
         .catch((error) => {
-            console.log("Error getting quest IDs: ", error);
+            console.log("Error getting classes: ", error);
         });
 }
 

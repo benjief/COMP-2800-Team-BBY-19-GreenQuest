@@ -1,7 +1,7 @@
 // JS for student-choose-quest.html
 
 var questIDs = [];
-var currentQuestID = null;
+var currentQuestID;
 var questTitle;
 var questDescription;
 var questInstructions;
@@ -9,10 +9,10 @@ var questInfo;
 var bitmojiURL;
 var userName;
 var className;
-var educatorName;
+var educatorID;
 var userID;
 
-/* Get the current user's name, class name, educator name, and ID from Firestore. */
+/* Get the current user's name, class name, educator ID, and ID from Firestore. */
 function getCurrentStudent() {
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {
@@ -24,7 +24,7 @@ function getCurrentStudent() {
                     // Extract the current student's class name
                     userName = doc.data().Student_Name;
                     className = doc.data().Student_Class;
-                    educatorName = doc.data().Student_Educator;
+                    educatorID = doc.data().Student_Educator;
                     userID = doc.id;
                     if (className == null) {
                         // Display a message on the page if the student isn't in a class
@@ -76,9 +76,8 @@ function getQuestIDs() {
 /**
  * Write this.
  */
-function getQuest(questID) {
-
-    db.collection("Quests").doc(questID)
+function getQuest(id) {
+    db.collection("Quests").doc(id)
         // Read
         .get()
         .then(function (doc) {
@@ -193,13 +192,13 @@ function pseudorandomID() {
 /** 
  * Write this.
  */
-function activateQuest(questID) {
+function updateStudentQuestStatus(questID) {
     db.collection("Students").doc(userID).update({
-            Student_Quest: true
+            Student_Quest: questID
         })
         .then(() => {
             console.log("Quest successfully activated!");
-            location.href = "./student-view-quest.html?questid=" + currentQuestID;
+            location.href = "./student-view-quest.html?questid=" + questID;
         })
         .catch((error) => {
             console.error("Error activating quest: ", error);
@@ -209,18 +208,23 @@ function activateQuest(questID) {
 /** 
  * Write this.
  */
-function writeQuest() {
+function writeActiveQuest() {
     let questID = pseudorandomID();
     // Update student quest
-    db.collection("Students").doc(userID).collection("Quests").doc(questID).set({
-            Quest_ID: currentQuestID,
+    db.collection("Student_Quests").doc(questID).set({
             Quest_Status: "active",
             Quest_Bitmoji: bitmojiURL,
-            Quest_Title: questTitle
+            Quest_Title: questTitle,
+            Quest_Description: questDescription,
+            Quest_Instructions: questInstructions,
+            Quest_Info: questInfo,
+            Quest_Participants: [userName],
+            Quest_Participant_IDs: [userID],
+            Quest_Approver_ID: educatorID,
         })
         .then(() => {
             console.log("Quest successfully written!");
-            activateQuest(questID);
+            updateStudentQuestStatus(questID);
         })
         .catch((error) => {
             console.error("Error writing quest: ", error);
@@ -231,7 +235,7 @@ function writeQuest() {
  * Write this.
  */
 function onClickAccept() {
-    writeQuest();
+    writeActiveQuest();
 }
 
 // Run function when document is ready 

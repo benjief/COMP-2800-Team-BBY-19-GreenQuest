@@ -15,8 +15,7 @@ var firstVisit = parsedUrl.searchParams.get("firstvisit");
 function sayHello() {
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {
-            db.collection("Students")
-                .doc(somebody.uid)
+            db.collection("Students").doc(somebody.uid)
                 // Read
                 .get()
                 .then(function (doc) {
@@ -46,18 +45,18 @@ function sayHello() {
  * Write this.
  */
 function checkQuestHistory() {
-    db.collection("Students").doc(userID).collection("Quests")
-    .where("Quest_Status", "!=", "active")
-    .get()
-    .then((querySnapshot) => {
-        let numQuests = querySnapshot.size;
-        if (numQuests == 0) {
-            disableQuestHistory();
-        }
-    })
-    .catch((error) => {
-        console.log("Error getting quest history: ", error);
-    });
+    db.collection("Student_Quests")
+        .where("Quest_Status", "!=", "active")
+        .get()
+        .then((querySnapshot) => {
+            let numQuests = querySnapshot.size;
+            if (numQuests == 0) {
+                disableQuestHistory();
+            }
+        })
+        .catch((error) => {
+            console.log("Error getting quest history: ", error);
+        });
 }
 
 /**
@@ -112,18 +111,11 @@ function getStudentPoints() {
  * Write this.
  */
 function getActiveQuest() {
-    db.collection("Students").doc(userID).collection("Quests")
-        .where("Quest_Status", "==", "active")
+    db.collection("Students").doc(userID)
         .get()
-        .then((querySnapshot) => {
-            // There should only ever be one quest at a time that's active
-            querySnapshot.forEach((doc) => {
-                questID = doc.data().Quest_ID;
-            })
+        .then(function (doc) {
+            questID = doc.data().Student_Quest;
             window.location.assign("/html/student-view-quest.html?questid=" + questID);
-        })
-        .catch((error) => {
-            console.log("Error getting quest ID: ", error);
         });
 }
 

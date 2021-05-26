@@ -21,6 +21,11 @@
     height: 100%;
 }
 
+
+input::placeholder {
+    color: rgb(180, 180, 180);
+}
+
 #student-filter {
     grid-area: filter;
     margin-bottom: 15px;
@@ -28,7 +33,7 @@
     justify-self: center;
     border: 1px solid rgb(160, 160, 160);
     /* border-style: dashed; */
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 5px;
 }
 
@@ -36,7 +41,7 @@
     outline-width: 0;
     border: 1px solid teal;
     /* border-style: dashed; */
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .student-list {
@@ -95,7 +100,7 @@
     margin-left: 10px;
 }
 
-.icon {
+.plus-icon, .minus-icon {
     height: 24px;
     width: 24px;
 }

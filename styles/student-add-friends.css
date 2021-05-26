@@ -1,4 +1,5 @@
-/** CSS for educator-remove-students.html */
+/** CSS for student-add-friends.html */
+
 #main-content-card {
     grid-template-areas:
         "card-text"
@@ -13,8 +14,8 @@
 
 .card-text-container {
     margin-top: 20px;
-    text-align: center;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .card-text {
@@ -47,15 +48,15 @@ input::placeholder {
 .student-list {
     grid-area: student-list;
     max-height: 300px;
-    overflow: scroll;
-    overflow-x: hidden;
     width: 90%;
     justify-self: center;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
 .student-list::-webkit-scrollbar {
     display: none;
-  }
+}
   
 .student-list {
     -ms-overflow-style: none; 

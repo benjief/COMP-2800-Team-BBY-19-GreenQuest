@@ -35,6 +35,7 @@
     grid-template-areas:
         "images"
         "input"
+        "add-friends"
         "feedback"
         "submit"
         "break"
@@ -78,9 +79,17 @@
     margin-top: 20px;
 }
 
-.message {
+#no-images {
     font-weight: 600;
     text-align: center;
+}
+
+#image-info{
+    align-self: flex-end;
+    position: relative;
+    right: 47px;
+    width: 24px;
+    height: 24px;
 }
 
 .page-container ul {
@@ -100,7 +109,7 @@
     margin-bottom: 5px;
 }
 
-.remove-icon {
+.minus-icon-active, .minus-icon-inactive {
     width: 24px;
     height: 24px;
 }
@@ -126,6 +135,13 @@
 
 #quest-notes {
     width: 90%;
+    border: 1px solid rgb(180, 180, 180);
+    border-radius: 5px;
+    font-size: 13pt;
+}
+
+#quest-notes::placeholder {
+    color: rgb(180, 180, 180);
 }
 
 #characters-remaining-container {
@@ -161,6 +177,31 @@
     margin-bottom: 40px;
 }
 
+.add-friends-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    grid-area: add-friends;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    width: 90%;
+    border: 2px solid #ff80ee;
+    border-style: dashed;
+    border-radius: 10px;
+    justify-self: center;
+}
+
+#add-friends-header {
+    margin-top: 20px;
+}
+
+.add-friends-container a {
+    font-size: 12pt;
+    color: black;
+    align-self: center;
+    padding-bottom: 30px;
+}
+
 #submit-button {
     display: flex;
     height: 100%;
@@ -193,4 +234,10 @@
     align-items: center;
     text-align: center;
     font-weight: 600;
+}
+
+.popover-body {
+    font-family: 'Mali', Arial, Helvetica, sans-serif;
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url("/img/background_pattern_2.png");
+    max-width: 180px;
 }

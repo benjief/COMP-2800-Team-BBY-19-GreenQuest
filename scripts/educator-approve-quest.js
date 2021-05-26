@@ -1,18 +1,15 @@
 // JS for educator-approve-quest.js
 
-
 var questIDs = [];
-var currentUser = null;
 var questID;
 var userID;
-var submitterID;
-var submitterPoints;
 var className;
 var classPoints;
-var questSubmitter = null;
+var questSubmitters = null;
 var questDescription = null;
 var questNotes = null;
 var questPoints = 0;
+var classList = [];
 
 var validInput = false;
 
@@ -30,7 +27,7 @@ function getCurrentUser() {
                 .then(function (doc) {
                     // Extract the current user's ID
                     userID = doc.id;
-                    pullQuestInfo();
+                    getQuests();
                 });
         }
     });
@@ -39,19 +36,20 @@ function getCurrentUser() {
 /**
  * Write this.
  */
-function pullQuestInfo() {
-    db.collection("Educators").doc(userID).collection("Quests").doc(questID)
+function pullQuestInfo(id) {
+    db.collection("Student_Quests").doc(id)
         .get()
         .then((doc) => {
-            questSubmitter = doc.data().Quest_Submitter;
-            submitterID = doc.data().Submitter_ID;
+            questSubmitters = doc.data().Quest_Participants;
+            submitterIDs = doc.data().Quest_Participant_IDs;
             questDescription = doc.data().Quest_Description;
             questNotes = doc.data().Quest_Notes;
-            imageURLs = doc.data().Quest_Photos;
-            className = doc.data().Submitter_Class;
-            getSubmitterPoints();
-            getClassPoints();
+            imageURLs = doc.data().Quest_Images;
+            // className = doc.data().Submitter_Class;
+            // getSubmitterPoints();
+            // getClassPoints();
             populateDOM();
+            getClassList();
         })
         .catch((error) => {
             console.log("Error getting quest: ", error);
@@ -61,39 +59,11 @@ function pullQuestInfo() {
 /**
  * Write this.
  */
-function getSubmitterPoints() {
-    db.collection("Students").doc(submitterID)
-        .get()
-        .then((doc) => {
-            submitterPoints = doc.data().Student_Points;
-            console.log(submitterPoints);
-        })
-        .catch((error) => {
-            console.log("Error getting submitter points: ", error);
-        });
-}
-
-/**
- * Write this.
- */
-function getClassPoints() {
-    db.collection("Classes").doc(className)
-        .get()
-        .then((doc) => {
-            classPoints = doc.data().Class_Points;
-            console.log(classPoints);
-        })
-        .catch((error) => {
-            console.log("Error getting class points: ", error);
-        });
-}
-
-/**
- * Write this.
- */
 function populateDOM() {
-    let submitter = "<p id='quest-submitter'>" + questSubmitter + "</p>";
-    $("#quest-submitter-container").append(submitter);
+    for (var i = 0; i < questSubmitters.length; i++) {
+        let submitter = "<li>" + questSubmitters[i] + "</li>";
+        $("#quest-submitters").append(submitter);
+    }
     let description = "<p id='quest-description'>" + questDescription + "</p>";
     $("#quest-description-container").append(description);
     if (questNotes === "" || questNotes == null) {
@@ -159,36 +129,77 @@ function deleteStoredImages() {
 /**
  * Write this.
  */
-function updateStudentPoints() {
-    submitterPoints += questPoints;
-    console.log(submitterPoints);
-    db.collection("Students").doc(submitterID).update({
-        Student_Points: submitterPoints
-    })
-        .then(() => {
-            console.log("Student points updated successfully!");
+function updateStudentPoints(id) {
+    console.log(id);
+    console.log(id === "68KLrNzUySUsHchhyhiD0zlqRih1");
+    db.collection("Students").doc(id)
+        .get()
+        .then(function (doc) {
+            let updatedStudentPoints = doc.data().Student_Points + questPoints;
+            db.collection("Students").doc(id).update({
+                Student_Points: updatedStudentPoints
+            })
+                .then(() => {
+                    console.log("Student points updated successfully!");
+                })
+                .catch((error) => {
+                    console.error("Error updating student points: ", error);
+                });
         })
-        .catch((error) => {
-            console.error("Error updating student points: ", error);
-        });
+}
+
+/**
+ * Write this.
+ * Taken from https://stackoverflow.com/questions/37365512/count-the-number-of-times-a-same-value-appears-in-a-javascript-array
+ * 
+ * @param {*} array 
+ * @param {*} value 
+ * @returns 
+ */
+function getOccurrence(array, value) {
+    return array.filter((v) => (v === value)).length;
 }
 
 /**
  * Write this.
  */
 function updateClassPoints() {
-    classPoints += questPoints;
-    console.log(classPoints);
-    db.collection("Classes").doc(className).update({
-        Class_Points: classPoints
-    })
-        .then(() => {
-            console.log("Class points successfully updated!");
+    let classPointsList = [];
+    for (var i = 0; i < classList.length; i++) {
+        let points = getOccurrence(classList, classList[i]) * questPoints;
+        let classPoints = { "name": classList[i], "points": points };
+        if (!classPointsList.includes(classPoints)) {
+            classPointsList.push(classPoints);
+        }
+    }
+
+    for (var i = 0; i < classPointsList.length; i++) {
+        db.collection("Classes").doc(classPointsList[i].name).update({
+            Class_Points: classPointsList[i].points
         })
-        .catch((error) => {
-            console.error("Error updating class points: " + error);
-        })
+            .then(() => {
+                console.log("Class points successfully updated!");
+            })
+            .catch((error) => {
+                console.error("Error updating class points: " + error);
+            });
+    }
 }
+
+/**
+ * Write this.
+ */
+function getClassList() {
+    for (var i = 0; i < submitterIDs.length; i++) {
+        db.collection("Students").doc(submitterIDs[i])
+            .get()
+            .then(function (doc) {
+                let className = doc.data().Student_Class;
+                classList.push(className);
+            });
+    }
+}
+
 
 /**
  * Write this.
@@ -196,9 +207,9 @@ function updateClassPoints() {
 function approveStudentQuest() {
     questPoints = document.getElementById("quest-points-input").value;
     questPoints = parseInt(questPoints);
-    db.collection("Students").doc(submitterID).collection("Quests").doc(questID).update({
+    db.collection("Student_Quests").doc(questID).update({
         Quest_Status: "approved",
-        Unread: true,
+        Quest_Unread: true,
         Quest_Points: questPoints,
         Date_Processed: new Date(),
         Date_Submitted: firebase.firestore.FieldValue.delete(),
@@ -206,7 +217,9 @@ function approveStudentQuest() {
     })
         .then(() => {
             console.log("Student quest successfully updated!");
-            updateStudentPoints();
+            for (var i = 0; i < submitterIDs.length; i++) {
+                updateStudentPoints(submitterIDs[i]);
+            }
             updateClassPoints();
         })
         .catch((error) => {
@@ -218,13 +231,13 @@ function approveStudentQuest() {
  * Write this.
  */
 function rejectStudentQuest() {
-    db.collection("Students").doc(submitterID).collection("Quests").doc(questID).update({
+    db.collection("Student_Quests").doc(questID).update({
         Quest_Status: "rejected",
         Unread: true,
         Quest_Points: 0,
         Date_Processed: new Date(),
         Date_Submitted: firebase.firestore.FieldValue.delete(),
-        Quest_Likes: 0
+        // Quest_Likes: 0
     })
         .then(() => {
             console.log("Student quest successfully updated!");
@@ -245,7 +258,7 @@ function checkInput() {
             color: "red"
         });
         $("#feedback").show(0);
-        $("#feedback").fadeOut(2500);
+        $("#feedback").fadeOut(2000);
     } else {
         validInput = true;
     }
@@ -257,26 +270,11 @@ function checkInput() {
 function onClickApprove() {
     checkInput();
     if (validInput) {
-        db.collection("Educators").doc(userID).collection("Quests").doc(questID).delete()
-            .then(() => {
-                console.log("Quest successfully approved!");
-                approveStudentQuest();
-                if (imageURLs.length != 0) {
-                    deleteStoredImages();
-                }
-                $("#feedback").html("Success! Please wait...");
-                $("#feedback").css({
-                    color: "green"
-                });
-                $("#feedback").show(0);
-                $("#feedback").fadeOut(2500);
-                setTimeout(function () {
-                    location.reload();
-                }, 2300);
-            })
-            .catch((error) => {
-                console.error("Error approving quest: ", error);
-            })
+        approveStudentQuest();
+        if (imageURLs.length != 0) {
+            deleteStoredImages();
+        }
+        displaySuccessMessage();
     }
 }
 
@@ -284,69 +282,85 @@ function onClickApprove() {
  * Write this
  */
 function onClickReject() {
-    db.collection("Educators").doc(userID).collection("Quests").doc(questID).delete()
-        .then(() => {
-            console.log("Quest successfully rejected!");
-            rejectStudentQuest();
-            if (imageURLs.length != 0) {
-                deleteStoredImages();
-            }
-            $("#feedback").html("Success! Please wait...");
-            $("#feedback").show(0);
-            $("#feedback").fadeOut(2500);
-            setTimeout(function () {
-                location.reload();
-            }, 2300);
-        })
-        .catch((error) => {
-            console.error("Error rejecting quest: ", error);
-        })
+    rejectStudentQuest();
+    if (imageURLs.length != 0) {
+        deleteStoredImages();
+    }
+    displaySuccessMessage();
 }
 
 /**
  * Write this
  */
-function listQuests() {
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-            db.collection("Educators")
-                .doc(user.uid)
-                // Read
-                .get()
-                .then(function (doc) {
-                    currentUser = doc.id;
-                    console.log("Your firebase user ID is " + currentUser);
-                    getQuests();
-                });
-        }
+function displaySuccessMessage() {
+    $("#feedback").html("Success! Please wait...");
+    $("#feedback").css({
+        color: "green"
     });
+    $("#feedback").show(0);
+    $("#feedback").fadeOut(1000);
+    setTimeout(function () {
+        // Refresh the page (will be redirected if there are no more quests to approve)
+        location.reload();
+    }, 1000);
 }
 
 /**
- * Reads quest IDs from Firestore and puts them into an array.
+//  * Write this
+//  */
+// function listQuests() {
+//     firebase.auth().onAuthStateChanged(function (user) {
+//         if (user) {
+//             db.collection("Educators")
+//                 .doc(user.uid)
+//                 // Read
+//                 .get()
+//                 .then(function (doc) {
+//                     currentUser = doc.id;
+//                     console.log("Your firebase user ID is " + currentUser);
+//                     getQuests();
+//                 });
+//         }
+//     });
+// }
+
+/**
+ * Reads quest IDs relevant to this user from Firestore and stores them in an array.
  */
 function getQuests() {
-    db.collection("Educators").doc(currentUser).collection("Quests")
+    db.collection("Student_Quests")
+        .where("Quest_Approver_ID", "==", userID)
         .orderBy("Date_Submitted", "asc")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                questIDs.push(doc.id);
+                if (doc.data().Quest_Status === "submitted") {
+                    questIDs.push(doc.id);
+                }
             });
             if (questIDs[0] == null) {
+                console.log("no more quests to process");
                 location.href = "./educator-home.html";
             }
-            console.log(questIDs[0]);
             questID = questIDs[0];
-            console.log(questID)
-            getCurrentUser();
+            for (var i = 0; i < questIDs.length; i++) {
+                pullQuestInfo(questIDs[i]);
+            }
         })
         .catch((error) => {
             console.log("Error getting quests: ", error);
         });
 }
 
+/**
+ * Write this.
+ * Taken from https://stackoverflow.com/questions/3252730/how-to-prevent-a-click-on-a-link-from-jumping-to-top-of-page
+ */
+$(".button").click(function (event) {
+    event.preventDefault();
+})
+
 // Run function when document is ready 
 $(document).ready(function () {
-    listQuests();
+    getCurrentUser();
 });

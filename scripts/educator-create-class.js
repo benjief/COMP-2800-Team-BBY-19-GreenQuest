@@ -1,9 +1,10 @@
 // JS for educator-create-class.js
 
-var noInput = false;
+var validInput = false;
 
 /**
  * Implement a character limit counter.
+ * Taken from https://www.sitepoint.com/community/t/javascript-form-elements-character-countdown-loop-through-form-elements/342603.
  * 
  * @param {*} field - DOM-element that characters are being counted in
  * @param {*} field2 - ID of the DOM-element displaying the number of characters remaining
@@ -49,7 +50,6 @@ function addClass(description, nickname) {
  */
 function checkInput(description, nickname) {
     if (description == null || nickname == null || description === "" || nickname === "") {
-        noInput = true;
         $("#feedback").html("Please enter a class description and nickname");
         $("#feedback").css({
             color: "red"
@@ -57,7 +57,7 @@ function checkInput(description, nickname) {
         $("#feedback").show(0);
         $("#feedback").fadeOut(2500);
     } else {
-        noInput = false;
+        validInput = true;
     }
 }
 
@@ -68,12 +68,14 @@ function onClickSubmit() {
     let description = document.getElementById("class-description").value;
     let nickname = document.getElementById("class-nickname").value;
     checkInput(description, nickname);
-    if (noInput == false) {
+    if (validInput) {
         // Add class to Firestore
         addClass(description, nickname);
         // Display success message and direct users back to the main page
-        let feedback = document.getElementById("feedback");
-        feedback.innerHTML = "Success! Please wait...";
+        $("#feedback").html("Success! Please wait...");
+        $("#feedback").css({
+            color: "green"
+        });
         $(feedback).show(0);
         $(feedback).fadeOut(2500);
         setTimeout(function () {
@@ -81,3 +83,11 @@ function onClickSubmit() {
         }, 2300);
     }
 }
+
+/**
+ * Write this.
+ * Taken from https://stackoverflow.com/questions/3252730/how-to-prevent-a-click-on-a-link-from-jumping-to-top-of-page
+ */
+ $(".button").click(function (event) {
+    event.preventDefault();
+})

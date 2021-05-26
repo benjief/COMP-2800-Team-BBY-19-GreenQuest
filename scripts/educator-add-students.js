@@ -1,6 +1,6 @@
 // JS for educator-add-students.js
 
-var currentUser = null;
+var userID;
 
 // Create empty lists to house student names and IDs
 var studentNames = [];
@@ -12,9 +12,6 @@ const parsedUrl = new URL(window.location.href);
 var className = parsedUrl.searchParams.get("classname");
 $(".page-heading").html("Add Students to " + className);
 
-// Pull redirect flag from URL
-var redirectFlag = parsedUrl.searchParams.get("redirectflag");
-
 function getCurrentUser() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
@@ -23,7 +20,7 @@ function getCurrentUser() {
                 // Read
                 .get()
                 .then(function (doc) {
-                    currentUser = doc.data().Educator_Name;
+                    userID = doc.id;
                     getStudents();
                 });
         }
@@ -53,8 +50,7 @@ function populateStudentList() {
             $("#student-container-" + i).append(studentName);
             let iconContainer = "<div class='icon-container' id='icon-container-" + i + "'></div>";
             $("#student-container-" + i).append(iconContainer);
-            let plusIcon = "<img src='/img/add_icon.png' class='icon' id='plus-icon-" + i +
-                "' onclick='addStudent()'>";
+            let plusIcon = "<img src='/img/add_icon.png' class='plus-icon' id='plus-icon-" + i + "'>";
             $("#icon-container-" + i).append(plusIcon);
         }
     }
@@ -79,66 +75,62 @@ function getStudents() {
         });
 }
 
+var test
+
 /**
  * Updates the student's Student_Class and Student_Educator attributes to the class they're being added to.
  * Also changes the "+" icon beside a student to a "-" icon and allows that student to be subsequently
  * removed from the class in question.
  */
-function addStudent() {
-    $(document).click(function (event) {
-        let index = $(event.target).attr("id");
-        // Extract index from event id (CITE THIS CODE)
-        index = index.match(/\d+/);
-        // Replace "add" icon with a "remove" icon
-        $(event.target).attr("src", "/img/remove_icon.png");
-        // Get "remove" icon to call removeStudent()
-        $(event.target).attr("onclick", "removeStudent()");
-        let studentToAdd = studentIDs[index];
-        console.log("Student to add" + studentToAdd);
-        console.log("Student added to class: " + className);
-        console.log("Student's Educator: " + currentUser);
-        // Update the student's Student_Class attribute
-        db.collection("Students").doc(studentToAdd).update({
-            Student_Class: className,
-            Student_Educator: currentUser
+$(document.body).on("click", ".plus-icon", function (event) {
+    let index = $(event.target).attr("id");
+    // Extract index from event id - 
+    // taken from https://www.geeksforgeeks.org/extract-a-number-from-a-string-using-javascript/#:~:text=The%20number%20from%20a%20string,(%5Cd%2B)%2F)
+    index = parseInt(index.match(/(\d+)/));
+    // Replace "add" icon with a "remove" icon
+    $(event.target).attr("src", "/img/remove_icon.png");
+    $(event.target).attr("class", "minus-icon");
+    let studentToAdd = studentIDs[index];
+    // Update the student's Student_Class and Student_Educator attributes
+    db.collection("Students").doc(studentToAdd).update({
+        Student_Class: className,
+        Student_Educator: userID
+    })
+        .then(() => {
+            console.log("Student successfully added to this class!");
         })
-            .then(() => {
-                console.log("Student successfully added to this class!");
-            })
-            .catch((error) => {
-                console.error("Error adding student to this class: ", error);
-            });
-    });
-}
+        .catch((error) => {
+            console.error("Error adding student to this class: ", error);
+        });
+});
 
 /**
  * Updates the student's Student_Class and Student_Educator attributes to null.
- * Also changes the "+" icon beside a student to a "-" icon and allows that student to be subsequently
+ * Also changes the "-" icon beside a student to a "+" icon and allows that student to be subsequently
  * added to the class in question.
  */
-function removeStudent() {
-    $(document).click(function (event) {
-        let index = $(event.target).attr("id");
-        // Extract index from event id
-        index = index.match(/\d+/);
-        // Replace "remove" icon with an "add" icon
-        $(event.target).attr("src", "/img/add_icon.png");
-        // Get "add" icon to call addStudent()
-        $(event.target).attr("onclick", "addStudent()");
-        let studentToRemove = studentIDs[index];
-        // Update the student's Student_Class attribute
-        db.collection("Students").doc(studentToRemove).update({
-            Student_Class: null,
-            Student_Educator: null
+$(document.body).on("click", ".minus-icon", function (event) {
+    // Extract index from event id
+    let index = $(event.target).attr("id");
+    // Extract index from event id - 
+    // taken from https://www.geeksforgeeks.org/extract-a-number-from-a-string-using-javascript/#:~:text=The%20number%20from%20a%20string,(%5Cd%2B)%2F)
+    index = parseInt(index.match(/(\d+)/));
+    // Replace "remove" icon with an "add" icon
+    $(event.target).attr("src", "/img/add_icon.png");
+    $(event.target).attr("class", "plus-icon");
+    let studentToRemove = studentIDs[index];
+    // Update the student's Student_Class attribute
+    db.collection("Students").doc(studentToRemove).update({
+        Student_Class: null,
+        Student_Educator: null
+    })
+        .then(() => {
+            console.log("Student successfully removed from this class!");
         })
-            .then(() => {
-                console.log("Student successfully added to this class!");
-            })
-            .catch((error) => {
-                console.error("Error adding student to this class: ", error);
-            });
-    });
-}
+        .catch((error) => {
+            console.error("Error removing student from this class: ", error);
+        });
+});
 
 /**
  * Redirects users back to the main page (or the manage class page) once they've finished adding students. 
@@ -146,12 +138,7 @@ function removeStudent() {
  */
 function onClickSubmit() {
     setTimeout(function () {
-        if (!redirectFlag) {
-            location.href = "./educator-home.html";
-        } else {
-            location.href = "./educator-manage-class.html?classname=" + className;
-        }
-
+        location.href = "./educator-manage-class.html?classname=" + className;
     }, 1000);
 }
 

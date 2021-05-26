@@ -11,19 +11,18 @@ var questInfo;
 var bitmojiURL;
 var userID;
 
-/* Get the current user's name, class name, educator name, and ID from Firestore. */
+/* Get the current user's ID from Firestore. */
 function getCurrentStudent() {
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {
-            db.collection("Students")
-                .doc(somebody.uid)
+            db.collection("Students").doc(somebody.uid)
                 // Read
                 .get()
                 .then(function (doc) {
                     // Extract the current student's class name
                     userID = doc.id;
                     console.log(userID)
-                    getUniqueID();
+                    getQuestInfo();
                 });
         }
     });
@@ -32,35 +31,19 @@ function getCurrentStudent() {
 /**
  * Write this.
  */
-function getUniqueID() {
-    db.collection("Students").doc(userID).collection("Quests")
-    .where("Quest_Status", "==", "active")
-    .get()
-    .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            uniqueID = doc.id;
-        })
-        getQuest();
-    })
-    .catch((error) => {
-        console.log("Error getting unique quest ID: ", error);
-    });
-}
-
-/**
- * Write this.
- */
-function getQuest() {
-    console.log(questID);
-    db.collection("Quests").doc(questID)
+function getQuestInfo() {
+    db.collection("Student_Quests").doc(questID)
         // Read
         .get()
         .then(function (doc) {
-            questTitle = doc.data().title;
-            questDescription = doc.data().description;
-            questInstructions = doc.data().instruction;
-            questInfo = doc.data().moreInfo;
+            questTitle = doc.data().Quest_Title;
+            questDescription = doc.data().Quest_Description;
+            questInstructions = doc.data().Quest_Instructions;
+            questInfo = doc.data().Quest_Info;
             getBitmoji();
+        })
+        .catch((error) => {
+            console.log("Error getting quest: ", error);
         });
 }
 
@@ -68,12 +51,15 @@ function getQuest() {
  * Write this.
  */
 function getBitmoji() {
-    db.collection("Students").doc(userID).collection("Quests").doc(uniqueID)
-    .get()
-    .then(function (doc) {
-        bitmojiURL = doc.data().Quest_Bitmoji;
-        addInfoToDOM();
-    });
+    db.collection("Student_Quests").doc(questID)
+        .get()
+        .then(function (doc) {
+            bitmojiURL = doc.data().Quest_Bitmoji;
+            addInfoToDOM();
+        })
+        .catch((error) => {
+            console.log("Error getting bitmoji: ", error);
+        });
 }
 
 /**
@@ -147,8 +133,8 @@ function onClickSubmit() {
  */
 function updateStudent() {
     db.collection("Students").doc(userID).update({
-            Student_Quest: false
-        })
+        Student_Quest: null
+    })
         .then(() => {
             console.log("Student_Quest successfully deactivated!");
             deleteQuest()
@@ -161,7 +147,7 @@ function updateStudent() {
  * Write this.
  */
 function deleteQuest() {
-    db.collection("Students").doc(userID).collection("Quests").doc(uniqueID)
+    db.collection("Student_Quests").doc(questID)
         .delete()
         .then(() => {
             console.log("Quest successfully deleted!");
@@ -178,7 +164,7 @@ function resetQuest() {
     if (confirm("Are you sure?")) {
         updateStudent();
     } else {
-        console.log("Reset quest cancelled");
+        console.log("Reset quest cancelled.");
     }
 }
 
