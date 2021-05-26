@@ -182,7 +182,7 @@ function populateDOM(i, timeDifference, unitOfTime) {
 
     //share button appears.
     //Inline share buttons sourced from https://platform.sharethis.com/inline-share-buttons.
-    let shareButton = '<!-- ShareThis BEGIN --><div id="my-inline-buttons"></div><!-- ShareThis END -->';
+    let shareButton = '<!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons"></div><!-- ShareThis END -->';
     $("#quest-container-" + i).append(shareButton);
     console.log("does this work?");
 }
@@ -219,24 +219,6 @@ function getBitmojiBackground() {
 // }
 
 
-
-//shareThis reinitializing configuration.
-window.__sharethis__.load('inline-share-buttons', {
-    alignment: 'right',
-    id: 'my-inline-buttons',
-    enabled: true,
-    font_size: 11,
-    padding: 8,
-    radius: 0,
-    networks: ['facebook', 'twitter', 'pinterest', 'sms'],
-    size: 32,
-    show_mobile_buttons: true,
-    spacing: 0,
-    url: "https://greenquest-5f80c.web.app/html/student-processed-quests.html", // custom url
-    title: "GreenQuest",
-    image: "https://18955-presscdn-pagely.netdna-ssl.com/wp-content/uploads/2016/12/ShareThisLogo2x.png", // useful for pinterest sharing buttons
-    description: "Set this"
-  });
 
 
 // Run function when document is ready 
