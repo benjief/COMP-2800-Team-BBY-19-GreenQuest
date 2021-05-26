@@ -219,19 +219,10 @@ function getBitmojiBackground() {
 // }
 
 
-// Run function when document is ready 
-$(document).ready(function () {
-    getCurrentUser();
-});
-
-
-
-
-
 
 //shareThis reinitializing configuration.
 window.__sharethis__.load('inline-share-buttons', {
-    alignment: 'left',
+    alignment: 'right',
     id: 'my-inline-buttons',
     enabled: true,
     font_size: 11,
@@ -241,9 +232,15 @@ window.__sharethis__.load('inline-share-buttons', {
     size: 32,
     show_mobile_buttons: true,
     spacing: 0,
-    url: "https://www.sharethis.com", // custom url
-    title: "My Custom Title",
+    url: "https://greenquest-5f80c.web.app/html/student-processed-quests.html", // custom url
+    title: "GreenQuest",
     image: "https://18955-presscdn-pagely.netdna-ssl.com/wp-content/uploads/2016/12/ShareThisLogo2x.png", // useful for pinterest sharing buttons
-    description: "My Custom Description",
-    username: "ShareThis" // custom @username for twitter sharing
+    description: "Set this"
   });
+
+
+// Run function when document is ready 
+$(document).ready(function () {
+    getCurrentUser();
+});
+

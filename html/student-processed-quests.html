@@ -14,10 +14,7 @@
     <link rel="stylesheet" href="/styles/student-processed-quests.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Mali&display=swap" rel="stylesheet">
-    
-    <!-- optional javascript to allow shareThis button to work -->
-    <script src="/scripts/student-processed-quests.js" defer></script>
-  
+      
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon//favicon-32x32.png">
@@ -26,7 +23,11 @@
     <link rel="mask-icon" href="/favicon//safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
+   
     <!-- Activating sharethis button for inline share option -->
+    <script type="text/javascript">
+        var __st_loadLate=true; //if __st_loadLate is defined then the widget will not load on content ready
+    </script>
     <script src='https://platform-api.sharethis.com/js/sharethis.js#property=60ad9735a28015001222d395&product=inline-share-buttons' defer></script>
 </head>
 
@@ -89,7 +90,7 @@
     <!-- JS files: Your own JavaScript functions included here    -->
     <!--------------------------------------------------------------------->
     <script src="/scripts/logout.js"></script>
-
+    <script src="/scripts/student-processed-quests.js"></script>
     <script src="/scripts/all-pages.js"></script>
 
 </body>
