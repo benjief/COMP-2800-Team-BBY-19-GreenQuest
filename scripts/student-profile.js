@@ -128,10 +128,9 @@ function loadNames() {
                     checkIfInClass(doc);
                     checkQuestHistory();
                     // Extract the first name of the user
-                    var name = doc.data().Student_Name.split(' ');
+                    var name = doc.data().Student_Name;
                     if (name) {
-                        $("#first-name").html(name[0]);
-                        $("#last-name").html(name[1]);
+                        $("#full-name").html(name);
                     } else {
                         $("#personalized-greeting-new-user").html("Please log in");
                     }

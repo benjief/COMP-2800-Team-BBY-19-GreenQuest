@@ -32,42 +32,49 @@
 
 #main-content-card {
     grid-template-areas:
-        "card-text card-text"
-        "profile-pic profile-info"
-        "recent-quest recent-quest"
-        "break break"
-        "back back";
-}
-
-.card-text-container {
-    margin-top: 20px;
-    margin-bottom: 30px;
-    text-align: center;
+        "profile-info"
+        "recent-quest"
+        "break"
+        "back";
 }
 
 .card-text {
     height: 100%;
 }
 
-#card-button-container-1 {
-    display: flex;
-    grid-area: profile-pic;
-    height: 125px;
-    width: 125px;
+.pfp {
+    height: 80px;
+    width: 110px;
+    border-radius: 50%;
+    margin: 10px;
+    background-image: url(/img/background_pattern_8.png);
+    border: 2px solid orange;
 }
 
-#card-button-container-2 {
+#upload-image {
+    font-size: 9px;
+    width: auto;
+    height: auto;
+}
+
+.profile-image {
+    width: auto;
+    height: 80px;
+}
+
+#profile-info {
+    margin-top: 20px;
+    display: flex;
     grid-area: profile-info;
+    height: auto;
+    width: 90%;
     background-image: url("/img/background_pattern_3.png");
+    font-size: 17px;
 }
 
 #card-button-container-3 {
     grid-area: recent-quest;
-}
-
-.profile-info {
-    font-size: 15px;
-    display: flex;
+    background-image: url("/img/background_pattern_6.png");
 }
 
 #card-button-container-4 {
