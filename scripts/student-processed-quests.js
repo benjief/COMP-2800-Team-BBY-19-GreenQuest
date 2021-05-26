@@ -182,7 +182,7 @@ function populateDOM(i, timeDifference, unitOfTime) {
 
     //share button appears.
     //Inline share buttons sourced from https://platform.sharethis.com/inline-share-buttons.
-    let shareButton = '<!-- ShareThis BEGIN --><!-- ShareThis END -->';
+    let shareButton = '<!-- ShareThis BEGIN --><div id="my-inline-buttons"></div><!-- ShareThis END -->';
     $("#quest-container-" + i).append(shareButton);
     console.log("does this work?");
 }
@@ -224,6 +224,12 @@ $(document).ready(function () {
     getCurrentUser();
 });
 
+
+
+
+
+
+//shareThis reinitializing configuration.
 window.__sharethis__.load('inline-share-buttons', {
     alignment: 'left',
     id: 'my-inline-buttons',
@@ -231,7 +237,7 @@ window.__sharethis__.load('inline-share-buttons', {
     font_size: 11,
     padding: 8,
     radius: 0,
-    networks: ['messenger', 'twitter', 'pinterest', 'sharethis', 'sms', 'wechat'],
+    networks: ['facebook', 'twitter', 'pinterest', 'sms'],
     size: 32,
     show_mobile_buttons: true,
     spacing: 0,
