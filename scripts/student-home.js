@@ -21,7 +21,6 @@ function sayHello() {
                 .then(function (doc) {
                     userID = doc.id;
                     getStudentPoints();
-                    checkIfInClass(doc);
                     checkQuestHistory();
                     // Extract the first name of the user
                     var name = doc.data().Student_Name.split(" ", 1);
@@ -62,18 +61,6 @@ function checkQuestHistory() {
         .catch((error) => {
             console.log("Error getting quest history: ", error);
         });
-}
-
-/**
- * Write this.
- * 
- * @param {*} doc 
- */
-function checkIfInClass(doc) {
-    if (doc.data().Student_Class == null) {
-        disableMyClass();
-        disableMyQuest();
-    }
 }
 
 /**
@@ -127,13 +114,6 @@ function getActiveQuest() {
 function postStudentPoints() {
     console.log(studentPoints);
     $("#student-points").html(studentPoints);
-}
-
-/** Write this. */
-function disableMyClass() {
-    $("#card-button-container-1").css({ backgroundColor: "rgb(200, 200, 200)" });
-    $("#card-button-container-1").css({ transform: "none" });
-    $("#card-button-container-1 a").removeAttr("href");
 }
 
 /** Write this. */

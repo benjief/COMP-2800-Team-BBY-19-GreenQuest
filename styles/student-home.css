@@ -36,7 +36,7 @@
         "my-profile"
         "my-quest"
         "completed-quests"
-        "leaderboard"
+        "leaderboards"
         "break"
         "logout";
 }
@@ -65,7 +65,7 @@
 }
 
 #card-button-container-5 {
-    grid-area: leaderboard;
+    grid-area: leaderboards;
 }
 
 #card-button-container-4 {

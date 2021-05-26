@@ -1,75 +1,44 @@
 // JS for student-leaderboard.js
 
-// Pull class name from URL and display it in the DOM
-const parsedUrl = new URL(window.location.href);
-var className = parsedUrl.searchParams.get("classname");
-$(".page-heading").html("Add Students to " + className);
+var userID;
 
 /**
- * Adds the current class to the link address of the selected option.
- */
-function onClick() {
-    $(document).click(function (event) {
-        let redirectLink = $(event.target).attr("href");
-        redirectLink += "?classname=" + className;
-        $(event.target).attr("href", redirectLink);
+ * Gets the current student's ID and from Firestore.
+*/
+function getCurrentStudent() {
+    firebase.auth().onAuthStateChanged(function (somebody) {
+        if (somebody) {
+            db.collection("Students").doc(somebody.uid)
+                // Read
+                .get()
+                .then(function (doc) {
+                    userID = doc.id;
+                    checkIfInClass(doc);
+                });
+        }
     });
 }
 
 /**
  * Write this.
+ * 
+ * @param {*} doc 
  */
- function checkAddStudents() {
-    db.collection("Students")
-    .where("Student_Class", "==", null)
-    .get()
-    .then((querySnapshot) => {
-        let numStudents = querySnapshot.size;
-        if (numStudents == 0) {
-            disableAddStudents();
-        }
-    })
-    .catch((error) => {
-        console.log("Error getting students not in a class: ", error);
-    });
-}
-
-/**
- * Write this.
- */
- function checkRemoveStudents() {
-    console.log(className);
-    db.collection("Students")
-    .where("Student_Class", "==", className)
-    .get()
-    .then((querySnapshot) => {
-        let numStudents = querySnapshot.size;
-        if (numStudents == 0) {
-            disableRemoveStudents();
-        }
-    })
-    .catch((error) => {
-        console.log("Error getting students in class: ", error);
-    });
+function checkIfInClass(doc) {
+    if (doc.data().Student_Class == null) {
+        disableMyClass();
+    }
 }
 
 /** Write this. */
-function disableAddStudents() {
+function disableMyClass() {
     $("#card-button-container-1").css({ backgroundColor: "rgb(200, 200, 200)" });
     $("#card-button-container-1").css({ transform: "none" });
     $("#card-button-container-1 a").removeAttr("href");
 }
 
-/** Write this. */
-function disableRemoveStudents() {
-    $("#card-button-container-2").css({ backgroundColor: "rgb(200, 200, 200)" });
-    $("#card-button-container-2").css({ transform: "none" });
-    $("#card-button-container-2 a").removeAttr("onclick");
-    $("#card-button-container-2 a").removeAttr("href");
-}
 
 // Run function when document is ready 
 $(document).ready(function () {
-    checkAddStudents();
-    checkRemoveStudents();
+    getCurrentStudent();
 });
