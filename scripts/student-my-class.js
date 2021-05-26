@@ -17,7 +17,7 @@ function getCurrentStudent() {
                 // Read
                 .get()
                 .then(function (doc) {
-                    // Extract the current student's ID and class name
+                    // Extract the current student's name and class name
                     currentStudent = doc.data().Student_Name;
                     className = doc.data().Student_Class;
                     if (className == null) {
@@ -48,8 +48,8 @@ function populateStudentList(currentStudent) {
         $(".student-list").append(studentContainer);
         let studentName = "<p class='student-name' id='student-name-" + i + "'>" + studentsInClass[i].name + "</p>";
         $("#student-container-" + i).append(studentName);
-        //different container color for current student. 
-        if (studentsInClass[i].name == currentStudent) {
+        // Different container color for current student
+        if (studentsInClass[i].name === currentStudent) {
             $("#student-container-" + i).addClass("current-student-container");
         }
         let studentPoints = "<p class='student-points' id='student-points-" + i + "'>" + studentsInClass[i].points + "</p>";
@@ -99,15 +99,6 @@ function getStudentsInClass() {
  */
 function addHeading() {
     $(".page-heading").html(className);
-}
-
-/**
- * Redirects users back to the student homepage.
- */
-function onClickBack() {
-    setTimeout(function () {
-        location.href = "./student-home.html";
-    }, 1000);
 }
 
 /**

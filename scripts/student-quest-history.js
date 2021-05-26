@@ -20,49 +20,51 @@ function getCurrentUser() {
     });
 }
 
-/**
- * Write this.
- */
-function checkUnreadQuests() {
-    let counter = 0;
-    db.collection("Student_Quests")
-        .where("Quest_Participant_IDs", "array-contains", userID)
-        .get()
-        .then((querySnapshot) => {
-            if (doc.data().Unread == true) {
-                querySnapshot.forEach((doc) => {
-                    counter++;
-                });
-                if (counter > 0) {
-                    addAlert();
-                }
-            }
-        });
-}
+// /**
+//  * Write this.
+//  */
+// function checkUnreadQuests() {
+//     let counter = 0;
+//     db.collection("Student_Quests")
+//         .where("Quest_Participant_IDs", "array-contains", userID)
+//         .get()
+//         .then((querySnapshot) => {
+//             querySnapshot.forEach((doc) => {
+//                 if (doc.data().Quest_Unread == true) {
+//                     counter++;
+//                 }
+//             });
+//             if (counter > 0) {
+//                 addAlert();
+//             }
+//         });
+// }
 
-/**
- * Write this.
- */
-function addAlert() {
-    // $("#processed-quests-button").html($("#processed-quests-button").html() + "<br /> &#128276;");
-    let notificationBell = "<img class='notification' src='/img/notification_icon.png'>";
-    $("#card-button-container-1").append(notificationBell);
-}
+// /**
+//  * Write this.
+//  */
+// function addAlert() {
+//     // $("#processed-quests-button").html($("#processed-quests-button").html() + "<br /> &#128276;");
+//     let notificationBell = "<img class='notification' src='/img/notification_icon.png'>";
+//     $("#card-button-container-1").append(notificationBell);
+// }
 
 /**
  * Write this.
  */
 function checkProcessedQuests() {
+    let counter = 0;
     db.collection("Student_Quests")
-        // The Quest_Points attribute is unique to processed quests
-        .where("Quest_Points", "!=", null)
+        .where("Quest_Participant_IDs", "array-contains", userID)
         .get()
         .then((querySnapshot) => {
-            let numQuests = querySnapshot.size;
-            if (numQuests == 0) {
+            querySnapshot.forEach(doc => {
+                if (doc.data().Quest_Status == "approved" || doc.data().Quest_Status == "rejected") {
+                    counter++;
+                }
+            })
+            if (counter == 0) {
                 disableProcessedQuests();
-            } else {
-                checkUnreadQuests();
             }
         })
         .catch((error) => {
@@ -80,7 +82,7 @@ function checkPendingQuests() {
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                if (doc.data().Quest_Submitter_IDs.includes(userID)) {
+                if (doc.data().Quest_Participant_IDs.includes(userID)) {
                     counter++;
                 }
             })
