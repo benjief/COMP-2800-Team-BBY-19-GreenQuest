@@ -181,7 +181,8 @@ function populateDOM(i, timeDifference, unitOfTime) {
     getBitmojiBackground();
 
     //share button appears.
-    let shareButton = '<div class="sharethis-inline-share-buttons"></div>';
+    //Inline share buttons sourced from https://platform.sharethis.com/inline-share-buttons.
+    let shareButton = '<!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons"></div><!-- ShareThis END -->';
     $("#quest-container-" + i).append(shareButton);
 }
 
