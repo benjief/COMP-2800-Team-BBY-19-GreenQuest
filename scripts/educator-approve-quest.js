@@ -164,6 +164,7 @@ function getOccurrence(array, value) {
  * Write this.
  */
 function updateClassPoints() {
+    console.log(classList);
     let classPointsList = [];
     for (var i = 0; i < classList.length; i++) {
         let points = getOccurrence(classList, classList[i]) * questPoints;
@@ -171,6 +172,7 @@ function updateClassPoints() {
         if (!classPointsList.includes(classPoints)) {
             classPointsList.push(classPoints);
         }
+        console.log(classPointsList);
     }
 
     for (var i = 0; i < classPointsList.length; i++) {
@@ -190,12 +192,15 @@ function updateClassPoints() {
  * Write this.
  */
 function getClassList() {
+    console.log(submitterIDs);
     for (var i = 0; i < submitterIDs.length; i++) {
         db.collection("Students").doc(submitterIDs[i])
             .get()
             .then(function (doc) {
                 let className = doc.data().Student_Class;
-                classList.push(className);
+                if (className != null) {
+                    classList.push(className);
+                }
             });
     }
 }
