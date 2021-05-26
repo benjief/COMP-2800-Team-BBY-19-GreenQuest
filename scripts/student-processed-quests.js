@@ -173,6 +173,10 @@ function populateDOM(i, timeDifference, unitOfTime) {
     let questBitmoji = "<img class='bitmoji' id='bitmoji-" + i + "' src='" + processedQuests[i].bitmoji + "'>";
     $("#quest-container-" + i).append(questBitmoji);
     getBitmojiBackground();
+
+    //share button appears.
+    let shareButton = '<div class="sharethis-inline-share-buttons"></div>';
+    $("#quest-container-" + i).append(shareButton);
 }
 
 /**
