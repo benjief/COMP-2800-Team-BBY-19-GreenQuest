@@ -182,8 +182,9 @@ function populateDOM(i, timeDifference, unitOfTime) {
 
     //share button appears.
     //Inline share buttons sourced from https://platform.sharethis.com/inline-share-buttons.
-    let shareButton = '<!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons"></div><!-- ShareThis END -->';
+    let shareButton = '<!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons">BUTTON</div><!-- ShareThis END -->';
     $("#quest-container-" + i).append(shareButton);
+    console.log("does this work?");
 }
 
 /**
