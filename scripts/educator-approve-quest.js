@@ -207,13 +207,13 @@ function getClassList() {
 function approveStudentQuest() {
     questPoints = document.getElementById("quest-points-input").value;
     questPoints = parseInt(questPoints);
+    console.log(questID);
     db.collection("Student_Quests").doc(questID).update({
         Quest_Status: "approved",
-        // Quest_Unread: true,
         Quest_Points: questPoints,
         Date_Processed: new Date(),
         Date_Submitted: firebase.firestore.FieldValue.delete(),
-        Quest_Likes: 0
+        // Quest_Likes: 0
     })
         .then(() => {
             console.log("Student quest successfully updated!");
@@ -342,7 +342,8 @@ function getQuests() {
                 console.log("no more quests to process");
                 location.href = "./educator-home.html";
             }
-           pullQuestInfo(questIDs[0]);
+            questID = questIDs[0];
+            pullQuestInfo(questID);
         })
         .catch((error) => {
             console.log("Error getting quests: ", error);
