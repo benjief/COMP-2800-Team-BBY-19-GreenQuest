@@ -17,8 +17,8 @@
 
 .modal-body img {
     max-width: 100%;
-    max-height: auto;
-    object-fit: contain;
+    max-height: 100%;
+    object-fit: cover;
 }
 
 .modal-footer {

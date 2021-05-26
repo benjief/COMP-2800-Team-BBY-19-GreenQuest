@@ -342,10 +342,7 @@ function getQuests() {
                 console.log("no more quests to process");
                 location.href = "./educator-home.html";
             }
-            questID = questIDs[0];
-            for (var i = 0; i < questIDs.length; i++) {
-                pullQuestInfo(questIDs[i]);
-            }
+           pullQuestInfo(questIDs[0]);
         })
         .catch((error) => {
             console.log("Error getting quests: ", error);
