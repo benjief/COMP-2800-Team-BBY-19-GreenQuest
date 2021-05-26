@@ -56,6 +56,10 @@
     margin-bottom: 40px;
 }
 
+.sharethis-inline-share-buttons {
+    margin-bottom: 10px;
+}
+
 #main-content-card {
     grid-template-areas:
         "profile-info"
@@ -63,6 +67,7 @@
         "extra-break"
         "quest-list"
         "break"
+        "share"
         "back";
 }
 
