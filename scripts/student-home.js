@@ -21,7 +21,6 @@ function sayHello() {
                 .then(function (doc) {
                     userID = doc.id;
                     getStudentPoints();
-                    checkIfInClass(doc);
                     checkQuestHistory();
                     // Extract the first name of the user
                     var name = doc.data().Student_Name.split(" ", 1);
@@ -45,30 +44,23 @@ function sayHello() {
  * Write this.
  */
 function checkQuestHistory() {
+    let counter = 0;
     db.collection("Student_Quests")
-        .where("Quest_Status", "!=", "active")
+        .where("Quest_Participant_IDs", "array-contains", userID)
         .get()
         .then((querySnapshot) => {
-            let numQuests = querySnapshot.size;
-            if (numQuests == 0) {
+            querySnapshot.forEach((doc) => {
+                if (doc.data().Quest_Status != "active") {
+                    counter++;
+                }
+            })
+            if (counter == 0) {
                 disableQuestHistory();
             }
         })
         .catch((error) => {
             console.log("Error getting quest history: ", error);
         });
-}
-
-/**
- * Write this.
- * 
- * @param {*} doc 
- */
-function checkIfInClass(doc) {
-    if (doc.data().Student_Class == null) {
-        disableMyClass();
-        disableMyQuest();
-    }
 }
 
 /**
@@ -88,6 +80,10 @@ function onClickMyQuest() {
             }
         });
 
+}
+
+function onClickMyProfile() {
+    window.location.assign("./student-profile.html?userid=" + userID);
 }
 
 function getStudentPoints() {
@@ -122,13 +118,6 @@ function getActiveQuest() {
 function postStudentPoints() {
     console.log(studentPoints);
     $("#student-points").html(studentPoints);
-}
-
-/** Write this. */
-function disableMyClass() {
-    $("#card-button-container-1").css({ backgroundColor: "rgb(200, 200, 200)" });
-    $("#card-button-container-1").css({ transform: "none" });
-    $("#card-button-container-1 a").removeAttr("href");
 }
 
 /** Write this. */

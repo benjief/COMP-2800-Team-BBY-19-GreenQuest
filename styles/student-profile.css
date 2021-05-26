@@ -1,0 +1,287 @@
+/** CSS for student-home.html */
+
+.modal-header {
+    border: none;
+}
+
+.modal-title {
+    font-weight: 600;
+}
+
+.modal-body {
+    display: flex;
+    justify-content: center;
+    height: 500px;
+    /* word-wrap: break-word; */
+}
+
+.modal-body img {
+    max-width: 100%;
+    max-height: auto;
+    object-fit: contain;
+}
+
+.modal-footer {
+    border: none;
+    justify-content: center;
+}
+
+#upload-new-image-input {
+    display: none;
+}
+
+#upload-new-image-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ff80ee;
+    border-radius: 5px;
+    height: 36px;
+    width: 160px;
+    color: white;
+    font-size: 12pt;
+}
+
+#upload-new-image-label:active {
+    background-color: rgb(86, 94, 100);
+}
+
+.btn {
+    background-color: #ff80ee;
+    border: none;
+    font-size: 12pt;
+}
+
+.heading-container {
+    margin-bottom: 40px;
+}
+
+#main-content-card {
+    grid-template-areas:
+        "profile-info"
+        "recent-activity"
+        "extra-break"
+        "quest-list"
+        "break"
+        "back";
+}
+
+.profile-container {
+    display: grid;
+    grid-template-columns: 50%  50%;
+    grid-area: profile-info;
+    width: 90%;
+    justify-self: center;
+    margin-top: 18px;
+    margin-bottom: 60px;
+    border: 2px dashed #ff8000;
+    border-radius: 10px;
+    padding: 15px;
+    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url("/img/background_pattern_2.png");
+}
+
+.profile-pic-container {
+    height: 130px;
+    width: 130px;
+    border-radius: 50%;
+    background-image: url(/img/background_pattern_8.png);
+    border: 2px solid #ff80ee;
+    overflow: hidden;
+    position: relative;
+    justify-self: center;
+}
+
+#upload-image {
+    font-size: 9px;
+    width: auto;
+    height: auto;
+}
+
+#profile-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover
+}
+
+.profile-info-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#profile-name, #profile-class {
+    align-self: center;
+    font-weight: 600;
+    margin: 0;
+}
+
+#profile-class {
+    font-weight: normal;
+    font-size: 12pt;
+    margin-top: 7px;
+}
+
+.profile-points-container {
+    display: flex;
+    justify-content: center;
+}
+
+.profile-points-container p {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    color: #ff8000;
+    font-weight: 600;
+}
+
+.profile-points-container img {
+    width: 20px;
+    height: 20px;
+    align-self: center;
+    margin-left: 3px;
+}
+
+/* #profile-info {
+    margin-top: 20px;
+    display: flex;
+    grid-area: profile-info;
+    height: auto;
+    width: 90%;
+    background-image: url("/img/background_pattern_3.png");
+    font-size: 17px;
+} */
+
+
+.student-points-container p {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    font-family: 'Mali', Arial, Helvetica, sans-serif;
+    font-size: 15pt;
+    font-weight: 600;
+    margin-left: 10px;
+    color: #ff8000;
+    text-shadow: 1px 1px 1px rgba(62, 63, 66, 0.788);
+}
+
+.card-text-container {
+    grid-area: recent-activity;
+    justify-content: center;
+}
+
+.message-container {
+    display: flex;
+    justify-content: center;
+}
+
+.message {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    width: 90%;
+}
+
+.quest-list {
+    /* display: flex; */
+    width: 90%;
+    max-height: 600px;
+    grid-area: quest-list;
+    overflow: scroll;
+    overflow-x: hidden;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 10pt;
+    justify-self: center;
+    padding-right: 9px;
+    padding-left: 9px;
+}
+
+.quest-list::-webkit-scrollbar {
+    display: none;
+  }
+  
+.quest-list {
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
+}
+
+.quest-container {
+    display: grid;
+    grid-template-columns: 36% 54% 10%;
+    grid-template-rows: repeat(3, 33.3px);
+    grid-template-areas: 
+        "quest-bitmoji quest-title notification"
+        "quest-bitmoji quest-points quest-points"
+        "quest-bitmoji quest-date quest-date";
+    /* background-color: rgb(255, 241, 254); */
+    background: linear-gradient(rgba(216, 233, 255, 0.7), rgba(238, 238, 238, 0.7)), url("/img/background_pattern_8.png");
+    border-radius: 10px;
+    align-items: center;
+    /* margin-bottom: 15px; */
+    box-shadow: 5px 5px 5px rgb(116, 103, 103);
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.quest-container:last-child {
+    margin-bottom: 0;
+}
+
+.quest-title {
+    /* display: flex;
+    height: 100%;
+    align-items: center; */
+    grid-area: quest-title;
+    font-weight: 600;
+    /* justify-self: center; */
+    margin: 0;
+    /* margin-left: 10px; */
+}
+
+.quest-points {
+    grid-area: quest-points;
+    /* justify-self: center; */
+    margin: 0;
+    font-weight: 600;
+    color: #ff8000;
+}
+
+.quest-date {
+    grid-area: quest-date;
+    /* justify-self: center; */
+    margin: 0;
+}
+
+.bitmoji {
+    grid-area: quest-bitmoji;
+    height: 85px;
+    width: 85px;
+    border: 1px solid #ff7b00;
+    border-style: dashed;
+    border-radius: 10px;
+    justify-self: center;
+    object-fit: scale-down;
+}
+
+#upload-image-input {
+    display: none;
+}
+
+#upload-image-label {
+    font-size: 12px;
+    height: 35px;
+    width: 100%;
+    position: relative;
+    top: -36px;
+    /* left: 50%; */
+    /* bottom: 0%; */
+    /* transform: translateX(-50%); */
+    text-align: center;
+    background: rgba(209, 209, 209, 0.822);
+    font-weight: 600;
+}
+
+#card-button-container-1 {
+    grid-area: back;
+    margin-bottom: 40px;
+}
