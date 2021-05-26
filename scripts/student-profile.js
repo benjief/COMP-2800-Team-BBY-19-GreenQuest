@@ -132,10 +132,11 @@ function loadNames() {
                     if (name) {
                         $("#full-name").html(name);
                     } else {
-                        $("#personalized-greeting-new-user").html("Please log in");
+                        $("#full-name").html("Please log in again");
                     }
                 });
         }
     });
 }
 loadNames();
+
