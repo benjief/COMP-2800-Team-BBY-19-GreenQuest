@@ -143,7 +143,7 @@ function getTimeElapsed() {
         }
         populateDOM(i, Math.floor(timeDifference), unitOfTime);
     }
-    setUnreadToFalse();
+    // setUnreadToFalse();
 }
 
 /**
@@ -179,6 +179,9 @@ function populateDOM(i, timeDifference, unitOfTime) {
     let questBitmoji = "<img class='bitmoji' id='bitmoji-" + i + "' src='" + processedQuests[i].bitmoji + "'>";
     $("#quest-container-" + i).append(questBitmoji);
     getBitmojiBackground();
+
+    let shareButton = '<div class="sharethis-sticky-share-buttons"></div>';
+    $("#main-content-card").append(shareButton);
 }
 
 /**
@@ -196,21 +199,21 @@ function getBitmojiBackground() {
 /**
  * Write this.
  */
-function setUnreadToFalse() {
-    db.collection(Quests)
-        // This is going to be slow, but I don't know how to combine where clauses
-        .where("Unread", "==", true)
-        .get()
-        .then((querySnapshot) => {
-            querySnapshot.forEach(function (doc) {
-                if (doc.data().Quest_Participant_IDs.includes(userID)) {
-                    doc.ref.update({
-                        Unread: false
-                    });
-                }
-            });
-        });
-}
+// function setUnreadToFalse() {
+//     db.collection(Quests)
+//         // This is going to be slow, but I don't know how to combine where clauses
+//         .where("Unread", "==", true)
+//         .get()
+//         .then((querySnapshot) => {
+//             querySnapshot.forEach(function (doc) {
+//                 if (doc.data().Quest_Participant_IDs.includes(userID)) {
+//                     doc.ref.update({
+//                         Unread: false
+//                     });
+//                 }
+//             });
+//         });
+// }
 
 
 // Run function when document is ready 
