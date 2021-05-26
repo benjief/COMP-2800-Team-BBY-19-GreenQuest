@@ -51,10 +51,6 @@
     margin-bottom: 10px;
 }
 
-.break {
-    margin-bottom: 0;
-}
-
 .current-student-container {
     background: linear-gradient(rgba(255, 227, 251, 0.7), rgba(255, 227, 251, 0.7)), url("/img/background_pattern_2.png");
     border-color: rgb(255, 0, 217)
