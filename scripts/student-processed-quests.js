@@ -180,11 +180,11 @@ function populateDOM(i, timeDifference, unitOfTime) {
     $("#quest-container-" + i).append(questBitmoji);
     getBitmojiBackground();
 
-    // //share button appears.
-    // //Inline share buttons sourced from https://platform.sharethis.com/inline-share-buttons.
-    // let shareButton = '<!-- ShareThis BEGIN --><!-- ShareThis END -->';
-    // $("#quest-container-" + i).append(shareButton);
-    // console.log("does this work?");
+    //share button appears.
+    //Inline share buttons sourced from https://platform.sharethis.com/inline-share-buttons.
+    let shareButton = '<!-- ShareThis BEGIN --><!-- ShareThis END -->';
+    $("#quest-container-" + i).append(shareButton);
+    console.log("does this work?");
 }
 
 /**
@@ -223,3 +223,21 @@ function getBitmojiBackground() {
 $(document).ready(function () {
     getCurrentUser();
 });
+
+window.__sharethis__.load('inline-share-buttons', {
+    alignment: 'left',
+    id: 'my-inline-buttons',
+    enabled: true,
+    font_size: 11,
+    padding: 8,
+    radius: 0,
+    networks: ['messenger', 'twitter', 'pinterest', 'sharethis', 'sms', 'wechat'],
+    size: 32,
+    show_mobile_buttons: true,
+    spacing: 0,
+    url: "https://www.sharethis.com", // custom url
+    title: "My Custom Title",
+    image: "https://18955-presscdn-pagely.netdna-ssl.com/wp-content/uploads/2016/12/ShareThisLogo2x.png", // useful for pinterest sharing buttons
+    description: "My Custom Description",
+    username: "ShareThis" // custom @username for twitter sharing
+  });

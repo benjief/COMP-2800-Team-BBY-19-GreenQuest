@@ -49,6 +49,9 @@
     width: 100%;
     margin-bottom: 15px;
 }
+.sharethis-inline-share-buttons {
+    grid-area: share;
+}
 
 .quest-container:last-child {
     margin-bottom: 0;
