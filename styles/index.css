@@ -7,7 +7,8 @@
         "extra-break"
         "description"
         "break"
-        "login";
+        "login"
+        "about";
     align-items: center;
     font-size: 15pt;
     margin-bottom: 20px;
@@ -66,6 +67,10 @@ hr {
 
 #card-button-container-1 {
     grid-area: login;
+}
+
+#card-button-container-2 {
+    grid-area: about;
     margin-bottom: 40px;
 }
 
