@@ -49,3 +49,7 @@
     position: relative;
     top: -2px;
 }
+
+#button {
+    width: 100%;
+}
