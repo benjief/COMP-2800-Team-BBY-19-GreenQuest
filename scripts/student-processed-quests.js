@@ -182,9 +182,10 @@ function populateDOM(i, timeDifference, unitOfTime) {
 
     //share button appears.
     //Inline share buttons sourced from https://platform.sharethis.com/inline-share-buttons.
+    // $("#quest-container-" + i).append($(".sharethis-inline-share-buttons"));
+    console.log("does this work?");
     let shareButton = '<!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons"></div><!-- ShareThis END -->';
     $("#quest-container-" + i).append(shareButton);
-    console.log("does this work?");
 }
 
 /**
@@ -222,5 +223,18 @@ function getBitmojiBackground() {
 // Run function when document is ready 
 $(document).ready(function () {
     getCurrentUser();
-    __sharethis__.initialize();
 });
+
+
+//Delaying the loading of the ShareThis header file.
+//Sourced from StackOverflow
+//source: https://stackoverflow.com/questions/9611714/delay-script-loading
+
+setTimeout(function() {
+    var headID = document.getElementsByTagName("head")[0];         
+    var newScript = document.createElement('script');
+    newScript.type = 'text/javascript';
+    newScript.src = 'https://platform-api.sharethis.com/js/sharethis.js#property=60ad9735a28015001222d395&product=inline-share-buttons';
+    headID.appendChild(newScript);
+}, 2000);
+

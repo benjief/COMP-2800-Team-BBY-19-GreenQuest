@@ -53,7 +53,9 @@
 
 .sharethis-inline-share-buttons {
     grid-area: share;
+    margin: 0 auto 1px;
 }
+
 .quest-container:last-child {
     margin-bottom: 0;
 }
