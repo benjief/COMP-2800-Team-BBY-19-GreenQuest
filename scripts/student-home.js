@@ -20,7 +20,7 @@ function sayHello() {
                 .get()
                 .then(function (doc) {
                     userID = doc.id;
-                    checkIfInClass(userID);
+                    checkIfInClass(doc);
                     getStudentPoints();
                     checkQuestHistory();
                     // Extract the first name of the user
