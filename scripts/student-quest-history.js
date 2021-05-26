@@ -29,13 +29,13 @@ function checkUnreadQuests() {
         .where("Quest_Participant_IDs", "array-contains", userID)
         .get()
         .then((querySnapshot) => {
-            if (doc.data().Unread == true) {
-                querySnapshot.forEach((doc) => {
+            querySnapshot.forEach((doc) => {
+                if (doc.data().Quest_Unread == true) {
                     counter++;
-                });
-                if (counter > 0) {
-                    addAlert();
                 }
+            });
+            if (counter > 0) {
+                addAlert();
             }
         });
 }
@@ -80,7 +80,7 @@ function checkPendingQuests() {
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                if (doc.data().Quest_Submitter_IDs.includes(userID)) {
+                if (doc.data().Quest_Participant_IDs.includes(userID)) {
                     counter++;
                 }
             })

@@ -45,12 +45,17 @@ function sayHello() {
  * Write this.
  */
 function checkQuestHistory() {
+    let counter = 0;
     db.collection("Student_Quests")
-        .where("Quest_Status", "!=", "active")
+        .where("Quest_Participant_IDs", "array-contains", userID)
         .get()
         .then((querySnapshot) => {
-            let numQuests = querySnapshot.size;
-            if (numQuests == 0) {
+            querySnapshot.forEach((doc) => {
+                if (doc.data().Quest_Status != "active") {
+                    counter++;
+                }
+            })
+            if (counter == 0) {
                 disableQuestHistory();
             }
         })
