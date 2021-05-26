@@ -16,7 +16,7 @@ function getCurrentUser() {
                 .then(function (doc) {
                     // Extract the current user's ID
                     userID = doc.id;
-                    pullApprovedQuests()
+                    pullQuests()
                 });
         }
     });
@@ -25,65 +25,32 @@ function getCurrentUser() {
 /**
  * Write this.
  */
-function pullApprovedQuests() {
+function pullQuests() {
     db.collection("Student_Quests")
         // This is going to be slow, but I don't know how to combine where clauses
-        .where("Quest_Status", "==", "approved")
+        .where("Quest_Participant_IDs", "array-contains", userID)
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                if (doc.data().Quest_Participant_IDs.includes(userID)) {
-                    let approvedQuest = {
+                if (doc.data().Quest_Status === "approved" || doc.data().Quest_Status === "rejected") {
+                    let processedQuest = {
                         "title": doc.data().Quest_Title,
                         "date": doc.data().Date_Processed,
                         "bitmoji": doc.data().Quest_Bitmoji,
                         "points": doc.data().Quest_Points,
-                        "unread": doc.data().Unread,
-                        "status": "approved"
+                        "status": doc.data().Quest_Status
                     };
-                    approvedQuests.push(approvedQuest);
+                    processedQuests.push(processedQuest);
                 }
             });
-            // console.log(approvedQuests);
-            pullRejectedQuests();
+            checkProcessedQuests();
         });
 }
 
 /**
  * Write this.
  */
-function pullRejectedQuests() {
-    db.collection("Student_Quests")
-        // This is going to be slow, but I don't know how to combine where clauses
-        .where("Quest_Status", "==", "rejected")
-        .get()
-        .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                if (doc.data().Quest_Participant_IDs.includes(userID)) {
-                    let rejectedQuest = {
-                        "title": doc.data().Quest_Title,
-                        "date": doc.data().Date_Processed,
-                        "bitmoji": doc.data().Quest_Bitmoji,
-                        "points": doc.data().Quest_Points,
-                        "unread": doc.data().Unread,
-                        "status": "rejected"
-                    };
-                    rejectedQuests.push(rejectedQuest);
-                }
-            });
-            // console.log(rejectedQuests);
-            mergeProcessedQuests();
-        });
-}
-
-/**
- * Write this.
- */
-function mergeProcessedQuests() {
-    processedQuests = approvedQuests.concat(rejectedQuests);
-    // Sorting code taken from https://flaviocopes.com/how-to-sort-array-of-objects-by-property-javascript/
-    processedQuests.sort((a, b) => (a.date > b.date) ? -1 : 1);
-    // Append a message to the DOM if there are no quests to display
+function checkProcessedQuests() {
     if (processedQuests.length == 0) {
         let message = "<div class='message-container'><img src='/img/slow_down.png'>"
             + "<p class='message'>Slow down - you haven't got any processed quests!</p></div>";
@@ -104,6 +71,8 @@ function mergeProcessedQuests() {
  * @param {*} store 
  */
 function getTimeElapsed() {
+    console.log(processedQuests.length);
+    console.log(processedQuests);
     for (var i = 0; i < processedQuests.length; i++) {
         // Get timestamp for quest submission (convert to a date object)
         var timeProcessed = processedQuests[i].date.toDate();
@@ -143,7 +112,6 @@ function getTimeElapsed() {
         }
         populateDOM(i, Math.floor(timeDifference), unitOfTime);
     }
-    setUnreadToFalse();
 }
 
 /**
@@ -159,19 +127,19 @@ function populateDOM(i, timeDifference, unitOfTime) {
     if (processedQuests[i].status === "approved") {
         var elapsedTime = "<p class='quest-date' id='elapsed-time-" + i + "'><span class='approved'>Approved</span> " + timeDifference + " "
             + unitOfTime + " ago</p>";
-        var notification = "<img class='notification' src='/img/approved_icon.png'>";
+        // var notification = "<img class='notification' src='/img/approved_icon.png'>";
     } else {
         var elapsedTime = "<p class='quest-date' id='elapsed-time-" + i + "'><span class='rejected'>Rejected</span> " + timeDifference + " "
             + unitOfTime + " ago</p>";
-        var notification = "<img class='notification' src='/img/rejected_icon.png'>";
+        // var notification = "<img class='notification' src='/img/rejected_icon.png'>";
     }
-    if (processedQuests[i].unread) {
-        console.log("quest-container-")
-        $("#quest-container-" + i).css({
-            background: "linear-gradient(rgba(242, 175, 255, 0.7), rgba(238, 238, 238, 0.7)), url('/img/background_pattern_8.png')"
-        });
-        console.log("wtf");
-    }
+    // if (processedQuests[i].unread) {
+    //     console.log("quest-container-")
+    //     $("#quest-container-" + i).css({
+    //         background: "linear-gradient(rgba(242, 175, 255, 0.7), rgba(238, 238, 238, 0.7)), url('/img/background_pattern_8.png')"
+    //     });
+    //     console.log("wtf");
+    // }
     $("#quest-container-" + i).append(elapsedTime);
     if (processedQuests[i].unread) {
         $("#quest-container-" + i).append(notification);
@@ -192,26 +160,6 @@ function getBitmojiBackground() {
         });
     }
 }
-
-/**
- * Write this.
- */
-function setUnreadToFalse() {
-    db.collection(Quests)
-        // This is going to be slow, but I don't know how to combine where clauses
-        .where("Unread", "==", true)
-        .get()
-        .then((querySnapshot) => {
-            querySnapshot.forEach(function (doc) {
-                if (doc.data().Quest_Participant_IDs.includes(userID)) {
-                    doc.ref.update({
-                        Unread: false
-                    });
-                }
-            });
-        });
-}
-
 
 // Run function when document is ready 
 $(document).ready(function () {

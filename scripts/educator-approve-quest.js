@@ -209,7 +209,7 @@ function approveStudentQuest() {
     questPoints = parseInt(questPoints);
     db.collection("Student_Quests").doc(questID).update({
         Quest_Status: "approved",
-        Quest_Unread: true,
+        // Quest_Unread: true,
         Quest_Points: questPoints,
         Date_Processed: new Date(),
         Date_Submitted: firebase.firestore.FieldValue.delete(),
