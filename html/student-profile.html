@@ -57,12 +57,13 @@
         <div class="card mb-3" id="main-content-card">
             <div class="profile-container">
                 <div class="profile-pic-container">
-                    <img id="profile-pic" src="/img/sam_1.png" alt="pfp">
-                    <input type="file" id="file">
-                    <label for="file" id="uploadBtn">Choose Photo</label>
+                    <img id="profile-pic">
+                    <input type="file" accept="image/*" id="upload-image-input">
+                    <label for="upload-image-input" id="upload-image-label">Upload Image</label>
                 </div>
                 <div class="profile-info-container">
                     <p id="profile-name"></p>
+                    <p id="profile-class"></p>
                     <div class="profile-points-container">
                         <p id="profile-points"></p>
                         <img src="/img/leaf_icon.png">
@@ -70,14 +71,33 @@
 
                 </div>
             </div>
-            <div class="card-button-container" id="card-button-container-3">
-                <div><b>Recent Activity</b>
-
-                </div>
+            <div class="card-text-container">
+                <p class="card-text">Recent Activity:</p>
             </div>
+            <hr class="extra-break">
+            <div class="quest-list"></div>
             <hr class="break">
-            <div class="card-button-container" id="card-button-container-4">
+            <div class="card-button-container" id="card-button-container-1">
                 <a class="button" onclick="history.back()" href="#">Back</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="imagePreview" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <input type="file" accept="image/*" id="upload-new-image-input"></input>
+                    <label for="upload-new-image-input" id="upload-new-image-label">Upload New Image</label>
+                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                </div>
             </div>
         </div>
     </div>

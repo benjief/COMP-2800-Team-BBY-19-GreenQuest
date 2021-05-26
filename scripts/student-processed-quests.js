@@ -29,6 +29,7 @@ function pullQuests() {
     db.collection("Student_Quests")
         // This is going to be slow, but I don't know how to combine where clauses
         .where("Quest_Participant_IDs", "array-contains", userID)
+        .orderBy("Date_Processed", "desc")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
@@ -141,9 +142,9 @@ function populateDOM(i, timeDifference, unitOfTime) {
     //     console.log("wtf");
     // }
     $("#quest-container-" + i).append(elapsedTime);
-    if (processedQuests[i].unread) {
-        $("#quest-container-" + i).append(notification);
-    }
+    // if (processedQuests[i].unread) {
+    //     $("#quest-container-" + i).append(notification);
+    // }
     let questBitmoji = "<img class='bitmoji' id='bitmoji-" + i + "' src='" + processedQuests[i].bitmoji + "'>";
     $("#quest-container-" + i).append(questBitmoji);
     getBitmojiBackground();

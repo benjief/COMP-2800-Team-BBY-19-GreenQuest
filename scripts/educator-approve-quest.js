@@ -122,7 +122,7 @@ function deleteStoredImages() {
             console.log("Processed image successfully removed from storage!");
         })
         .catch((error) => {
-            console.error("Error deleting processed image from storage: ", error);
+            console.error("Error removing processed image from storage: ", error);
         });
 }
 
