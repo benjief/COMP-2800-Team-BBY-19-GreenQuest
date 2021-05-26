@@ -83,7 +83,7 @@ function mergeProcessedQuests() {
         + "<p class='message'>Slow down - you haven't got any processed quests!</p></div>";
         $(".quest-list").append(message);
         $(".quest-list").css({
-            height: "100px",
+            height: "100%",
             display: "flex",
             justifyContent: "center"
         });
