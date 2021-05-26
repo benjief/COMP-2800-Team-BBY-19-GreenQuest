@@ -82,6 +82,10 @@ function onClickMyQuest() {
 
 }
 
+function onClickMyProfile() {
+    window.location.assign("./student-profile.html?userid=" + userID);
+}
+
 function getStudentPoints() {
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {
