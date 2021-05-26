@@ -72,7 +72,7 @@ function getTopScores() {
     if (classScores.size >= 3) {
         firstPlace = iterator.next().value;
         secondPlace = iterator.next().value;
-        thirdPace = iterator.next().value;
+        thirdPlace = iterator.next().value;
     } else if (classScores == 2) {
         firstPlace = iterator.next().value;
         secondPlace = iterator.next().value;
