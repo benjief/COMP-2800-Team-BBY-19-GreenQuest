@@ -42,3 +42,21 @@ function populateHeading() {
 $(document).ready(function () {
     getUserInfo();
 });
+
+
+
+//broken code below
+let file = {};
+
+function chooseFile(e) {
+    file = e.target.files[0];
+    console.log(file);
+}
+
+$("#file").change(function(){
+    firebase.storage().ref('user/' + userID + '/profile.jpg').put(file).then(function () {
+        console.log("successfully uploaded a image")
+    }).catch(error => {
+        console.log(error.message);
+    })
+});
