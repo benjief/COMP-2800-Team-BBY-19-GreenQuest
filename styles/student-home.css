@@ -111,3 +111,11 @@
     height: 100%;
     align-items: center;
 }
+
+.inactive {
+    background-color: rgb(200, 200, 200);
+}
+
+.inactive:active {
+    transform: none;
+}
