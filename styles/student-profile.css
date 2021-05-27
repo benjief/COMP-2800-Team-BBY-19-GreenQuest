@@ -67,7 +67,7 @@
         "extra-break"
         "quest-list"
         "break"
-        "back";
+        "home";
 }
 
 .profile-container {
@@ -312,7 +312,7 @@
 }
 
 #card-button-container-1 {
-    grid-area: back;
+    grid-area: home;
     margin-bottom: 40px;
 }
 

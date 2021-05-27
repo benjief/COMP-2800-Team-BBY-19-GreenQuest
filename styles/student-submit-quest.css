@@ -45,7 +45,6 @@
         "submit"
         "break"
         "home"
-        "back"
         ;
     align-items: center;
 }
@@ -177,10 +176,6 @@
     grid-area: home;
 }
 
-#card-button-container-3 {
-    grid-area: back;
-    margin-bottom: 40px;
-}
 
 .add-friends-container {
     display: flex;

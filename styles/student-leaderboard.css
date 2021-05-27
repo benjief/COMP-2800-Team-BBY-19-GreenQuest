@@ -10,7 +10,7 @@
         "all-classes"
         "all-students"
         "break"
-        "back";
+        "home";
 }
 
 .card-text-container {
@@ -35,6 +35,6 @@
 }
 
 #card-button-container-4 {
-    grid-area: back;
+    grid-area: home;
     margin-bottom: 40px;
 }
