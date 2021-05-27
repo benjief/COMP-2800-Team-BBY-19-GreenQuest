@@ -12,6 +12,7 @@ var profilePic;
 var profileClass;
 
 var bitmojiURL = null;
+var twitterBitmoji = null;
 
 var recentQuests = [];
 
@@ -48,6 +49,7 @@ function getProfileInfo() {
             profileClass = doc.data().Student_Class;
             populateDOM();
             populateHeading();
+            getBitmoji();
             if (userID == profileID) {
                 let newProfilePicInput = "<input type='file' accept='image/*' id='upload-new-image-input'></input>";
                 let label = "<label for='upload-new-image-input' id='upload-new-image-label'>Upload New Image</label>";
@@ -56,7 +58,6 @@ function getProfileInfo() {
             }
             if (profilePic == null) {
                 if (userID === profileID) {
-                    getBitmoji();
                     activatePrimaryInput();
                 }
                 else {
@@ -86,8 +87,9 @@ function getBitmoji() {
             storageRef.child("images/bitmojis/" + randomNum.toString() + ".png").getDownloadURL()
                 .then((url) => {
                     bitmojiURL = url;
-                    // bitmojiURL = imageRef.getDownloadURL();
-                    $("#profile-pic").attr("src", bitmojiURL);
+                    if (profilePic == null) {
+                        $("#profile-pic").attr("src", bitmojiURL);
+                    }  
                 })
                 .catch((error) => {
                     console.error("Error getting url: ", error);
@@ -358,14 +360,15 @@ function addRecentQuestsToDOM(i, timeDifference, unitOfTime) {
     getBitmojiBackground();
 }
 
-// /**
-//  * Write this.
-//  */
-// $(document.body).on("click", ".st-custom-button", function (event) {
-//     let pointsToPost = $(event.target).attr("id");
-//     $("#twitter-description").prop("value", "I just earned " + pointsToPost + " points saving the world " 
-//     + "on GreenQuest! Come and join me!");
-// })
+/**
+ * Write this.
+ */
+$(document.body).on("click", ".st-custom-button", function (event) {
+    let pointsToPost = $(event.target).attr("id");
+    $("#twitter-description").prop("value", "I just earned " + pointsToPost + " points saving the world " 
+    + "on GreenQuest! Come and join me!");
+    $("#twitter-image").prop("value", bitmojiURL);
+})
 
 /**
  * Write this.
