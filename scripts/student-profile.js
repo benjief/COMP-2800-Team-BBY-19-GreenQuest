@@ -370,6 +370,10 @@ $(document).ready(function () {
     getCurrentStudent();
 });
 
+
+//share button
+
+
     //HCTI_API creating img from HTML
     //Source: [https://docs.htmlcsstoimage.com/example-code/javascript/](https://docs.htmlcsstoimage.com/example-code/javascript/)
     // const json = {
