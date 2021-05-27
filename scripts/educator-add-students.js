@@ -177,7 +177,7 @@ $(document).ready(function () {
 
 //Load Timer
 function myFunction() {
-    setTimeout(showPage, 1500);
+    setTimeout(showPage, 1300);
   }
   
   function showPage() {
