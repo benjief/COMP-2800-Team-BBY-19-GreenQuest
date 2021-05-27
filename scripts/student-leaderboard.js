@@ -31,9 +31,9 @@ function checkIfInClass(doc) {
 }
 
 /** Write this. */
-function disableMyClass() {
+function enableMyClass() {
         $("#card-button-container-1 a").attr("href", "./student-my-class.html");
-        $("#card-button-container-1").removeAttr("inactive");
+        $("#card-button-container-1").removeClass("inactive");
 }
 
 
