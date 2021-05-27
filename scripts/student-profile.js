@@ -55,7 +55,6 @@ function getProfileInfo() {
                 let label = "<label for='upload-new-image-input' id='upload-new-image-label'>Upload New Image</label>";
                 $(".modal-footer").append(newProfilePicInput, label);
                 activateSecondaryInput();
-                updateHead();
             }
             if (profilePic == null) {
                 if (userID === profileID) {
@@ -88,8 +87,10 @@ function getBitmoji() {
             storageRef.child("images/bitmojis/" + randomNum.toString() + ".png").getDownloadURL()
                 .then((url) => {
                     bitmojiURL = url;
+                    updateHead();
                     if (profilePic == null) {
                         $("#profile-pic").attr("src", bitmojiURL);
+
                     }
                 })
                 .catch((error) => {
@@ -383,6 +384,7 @@ function getBitmojiBackground() {
  * Write this.
  */
 function updateHead() {
+    console.log(bitmojiURL);
     $("#twitter-description").attr("value", "I've earned " + profilePoints + " points saving "
         + "the planet with GreenQuest. Come and join me!");
     $("#twitter-image").attr("value", bitmojiURL);
