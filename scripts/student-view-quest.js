@@ -177,6 +177,7 @@ $(document).ready(function () {
     });
 });
 
+//Loading timer
 function myFunction() {
     setTimeout(showPage, 1500);
   }

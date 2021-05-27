@@ -369,3 +369,13 @@ function getBitmojiBackground() {
 $(document).ready(function () {
     getCurrentStudent();
 });
+
+//Loading timer
+function myFunction() {
+    setTimeout(showPage, 1000);
+  }
+  
+  function showPage() {
+    document.getElementById("loader").style.display = "none";
+  }
+  myFunction();

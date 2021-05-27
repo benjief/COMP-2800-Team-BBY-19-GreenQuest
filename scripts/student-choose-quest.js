@@ -247,6 +247,7 @@ $(document).ready(function () {
     });
 });
 
+//Loading timer
 function myFunction() {
   setTimeout(showPage, 2000);
 }
