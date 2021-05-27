@@ -358,14 +358,14 @@ function addRecentQuestsToDOM(i, timeDifference, unitOfTime) {
     getBitmojiBackground();
 }
 
-/**
- * Write this.
- */
-$(document.body).on("click", ".st-custom-button", function (event) {
-    let pointsToPost = $(event.target).attr("id");
-    $("#twitter-description").prop("value", "I just earned " + pointsToPost + " points saving the world " 
-    + "on GreenQuest! Come and join me!");
-})
+// /**
+//  * Write this.
+//  */
+// $(document.body).on("click", ".st-custom-button", function (event) {
+//     let pointsToPost = $(event.target).attr("id");
+//     $("#twitter-description").prop("value", "I just earned " + pointsToPost + " points saving the world " 
+//     + "on GreenQuest! Come and join me!");
+// })
 
 /**
  * Write this.
