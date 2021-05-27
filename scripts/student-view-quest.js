@@ -176,3 +176,12 @@ $(document).ready(function () {
         $('.modal-body iframe').attr('src', '');
     });
 });
+
+function myFunction() {
+    setTimeout(showPage, 1500);
+  }
+  
+  function showPage() {
+    document.getElementById("loader").style.display = "none";
+  }
+  myFunction();
