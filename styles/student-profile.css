@@ -73,7 +73,7 @@
     width: 90%;
     justify-self: center;
     margin-top: 18px;
-    margin-bottom: 60px;
+    margin-bottom: 20px;
     border: 2px dashed #ff8000;
     border-radius: 10px;
     padding: 15px;
@@ -143,17 +143,6 @@
     margin-left: 3px;
 }
 
-/* #profile-info {
-    margin-top: 20px;
-    display: flex;
-    grid-area: profile-info;
-    height: auto;
-    width: 90%;
-    background-image: url("/img/background_pattern_3.png");
-    font-size: 17px;
-} */
-
-
 .student-points-container p {
     display: flex;
     height: 100%;
@@ -169,7 +158,9 @@
 .social-media-container {
     display: flex;
     position: relative;
-    right: 6px
+    right: 6px;
+    height: 40px;
+    align-items: center;
 }
 
 #twitter-icon {  
