@@ -40,6 +40,7 @@ function getQuestInfo() {
             questDescription = doc.data().Quest_Description;
             questInstructions = doc.data().Quest_Instructions;
             questInfo = doc.data().Quest_Info;
+            enableSubmitQuest();
             getBitmoji();
         })
         .catch((error) => {
