@@ -172,7 +172,7 @@ function resetQuest() {
  * Write this.
  */
 function enableSubmitQuest() {
-    $("#card-button-container-1").attr("onclick", "onClickSubmit()");
+    $("#card-button-container-1 a").attr("onclick", "onClickSubmit()");
     $("#card-button-container-1").removeClass("inactive");
 }
 
