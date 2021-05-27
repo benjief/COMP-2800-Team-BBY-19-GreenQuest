@@ -104,3 +104,14 @@ function getClasses() {
 $(document).ready(function () {
     getClassName();
 });
+
+
+//Load timer
+function myFunction() {
+    setTimeout(showPage, 1300);
+  }
+  
+  function showPage() {
+    document.getElementById("loader").style.display = "none";
+  }
+  myFunction();

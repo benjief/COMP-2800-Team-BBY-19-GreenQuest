@@ -107,3 +107,13 @@ function addHeading() {
 $(document).ready(function () {
     getCurrentStudent();
 });
+
+//Load Timer
+function myFunction() {
+    setTimeout(showPage, 1300);
+  }
+  
+  function showPage() {
+    document.getElementById("loader").style.display = "none";
+  }
+  myFunction();
