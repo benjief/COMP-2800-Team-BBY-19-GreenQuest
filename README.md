@@ -7,20 +7,20 @@
 ## Team Info
 | First name    | Last name     | Student Number |
 | ------------- | ------------- | -------------- |
-| Content Cell  | Content Cell  | Content Cell   |
-| Content Cell  | Content Cell  | Content Cell   |
-| Content Cell  | Content Cell  | Content Cell   |
-| Content Cell  | Content Cell  | Content Cell   |
+| Samuel        | Tjahjadi      | A00978466      |
+| Benjie        | Friedman      | A01248859      |
+| Gyephel       | Tenzin        | A01178786      |
+| Giwoun        | Bae           | A01243484      |
 
 ## Overview
-(Overview consisting of one paragraph and possibly a short bulleted list that describes how the repo is organized)
-
+We organized our repo by grouping file types together such as all HTML files into the "html" folder. 
 
  Top level of project folder: 
 ├── .gitignore                     # Git ignore file
 ├── .vs                            # vs
 ├── .vscode                        # Folder for the live server settings port
 ├── jquery_plugins                 # Folder for plugins like the jquery star-rating feature
+├── mergelog                       # File with all the merge history
 └── README.md                      # README file
 
 It has the following subfolders and files:
@@ -86,9 +86,10 @@ It has the following subfolders and files:
 |   /storefront.css                # Styles specifically for storefront.html
 |   /stores.css                    # Styles specifically for stores.html
 |   └── outdated-scripts           # Folder for unused or obsolete files
+|
 Firebase hosting files:               
 ├── .firebase                      # firebase
-├── .firebase.json                 # firebase json
+├── firebase.json                 # firebase json
 ├── .firebaserc                    # firebaserc
 ├── firestore.rules                # firestore rules
 ├── storage.rules                  # storage rules
