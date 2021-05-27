@@ -391,6 +391,7 @@ function updateHead() {
             + "the planet with GreenQuest. Come and join me!");
         $("#facebook-image").attr("content", bitmojiURL);
     }
+}
 
     // Run function when document is ready 
     $(document).ready(function () {
