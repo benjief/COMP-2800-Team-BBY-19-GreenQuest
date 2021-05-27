@@ -143,13 +143,13 @@ function postStudentPoints() {
 }
 
 /** Write this. */
-function enableMyProfile() {
-    $("#card-button-container-1 a").attr("href", "./student-leaderboard.html");
-    $("#card-button-container-1").removeClass("inactive");
+function enableLeaderboards() {
+    $("#card-button-container-5 a").attr("href", "./student-leaderboard.html");
+    $("#card-button-container-5").removeClass("inactive");
 }
 
 /** Write this. */
-function enableLeaderboards() {
+function enableMyProfile() {
     $("#card-button-container-1 a").attr("onclick", "onClickMyProfile()");
     $("#card-button-container-1").removeClass("inactive");
 }

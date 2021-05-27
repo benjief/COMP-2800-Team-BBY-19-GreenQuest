@@ -88,6 +88,6 @@ function onClickSubmit() {
  * Write this.
  * Taken from https://stackoverflow.com/questions/3252730/how-to-prevent-a-click-on-a-link-from-jumping-to-top-of-page
  */
- $(".button").click(function (event) {
+ $("#card-button-container-1 a").click(function (event) {
     event.preventDefault();
 })
