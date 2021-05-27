@@ -63,8 +63,8 @@ function checkProcessedQuests() {
                     counter++;
                 }
             })
-            if (counter == 0) {
-                disableProcessedQuests();
+            if (counter != 0) {
+                enableProcessedQuests();
             }
         })
         .catch((error) => {
@@ -86,8 +86,8 @@ function checkPendingQuests() {
                     counter++;
                 }
             })
-            if (counter == 0) {
-                disablePendingQuests();
+            if (counter != 0) {
+                enablePendingQuests();
             }
         })
         .catch((error) => {
@@ -96,17 +96,15 @@ function checkPendingQuests() {
 }
 
 /** Write this. */
-function disableProcessedQuests() {
-    $("#card-button-container-1").css({ backgroundColor: "rgb(200, 200, 200)" });
-    $("#card-button-container-1").css({ transform: "none" });
-    $("#card-button-container-1 a").removeAttr("href");
+function enableProcessedQuests() {
+    $("#card-button-container-1 a").attr("href", "./student-processed-quests.html");
+    $("#card-button-container-1").removeClass("inactive");
 }
 
 /** Write this. */
-function disablePendingQuests() {
-    $("#card-button-container-2").css({ backgroundColor: "rgb(200, 200, 200)" });
-    $("#card-button-container-2").css({ transform: "none" });
-    $("#card-button-container-2 a").removeAttr("href");
+function enablePendingQuests() {
+    $("#card-button-container-2 a").attr("href", "./student-pending-quests.html");
+    $("#card-button-container-2").removeClass("inactive");
 }
 
 // Run function when document is ready 

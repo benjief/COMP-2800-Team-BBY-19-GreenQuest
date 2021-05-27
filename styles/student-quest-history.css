@@ -71,3 +71,11 @@ hr {
     top: -2px;
     justify-self: center;
 }
+
+.inactive {
+    background-color: rgb(200, 200, 200);
+}
+
+.inactive:active {
+    transform: none;
+}
