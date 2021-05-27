@@ -20,7 +20,9 @@ We organized our repo by grouping file types together such as all HTML files int
 ├── .vs                            # vs
 ├── .vscode                        # Folder for the live server settings port
 ├── jquery_plugins                 # Folder for plugins like the jquery star-rating feature
-├── mergelog                       # File with all the merge history
+├── mergelog                       # File with all the firestore merge history
+├── index.html                     # Landing page
+├── 404.html                       # Error page
 └── README.md                      # README file
 
 It has the following subfolders and files:
@@ -88,8 +90,8 @@ It has the following subfolders and files:
 |   └── outdated-scripts           # Folder for unused or obsolete files
 |
 Firebase hosting files:               
-├── .firebase                      # firebase
-├── firebase.json                 # firebase json
+├── .firebase                      # contains hosting..cache for firebase
+├── firebase.json                  # firebase json
 ├── .firebaserc                    # firebaserc
 ├── firestore.rules                # firestore rules
 ├── storage.rules                  # storage rules
