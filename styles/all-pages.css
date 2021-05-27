@@ -67,10 +67,10 @@ body {
 .card-text-container {
     display: flex;
     grid-area: card-text;
-    margin-left: 10px;
-    margin-right: 10px;
     font-size: 20pt;
     color: rgb(29, 29, 29);
+    width: 85%;
+    justify-self: center;
 }
 
 /* Other styling */
