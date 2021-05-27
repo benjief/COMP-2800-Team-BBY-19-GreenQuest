@@ -16,6 +16,7 @@
 We organized our repo by grouping file types together such as all HTML files into the "html" folder. 
 
  Top level of project folder: 
+<<<<<<< HEAD
 
 ├── .gitignore                      # Git ignore file
 ├──  404.html                       # 404 page 
@@ -25,6 +26,16 @@ We organized our repo by grouping file types together such as all HTML files int
 ├──  mergelog                       # File with all the merge history
 └──  README.md                      # README file
 
+=======
+├── .gitignore                     # Git ignore file
+├── .vs                            # vs
+├── .vscode                        # Folder for the live server settings port
+├── jquery_plugins                 # Folder for plugins like the jquery star-rating feature
+├── mergelog                       # File with all the firestore merge history
+├── index.html                     # Landing page
+├── 404.html                       # Error page
+└── README.md                      # README file
+>>>>>>> 6becc0be7c38cf0d34886571bec5f9ca3b26669b
 
 It has the following subfolders and files:
 ├── .github                         # folder for firebase-hosting-workflow
@@ -116,7 +127,11 @@ It has the following subfolders and files:
 |   └── outdated-scripts           # Folder for unused or obsolete files
 |
 Firebase hosting files:               
+<<<<<<< HEAD
 ├── .firebase                      # firebase
+=======
+├── .firebase                      # contains hosting..cache for firebase
+>>>>>>> 6becc0be7c38cf0d34886571bec5f9ca3b26669b
 ├── firebase.json                  # firebase json
 ├── .firebaserc                    # firebaserc
 ├── firestore.rules                # firestore rules
@@ -130,7 +145,9 @@ Firebase hosting files:
 1. Go to https://greenquest-5f80c.web.app/
 2. Press "Sign up / Login" located at the bottom of the page
 3. Click on the small circle beside the roles 
+
 --------------------------------------------------------------------
+
 For educator:
 1. Enter the authentication key in the textbox, "123456"
 2. Click "Sign in with email"
@@ -149,7 +166,9 @@ You should now be at the educator-home screen
 A quest should be there for you to approve
 
 11. Approve the quest and reward an X amount of points or reject the quest
+
 --------------------------------------------------------------------
+
 For Students:
 1. Click "Sign in with email"
 2. In the email address text field, enter "samuel_tjahjadi@outlook.com"
@@ -179,7 +198,43 @@ You should see the quest you recently submitted
 14. Press one of the options available.
 
 You should see your standing as well as your peers
+
+## Instrutions for new contributors
+
+To become a contributer, you must first do the following things
+
 --------------------------------------------------------------------
+
+Connecting to GitHub:
+- Get an invitation to the Github Repository
+- Under "Code", copy the HTTPS link
+- Open Windows Command Prompt
+- Navigate to where you want your file to be
+- In the command prompt, type Git Clone and paste the HTTP Link
+
+Now you have a copy of the application files
+
+- Open an IDE of your choice
+- Click on file, then open folder and navigate to where you stored your
+  copied files
+- Press "Open"
+
+Your IDE should no display the source code of the application
+
+--------------------------------------------------------------------
+
+Connecting to Firebase:
+- Get an invitation to the Firebase database
+- Login with an account of your choice
+- Click on "console" in the navigation bar
+- Click on the application you have been invited to
+
+You should now have access to the database portion of the application
+
+
+
+
+
 
 
 

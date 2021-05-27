@@ -40,6 +40,7 @@ function getQuestInfo() {
             questDescription = doc.data().Quest_Description;
             questInstructions = doc.data().Quest_Instructions;
             questInfo = doc.data().Quest_Info;
+            enableSubmitQuest();
             getBitmoji();
         })
         .catch((error) => {
@@ -172,7 +173,7 @@ function resetQuest() {
  * Write this.
  */
 function enableSubmitQuest() {
-    $("#card-button-container-1").attr("onclick", "onClickSubmit()");
+    $("#card-button-container-1 a").attr("onclick", "onClickSubmit()");
     $("#card-button-container-1").removeClass("inactive");
 }
 
