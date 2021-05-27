@@ -65,7 +65,7 @@ function checkQuestHistory() {
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                if (doc.data().Quest_Status != "active") {
+                if (doc.data().Quest_Status !== "active") {
                     counter++;
                 }
             })
@@ -136,9 +136,9 @@ function postStudentPoints() {
 }
 
 /** Write this. */
-function enalbeQuestHistory() {
+function enableQuestHistory() {
     $("#card-button-container-3 a").attr("href", "./student-quest-history.html");
-    $("#card-button-container-3").removeAttr("inactive");
+    $("#card-button-container-3").removeClass("inactive");
 }
 
 /** Write this. */
