@@ -4,6 +4,8 @@ var studentPoints;
 var userID;
 var questID;
 
+var userType;
+
 // Pull 'firstvisit' tag from URL and use it to choose the correct message to display
 const parsedUrl = new URL(window.location.href);
 var firstVisit = parsedUrl.searchParams.get("firstvisit");
@@ -22,10 +24,15 @@ function sayHello() {
                 // Read
                 .get()
                 .then(function (doc) {
+                    if (doc.data() == undefined) {
+                        window.location.assign("../index.html");
+                    }
                     userID = doc.id;
                     checkIfInClass(doc);
                     getStudentPoints();
                     checkQuestHistory();
+                    enableMyProfile();
+                    enableLeaderboards();
                     // Extract the first name of the user
                     var name = doc.data().Student_Name.split(" ", 1);
                     if (name) {
@@ -133,6 +140,18 @@ function getActiveQuest() {
 function postStudentPoints() {
     console.log(studentPoints);
     $("#student-points").html(studentPoints);
+}
+
+/** Write this. */
+function enableMyProfile() {
+    $("#card-button-container-1 a").attr("href", "./student-leaderboard.html");
+    $("#card-button-container-1").removeClass("inactive");
+}
+
+/** Write this. */
+function enableLeaderboards() {
+    $("#card-button-container-1 a").attr("onclick", "onClickMyProfile()");
+    $("#card-button-container-1").removeClass("inactive");
 }
 
 /** Write this. */
