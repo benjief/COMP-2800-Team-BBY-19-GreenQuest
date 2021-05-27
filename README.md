@@ -16,20 +16,48 @@
 We organized our repo by grouping file types together such as all HTML files into the "html" folder. 
 
  Top level of project folder: 
-├── .gitignore                     # Git ignore file
-├── .vs                            # vs
-├── .vscode                        # Folder for the live server settings port
-├── jquery_plugins                 # Folder for plugins like the jquery star-rating feature
-├── mergelog                       # File with all the merge history
-└── README.md                      # README file
+
+├── .gitignore                      # Git ignore file
+├──  404.html                       # 404 page 
+├──  index.html                     # landing page 
+├──  .vscode                        # settings for vscode
+├──  storage.rules                  # firestore rule file.
+├──  mergelog                       # File with all the merge history
+└──  README.md                      # README file
+
 
 It has the following subfolders and files:
-├── .git                           # Folder for git repo
+├── .github                         # folder for firebase-hosting-workflow
 |
 ├── html                            # Folder for folders with coded files
-|   /headcount.html            # Headcount updater
-|   /main.html                 # Main page for employees
-|   /reviews.html              # Reviews
+|   /about-us.html                  # Page for about us
+|   /educator-add-quest.html        # Educator page for adding quest to the firebase
+|   /educator-add-students.html     # Educator page for adding students to class
+|   /educator-approve-quest.html    # Educator page for approving quests students submitted
+|   /educator-create-class.html     # Educator page for creating a virtual class/group
+|   /educator-home.html             # Homepage for the educator only
+|   /educator-manage-class.html     # Educator page for managing a class
+|   /educator-manage-classes.html   # Educator page for managing multiple classes
+|   /educator-new-home.html         # Homepage for the educator
+|   /educator-remove-students.html  # Educator page for removing students from a class
+|   /login.html                     # Login page for both student and educator
+|   /student-add-friends.html       # Student page for adding friend when submitting
+|   /student-all-classes.html       # Student page class standings for all classes
+|   /student-all-students.html      # Student page student standings for all students
+|   /student-choose-quest.html      # Student page for removing students from a class
+|   /student-add-friends.html       # Student page for removing students from a class
+|   /student-add-friends.html       # Student page for removing students from a class
+|   /student-add-friends.html       # Student page for removing students from a class
+
+
+
+
+
+
+
+
+
+|   /educator-add-students.html              # Reviews
 |   /stats.html                # Stats
 |   /storefront.html           # Storefront page for all stores
 |   /stores.html               # Store list
@@ -89,7 +117,7 @@ It has the following subfolders and files:
 |
 Firebase hosting files:               
 ├── .firebase                      # firebase
-├── firebase.json                 # firebase json
+├── firebase.json                  # firebase json
 ├── .firebaserc                    # firebaserc
 ├── firestore.rules                # firestore rules
 ├── storage.rules                  # storage rules
