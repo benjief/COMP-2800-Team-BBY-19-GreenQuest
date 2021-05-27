@@ -25,8 +25,8 @@ function checkAddStudents() {
         .get()
         .then((querySnapshot) => {
             let numStudents = querySnapshot.size;
-            if (numStudents == 0) {
-                disableAddStudents();
+            if (numStudents > 0) {
+                enableAddStudents();
             }
         })
         .catch((error) => {
@@ -44,9 +44,10 @@ function checkRemoveStudents() {
         .get()
         .then((querySnapshot) => {
             let numStudents = querySnapshot.size;
-            if (numStudents == 0) {
-                disableRemoveStudents();
+            if (numStudents > 0) {
+                enableRemoveStudents();
             }
+            console.log(numStudents);
         })
         .catch((error) => {
             console.log("Error getting students in class: ", error);
@@ -54,18 +55,17 @@ function checkRemoveStudents() {
 }
 
 /** Write this. */
-function disableAddStudents() {
-    $("#card-button-container-1").css({ backgroundColor: "rgb(200, 200, 200)" });
-    $("#card-button-container-1").css({ transform: "none" });
-    $("#card-button-container-1 a").removeAttr("href");
+function enableAddStudents() {
+    $("#card-button-container-1 a").attr("onclick", "onClick()");
+    $("#card-button-container-1 a").attr("href", "./educator-add-students.html");
+    $("#card-button-container-1").removeClass("inactive");
 }
 
 /** Write this. */
-function disableRemoveStudents() {
-    $("#card-button-container-2").css({ backgroundColor: "rgb(200, 200, 200)" });
-    $("#card-button-container-2").css({ transform: "none" });
-    $("#card-button-container-2 a").removeAttr("onclick");
-    $("#card-button-container-2 a").removeAttr("href");
+function enableRemoveStudents() {
+    $("#card-button-container-2 a").attr("onclick", "onClick()");
+    $("#card-button-container-2 a").attr("href", "./educator-remove-students.html");
+    $("#card-button-container-2").removeClass("inactive");
 }
 
 /**

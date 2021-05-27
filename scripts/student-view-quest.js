@@ -168,6 +168,14 @@ function resetQuest() {
     }
 }
 
+/**
+ * Write this.
+ */
+function enableSubmitQuest() {
+    $("#card-button-container-1").attr("onclick", "onClickSubmit()");
+    $("#card-button-container-1").removeClass("inactive");
+}
+
 // Run function when document is ready 
 $(document).ready(function () {
     getCurrentStudent();
@@ -178,11 +186,12 @@ $(document).ready(function () {
 });
 
 //Loading timer
-function myFunction() {
-    setTimeout(showPage, 1500);
+//Taken from https://www.w3schools.com/howto/howto_css_loader.asp
+function delayTimer() {
+    setTimeout(removeSpinner, 1500);
   }
   
-  function showPage() {
+  function removeSpinner() {
     document.getElementById("loader").style.display = "none";
   }
-  myFunction();
+  delayTimer();

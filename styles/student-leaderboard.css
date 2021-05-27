@@ -38,3 +38,11 @@
     grid-area: home;
     margin-bottom: 40px;
 }
+
+.inactive {
+    background-color: rgb(200, 200, 200);
+}
+
+.inactive:active {
+    transform: none;
+}

@@ -38,7 +38,7 @@
     grid-area: create-class;
 }
 
-#card-button-container-5 {
+#card-button-container-4 {
     grid-area: add-quest;
     margin-bottom: 0;
 }
@@ -46,4 +46,12 @@
 #card-button-container-5 {
     grid-area: logout;
     margin-bottom: 40px;
+}
+
+.inactive {
+    background-color: rgb(200, 200, 200);
+}
+
+.inactive:active {
+    transform: none;
 }

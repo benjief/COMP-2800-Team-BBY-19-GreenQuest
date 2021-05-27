@@ -50,8 +50,8 @@ function sayHello() {
  * @param {*} doc 
  */
  function checkIfInClass(doc) {
-    if (doc.data().Student_Class == null) {
-        disableMyQuest();
+    if (doc.data().Student_Class != null) {
+        enableMyQuest();
     }
 }
 
@@ -65,12 +65,12 @@ function checkQuestHistory() {
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                if (doc.data().Quest_Status != "active") {
+                if (doc.data().Quest_Status !== "active") {
                     counter++;
                 }
             })
-            if (counter == 0) {
-                disableQuestHistory();
+            if (counter != 0) {
+                enableQuestHistory();
             }
         })
         .catch((error) => {
@@ -136,20 +136,29 @@ function postStudentPoints() {
 }
 
 /** Write this. */
-function disableQuestHistory() {
-    $("#card-button-container-3").css({ backgroundColor: "rgb(200, 200, 200)" });
-    $("#card-button-container-3").css({ transform: "none" });
-    $("#card-button-container-3 a").removeAttr("href");
+function enableQuestHistory() {
+    $("#card-button-container-3 a").attr("href", "./student-quest-history.html");
+    $("#card-button-container-3").removeClass("inactive");
 }
 
 /** Write this. */
-function disableMyQuest() {
-    $("#card-button-container-2").css({ backgroundColor: "rgb(200, 200, 200)" });
-    $("#card-button-container-2").css({ transform: "none" });
-    $("#card-button-container-2 a").removeAttr("onclick");
+function enableMyQuest() {
+    $("#card-button-container-2 a").attr("onclick", "onClickMyQuest()");
+    $("#card-button-container-2").removeClass("inactive");
 }
 
 // Run function when document is ready 
 $(document).ready(function () {
     sayHello();
 });
+
+//Load Timer
+//Taken from https://www.w3schools.com/howto/howto_css_loader.asp
+function delayTimer() {
+    setTimeout(removeSpinner, 500);
+  }
+  
+  function removeSpinner() {
+    document.getElementById("loader").style.display = "none";
+  }
+  delayTimer();

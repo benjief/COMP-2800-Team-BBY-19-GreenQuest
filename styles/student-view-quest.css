@@ -125,11 +125,19 @@
     align-self: center
 }
 
+.inactive {
+    background-color: rgb(200, 200, 200);
+}
+
+.inactive:active {
+    transform: none;
+}
+
 /* Center the loader */
 #loader {
     position: absolute;
     left: 55%;
-    top: 30%;
+    top: 18%;
     z-index: 1;
     width: 120px;
     height: 120px;

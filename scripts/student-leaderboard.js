@@ -25,16 +25,15 @@ function getCurrentStudent() {
  * @param {*} doc 
  */
 function checkIfInClass(doc) {
-    if (doc.data().Student_Class == null) {
-        disableMyClass();
+    if (doc.data().Student_Class != null) {
+        enableMyClass();
     }
 }
 
 /** Write this. */
 function disableMyClass() {
-    $("#card-button-container-1").css({ backgroundColor: "rgb(200, 200, 200)" });
-    $("#card-button-container-1").css({ transform: "none" });
-    $("#card-button-container-1 a").removeAttr("href");
+        $("#card-button-container-1 a").attr("href", "./student-my-class.html");
+        $("#card-button-container-1").removeAttr("inactive");
 }
 
 
