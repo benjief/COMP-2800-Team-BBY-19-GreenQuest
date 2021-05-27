@@ -1,20 +1,21 @@
 ## My Web Application (Title)
 
-* [General info](#general-info)
-* [Technologies](#technologies)
-* [Contents](#content)
+* [Team Info](#team-info)
+* [Ovewview](#overview)
+* [Instructions](#instructions)
 
-## General Info
-This browser based web application shows you real-time occupancy data for Costco stores
-	
-## Technologies
-Technologies used for this project:
-* HTML, CSS
-* JavaScript
-* Bootstrap 
-* Jquery
-	
-## Content
+## Team Info
+| First name    | Last name     | Student Number |
+| ------------- | ------------- | -------------- |
+| Content Cell  | Content Cell  | Content Cell   |
+| Content Cell  | Content Cell  | Content Cell   |
+| Content Cell  | Content Cell  | Content Cell   |
+| Content Cell  | Content Cell  | Content Cell   |
+
+## Overview
+(Overview consisting of one paragraph and possibly a short bulleted list that describes how the repo is organized)
+
+
  Top level of project folder: 
 ├── .gitignore                     # Git ignore file
 ├── .vs                            # vs
@@ -92,3 +93,7 @@ Firebase hosting files:
 ├── firestore.rules                # firestore rules
 ├── storage.rules                  # storage rules
 └── firestore.indexes.json         # firestore indexes json
+
+
+## Instructions
+(Numbered list of setup instructions.)
