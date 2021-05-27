@@ -16,29 +16,16 @@
 We organized our repo by grouping file types together such as all HTML files into the "html" folder. 
 
  Top level of project folder: 
-<<<<<<< HEAD
-
-├── .gitignore                      # Git ignore file
-├──  404.html                       # 404 page 
-├──  index.html                     # landing page 
-├──  .vscode                        # settings for vscode
-├──  storage.rules                  # firestore rule file.
-├──  mergelog                       # File with all the merge history
-└──  README.md                      # README file
-
-=======
 ├── .gitignore                     # Git ignore file
-├── .vs                            # vs
 ├── .vscode                        # Folder for the live server settings port
 ├── jquery_plugins                 # Folder for plugins like the jquery star-rating feature
 ├── mergelog                       # File with all the firestore merge history
 ├── index.html                     # Landing page
 ├── 404.html                       # Error page
 └── README.md                      # README file
->>>>>>> 6becc0be7c38cf0d34886571bec5f9ca3b26669b
 
 It has the following subfolders and files:
-├── .github                         # folder for firebase-hosting-workflow
+├── .github \ workflows             # folder for firebase-hosting-workflow
 |
 ├── html                            # Folder for folders with coded files
 |   /about-us.html                  # Page for about us
@@ -127,11 +114,7 @@ It has the following subfolders and files:
 |   └── outdated-scripts           # Folder for unused or obsolete files
 |
 Firebase hosting files:               
-<<<<<<< HEAD
-├── .firebase                      # firebase
-=======
 ├── .firebase                      # contains hosting..cache for firebase
->>>>>>> 6becc0be7c38cf0d34886571bec5f9ca3b26669b
 ├── firebase.json                  # firebase json
 ├── .firebaserc                    # firebaserc
 ├── firestore.rules                # firestore rules
