@@ -35,7 +35,7 @@ function getCurrentStudent() {
  * Write this.
  */
 function getProfileInfo() {
-    db.collection("Students").doc(userID)
+    db.collection("Students").doc(profileID)
         .get()
         .then(function (doc) {
             profileName = doc.data().Student_Name;
