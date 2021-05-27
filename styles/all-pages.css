@@ -131,3 +131,7 @@ body {
     justify-self: center;
     box-shadow: 0 0 4px rgb(0, 83, 56);
 }
+
+.message {
+    font-size: 12pt;
+}
