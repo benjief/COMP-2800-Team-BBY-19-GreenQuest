@@ -54,6 +54,7 @@ function getProfileInfo() {
             }
             if (profilePic == null) {
                 if (userID === profileID) {
+                    console.log("yes");
                     activatePrimaryInput();
                     getBitmoji();
                 }
@@ -129,8 +130,9 @@ function populateHeading() {
  * CITE - Write this.
  */
 function activatePrimaryInput() {
+    console.log("test");
     let label = "<label for='upload-image-input' id='upload-image-label'>Upload Image</label>";
-    $("#profile-pic-container").append(label);
+    $(".profile-pic-container").append(label);
     const imageInput = document.getElementById("upload-image-input");
     imageInput.addEventListener('change', function (event) {
         storeImage(event.target.files[0]);
