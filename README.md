@@ -94,6 +94,72 @@ Firebase hosting files:
 ├── storage.rules                  # storage rules
 └── firestore.indexes.json         # firestore indexes json
 
+## Instructions on how to use GreenQuest
 
-## Instructions
 (Numbered list of setup instructions.)
+
+1. Go to https://greenquest-5f80c.web.app/
+2. Press "Sign up / Login" located at the bottom of the page
+3. Click on the small circle beside the roles 
+--------------------------------------------------------------------
+For educator:
+1. Enter the authentication key in the textbox, "123456"
+2. Click "Sign in with email"
+3. In the email address text field, enter "samuel_tjahjadi@outlook.com"
+4. In the password text field, enter "123123"
+
+You should now be at the educator-home screen
+
+5. Press "Manage Classes"
+6. Press "GQ"
+7. Press "Add Students"
+8. Select the students you would like to add
+9. Press "Submit" and then "Home"
+10. Press "Approve Quests" 
+
+A quest should be there for you to approve
+
+11. Approve the quest and reward an X amount of points or reject the quest
+--------------------------------------------------------------------
+For Students:
+1. Click "Sign in with email"
+2. In the email address text field, enter "samuel_tjahjadi@outlook.com"
+3. In the password text field, enter "123123"
+
+You should now be at the student-home screen
+
+4. Press "My Profile"
+
+You should see yourself as awell as the amount of points you have and your recent activities
+
+5. Press "Home" and then "My Quest"
+6. Press "Accept Quest" or "Skip Quest" for a new quest
+7. Press "Instructions" or "More information" to learn more about the task
+8. Press "Submist Quest"
+9. Under "Quest Notes", enter the details of your quest and press "Submit"
+
+You should be automatically taken back to the home page
+
+10. Press "Quest History" 
+11. Press "Pending Quest"
+
+You should see the quest you recently submitted
+
+12. Press "Home" 
+13. Press "Leaderboards" 
+14. Press one of the options available.
+
+You should see your standing as well as your peers
+--------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
