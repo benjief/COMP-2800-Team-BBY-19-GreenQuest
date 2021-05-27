@@ -94,3 +94,13 @@ function onClickBack() {
 $(document).ready(function () {
     listClasses();
 });
+
+//Load Timer
+function myFunction() {
+    setTimeout(showPage, 1000);
+  }
+  
+  function showPage() {
+    document.getElementById("loader").style.display = "none";
+  }
+  myFunction();
