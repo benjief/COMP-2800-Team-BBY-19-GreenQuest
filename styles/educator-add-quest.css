@@ -14,7 +14,7 @@
         "feedback"
         "submit"
         "break"
-        "back";
+        "home";
 }
 
 .card-text-container {
@@ -127,7 +127,7 @@ input::placeholder {
 }
 
 #card-button-container-2 {
-    grid-area: back;
+    grid-area: home;
     margin-bottom: 40px;
 }
 

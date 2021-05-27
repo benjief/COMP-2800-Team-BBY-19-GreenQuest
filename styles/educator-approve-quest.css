@@ -43,7 +43,7 @@
         "approve"
         "reject"
         "break"
-        "back";
+        "home";
     align-items: center;
 }
 
@@ -125,7 +125,7 @@ input {
 }
 
 #card-button-container-3 {
-    grid-area: back;
+    grid-area: home;
     margin-bottom: 40px;
 }
 

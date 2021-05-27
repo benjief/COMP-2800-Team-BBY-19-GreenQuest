@@ -7,7 +7,7 @@
         "student-list"
         "break"
         "submit"
-        "back";
+        "home";
     margin-bottom: 60px !important;
 }
 
@@ -110,7 +110,7 @@ input::placeholder {
 }
 
 #card-button-container-2 {
-    grid-area: back;
+    grid-area: home;
     margin-bottom: 40px;
 }
 
