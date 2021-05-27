@@ -152,11 +152,12 @@ $(document).ready(function () {
 });
 
 //Load Timer
-function myFunction() {
-    setTimeout(showPage, 500);
+//Taken from https://www.w3schools.com/howto/howto_css_loader.asp
+function delayTimer() {
+    setTimeout(removeSpinner, 500);
   }
   
-  function showPage() {
+  function removeSpinner() {
     document.getElementById("loader").style.display = "none";
   }
-  myFunction();
+  delayTimer();
