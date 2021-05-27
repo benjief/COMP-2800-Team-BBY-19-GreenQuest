@@ -6,6 +6,8 @@ var firstPlace = 0;
 var secondPlace = 0;
 var thirdPlace = 0;
 
+var classScores = [];
+
 /**
  * Get the current user's class name from Firestore (if it exists).
  */
@@ -40,7 +42,8 @@ function populateClassList(studentClassName) {
         } else if (classes[i].points == thirdPlace) {
             var ribbon = "<img src='/img/bronze_ribbon.png'>";
         } else {
-            ribbon = null;
+            let classPlacement = classScores.indexOf(classes[i].points) + 1;
+            ribbon = "<p 'class-placement'>" + classPlacement + "</p>";
         }
         $("#ribbon-container-" + i).append(ribbon);
         let className = "<p class='class-name' id='class-name-" + i + "'>" + classes[i].name + "</p>";
@@ -62,21 +65,20 @@ function populateClassList(studentClassName) {
  * Taken from https://www.w3schools.com/js/js_array_sort.asp (sorting algorithm)
  */
 function getTopScores() {
-    let classScores = [];
     for (var i = 0; i < classes.length; i++) {
         classScores.push(classes[i].points);
     }
     classScores.sort(function (a, b) { return b - a });
-    classScores = new Set(classScores);
+    classScoresSet = new Set(classScores);
     let iterator = classScores.values();
-    if (classScores.size >= 3) {
+    if (classScoresSet.size >= 3) {
         firstPlace = iterator.next().value;
         secondPlace = iterator.next().value;
         thirdPlace = iterator.next().value;
-    } else if (classScores == 2) {
+    } else if (classScoresSet == 2) {
         firstPlace = iterator.next().value;
         secondPlace = iterator.next().value;
-    } else if (classScores == 1) {
+    } else if (classScoresSet == 1) {
         firstPlace = iterator.next().value;
     }
     populateClassList(studentClassName);
