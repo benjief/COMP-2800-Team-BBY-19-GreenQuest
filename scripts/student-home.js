@@ -150,3 +150,13 @@ function disableMyQuest() {
 $(document).ready(function () {
     sayHello();
 });
+
+//Load Timer
+function myFunction() {
+    setTimeout(showPage, 500);
+  }
+  
+  function showPage() {
+    document.getElementById("loader").style.display = "none";
+  }
+  myFunction();
