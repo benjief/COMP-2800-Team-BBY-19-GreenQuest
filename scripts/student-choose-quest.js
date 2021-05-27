@@ -246,3 +246,13 @@ $(document).ready(function () {
         $('.modal-body iframe').attr('src', '');
     });
 });
+
+//Loading timer
+function myFunction() {
+  setTimeout(showPage, 2000);
+}
+
+function showPage() {
+  document.getElementById("loader").style.display = "none";
+}
+myFunction();

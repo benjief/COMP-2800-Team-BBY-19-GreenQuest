@@ -33,9 +33,10 @@
 #main-content-card {
     grid-template-areas:
         "card-text"
-        "my-class"
+        "my-profile"
         "my-quest"
         "completed-quests"
+        "leaderboards"
         "break"
         "logout";
 }
@@ -52,7 +53,7 @@
 
 #card-button-container-1 {
     display: flex;
-    grid-area: my-class;
+    grid-area: my-profile;
 }
 
 #card-button-container-2 {
@@ -61,7 +62,10 @@
 
 #card-button-container-3 {
     grid-area: completed-quests;
-    margin-bottom: 0;
+}
+
+#card-button-container-5 {
+    grid-area: leaderboards;
 }
 
 #card-button-container-4 {

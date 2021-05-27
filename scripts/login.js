@@ -33,6 +33,7 @@ var uiConfig = {
                         Student_Educator: null,
                         Student_Points: 0,
                         Student_Quest: null,
+                        Student_Profile_Pic: null,
                         User_Type: "student"
                     })
                         .then(function () {

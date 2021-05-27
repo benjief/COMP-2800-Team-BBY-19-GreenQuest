@@ -25,13 +25,12 @@ function getCurrentUser() {
  */
 function pullPendingQuests() {
     db.collection("Student_Quests")
-        // This is going to be slow, but I don't know how to combine where clauses
-        .where("Quest_Status", "==", "submitted")
+        .where("Quest_Participant_IDs", "array-contains", userID)
         .orderBy("Date_Submitted", "desc")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                if (doc.data().Quest_Participant_IDs.includes(userID)) {
+                if (doc.data().Quest_Status == "submitted") {
                     let pendingQuest = {
                         "title": doc.data().Quest_Title,
                         "date": doc.data().Date_Submitted,
@@ -143,3 +142,13 @@ function getBitmojiBackground() {
 $(document).ready(function () {
     getCurrentUser();
 });
+
+//Loading timer
+function myFunction() {
+    setTimeout(showPage, 1350);
+  }
+  
+  function showPage() {
+    document.getElementById("loader").style.display = "none";
+  }
+  myFunction();
