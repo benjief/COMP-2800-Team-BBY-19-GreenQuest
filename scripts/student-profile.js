@@ -55,6 +55,7 @@ function getProfileInfo() {
                 let label = "<label for='upload-new-image-input' id='upload-new-image-label'>Upload New Image</label>";
                 $(".modal-footer").append(newProfilePicInput, label);
                 activateSecondaryInput();
+                updateHead();
             }
             if (profilePic == null) {
                 if (userID === profileID) {
@@ -89,7 +90,7 @@ function getBitmoji() {
                     bitmojiURL = url;
                     if (profilePic == null) {
                         $("#profile-pic").attr("src", bitmojiURL);
-                    }  
+                    }
                 })
                 .catch((error) => {
                     console.error("Error getting url: ", error);
@@ -111,6 +112,12 @@ function populateDOM() {
     } else {
         $("#profile-class").html(profileClass);
     }
+    if (userID == profileID) {
+        let twitterIcon = "<div class='st-custom-button' id='twitter-icon' data-network='twitter'></div>";
+        let facebookIcon = "<div class='st-custom-button' id='facebook-icon' data-network='facebook'></div>";
+        $(".social-media-container").append(twitterIcon, facebookIcon);
+        window.__sharethis__.initialize();
+    }
 }
 
 /**
@@ -125,6 +132,8 @@ function populateHeading() {
  * CITE - Write this.
  */
 function activatePrimaryInput() {
+    let label = "<label for='upload-image-input' id='upload-image-label'>Upload Image</label>";
+    $("#profile-pic-container").append(label);
     const imageInput = document.getElementById("upload-image-input");
     imageInput.addEventListener('change', function (event) {
         storeImage(event.target.files[0]);
@@ -343,9 +352,6 @@ function getTimeElapsed() {
 function addRecentQuestsToDOM(i, timeDifference, unitOfTime) {
     let questContainer = "<div class='quest-container' id='quest-container-" + i + "'></div>";
     $(".quest-list").append(questContainer);
-    let socialMedia = "<div class='st-custom-button' id='" + recentQuests[i].points + "' data-network='twitter'</div> ";
-    $("#quest-container-" + i).append(socialMedia);
-    window.__sharethis__.initialize();
     let questTitle = "<p class='quest-title' id='quest-title-" + i + "'>" + recentQuests[i].title + "</p>";
     $("#quest-container-" + i).append(questTitle);
     let questPoints = "<p class='quest-points' id='quest-points-" + i + "'>" + recentQuests[i].points + " points</p>";
@@ -363,17 +369,6 @@ function addRecentQuestsToDOM(i, timeDifference, unitOfTime) {
 /**
  * Write this.
  */
-$(document.body).on("click", ".st-custom-button", function (event) {
-    console.log("working");
-    let pointsToPost = $(event.target).attr("id");
-    $("#twitter-description").attr("value", "I just earned " + pointsToPost + " points saving the world " 
-    + "on GreenQuest! Come and join me!");
-    $("#twitter-image").attr("value", bitmojiURL);
-})
-
-/**
- * Write this.
- */
 function getBitmojiBackground() {
     for (var i = 0; i < recentQuests.length; i++) {
         let randomNum = Math.floor(Math.random() * 5 + 3);
@@ -383,17 +378,30 @@ function getBitmojiBackground() {
     }
 }
 
+
+/**
+ * Write this.
+ */
+function updateHead() {
+    $("#twitter-description").attr("value", "I've earned " + profilePoints + " points saving "
+        + "the planet with GreenQuest. Come and join me!");
+    $("#twitter-image").attr("value", bitmojiURL);
+    $("#facebook-description").attr("content", "I've earned " + profilePoints + " points saving "
+        + "the planet with GreenQuest. Come and join me!");
+    $("#facebook-image").attr("content", bitmojiURL);
+}
+
 // Run function when document is ready 
 $(document).ready(function () {
     getCurrentStudent();
 });
 
+
 //Loading timer
 function myFunction() {
     setTimeout(showPage, 1000);
-  }
-  
-  function showPage() {
+}
+function showPage() {
     document.getElementById("loader").style.display = "none";
-  }
-  myFunction();
+}
+myFunction();

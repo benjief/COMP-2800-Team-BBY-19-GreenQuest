@@ -106,11 +106,10 @@
 .profile-info-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    margin-left: 20px;
 }
 
 #profile-name, #profile-class {
-    align-self: center;
     font-weight: 600;
     margin: 0;
 }
@@ -123,7 +122,6 @@
 
 .profile-points-container {
     display: flex;
-    justify-content: center;
 }
 
 .profile-points-container p {
@@ -162,6 +160,33 @@
     margin-left: 10px;
     color: #ff8000;
     text-shadow: 1px 1px 1px rgba(62, 63, 66, 0.788);
+}
+
+.social-media-container {
+    display: flex;
+    position: relative;
+    right: 6px
+}
+
+#twitter-icon {  
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+    background: url("/img/twitter_icon.png");
+    background-color: white;
+    background-size: cover;
+    border-radius: 50%;
+}
+
+#facebook-icon {
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+    background: url("/img/facebook_icon.png");
+    background-color: white;
+    background-size: cover;
+    border-radius: 50%;
+    margin-left: 5px;
 }
 
 .card-text-container {
@@ -207,12 +232,12 @@
 
 .quest-container {
     display: grid;
-    grid-template-columns: 35% 55% 9%;
+    grid-template-columns: 35% 65%;
     grid-template-rows: repeat(3, 33.3px);
     grid-template-areas: 
-        "quest-bitmoji quest-title quest-title"
-        "quest-bitmoji quest-points quest-points"
-        "quest-bitmoji quest-date social-media";
+        "quest-bitmoji quest-title"
+        "quest-bitmoji quest-points"
+        "quest-bitmoji quest-date";
     /* background-color: rgb(255, 241, 254); */
     background: linear-gradient(rgba(216, 233, 255, 0.7), rgba(238, 238, 238, 0.7)), url("/img/background_pattern_8.png");
     border-radius: 10px;
@@ -225,15 +250,6 @@
 
 .quest-container:last-child {
     margin-bottom: 0;
-}
-
-.st-custom-button[data-network] {  
-    grid-area: social-media;
-    height: 22px;
-    width: 22px;
-    cursor: pointer;
-    background: url("/img/twitter_icon.png");
-    background-size: cover;
 }
 
 .quest-title {
