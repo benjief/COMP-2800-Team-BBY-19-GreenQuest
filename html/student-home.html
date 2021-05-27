@@ -79,6 +79,28 @@
                 <a class="button" onclick="logout()" href="login.html">Log Out</a>
             </div>
         </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="welcomeMessage" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">Welcome!</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body"><img src="/img/benjie_hi.png">
+                        Welcome to GreenQuest! You won't be able to start your own quests until
+                        your teacher adds you to their virtual class, so get on their case about that stat! In the meantime, 
+                        you can upload a profile picture in "My Profile" and join in on your friends' quests! Finally, remember 
+                        that this isn't just about winning that grand prize, it's also about saving the planet. You've got this -
+                        go get 'em!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Got it!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!----------------------------------------------->
@@ -86,7 +108,7 @@
     <!----------------------------------------------->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
-    </script>
+        </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>

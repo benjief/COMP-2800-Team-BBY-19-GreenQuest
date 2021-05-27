@@ -13,6 +13,9 @@ var firstVisit = parsedUrl.searchParams.get("firstvisit");
  * Also assigns the user's ID to userID.
 */
 function sayHello() {
+    if (firstVisit) {
+        $("#welcomeMessage").modal("show");
+    }
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {
             db.collection("Students").doc(somebody.uid)
