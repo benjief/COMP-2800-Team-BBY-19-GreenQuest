@@ -341,11 +341,9 @@ function getTimeElapsed() {
 function addRecentQuestsToDOM(i, timeDifference, unitOfTime) {
     let questContainer = "<div class='quest-container' id='quest-container-" + i + "'></div>";
     $(".quest-list").append(questContainer);
-    let socialMedia = "<div class='st-custom-button' id='tweet-" + i + "' data-network='twitter' " 
+    let socialMedia = "<div class='st-custom-button' id='" + recentQuests[i].points + "' data-network='twitter'" 
         + "data-url='http://greenquest-5f80c.web.app/'</div> ";
     $("#quest-container-" + i).append(socialMedia);
-    $("#tweet-" + i).attr("data-title", "I just earned " + recentQuests[i].points + " points saving the world " 
-        + "on GreenQuest! Why don't you join me?");
     window.__sharethis__.initialize();
     let questTitle = "<p class='quest-title' id='quest-title-" + i + "'>" + recentQuests[i].title + "</p>";
     $("#quest-container-" + i).append(questTitle);
@@ -357,8 +355,18 @@ function addRecentQuestsToDOM(i, timeDifference, unitOfTime) {
     let questBitmoji = "<img class='bitmoji' id='bitmoji-" + i + "' src='" + recentQuests[i].bitmoji + "'>";
     $("#quest-container-" + i).append(questBitmoji);
     console.log(recentQuests[i].bitmoji);
+    // $("#tweet-" + i).attr("data-image", "https://firebasestorage.googleapis.com/v0/b/greenquest-5f80c.appspot.com/o/images%2Fbitmojis%2F23.png?alt=media&token=f5439a0e-d17b-4371-8d0e-c6b4e47dca91");
     getBitmojiBackground();
 }
+
+/**
+ * Write this.
+ */
+$(document.body).on("click", ".st-custom-button", function (event) {
+    let pointsToPost = $(event.target).attr("id");
+    $("#twitter-description").prop("value", "I just earned " + pointsToPost + " points saving the world " 
+    + "on GreenQuest! Come and join me!");
+})
 
 /**
  * Write this.
