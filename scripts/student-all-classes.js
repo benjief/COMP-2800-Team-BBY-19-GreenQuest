@@ -106,3 +106,15 @@ function getClasses() {
 $(document).ready(function () {
     getClassName();
 });
+
+
+//Load timer
+//Taken from https://www.w3schools.com/howto/howto_css_loader.asp
+function delayTimer() {
+    setTimeout(removeSpinner, 1300);
+  }
+  
+  function removeSpinner() {
+    document.getElementById("loader").style.display = "none";
+  }
+  delayTimer();

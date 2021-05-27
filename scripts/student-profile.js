@@ -396,10 +396,12 @@ $(document).ready(function () {
 
 
 //Loading timer
-function myFunction() {
-    setTimeout(showPage, 1000);
-}
-function showPage() {
+//Taken from https://www.w3schools.com/howto/howto_css_loader.asp
+function delayTimer() {
+    setTimeout(removeSpinner, 1000);
+  }
+  
+  function removeSpinner() {
     document.getElementById("loader").style.display = "none";
-}
-myFunction();
+  }
+  delayTimer();

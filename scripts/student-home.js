@@ -153,3 +153,14 @@ function disableMyQuest() {
 $(document).ready(function () {
     sayHello();
 });
+
+//Load Timer
+//Taken from https://www.w3schools.com/howto/howto_css_loader.asp
+function delayTimer() {
+    setTimeout(removeSpinner, 500);
+  }
+  
+  function removeSpinner() {
+    document.getElementById("loader").style.display = "none";
+  }
+  delayTimer();
