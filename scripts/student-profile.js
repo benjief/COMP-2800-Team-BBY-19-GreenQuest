@@ -364,10 +364,11 @@ function addRecentQuestsToDOM(i, timeDifference, unitOfTime) {
  * Write this.
  */
 $(document.body).on("click", ".st-custom-button", function (event) {
+    console.log("working");
     let pointsToPost = $(event.target).attr("id");
-    $("#twitter-description").prop("value", "I just earned " + pointsToPost + " points saving the world " 
+    $("#twitter-description").attr("value", "I just earned " + pointsToPost + " points saving the world " 
     + "on GreenQuest! Come and join me!");
-    $("#twitter-image").prop("value", bitmojiURL);
+    $("#twitter-image").attr("value", bitmojiURL);
 })
 
 /**
