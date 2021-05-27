@@ -104,7 +104,9 @@ Firebase hosting files:
 1. Go to https://greenquest-5f80c.web.app/
 2. Press "Sign up / Login" located at the bottom of the page
 3. Click on the small circle beside the roles 
+
 --------------------------------------------------------------------
+
 For educator:
 1. Enter the authentication key in the textbox, "123456"
 2. Click "Sign in with email"
@@ -123,7 +125,9 @@ You should now be at the educator-home screen
 A quest should be there for you to approve
 
 11. Approve the quest and reward an X amount of points or reject the quest
+
 --------------------------------------------------------------------
+
 For Students:
 1. Click "Sign in with email"
 2. In the email address text field, enter "samuel_tjahjadi@outlook.com"
@@ -153,7 +157,43 @@ You should see the quest you recently submitted
 14. Press one of the options available.
 
 You should see your standing as well as your peers
+
+## Instrutions for new contributors
+
+To become a contributer, you must first do the following things
+
 --------------------------------------------------------------------
+
+Connecting to GitHub:
+- Get an invitation to the Github Repository
+- Under "Code", copy the HTTPS link
+- Open Windows Command Prompt
+- Navigate to where you want your file to be
+- In the command prompt, type Git Clone and paste the HTTP Link
+
+Now you have a copy of the application files
+
+- Open an IDE of your choice
+- Click on file, then open folder and navigate to where you stored your
+  copied files
+- Press "Open"
+
+Your IDE should no display the source code of the application
+
+--------------------------------------------------------------------
+
+Connecting to Firebase:
+- Get an invitation to the Firebase database
+- Login with an account of your choice
+- Click on "console" in the navigation bar
+- Click on the application you have been invited to
+
+You should now have access to the database portion of the application
+
+
+
+
+
 
 
 
