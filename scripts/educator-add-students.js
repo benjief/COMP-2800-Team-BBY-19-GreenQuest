@@ -142,6 +142,7 @@ function onClickSubmit() {
     }, 1000);
 }
 
+
 function filterByName() {
     let filter = $("#student-filter").toLowerCase();
     for (var i = 0; i < studentNames.length; i++) {
