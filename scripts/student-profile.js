@@ -370,9 +370,15 @@ $(document).ready(function () {
     getCurrentStudent();
 });
 
+/**
+ * ShareThis button customization.
+ */
 
-//share button
-
+$(".sharethis-inline-share-buttons").attr("data-url","greenquest-5f80c.web.app");
+$(".sharethis-inline-share-buttons").attr("data-title","greenquest-5f80c.web.app");
+$(".sharethis-inline-share-buttons").attr("data-image","greenquest-5f80c.web.app");
+$(".sharethis-inline-share-buttons").attr("data-description","greenquest-5f80c.web.app");
+$(".sharethis-inline-share-buttons").attr("data-message","greenquest-5f80c.web.app");
 
     //HCTI_API creating img from HTML
     //Source: [https://docs.htmlcsstoimage.com/example-code/javascript/](https://docs.htmlcsstoimage.com/example-code/javascript/)
