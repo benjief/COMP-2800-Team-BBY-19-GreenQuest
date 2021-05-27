@@ -168,6 +168,14 @@ function resetQuest() {
     }
 }
 
+/**
+ * Write this.
+ */
+function enableSubmitQuest() {
+    $("#card-button-container-1").attr("onclick", "onClickSubmit()");
+    $("#card-button-container-1").removeClass("inactive");
+}
+
 // Run function when document is ready 
 $(document).ready(function () {
     getCurrentStudent();
