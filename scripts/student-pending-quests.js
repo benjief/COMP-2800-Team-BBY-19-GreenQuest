@@ -24,33 +24,42 @@ function getCurrentUser() {
  * Write this.
  */
 function pullPendingQuests() {
-    db.collection("Students").doc(userID).collection("Quests")
-        .where("Quest_Status", "==", "submitted")
+    db.collection("Student_Quests")
+        .where("Quest_Participant_IDs", "array-contains", userID)
         .orderBy("Date_Submitted", "desc")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                let pendingQuest = {
-                    "title": doc.data().Quest_Title,
-                    "date": doc.data().Date_Submitted,
-                    "bitmoji": doc.data().Quest_Bitmoji
-                };
-                pendingQuests.push(pendingQuest);
+                if (doc.data().Quest_Status == "submitted") {
+                    let pendingQuest = {
+                        "title": doc.data().Quest_Title,
+                        "date": doc.data().Date_Submitted,
+                        "bitmoji": doc.data().Quest_Bitmoji
+                    };
+                    pendingQuests.push(pendingQuest);
+                }
             });
             console.log(pendingQuests);
             if (pendingQuests.length == 0) {
-                let message = "<div class='message-container'><img src='/img/slow_down.png'>"
-                    + "<p class='message'>Slow down - you haven't got any pending quests!</p></div>";
-                $(".quest-list").append(message);
-                $(".quest-list").css({
-                    height: "300px",
-                    display: "flex",
-                    justifyContent: "center"
-                });
+                appendMessage();
             } else {
                 getTimeElapsed();
             }
         });
+}
+
+/**
+ * Write this.
+ */
+function appendMessage() {
+    let message = "<div class='message-container'><img src='/img/slow_down.png'>"
+        + "<p class='message'>Slow down - you haven't got any pending quests!</p></div>";
+    $(".quest-list").append(message);
+    $(".quest-list").css({
+        height: "300px",
+        display: "flex",
+        justifyContent: "center"
+    });
 }
 
 
@@ -133,3 +142,14 @@ function getBitmojiBackground() {
 $(document).ready(function () {
     getCurrentUser();
 });
+
+//Loading timer
+//Taken from https://www.w3schools.com/howto/howto_css_loader.asp
+function delayTimer() {
+    setTimeout(removeSpinner, 1350);
+  }
+  
+  function removeSpinner() {
+    document.getElementById("loader").style.display = "none";
+  }
+  delayTimer();

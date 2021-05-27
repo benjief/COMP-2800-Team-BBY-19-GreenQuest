@@ -3,7 +3,8 @@
 /**
  * Get the current user's name from Firestore and use it to create a personalized greeting. 
  */
-   function sayHello() {
+function sayHello() {
+    $("#welcomeMessage").modal("show");
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {
             db.collection("Educators")
@@ -26,4 +27,8 @@
         }
     });
 }
-sayHello();
+
+// Run function when document is ready 
+$(document).ready(function () {
+    sayHello();
+});

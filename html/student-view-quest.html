@@ -55,24 +55,25 @@
         <div class="card mb-3" id="main-content-card">
             <div class="text-container" id="quest-title-container">
             </div>
-            <div class="image-container"></div>
+            <div class="image-container"><div id="loader"></div></div>
             <div class="text-container" id="quest-description-container">
             </div>
             <div class="text-container" id="quest-instructions-container">
             </div>
             <div class="text-container" id="quest-information-container">
             </div>
-            <div class="card-button-container" id="card-button-container-1">
-                <a class="button" href="#" onclick="onClickSubmit()">Submit your Quest</a>
+            <div class="card-button-container inactive" id="card-button-container-1">
+                <a class="button" href="#">Submit your Quest</a>
             </div>
             <div class="card-button-container" id="card-button-container-2">
                 <a class="button" href="#" onclick="resetQuest()">Get New Quest</a>
             </div>
             <hr class="break">
             <div class="card-button-container" id="card-button-container-3">
-                <a class="button" href="#" onclick="history.back()">Back</a>
+                <a class="button" href="./student-home.html">Home</a>
             </div>
         </div>
+        
         <!-- Modal -->
         <div class="modal fade" id="videoViewer" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
             <div class="modal-dialog">

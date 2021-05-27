@@ -7,7 +7,7 @@
         "student-list"
         "break"
         "submit"
-        "back";
+        "home";
     margin-bottom: 60px !important;
 }
 
@@ -21,6 +21,11 @@
     height: 100%;
 }
 
+
+input::placeholder {
+    color: rgb(180, 180, 180);
+}
+
 #student-filter {
     grid-area: filter;
     margin-bottom: 15px;
@@ -28,7 +33,7 @@
     justify-self: center;
     border: 1px solid rgb(160, 160, 160);
     /* border-style: dashed; */
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 5px;
 }
 
@@ -36,7 +41,7 @@
     outline-width: 0;
     border: 1px solid teal;
     /* border-style: dashed; */
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .student-list {
@@ -67,7 +72,7 @@
     border-radius: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
-    background: linear-gradient(rgba(254, 255, 168, 0.7), rgba(254, 255, 168, 0.7)), url("/img/background_pattern_2.png");
+    background: linear-gradient(rgba(236, 236, 236, 0.8), rgba(255, 255, 255, 0.7)), url("/img/background_pattern_2.png");
     font-weight: 600;
 }
 
@@ -95,7 +100,7 @@
     margin-left: 10px;
 }
 
-.icon {
+.plus-icon, .minus-icon {
     height: 24px;
     width: 24px;
 }
@@ -105,7 +110,7 @@
 }
 
 #card-button-container-2 {
-    grid-area: back;
+    grid-area: home;
     margin-bottom: 40px;
 }
 
@@ -126,3 +131,29 @@
     font-weight: 600;
     font-size: 12pt;
 }
+
+/* Center the loader */
+#loader {
+    position: absolute;
+    left: 55%;
+    top: 18%;
+    z-index: 1;
+    width: 120px;
+    height: 120px;
+    margin: -76px 0 0 -76px;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #28c513;
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+  }
+  
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

@@ -1,6 +1,6 @@
 // JS for student-view-quest.html
 
-// Pull quest ID from URL
+// Pull quest ID from URL (passed from student-home.html)
 const parsedUrl = new URL(window.location.href);
 var questID = parsedUrl.searchParams.get("questid");
 
@@ -11,73 +11,83 @@ var questInfo;
 var bitmojiURL;
 var userID;
 
-/* Get the current user's name, class name, educator name, and ID from Firestore. */
+
+/**
+ * Delay timer for a spinner that spins while the page is loading to help users understand what is happening.
+ * The spinner is present for 1.5 seconds before being hidden.
+ * @author w3schools
+ * @see https://www.w3schools.com/howto/howto_css_loader.asp
+ */
+function delayTimer() {
+    setTimeout(removeSpinner, 1500);
+}
+
+/**
+ * Sets the spinner's display to none.
+ */
+function removeSpinner() {
+    document.getElementById("loader").style.display = "none";
+}
+// Run the delay timer 
+delayTimer();
+
+/**
+ * Gets the current user's ID from Firestore.
+ */
 function getCurrentStudent() {
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {
-            db.collection("Students")
-                .doc(somebody.uid)
-                // Read
+            db.collection("Students").doc(somebody.uid)
                 .get()
                 .then(function (doc) {
-                    // Extract the current student's class name
+                    // Extract the current student's user ID
                     userID = doc.id;
-                    console.log(userID)
-                    getUniqueID();
+                    getQuestInfo();
                 });
         }
     });
 }
 
 /**
- * Write this.
+ * Pulls all of this quest's information from Firestore: its title title and description, along with instruction and
+ * more info video links.
  */
-function getUniqueID() {
-    db.collection("Students").doc(userID).collection("Quests")
-    .where("Quest_Status", "==", "active")
-    .get()
-    .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            uniqueID = doc.id;
-        })
-        getQuest();
-    })
-    .catch((error) => {
-        console.log("Error getting unique quest ID: ", error);
-    });
-}
-
-/**
- * Write this.
- */
-function getQuest() {
-    console.log(questID);
-    db.collection("Quests").doc(questID)
+function getQuestInfo() {
+    db.collection("Student_Quests").doc(questID)
         // Read
         .get()
         .then(function (doc) {
-            questTitle = doc.data().title;
-            questDescription = doc.data().description;
-            questInstructions = doc.data().instruction;
-            questInfo = doc.data().moreInfo;
+            questTitle = doc.data().Quest_Title;
+            questDescription = doc.data().Quest_Description;
+            questInstructions = doc.data().Quest_Instructions;
+            questInfo = doc.data().Quest_Info;
+            // The above code running ensures that the student does indeed have an active quest, so the "Submit Quest" button can be activated
+            enableSubmitQuest();
             getBitmoji();
+        })
+        .catch((error) => {
+            console.log("Error getting quest: ", error);
         });
 }
 
 /**
- * Write this.
+ * Pulls the bitmoji image assigned to this quest when it was chosen 
  */
 function getBitmoji() {
-    db.collection("Students").doc(userID).collection("Quests").doc(uniqueID)
-    .get()
-    .then(function (doc) {
-        bitmojiURL = doc.data().Quest_Bitmoji;
-        addInfoToDOM();
-    });
+    db.collection("Student_Quests").doc(questID)
+        .get()
+        .then(function (doc) {
+            // Pull image link from Firestore
+            bitmojiURL = doc.data().Quest_Bitmoji;
+            addInfoToDOM();
+        })
+        .catch((error) => {
+            console.log("Error getting bitmoji: ", error);
+        });
 }
 
 /**
- * Write this.
+ * Adds all of the quest information pulled from Firestore above to the DOM.
  */
 function addInfoToDOM() {
     let title = "<p id='quest-title'>" + questTitle + "</p>";
@@ -96,39 +106,41 @@ function addInfoToDOM() {
 }
 
 /**
- * Write this.
+ * Opens up a Bootstrap modal to display a video. This is triggered when either
+ * of the "Instructions" or "More Info" anchors are clicked on.
  * 
- * @param {*} element 
+ * @param {*} element  - The DOM element being displayed in this modal.
  */
 function showVideo(element) {
     let category = $(element).attr("id");
     let videoURL = null;
     let videoTitle = null;
 
+    // Assign variables that will be used to populate the modal with instructions-specific content
     if (category === "quest-instructions") {
         videoURL = questInstructions;
         videoTitle = "Instructions";
-
+        // Assign variables that will be used to populate the modal with info-specific content
     } else {
         videoURL = questInfo;
         videoTitle = "More Information";
     }
-
+    // Clear any content that may still be populating the modal
     $(".modal-body").html("");
-
     if (videoURL) {
         $(".modal-title").html(videoTitle);
         $(".modal-body").html("<iframe src='" + videoURL + "' allowfullscreen>");
     } else {
         $(".modal-title").html("No video available");
-        $(".modal-body").html("Sorry, we couldn't generate a video for you.");
+        $(".modal-body").html("Sorry, we couldn't load this video for you.");
     }
 }
 
 /**
- * Write this.
+ * Selects a random background for the quest's bitmoji from a collection of 5 background images (stored locally).
  */
 function getBitmojiBackground() {
+    // The "+ 3" corresponds purely to how background images are named
     let randomNum = Math.floor(Math.random() * 5 + 3);
     $(".image-container").css({
         background: "url('../img/background_pattern_" + randomNum + ".png')"
@@ -136,19 +148,21 @@ function getBitmojiBackground() {
 }
 
 /**
- * Write this.
+ * Redirects the student to the "Submit Quest" page, passing along the IDs of both the student and the quest to be submitted
+ * (currently being viewed).
  */
 function onClickSubmit() {
     location.href = "./student-submit-quest.html?questid=" + questID + "&userid=" + userID;
 }
 
 /**
- * Write this.
+ * Updates the quest-submitting student's "Student_Quest" field in Firestore to null. This field is used as a flag
+ * for whether or not a student is eligible to select a new quest.
  */
 function updateStudent() {
     db.collection("Students").doc(userID).update({
-            Student_Quest: false
-        })
+        Student_Quest: null
+    })
         .then(() => {
             console.log("Student_Quest successfully deactivated!");
             deleteQuest()
@@ -157,11 +171,24 @@ function updateStudent() {
         });
 }
 
+
+/**
+ * Asks the student if they're sure they want to choose a new quest and discard the one they're currently viewing.
+ * If they choose "Ok," their status is reset, and their current quest is deleted. If they choose "Cancel," nothing happens.
+ */
+function resetQuest() {
+    if (confirm("Are you sure?")) {
+        updateStudent();
+    } else {
+        console.log("Reset quest cancelled.");
+    }
+}
+
 /** 
- * Write this.
+ * Deletes the quest being viewed from the database if a user decides to choose a new one.
  */
 function deleteQuest() {
-    db.collection("Students").doc(userID).collection("Quests").doc(uniqueID)
+    db.collection("Student_Quests").doc(questID)
         .delete()
         .then(() => {
             console.log("Quest successfully deleted!");
@@ -172,20 +199,20 @@ function deleteQuest() {
 }
 
 /**
- * Write this.
+ * Changes the "Submit Quest" button from an inactive to an active state.
  */
-function resetQuest() {
-    if (confirm("Are you sure?")) {
-        updateStudent();
-    } else {
-        console.log("Reset quest cancelled");
-    }
+function enableSubmitQuest() {
+    $("#card-button-container-1 a").attr("onclick", "onClickSubmit()");
+    $("#card-button-container-1").removeClass("inactive");
 }
 
-// Run function when document is ready 
+// Run getCurrentStudent() to start the function cascade when the page is ready.
 $(document).ready(function () {
     getCurrentStudent();
-    // Stops videos from playing once modals are closed */
+
+    /**
+     * Stops videos from playing once modals are closed.
+     */
     $('#videoViewer').on('hide.bs.modal', function () {
         $('.modal-body iframe').attr('src', '');
     });

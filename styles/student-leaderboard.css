@@ -1,0 +1,48 @@
+/** CSS for student-leaderboard.html */
+.page-container {
+    margin-top: 50px;
+}
+
+#main-content-card {
+    grid-template-areas:
+        "card-text"
+        "my-class"
+        "all-classes"
+        "all-students"
+        "break"
+        "home";
+}
+
+.card-text-container {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.card-text {
+    height: 100%;
+}
+
+#card-button-container-1 {
+    grid-area: my-class;
+}
+
+#card-button-container-2 {
+    grid-area: all-classes;
+}
+#card-button-container-3 {
+    grid-area: all-students;
+}
+
+#card-button-container-4 {
+    grid-area: home;
+    margin-bottom: 40px;
+}
+
+.inactive {
+    background-color: rgb(200, 200, 200);
+}
+
+.inactive:active {
+    transform: none;
+}

@@ -6,6 +6,8 @@ var className;
 // Create a variable to house the names of students who are also in this class
 var studentsInClass = [];
 
+var studentScores = [];
+
 /**
  * Get the current user's name and class name from Firestore.
  */
@@ -17,7 +19,7 @@ function getCurrentStudent() {
                 // Read
                 .get()
                 .then(function (doc) {
-                    // Extract the current student's ID and class name
+                    // Extract the current student's name and class name
                     currentStudent = doc.data().Student_Name;
                     className = doc.data().Student_Class;
                     if (className == null) {
@@ -44,12 +46,18 @@ function getCurrentStudent() {
 function populateStudentList(currentStudent) {
     var classTotalPoints = 0;
     for (var i = 0; i < studentsInClass.length; i++) {
-        let studentContainer = "<div class='student-container' id='student-container-" + i + "'></div>";
+        let studentProfileLink = "./student-profile.html?userid=" + studentsInClass[i].id;
+        let studentContainer = "<a class='student-container' id='student-container-" + i + "' href='" + studentProfileLink + "'></a>";
         $(".student-list").append(studentContainer);
+        let placeContainer = "<div class='place-container' id='place-container-" + i + "'></div>";
+        $("#student-container-" + i).append(placeContainer);
+        let studentPlacement = studentScores.indexOf(studentsInClass[i].points) + 1;
+        let place = "<p>" + studentPlacement + "</p>";
+        $("#place-container-" + i).append(place);
         let studentName = "<p class='student-name' id='student-name-" + i + "'>" + studentsInClass[i].name + "</p>";
         $("#student-container-" + i).append(studentName);
-        //different container color for current student. 
-        if (studentsInClass[i].name == currentStudent) {
+        // Different container color for current student
+        if (studentsInClass[i].name === currentStudent) {
             $("#student-container-" + i).addClass("current-student-container");
         }
         let studentPoints = "<p class='student-points' id='student-points-" + i + "'>" + studentsInClass[i].points + "</p>";
@@ -86,12 +94,23 @@ function getStudentsInClass() {
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                let studentObject = { "name": doc.data().Student_Name, "points": doc.data().Student_Points.toString() };
+                let studentObject = { "id": doc.id, "name": doc.data().Student_Name, "points": doc.data().Student_Points.toString() };
                 studentsInClass.push(studentObject);
             });
+            getScores();
             populateStudentList(currentStudent);
             addHeading();
         })
+}
+
+/**
+ * Write this.
+ */
+function getScores() {
+    for (var i = 0; i < studentsInClass.length; i++) {
+        studentScores.push(studentsInClass[i].points);
+    }
+    studentScores.sort(function (a, b) { return b - a });
 }
 
 /**
@@ -102,17 +121,19 @@ function addHeading() {
 }
 
 /**
- * Redirects users back to the student homepage.
- */
-function onClickBack() {
-    setTimeout(function () {
-        location.href = "./student-home.html";
-    }, 1000);
-}
-
-/**
  * Call function when the page is ready.
  */
 $(document).ready(function () {
     getCurrentStudent();
 });
+
+//Load Timer
+//Taken from https://www.w3schools.com/howto/howto_css_loader.asp
+function delayTimer() {
+    setTimeout(removeSpinner, 1300);
+  }
+  
+  function removeSpinner() {
+    document.getElementById("loader").style.display = "none";
+  }
+  delayTimer();

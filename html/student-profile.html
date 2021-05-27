@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        name="educator homepage">
+    <title>GreenQuest - Home</title>
+
+    <!-- Bootstrap for Mobile-first, and JQuery -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <!-- Optional styles and scripts of your own -->
+    <link rel="stylesheet" href="/styles/all-pages.css">
+    <link rel="stylesheet" href="/styles/student-profile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mali&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon/favicon-16x16.png">
+    <link rel="manifest" href="../favicon/site.webmanifest">
+    <link rel="mask-icon" href="../favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- ShareThis -->
+    <script type="text/javascript"
+        src="https://platform-api.sharethis.com/js/sharethis.js#property=60af3996b072aa0011492f46&product=inline-share-buttons"
+        async="async"></script>
+    <meta property="fb:app_id" content="110610984451948" />
+    <meta property="og:title" content="Let's save the planet!" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="greenquest-5f80c.web.app" />
+    <meta id="facebook-image" property="og:image"
+        content="https://firebasestorage.googleapis.com/v0/b/greenquest-5f80c.appspot.com/o/images%2Fbitmojis%2F13.png?alt=media&token=39792402-c44a-4f31-8309-5caa726457d5" />
+    <meta id="facebook-description" property="og:description"
+        content="I'm earning points to win awesome prizes at my school by making the world a better place!" />
+    <meta property="og:site_name" content="GreenQuest" />
+    <meta name="twitter:card" value="summary" />
+    <meta name="twitter:site" value="GreenQuest" />
+    <meta name="twitter:creator" value="" />
+    <meta name="twitter:url" value="greenquest-5f80c.web.app" />
+    <meta name="twitter:title" value="Let's save the planet!" />
+    <meta id="twitter-description" name="twitter:description"
+        value="I'm earning points to win awesome prizes at my school by making the world a better place!" />
+    <meta id="twitter-image" name="twitter:image id"
+        value="https://firebasestorage.googleapis.com/v0/b/greenquest-5f80c.appspot.com/o/images%2Fbitmojis%2F16.png?alt=media&token=810fee74-a72e-4aa1-bf8d-7b3cd402bd84" />
+    <meta name="tw-line" content="" />
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand abs" href="./student-home.html">GreenQuest</a>
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse" id="collapseNavbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./student-home.html">Homepage</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./about-us.html?usertype=student">About Us</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="../index.html" onclick="logout()">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-container">
+        <div class="heading-container">
+            <p class="page-heading"></p>
+        </div>
+        <div class="card mb-3" id="main-content-card">
+            <div class="profile-container">
+                <div class="profile-pic-container">
+                    <img id="profile-pic">
+                    <input type="file" accept="image/*" id="upload-image-input">
+                </div>
+                <div class="profile-info-container">
+                    <p id="profile-name"></p>
+                    <p id="profile-class"></p>
+                    <div class="profile-points-container">
+                        <p id="profile-points"></p>
+                        <img src="/img/leaf_icon.png">
+                    </div>
+                </div>
+            </div>
+            <div class="card-text-container">
+                <p class="card-text">Recent Activity:</p>
+            </div>
+            <hr class="extra-break">
+            <div class="quest-list"></div>
+            <hr class="break">
+            <div class="card-button-container" id="card-button-container-1">
+                <a class="button" href="./student-home.html">Home</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="imagePreview" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="loader"></div>
+    <!----------------------------------------------->
+    <!-- JS: Boostrap, JQuery, Firebase, API related    -->
+    <!----------------------------------------------->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+        </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
+
+    <!-- Link to the api keys for your firebase project -->
+    <script src="/scripts/firebase-api-GreenQuest.js"></script>
+
+    <!--------------------------------------------------------------------->
+    <!-- JS files: Your own JavaScript functions included here    -->
+    <!--------------------------------------------------------------------->
+    <script src="/scripts/logout.js"></script>
+    <script src="/scripts/student-profile.js"></script>
+
+
+</body>
+
+</html>
