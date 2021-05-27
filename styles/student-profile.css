@@ -293,11 +293,11 @@
 }
 
 #upload-image-label {
-    font-size: 12px;
-    height: 35px;
+    font-size: 11px;
+    height: 40px;
     width: 100%;
     position: relative;
-    top: -36px;
+    top: -40px;
     /* left: 50%; */
     /* bottom: 0%; */
     /* transform: translateX(-50%); */
