@@ -166,3 +166,13 @@ function getBitmojiBackground() {
 $(document).ready(function () {
     getCurrentUser();
 });
+
+//Loading timer
+function myFunction() {
+    setTimeout(showPage, 1350);
+  }
+  
+  function showPage() {
+    document.getElementById("loader").style.display = "none";
+  }
+  myFunction();
