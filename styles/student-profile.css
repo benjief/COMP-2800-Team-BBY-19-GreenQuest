@@ -281,6 +281,11 @@
     font-weight: 600;
 }
 
+#upload-image-label:active {
+    background: rgba(103, 207, 255, 0.822);
+    color: white;
+}
+
 #card-button-container-1 {
     grid-area: back;
     margin-bottom: 40px;
