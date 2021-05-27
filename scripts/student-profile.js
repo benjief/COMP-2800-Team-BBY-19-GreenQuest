@@ -364,3 +364,38 @@ function getBitmojiBackground() {
 $(document).ready(function () {
     getCurrentStudent();
 });
+
+    //HCTI_API creating img from HTML
+    //Source: [https://docs.htmlcsstoimage.com/example-code/javascript/](https://docs.htmlcsstoimage.com/example-code/javascript/)
+    // const json = {
+    //     url: "http://127.0.0.1:5501/html/student-profile.html",
+    //     selector: ".profile #main-content-card",
+    //     ms_delay: "500"
+    // };
+    
+    // const username = "eb1113f4-b4a8-4585-88f4-854983f6ad57";
+    // const password = "f958d0bf-9a13-4048-91af-92df41f41433";
+    
+    // const options = {
+    //     method: 'POST',
+    //     body: JSON.stringify(json),
+    //     headers: {
+    //     'Content-Type': 'application/json',
+    //     'Authorization': 'Basic ' + btoa(username + ":" + password)
+    //     }
+    // }
+    
+    // fetch('https://hcti.io/v1/image', options)
+    //     .then(res => {
+    //     if (res.ok) {
+    //         return res.json();
+    //     } else {
+    //         return Promise.reject(res.status);
+    //     }
+    //     })
+    //     .then(data => {
+    //     // Image URL is available here
+    //     $(".sharethis-inline-share-buttons").attr("data-url", data.url);
+    //     console.log("this is dataurl: " + data.url)
+    //     })
+    //     .catch(err => console.error(err));
