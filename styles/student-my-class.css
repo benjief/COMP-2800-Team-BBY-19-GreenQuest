@@ -43,10 +43,10 @@
 .student-container {
     display: grid;
     grid-template-rows: 100%;
-    grid-template-columns: 60% 34% 6%;
+    grid-template-columns: 20% 40% 34% 6%;
     border: 1px dashed #ff7b00;
     border-radius: 10px;
-    background: linear-gradient(rgba(254, 255, 168, 0.7), rgba(254, 255, 168, 0.7)), url("/img/background_pattern_2.png");
+    background: linear-gradient(rgba(236, 236, 236, 0.7), rgba(255, 255, 255, 0.7)), url("/img/background_pattern_2.png");
     font-weight: 600;
     margin-bottom: 10px;
 }
@@ -68,13 +68,25 @@
 }
 
 .current-student-container {
-    background: linear-gradient(rgba(255, 227, 251, 0.7), rgba(255, 227, 251, 0.7)), url("/img/background_pattern_2.png");
+    background: linear-gradient(rgba(255, 190, 245, 0.7), rgba(255, 227, 251, 0.7)), url("/img/background_pattern_2.png");
     border-color: rgb(255, 0, 217)
 }
 
 /* .student-container:last-child {
     margin-bottom: 0;
 } */
+
+.place-container {
+    display: flex;
+    justify-content: center;
+}
+
+.place-container p {
+    align-self: center;
+    margin: 0;
+    font-size: 14pt;
+    color: #ff7b00;
+}
 
 .student-container img {
     justify-self: center;
