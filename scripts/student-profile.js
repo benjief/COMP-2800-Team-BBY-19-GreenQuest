@@ -111,6 +111,7 @@ function populateDOM() {
         $("#profile-class").html(profileClass);
     }
     if (userID === profileID) {
+        let socialMediaContainer = "<div class='social-media-container'></div>";
         let twitterIcon = "<div class='st-custom-button' id='twitter-icon' data-network='twitter'></div>";
         let facebookIcon = "<div class='st-custom-button' id='facebook-icon' data-network='facebook'></div>";
         $(".social-media-container").append(twitterIcon, facebookIcon);
