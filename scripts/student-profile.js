@@ -341,6 +341,9 @@ function getTimeElapsed() {
 function addRecentQuestsToDOM(i, timeDifference, unitOfTime) {
     let questContainer = "<div class='quest-container' id='quest-container-" + i + "'></div>";
     $(".quest-list").append(questContainer);
+    let socialMedia = "<div class='st-custom-button' data-network='facebook'</div>";
+    $("#quest-container-" + i).append(socialMedia);
+    window.__sharethis__.initialize();
     let questTitle = "<p class='quest-title' id='quest-title-" + i + "'>" + recentQuests[i].title + "</p>";
     $("#quest-container-" + i).append(questTitle);
     let questPoints = "<p class='quest-points' id='quest-points-" + i + "'>" + recentQuests[i].points + " points</p>";
