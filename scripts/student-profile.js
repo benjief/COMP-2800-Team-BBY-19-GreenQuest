@@ -11,9 +11,6 @@ var profilePoints;
 var profilePic;
 var profileClass;
 
-var bitmojiURL = null;
-var twitterBitmoji = null;
-
 var recentQuests = [];
 
 /**
@@ -47,9 +44,8 @@ function getProfileInfo() {
             profilePoints = doc.data().Student_Points;
             profilePic = doc.data().Student_Profile_Pic;
             profileClass = doc.data().Student_Class;
-            populateDOM();
             populateHeading();
-            getBitmoji();
+            populateDOM();
             if (userID == profileID) {
                 let newProfilePicInput = "<input type='file' accept='image/*' id='upload-new-image-input'></input>";
                 let label = "<label for='upload-new-image-input' id='upload-new-image-label'>Upload New Image</label>";
@@ -59,6 +55,7 @@ function getProfileInfo() {
             if (profilePic == null) {
                 if (userID === profileID) {
                     activatePrimaryInput();
+                    getBitmoji();
                 }
                 else {
                     getBitmoji();
@@ -86,8 +83,7 @@ function getBitmoji() {
             let randomNum = Math.floor(Math.random() * counter + 1);
             storageRef.child("images/bitmojis/" + randomNum.toString() + ".png").getDownloadURL()
                 .then((url) => {
-                    bitmojiURL = url;
-                    updateHead();
+                    let bitmojiURL = url;
                     if (profilePic == null) {
                         $("#profile-pic").attr("src", bitmojiURL);
 
@@ -112,6 +108,12 @@ function populateDOM() {
         $("#profile-class").html("Not in a Class");
     } else {
         $("#profile-class").html(profileClass);
+    }
+    if (userID === profileID) {
+        let twitterIcon = "<div class='st-custom-button' id='twitter-icon' data-network='twitter'></div>";
+        let facebookIcon = "<div class='st-custom-button' id='facebook-icon' data-network='facebook'></div>";
+        $(".social-media-container").append(twitterIcon, facebookIcon);
+        window.__sharethis__.initialize();
     }
 }
 
@@ -380,30 +382,21 @@ function getBitmojiBackground() {
 function updateHead() {
     console.log(bitmojiURL);
     if (userID == profileID) {
-        let twitterIcon = "<div class='st-custom-button' id='twitter-icon' data-network='twitter'></div>";
-        let facebookIcon = "<div class='st-custom-button' id='facebook-icon' data-network='facebook'></div>";
-        $(".social-media-container").append(twitterIcon, facebookIcon);
-        window.__sharethis__.initialize();
-        $("#twitter-description").attr("value", "I've earned " + profilePoints + " points saving "
-            + "the planet with GreenQuest. Come and join me!");
-        $("#twitter-image").attr("value", bitmojiURL);
-        $("#facebook-description").attr("content", "I've earned " + profilePoints + " points saving "
-            + "the planet with GreenQuest. Come and join me!");
-        $("#facebook-image").attr("content", bitmojiURL);
+
     }
 }
 
-    // Run function when document is ready 
-    $(document).ready(function () {
-        getCurrentStudent();
-    });
+// Run function when document is ready 
+$(document).ready(function () {
+    getCurrentStudent();
+});
 
 
-    //Loading timer
-    function myFunction() {
-        setTimeout(showPage, 1000);
-    }
-    function showPage() {
-        document.getElementById("loader").style.display = "none";
-    }
-    myFunction();
+//Loading timer
+function myFunction() {
+    setTimeout(showPage, 1000);
+}
+function showPage() {
+    document.getElementById("loader").style.display = "none";
+}
+myFunction();
