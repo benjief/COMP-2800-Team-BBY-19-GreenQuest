@@ -113,12 +113,6 @@ function populateDOM() {
     } else {
         $("#profile-class").html(profileClass);
     }
-    if (userID == profileID) {
-        let twitterIcon = "<div class='st-custom-button' id='twitter-icon' data-network='twitter'></div>";
-        let facebookIcon = "<div class='st-custom-button' id='facebook-icon' data-network='facebook'></div>";
-        $(".social-media-container").append(twitterIcon, facebookIcon);
-        window.__sharethis__.initialize();
-    }
 }
 
 /**
@@ -385,25 +379,30 @@ function getBitmojiBackground() {
  */
 function updateHead() {
     console.log(bitmojiURL);
-    $("#twitter-description").attr("value", "I've earned " + profilePoints + " points saving "
-        + "the planet with GreenQuest. Come and join me!");
-    $("#twitter-image").attr("value", bitmojiURL);
-    $("#facebook-description").attr("content", "I've earned " + profilePoints + " points saving "
-        + "the planet with GreenQuest. Come and join me!");
-    $("#facebook-image").attr("content", bitmojiURL);
-}
+    if (userID == profileID) {
+        let twitterIcon = "<div class='st-custom-button' id='twitter-icon' data-network='twitter'></div>";
+        let facebookIcon = "<div class='st-custom-button' id='facebook-icon' data-network='facebook'></div>";
+        $(".social-media-container").append(twitterIcon, facebookIcon);
+        window.__sharethis__.initialize();
+        $("#twitter-description").attr("value", "I've earned " + profilePoints + " points saving "
+            + "the planet with GreenQuest. Come and join me!");
+        $("#twitter-image").attr("value", bitmojiURL);
+        $("#facebook-description").attr("content", "I've earned " + profilePoints + " points saving "
+            + "the planet with GreenQuest. Come and join me!");
+        $("#facebook-image").attr("content", bitmojiURL);
+    }
 
-// Run function when document is ready 
-$(document).ready(function () {
-    getCurrentStudent();
-});
+    // Run function when document is ready 
+    $(document).ready(function () {
+        getCurrentStudent();
+    });
 
 
-//Loading timer
-function myFunction() {
-    setTimeout(showPage, 1000);
-}
-function showPage() {
-    document.getElementById("loader").style.display = "none";
-}
-myFunction();
+    //Loading timer
+    function myFunction() {
+        setTimeout(showPage, 1000);
+    }
+    function showPage() {
+        document.getElementById("loader").style.display = "none";
+    }
+    myFunction();
