@@ -13,6 +13,9 @@ var firstVisit = parsedUrl.searchParams.get("firstvisit");
  * Also assigns the user's ID to userID.
 */
 function sayHello() {
+    if (firstVisit) {
+        $("#welcomeMessage").modal("show");
+    }
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {
             db.collection("Students").doc(somebody.uid)
@@ -20,6 +23,7 @@ function sayHello() {
                 .get()
                 .then(function (doc) {
                     userID = doc.id;
+                    checkIfInClass(doc);
                     getStudentPoints();
                     checkQuestHistory();
                     // Extract the first name of the user
@@ -38,6 +42,17 @@ function sayHello() {
                 });
         }
     });
+}
+
+/**
+ * Write this.
+ * 
+ * @param {*} doc 
+ */
+ function checkIfInClass(doc) {
+    if (doc.data().Student_Class == null) {
+        disableMyQuest();
+    }
 }
 
 /**

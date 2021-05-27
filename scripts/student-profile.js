@@ -11,8 +11,6 @@ var profilePoints;
 var profilePic;
 var profileClass;
 
-var bitmojiURL = null;
-
 var recentQuests = [];
 
 /**
@@ -37,7 +35,7 @@ function getCurrentStudent() {
  * Write this.
  */
 function getProfileInfo() {
-    db.collection("Students").doc(userID)
+    db.collection("Students").doc(profileID)
         .get()
         .then(function (doc) {
             profileName = doc.data().Student_Name;
@@ -46,8 +44,8 @@ function getProfileInfo() {
             profilePoints = doc.data().Student_Points;
             profilePic = doc.data().Student_Profile_Pic;
             profileClass = doc.data().Student_Class;
-            populateDOM();
             populateHeading();
+            populateDOM();
             if (userID == profileID) {
                 let newProfilePicInput = "<input type='file' accept='image/*' id='upload-new-image-input'></input>";
                 let label = "<label for='upload-new-image-input' id='upload-new-image-label'>Upload New Image</label>";
@@ -56,8 +54,9 @@ function getProfileInfo() {
             }
             if (profilePic == null) {
                 if (userID === profileID) {
-                    getBitmoji();
+                    console.log("yes");
                     activatePrimaryInput();
+                    getBitmoji();
                 }
                 else {
                     getBitmoji();
@@ -85,9 +84,11 @@ function getBitmoji() {
             let randomNum = Math.floor(Math.random() * counter + 1);
             storageRef.child("images/bitmojis/" + randomNum.toString() + ".png").getDownloadURL()
                 .then((url) => {
-                    bitmojiURL = url;
-                    // bitmojiURL = imageRef.getDownloadURL();
-                    $("#profile-pic").attr("src", bitmojiURL);
+                    let bitmojiURL = url;
+                    if (profilePic == null) {
+                        $("#profile-pic").attr("src", bitmojiURL);
+
+                    }
                 })
                 .catch((error) => {
                     console.error("Error getting url: ", error);
@@ -104,7 +105,19 @@ function getBitmoji() {
 function populateDOM() {
     $("#profile-name").html(profileName);
     $("#profile-points").html(profilePoints);
-    $("#profile-class").html(profileClass);
+    if (profileClass == null) {
+        $("#profile-class").html("Not in a Class");
+    } else {
+        $("#profile-class").html(profileClass);
+    }
+    if (userID === profileID) {
+        let socialMediaContainer = "<div class='social-media-container'></div>";
+        $(".profile-info-container").append(socialMediaContainer);
+        let twitterIcon = "<div class='st-custom-button' id='twitter-icon' data-network='twitter'></div>";
+        let facebookIcon = "<div class='st-custom-button' id='facebook-icon' data-network='facebook'></div>";
+        $(".social-media-container").append(twitterIcon, facebookIcon);
+        window.__sharethis__.initialize();
+    }
 }
 
 /**
@@ -119,6 +132,9 @@ function populateHeading() {
  * CITE - Write this.
  */
 function activatePrimaryInput() {
+    console.log("test");
+    let label = "<label for='upload-image-input' id='upload-image-label'>Upload Image</label>";
+    $(".profile-pic-container").append(label);
     const imageInput = document.getElementById("upload-image-input");
     imageInput.addEventListener('change', function (event) {
         storeImage(event.target.files[0]);
@@ -276,6 +292,7 @@ function checkRecentQuests() {
             justifyContent: "center",
             textAlign: "center"
         });
+        $(".card-text").html("No Recent Activity");
     } else {
         getTimeElapsed();
     }
@@ -345,6 +362,8 @@ function addRecentQuestsToDOM(i, timeDifference, unitOfTime) {
     $("#quest-container-" + i).append(elapsedTime);
     let questBitmoji = "<img class='bitmoji' id='bitmoji-" + i + "' src='" + recentQuests[i].bitmoji + "'>";
     $("#quest-container-" + i).append(questBitmoji);
+    console.log(recentQuests[i].bitmoji);
+    // $("#tweet-" + i).attr("data-image", "https://firebasestorage.googleapis.com/v0/b/greenquest-5f80c.appspot.com/o/images%2Fbitmojis%2F23.png?alt=media&token=f5439a0e-d17b-4371-8d0e-c6b4e47dca91");
     getBitmojiBackground();
 }
 
@@ -360,7 +379,28 @@ function getBitmojiBackground() {
     }
 }
 
+
+/**
+ * Write this.
+ */
+function updateHead() {
+    console.log(bitmojiURL);
+    if (userID == profileID) {
+
+    }
+}
+
 // Run function when document is ready 
 $(document).ready(function () {
     getCurrentStudent();
 });
+
+
+//Loading timer
+function myFunction() {
+    setTimeout(showPage, 1000);
+}
+function showPage() {
+    document.getElementById("loader").style.display = "none";
+}
+myFunction();

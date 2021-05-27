@@ -43,16 +43,18 @@
 .student-container {
     display: grid;
     grid-template-rows: 100%;
-    grid-template-columns: 10% 50% 34% 6%;
+    grid-template-columns: 20% 40% 34% 6%;
     border: 1px dashed #ff7b00;
     border-radius: 10px;
-    background: linear-gradient(rgba(254, 255, 168, 0.7), rgba(254, 255, 168, 0.7)), url("/img/background_pattern_2.png");
+    background: linear-gradient(rgba(236, 236, 236, 0.8), rgba(255, 255, 255, 0.7)), url("/img/background_pattern_2.png");
     font-weight: 600;
     margin-bottom: 10px;
+    color: black;
+    text-decoration: none;
 }
 
 .current-student-container {
-    background: linear-gradient(rgba(255, 227, 251, 0.7), rgba(255, 227, 251, 0.7)), url("/img/background_pattern_2.png");
+    background: linear-gradient(rgba(255, 190, 245, 0.8), rgba(255, 227, 251, 0.7)), url("/img/background_pattern_2.png");
     border-color: rgb(255, 0, 217)
 }
 
@@ -69,6 +71,13 @@
     width: 25px;
     height: 25px;
     align-self: center;
+}
+
+.ribbon-container p {
+    align-self: center;
+    margin: 0;
+    font-size: 14pt;
+    color: #ff7b00;
 }
 
 #leaf-icon {
@@ -98,6 +107,7 @@
     align-items: center;
     justify-content: flex-end;
     padding-right: 5px;
+    color: #ff7b00;
 }
 
 #card-button-container-1 {

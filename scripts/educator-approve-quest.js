@@ -162,40 +162,94 @@ function getOccurrence(array, value) {
 
 /**
  * Write this.
+ * Reduce algorithm taken from https://stackoverflow.com/questions/1230233/how-to-find-the-sum-of-an-array-of-numbers
  */
-function updateClassPoints() {
-    let classPointsList = [];
+function getClassNames() {
+    let classNames = [];
     for (var i = 0; i < classList.length; i++) {
-        let points = getOccurrence(classList, classList[i]) * questPoints;
-        let classPoints = { "name": classList[i], "points": points };
-        if (!classPointsList.includes(classPoints)) {
-            classPointsList.push(classPoints);
-        }
+        classNames.push(classList[i].name);
     }
 
-    for (var i = 0; i < classPointsList.length; i++) {
-        db.collection("Classes").doc(classPointsList[i].name).update({
-            Class_Points: classPointsList[i].points
-        })
-            .then(() => {
-                console.log("Class points successfully updated!");
-            })
-            .catch((error) => {
-                console.error("Error updating class points: " + error);
-            });
+    getPointsToAdd(classNames);
+}
+
+/**
+ * Write this.
+ * 
+ * @param {*} classNames 
+ */
+function getPointsToAdd(classNames) {
+    let pointsToAdd = [];
+    for (var i = 0; i < classNames.length; i++) {
+        let classOccurrence = getOccurrence(classNames, classNames[i]);
+        let classObject = { "name": classNames[i], "points": classOccurrence * questPoints };
+        pointsToAdd.push(classObject);
     }
+    getUpdatedClassPoints(pointsToAdd);
+}
+
+/**
+ * Write this.
+ * 
+ * @param {*} pointsToAdd 
+ */
+function getUpdatedClassPoints(pointsToAdd) {
+    let classNames = []
+    let updatedClassPoints = [];
+    console.log(classList);
+
+    for (var i = 0; i < classList.length; i++) {
+        let updatedPoints = classList[i].points + pointsToAdd[i].points;
+        let updatedClassObject = { "name": classList[i].name, "points": updatedPoints };
+        if (!classNames.includes(classList[i].name)) {
+            updatedClassPoints.push(updatedClassObject);
+            classNames.push(classList[i].name);
+        }
+    }
+    console.log(updatedClassPoints);
+    for (var i = 0; i < updatedClassPoints.length; i++) {
+        updateClassPoints(updatedClassPoints[i]);
+    }
+}
+
+/**
+ * Write this.
+ * 
+ * @param {*} studentClass 
+ */
+function updateClassPoints(studentClass) {
+    db.collection("Classes").doc(studentClass.name).update({
+        Class_Points: studentClass.points
+    })
+        .then(() => {
+            console.log("Class points successfully updated!");
+        })
+        .catch((error) => {
+            console.error("Error updating class points: " + error);
+        });
 }
 
 /**
  * Write this.
  */
 function getClassList() {
+    console.log(submitterIDs);
     for (var i = 0; i < submitterIDs.length; i++) {
         db.collection("Students").doc(submitterIDs[i])
             .get()
             .then(function (doc) {
                 let className = doc.data().Student_Class;
-                classList.push(className);
+                if (className != null) {
+                    db.collection("Classes").doc(className)
+                        .get()
+                        .then(function (doc) {
+                            let classPoints = doc.data().Class_Points;
+                            let classObject = { "name": className, "points": classPoints };
+                            classList.push(classObject);
+                        })
+
+                }
+                console.log(classList);
             });
     }
 }
@@ -207,20 +261,19 @@ function getClassList() {
 function approveStudentQuest() {
     questPoints = document.getElementById("quest-points-input").value;
     questPoints = parseInt(questPoints);
+    console.log(questID);
     db.collection("Student_Quests").doc(questID).update({
         Quest_Status: "approved",
-        // Quest_Unread: true,
         Quest_Points: questPoints,
         Date_Processed: new Date(),
-        Date_Submitted: firebase.firestore.FieldValue.delete(),
-        Quest_Likes: 0
+        Date_Submitted: firebase.firestore.FieldValue.delete()
     })
         .then(() => {
             console.log("Student quest successfully updated!");
             for (var i = 0; i < submitterIDs.length; i++) {
                 updateStudentPoints(submitterIDs[i]);
             }
-            updateClassPoints();
+            getClassNames();
         })
         .catch((error) => {
             console.error("Error updating student quest: " + error);
@@ -237,7 +290,6 @@ function rejectStudentQuest() {
         Quest_Points: 0,
         Date_Processed: new Date(),
         Date_Submitted: firebase.firestore.FieldValue.delete(),
-        // Quest_Likes: 0
     })
         .then(() => {
             console.log("Student quest successfully updated!");
@@ -306,25 +358,6 @@ function displaySuccessMessage() {
 }
 
 /**
-//  * Write this
-//  */
-// function listQuests() {
-//     firebase.auth().onAuthStateChanged(function (user) {
-//         if (user) {
-//             db.collection("Educators")
-//                 .doc(user.uid)
-//                 // Read
-//                 .get()
-//                 .then(function (doc) {
-//                     currentUser = doc.id;
-//                     console.log("Your firebase user ID is " + currentUser);
-//                     getQuests();
-//                 });
-//         }
-//     });
-// }
-
-/**
  * Reads quest IDs relevant to this user from Firestore and stores them in an array.
  */
 function getQuests() {
@@ -343,9 +376,7 @@ function getQuests() {
                 location.href = "./educator-home.html";
             }
             questID = questIDs[0];
-            for (var i = 0; i < questIDs.length; i++) {
-                pullQuestInfo(questIDs[i]);
-            }
+            pullQuestInfo(questID);
         })
         .catch((error) => {
             console.log("Error getting quests: ", error);

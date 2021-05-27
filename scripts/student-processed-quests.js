@@ -174,16 +174,12 @@ $(document).ready(function () {
     getCurrentUser();
 });
 
-
-//Delaying the loading of the ShareThis header file.
-//Sourced from StackOverflow
-//source: https://stackoverflow.com/questions/9611714/delay-script-loading
-
-setTimeout(function() {
-    var headID = document.getElementsByTagName("head")[0];         
-    var newScript = document.createElement('script');
-    newScript.type = 'text/javascript';
-    newScript.src = 'https://platform-api.sharethis.com/js/sharethis.js#property=60ad9735a28015001222d395&product=inline-share-buttons';
-    headID.appendChild(newScript);
-}, 2000);
-
+//Loading timer
+function myFunction() {
+    setTimeout(showPage, 1350);
+  }
+  
+  function showPage() {
+    document.getElementById("loader").style.display = "none";
+  }
+  myFunction();

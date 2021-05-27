@@ -72,7 +72,7 @@ input::placeholder {
     border-radius: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
-    background: linear-gradient(rgba(254, 255, 168, 0.7), rgba(254, 255, 168, 0.7)), url("/img/background_pattern_2.png");
+    background: linear-gradient(rgba(236, 236, 236, 0.8), rgba(255, 255, 255, 0.7)), url("/img/background_pattern_2.png");
     font-weight: 600;
 }
 

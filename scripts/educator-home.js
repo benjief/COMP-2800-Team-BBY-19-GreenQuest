@@ -38,13 +38,18 @@ function sayHello() {
  * Write this
  */
 function checkNumQuests() {
+    let counter = 0;
     console.log(userID);
     db.collection("Student_Quests")
         .where("Quest_Approver_ID", "==", userID)
         .get()
         .then((querySnapshot) => {
-            let numClasses = querySnapshot.size;
-            if (numClasses == 0) {
+            querySnapshot.forEach(doc => {
+                if (doc.data().Quest_Status == "submitted") {
+                    counter++;
+                }
+            })
+            if (counter == 0) {
                 disableApproveQuests();
             }
         })

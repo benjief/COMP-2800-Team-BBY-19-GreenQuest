@@ -6,6 +6,8 @@ var className;
 // Create a variable to house the names of students who are also in this class
 var studentsInClass = [];
 
+var studentScores = [];
+
 /**
  * Get the current user's name and class name from Firestore.
  */
@@ -44,8 +46,14 @@ function getCurrentStudent() {
 function populateStudentList(currentStudent) {
     var classTotalPoints = 0;
     for (var i = 0; i < studentsInClass.length; i++) {
-        let studentContainer = "<div class='student-container' id='student-container-" + i + "'></div>";
+        let studentProfileLink = "./student-profile.html?userid=" + studentsInClass[i].id;
+        let studentContainer = "<a class='student-container' id='student-container-" + i + "' href='" + studentProfileLink + "'></a>";
         $(".student-list").append(studentContainer);
+        let placeContainer = "<div class='place-container' id='place-container-" + i + "'></div>";
+        $("#student-container-" + i).append(placeContainer);
+        let studentPlacement = studentScores.indexOf(studentsInClass[i].points) + 1;
+        let place = "<p>" + studentPlacement + "</p>";
+        $("#place-container-" + i).append(place);
         let studentName = "<p class='student-name' id='student-name-" + i + "'>" + studentsInClass[i].name + "</p>";
         $("#student-container-" + i).append(studentName);
         // Different container color for current student
@@ -86,12 +94,23 @@ function getStudentsInClass() {
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                let studentObject = { "name": doc.data().Student_Name, "points": doc.data().Student_Points.toString() };
+                let studentObject = { "id": doc.id, "name": doc.data().Student_Name, "points": doc.data().Student_Points.toString() };
                 studentsInClass.push(studentObject);
             });
+            getScores();
             populateStudentList(currentStudent);
             addHeading();
         })
+}
+
+/**
+ * Write this.
+ */
+function getScores() {
+    for (var i = 0; i < studentsInClass.length; i++) {
+        studentScores.push(studentsInClass[i].points);
+    }
+    studentScores.sort(function (a, b) { return b - a });
 }
 
 /**

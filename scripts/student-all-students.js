@@ -7,6 +7,8 @@ var firstPlace = 0;
 var secondPlace = 0;
 var thirdPlace = 0;
 
+var studentScores = [];
+
 /**
  * Get the current user's name and class name from Firestore.
  */
@@ -31,7 +33,8 @@ function getCurrentStudent() {
  */
 function populateStudentList(currentStudent) {
     for (var i = 0; i < students.length; i++) {
-        let studentContainer = "<div class='student-container' id='student-container-" + i + "'></div>";
+        let studentProfileLink = "./student-profile.html?userid=" + students[i].id;
+        let studentContainer = "<a class='student-container' id='student-container-" + i + "' href='" + studentProfileLink + "'></a>";
         $(".student-list").append(studentContainer);
         let ribbonContainer = "<div class='ribbon-container' id='ribbon-container-" + i + "'></div>";
         $("#student-container-" + i).append(ribbonContainer);
@@ -42,7 +45,8 @@ function populateStudentList(currentStudent) {
         } else if (students[i].points == thirdPlace) {
             var ribbon = "<img src='/img/bronze_ribbon.png'>";
         } else {
-            ribbon = null;
+            let studentPlacement = studentScores.indexOf(students[i].points) + 1;
+            ribbon = "<p class='student-placement'>" + studentPlacement + "</p>";
         }
         $("#ribbon-container-" + i).append(ribbon);
         let studentName = "<p class='student-name' id='student-name-" + i + "'>" + students[i].name + "</p>";
@@ -63,22 +67,21 @@ function populateStudentList(currentStudent) {
  * Write this.
  * Taken from https://www.w3schools.com/js/js_array_sort.asp (sorting algorithm)
  */
- function getTopScores() {
-    let studentScores = [];
+function getTopScores() {
     for (var i = 0; i < students.length; i++) {
         studentScores.push(students[i].points);
     }
     studentScores.sort(function (a, b) { return b - a });
-    studentScores = new Set(studentScores);
+    studentScoresSet = new Set(studentScores);
     let iterator = studentScores.values();
-    if (studentScores.size >= 3) {
+    if (studentScoresSet.size >= 3) {
         firstPlace = iterator.next().value;
         secondPlace = iterator.next().value;
-        thirdPace = iterator.next().value;
-    } else if (studentScores == 2) {
+        thirdPlace = iterator.next().value;
+    } else if (studentScoresSet == 2) {
         firstPlace = iterator.next().value;
         secondPlace = iterator.next().value;
-    } else if (studentScores == 1) {
+    } else if (studentScoresSet == 1) {
         firstPlace = iterator.next().value;
     }
     populateStudentList(currentStudent);
@@ -93,7 +96,7 @@ function getStudents() {
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                let studentObject = { "name": doc.data().Student_Name, "points": doc.data().Student_Points.toString() };
+                let studentObject = { "id": doc.id, "name": doc.data().Student_Name, "points": doc.data().Student_Points.toString() };
                 students.push(studentObject);
             });
             getTopScores();
