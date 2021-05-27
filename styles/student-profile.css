@@ -229,10 +229,10 @@
 
 .st-custom-button[data-network] {  
     grid-area: social-media;
-    height: 18px;
-    width: 18px;
+    height: 22px;
+    width: 22px;
     cursor: pointer;
-    background: url("/img/facebook_icon.png");
+    background: url("/img/twitter_icon.png");
     background-size: cover;
 }
 

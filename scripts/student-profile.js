@@ -341,8 +341,11 @@ function getTimeElapsed() {
 function addRecentQuestsToDOM(i, timeDifference, unitOfTime) {
     let questContainer = "<div class='quest-container' id='quest-container-" + i + "'></div>";
     $(".quest-list").append(questContainer);
-    let socialMedia = "<div class='st-custom-button' data-network='facebook'</div>";
+    let socialMedia = "<div class='st-custom-button' id='tweet-" + i + "' data-network='twitter' " 
+        + "data-url='http://greenquest-5f80c.web.app/'</div> ";
     $("#quest-container-" + i).append(socialMedia);
+    $("#tweet-" + i).attr("data-title", "I just earned " + recentQuests[i].points + " points saving the world " 
+        + "on GreenQuest! Why don't you join me?");
     window.__sharethis__.initialize();
     let questTitle = "<p class='quest-title' id='quest-title-" + i + "'>" + recentQuests[i].title + "</p>";
     $("#quest-container-" + i).append(questTitle);
@@ -353,6 +356,7 @@ function addRecentQuestsToDOM(i, timeDifference, unitOfTime) {
     $("#quest-container-" + i).append(elapsedTime);
     let questBitmoji = "<img class='bitmoji' id='bitmoji-" + i + "' src='" + recentQuests[i].bitmoji + "'>";
     $("#quest-container-" + i).append(questBitmoji);
+    console.log(recentQuests[i].bitmoji);
     getBitmojiBackground();
 }
 
