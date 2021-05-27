@@ -93,7 +93,7 @@ $(document).ready(function () {
 
 //Load Timer
 function myFunction() {
-    setTimeout(showPage, 1500);
+    setTimeout(showPage, 700);
   }
   
   function showPage() {
