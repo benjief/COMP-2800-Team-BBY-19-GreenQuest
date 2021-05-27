@@ -83,7 +83,9 @@ var test
  * removed from the class in question.
  */
 $(document.body).on("click", ".plus-icon", function (event) {
+    
     let index = $(event.target).attr("id");
+    console.log(index);
     // Extract index from event id - 
     // taken from https://www.geeksforgeeks.org/extract-a-number-from-a-string-using-javascript/#:~:text=The%20number%20from%20a%20string,(%5Cd%2B)%2F)
     index = parseInt(index.match(/(\d+)/));
@@ -91,6 +93,7 @@ $(document.body).on("click", ".plus-icon", function (event) {
     $(event.target).attr("src", "/img/remove_icon.png");
     $(event.target).attr("class", "minus-icon");
     let studentToAdd = studentIDs[index];
+    console.log(studentToAdd);
     // Update the student's Student_Class and Student_Educator attributes
     db.collection("Students").doc(studentToAdd).update({
         Student_Class: className,

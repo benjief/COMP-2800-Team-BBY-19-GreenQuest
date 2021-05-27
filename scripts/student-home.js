@@ -50,8 +50,8 @@ function sayHello() {
  * @param {*} doc 
  */
  function checkIfInClass(doc) {
-    if (doc.data().Student_Class == null) {
-        disableMyQuest();
+    if (doc.data().Student_Class != null) {
+        enableMyQuest();
     }
 }
 
@@ -69,8 +69,8 @@ function checkQuestHistory() {
                     counter++;
                 }
             })
-            if (counter == 0) {
-                disableQuestHistory();
+            if (counter != 0) {
+                enableQuestHistory();
             }
         })
         .catch((error) => {
@@ -136,17 +136,15 @@ function postStudentPoints() {
 }
 
 /** Write this. */
-function disableQuestHistory() {
-    $("#card-button-container-3").css({ backgroundColor: "rgb(200, 200, 200)" });
-    $("#card-button-container-3").css({ transform: "none" });
-    $("#card-button-container-3 a").removeAttr("href");
+function enalbeQuestHistory() {
+    $("#card-button-container-3 a").attr("href", "./student-quest-history.html");
+    $("#card-button-container-3").removeAttr("inactive");
 }
 
 /** Write this. */
-function disableMyQuest() {
-    $("#card-button-container-2").css({ backgroundColor: "rgb(200, 200, 200)" });
-    $("#card-button-container-2").css({ transform: "none" });
-    $("#card-button-container-2 a").removeAttr("onclick");
+function enableMyQuest() {
+    $("#card-button-container-2 a").attr("onclick", "onClickMyQuest()");
+    $("#card-button-container-2").removeClass("inactive");
 }
 
 // Run function when document is ready 

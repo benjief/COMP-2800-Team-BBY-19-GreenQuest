@@ -49,8 +49,8 @@ function checkNumQuests() {
                     counter++;
                 }
             })
-            if (counter == 0) {
-                disableApproveQuests();
+            if (counter > 0) {
+                enableApproveQuests();
             }
         })
         .catch((error) => {
@@ -61,15 +61,15 @@ function checkNumQuests() {
 /**
  * Write this 
  */
- function checkNumClasses() {
+function checkNumClasses() {
     console.log(userEmail);
     db.collection("Classes")
         .where("Owner_Email", "==", userEmail)
         .get()
         .then((querySnapshot) => {
             let numClasses = querySnapshot.size;
-            if (numClasses == 0) {
-                disableManageClasses();
+            if (numClasses != 0) {
+                enableManageClasses();
             }
         })
         .catch((error) => {
@@ -78,31 +78,20 @@ function checkNumQuests() {
 }
 
 /** Write this. */
-function disableApproveQuests() {
-    $("#card-button-container-2").css({ backgroundColor: "rgb(200, 200, 200)" });
-    $("#card-button-container-2").css({ transform: "none" });
-    $("#card-button-container-2 a").removeAttr("href");
+function enableApproveQuests() {
+    // $("#card-button-container-2").css({ backgroundColor: "#ff80ee" });
+    $("#card-button-container-2").removeClass("inactive");
+    $("#card-button-container-2 a").attr("href", "educator-approve-quest.html");
 }
 
 /** Write this. */
-function disableManageClasses() {
-    $("#card-button-container-1").css({ backgroundColor: "rgb(200, 200, 200)" });
-    $("#card-button-container-1").css({ transform: "none" });
-    $("#card-button-container-1 a").removeAttr("href");
+function enableManageClasses() {
+    // $("#card-button-container-1").css({ backgroundColor: "#ff80ee" });
+    $("#card-button-container-1").removeClass("inactive");
+    $("#card-button-container-1 a").attr("href", "./educator-manage-classes.html");
 }
 
 // Run function when document is ready 
 $(document).ready(function () {
     sayHello();
 });
-
-//Load Timer
-//Taken from https://www.w3schools.com/howto/howto_css_loader.asp
-function delayTimer() {
-    setTimeout(removeSpinner, 700);
-  }
-  
-  function removeSpinner() {
-    document.getElementById("loader").style.display = "none";
-  }
-  delayTimer();
