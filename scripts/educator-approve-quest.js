@@ -164,6 +164,7 @@ function getOccurrence(array, value) {
  * Write this.
  */
 function updateClassPoints() {
+    console.log(classList);
     let classPointsList = [];
     for (var i = 0; i < classList.length; i++) {
         let points = getOccurrence(classList, classList[i]) * questPoints;
@@ -171,6 +172,7 @@ function updateClassPoints() {
         if (!classPointsList.includes(classPoints)) {
             classPointsList.push(classPoints);
         }
+        console.log(classPointsList);
     }
 
     for (var i = 0; i < classPointsList.length; i++) {
@@ -190,12 +192,15 @@ function updateClassPoints() {
  * Write this.
  */
 function getClassList() {
+    console.log(submitterIDs);
     for (var i = 0; i < submitterIDs.length; i++) {
         db.collection("Students").doc(submitterIDs[i])
             .get()
             .then(function (doc) {
                 let className = doc.data().Student_Class;
-                classList.push(className);
+                if (className != null) {
+                    classList.push(className);
+                }
             });
     }
 }
@@ -207,13 +212,13 @@ function getClassList() {
 function approveStudentQuest() {
     questPoints = document.getElementById("quest-points-input").value;
     questPoints = parseInt(questPoints);
+    console.log(questID);
     db.collection("Student_Quests").doc(questID).update({
         Quest_Status: "approved",
-        // Quest_Unread: true,
         Quest_Points: questPoints,
         Date_Processed: new Date(),
         Date_Submitted: firebase.firestore.FieldValue.delete(),
-        Quest_Likes: 0
+        // Quest_Likes: 0
     })
         .then(() => {
             console.log("Student quest successfully updated!");
@@ -343,9 +348,7 @@ function getQuests() {
                 location.href = "./educator-home.html";
             }
             questID = questIDs[0];
-            for (var i = 0; i < questIDs.length; i++) {
-                pullQuestInfo(questIDs[i]);
-            }
+            pullQuestInfo(questID);
         })
         .catch((error) => {
             console.log("Error getting quests: ", error);

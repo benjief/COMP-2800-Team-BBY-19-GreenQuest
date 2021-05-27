@@ -17,8 +17,8 @@
 
 .modal-body img {
     max-width: 100%;
-    max-height: auto;
-    object-fit: contain;
+    max-height: 100%;
+    object-fit: cover;
 }
 
 .modal-footer {
@@ -284,6 +284,11 @@
     text-align: center;
     background: rgba(209, 209, 209, 0.822);
     font-weight: 600;
+}
+
+#upload-image-label:active {
+    background: rgba(103, 207, 255, 0.822);
+    color: white;
 }
 
 #card-button-container-1 {

@@ -8,6 +8,7 @@
         "card-text"
         "add-students"
         "remove-students"
+        "delete-class"
         "break"
         "back";
 }
@@ -28,10 +29,13 @@
 
 #card-button-container-2 {
     grid-area: remove-students;
+}
+#card-button-container-3 {
+    grid-area: delete-class;
     margin-bottom: 0;
 }
 
-#card-button-container-3 {
+#card-button-container-4 {
     grid-area: back;
     margin-bottom: 40px;
 }

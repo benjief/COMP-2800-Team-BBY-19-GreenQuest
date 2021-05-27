@@ -104,7 +104,11 @@ function getBitmoji() {
 function populateDOM() {
     $("#profile-name").html(profileName);
     $("#profile-points").html(profilePoints);
-    $("#profile-class").html(profileClass);
+    if (profileClass == null) {
+        $("#profile-class").html("Not in a Class");
+    } else {
+        $("#profile-class").html(profileClass);
+    }
 }
 
 /**
@@ -276,6 +280,7 @@ function checkRecentQuests() {
             justifyContent: "center",
             textAlign: "center"
         });
+        $(".card-text").html("No Recent Activity");
     } else {
         getTimeElapsed();
     }

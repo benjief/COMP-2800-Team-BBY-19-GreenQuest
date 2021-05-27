@@ -74,7 +74,7 @@ function populateStudentList(currentStudent) {
     if (studentScores.size >= 3) {
         firstPlace = iterator.next().value;
         secondPlace = iterator.next().value;
-        thirdPace = iterator.next().value;
+        thirdPlace = iterator.next().value;
     } else if (studentScores == 2) {
         firstPlace = iterator.next().value;
         secondPlace = iterator.next().value;

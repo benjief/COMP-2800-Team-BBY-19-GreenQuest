@@ -67,7 +67,7 @@ function populateStudentList() {
  */
 function getStudents() {
     db.collection("Students")
-        .where("Student_Educator", "!=", null)
+        // .where("Student_Educator", "!=", null)
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {

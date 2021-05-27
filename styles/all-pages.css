@@ -7,11 +7,11 @@
 }
 
 nav .navbar-nav li a {
-    color: white !important;
+    color: rgba(255, 255, 255, 0.767) !important;
 }
 
 .navbar {
-    background-color: rgba(53, 255, 46, 0.9);
+    background-color: rgba(53, 255, 46, 0.95);
 }
 
 /* Body styling */
@@ -83,6 +83,7 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
+    width: 100%;
 }
 
 .card-button-container {
