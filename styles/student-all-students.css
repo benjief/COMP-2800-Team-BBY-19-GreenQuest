@@ -58,10 +58,6 @@
     border-color: rgb(255, 0, 217)
 }
 
-/* .student-container:last-child {
-    margin-bottom: 0;
-} */
-
 .ribbon-container {
     display: flex;
     justify-content: center;

@@ -74,10 +74,6 @@
     border-color: rgb(255, 0, 217)
 }
 
-/* .student-container:last-child {
-    margin-bottom: 0;
-} */
-
 .place-container {
     display: flex;
     justify-content: center;

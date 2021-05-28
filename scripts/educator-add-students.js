@@ -1,23 +1,42 @@
 // JS for educator-add-students.js
 
-var userID;
-
-// Create empty lists to house student names and IDs
-var studentNames = [];
-var studentIDs = [];
-var studentsInAClass = [];
-
-// Pull class name from URL and display it in the DOM
+// Pull class name from URL and display it in the DOM (as a heading)
 const parsedUrl = new URL(window.location.href);
 var className = parsedUrl.searchParams.get("classname");
 $(".page-heading").html("Add Students to " + className);
 
+var userID;
+var studentNames = [];
+var studentIDs = [];
+var studentsInAClass = [];
+
+/**
+ * Delay timer for a spinner that spins while the page is loading to help users understand what is happening.
+ * The spinner is present for 500 milliseconds before being hidden.
+ * @author w3schools
+ * @see https://www.w3schools.com/howto/howto_css_loader.asp
+ */
+ function delayTimer() {
+    setTimeout(removeSpinner, 1300);
+}
+
+/**
+ * Sets the spinner's display to none.
+ */
+function removeSpinner() {
+    document.getElementById("loader").style.display = "none";
+}
+// Run the delay timer 
+delayTimer();
+
+/**
+ * Pulls the current educator's ID from Firestore.
+ */
 function getCurrentUser() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             db.collection("Educators")
                 .doc(user.uid)
-                // Read
                 .get()
                 .then(function (doc) {
                     userID = doc.id;
@@ -28,36 +47,8 @@ function getCurrentUser() {
 }
 
 /**
- * Appends a list of student names (along with a "+" icon) to the DOM.
- */
-function populateStudentList() {
-    if (studentNames.length == 0) {
-        let message = "<div class='message-container'><img src='/img/slow_down.png'>"
-            + "<p class='message'>Sorry, there aren't any classless students left to add!</p></div>";
-        $(".student-list").append(message);
-        $(".student-list").css({
-            height: "300px",
-            display: "flex",
-            justifyContent: "center"
-        });
-        $("#student-filter").remove();
-        $("#card-button-container-1").remove();
-    } else {
-        for (var i = 0; i < studentNames.length; i++) {
-            let studentContainer = "<div class='student-container' id='student-container-" + i + "'></div>";
-            $(".student-list").append(studentContainer);
-            let studentName = "<p class='student-name' id='student-name-" + i + "'>" + studentNames[i] + "</p>";
-            $("#student-container-" + i).append(studentName);
-            let iconContainer = "<div class='icon-container' id='icon-container-" + i + "'></div>";
-            $("#student-container-" + i).append(iconContainer);
-            let plusIcon = "<img src='/img/add_icon.png' class='plus-icon' id='plus-icon-" + i + "'>";
-            $("#icon-container-" + i).append(plusIcon);
-        }
-    }
-}
-
-/**
- * Reads students' names from the Students collection and puts them into an array if they aren't already in ANY class.
+ * Reads students' names and IDs from the (classless) "Students" collection in Firestore and puts them into 
+ * an array if they aren't already in a class.
  */
 function getStudents() {
     db.collection("Students")
@@ -75,25 +66,55 @@ function getStudents() {
         });
 }
 
-var test
+/**
+ * Appends a list of student names (along with a "+" icon) to the DOM. The "+" icon allows students
+ * to be added to the class that is currently being modified. If no students are available to add,
+ * a message is displayed specifying this (although users shouldn't easily end up on the "Add Students" page
+ * if there aren't any classless students left in the database).
+ */
+function populateStudentList() {
+    // Push a message to the DOM if there aren't any classless students left to add
+    if (studentNames.length == 0) {
+        let message = "<div class='message-container'><img src='/img/slow_down.png'>"
+            + "<p class='message'>Sorry, there aren't any classless students left to add!</p></div>";
+        $(".student-list").append(message);
+        $(".student-list").css({
+            height: "300px",
+            display: "flex",
+            justifyContent: "center"
+        });
+        /* Get rid of the filter element and "Submit" button, since they are of no use when there
+           aren't any students to display */
+        $("#student-filter").remove();
+        $("#card-button-container-1").remove();
+    } else {
+        // If there are students to add, populate and push a list containing their names to the DOM
+        for (var i = 0; i < studentNames.length; i++) {
+            let studentContainer = "<div class='student-container' id='student-container-" + i + "'></div>";
+            $(".student-list").append(studentContainer);
+            let studentName = "<p class='student-name' id='student-name-" + i + "'>" + studentNames[i] + "</p>";
+            $("#student-container-" + i).append(studentName);
+            let iconContainer = "<div class='icon-container' id='icon-container-" + i + "'></div>";
+            $("#student-container-" + i).append(iconContainer);
+            let plusIcon = "<img src='/img/add_icon.png' class='plus-icon' id='plus-icon-" + i + "'>";
+            $("#icon-container-" + i).append(plusIcon);
+        }
+    }
+}
 
 /**
- * Updates the student's Student_Class and Student_Educator attributes to the class they're being added to.
+ * Updates the student's Student_Class and Student_Educator fields in Firestore to the class they're being added to.
  * Also changes the "+" icon beside a student to a "-" icon and allows that student to be subsequently
  * removed from the class in question.
  */
 $(document.body).on("click", ".plus-icon", function (event) {
-    
     let index = $(event.target).attr("id");
-    console.log(index);
-    // Extract index from event id - 
-    // taken from https://www.geeksforgeeks.org/extract-a-number-from-a-string-using-javascript/#:~:text=The%20number%20from%20a%20string,(%5Cd%2B)%2F)
+    // Extract student index from event id (this was strategically populated as such)
     index = parseInt(index.match(/(\d+)/));
-    // Replace "add" icon with a "remove" icon
+    // Replace "add" icon with a "remove" icon and change its class
     $(event.target).attr("src", "/img/remove_icon.png");
     $(event.target).attr("class", "minus-icon");
     let studentToAdd = studentIDs[index];
-    console.log(studentToAdd);
     // Update the student's Student_Class and Student_Educator attributes
     db.collection("Students").doc(studentToAdd).update({
         Student_Class: className,
@@ -113,16 +134,12 @@ $(document.body).on("click", ".plus-icon", function (event) {
  * added to the class in question.
  */
 $(document.body).on("click", ".minus-icon", function (event) {
-    // Extract index from event id
     let index = $(event.target).attr("id");
-    // Extract index from event id - 
-    // taken from https://www.geeksforgeeks.org/extract-a-number-from-a-string-using-javascript/#:~:text=The%20number%20from%20a%20string,(%5Cd%2B)%2F)
     index = parseInt(index.match(/(\d+)/));
-    // Replace "remove" icon with an "add" icon
+    // Replace "remove" icon with an "add" icon and change its class back to what it was before
     $(event.target).attr("src", "/img/add_icon.png");
     $(event.target).attr("class", "plus-icon");
     let studentToRemove = studentIDs[index];
-    // Update the student's Student_Class attribute
     db.collection("Students").doc(studentToRemove).update({
         Student_Class: null,
         Student_Educator: null
@@ -136,8 +153,7 @@ $(document.body).on("click", ".minus-icon", function (event) {
 });
 
 /**
- * Redirects users back to the main page (or the manage class page) once they've finished adding students. 
- * Redirection depends on whether or not users are adding students to their class for the first time.
+ * Redirects users back to the "Manage Class" page once they've finished adding students. 
  */
 function onClickSubmit() {
     setTimeout(function () {
@@ -145,26 +161,17 @@ function onClickSubmit() {
     }, 1000);
 }
 
-
-function filterByName() {
-    let filter = $("#student-filter").toLowerCase();
-    for (var i = 0; i < studentNames.length; i++) {
-        if (studentNames[i].toLowerCase().indexOf(filter) <= -1) {
-            $("#student-container-" + i).css({ display: "none" });
-        }
-    }
-}
-
-
 /**
- * Call functions when the page is ready .
+ * Calls getCurrentUser() and starts the function cascade when the page is ready.
  */
 $(document).ready(function () {
     getCurrentUser();
 
     /**
-     * Write this.
-     * Adapted from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_filter_list
+     * When a string is typed into the DOM filter input, if that string isn't contained in a student's name
+     * (case insensitive), the name is hidden and disappears from the list.
+     * Adapted from code by @author w3schools
+     * @see https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_filter_list
      */
     $("#student-filter").on("keyup", function () {
         let filter = $("#student-filter").prop("value").toLowerCase();
@@ -177,14 +184,3 @@ $(document).ready(function () {
         }
     })
 });
-
-//Load Timer
-//Taken from https://www.w3schools.com/howto/howto_css_loader.asp
-function delayTimer() {
-    setTimeout(removeSpinner, 1300);
-  }
-  
-  function removeSpinner() {
-    document.getElementById("loader").style.display = "none";
-  }
-  delayTimer();
