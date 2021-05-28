@@ -18,7 +18,6 @@ We organized our repo by grouping file types together such as all HTML files int
  Top level of project folder: 
 ├── .gitignore                      # Git ignore file
 ├── .vscode                         # Folder for the live server settings port
-├── jquery_plugins                  # Folder for plugins like the jquery star-rating feature
 ├── mergelog                        # File with all the firestore merge history
 ├── index.html                      # Landing page
 ├── 404.html                        # Error page
@@ -175,6 +174,9 @@ Firebase hosting files:
 3. Click on the small circle beside the roles 
 
 --------------------------------------------------------------------
+
+**************** PLEASE READ CAREFULLY FOR TESTING *******************
+****** TO SIGN IN/or SIGN UP AS EDUCATOR, THE CODE IS 123456 *********
 
 For educator:
 1. Enter the authentication key in the textbox, "123456"
