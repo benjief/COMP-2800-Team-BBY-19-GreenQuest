@@ -11,7 +11,6 @@ var questInfo;
 var bitmojiURL;
 var userID;
 
-
 /**
  * Delay timer for a spinner that spins while the page is loading to help users understand what is happening.
  * The spinner is present for 1.5 seconds before being hidden.

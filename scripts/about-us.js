@@ -10,7 +10,7 @@ var eggPositions = [1, 1, 1, 1]; // Stores the positions of each of four profile
 
 /**
  * Chooses a random background from four images. The "+ 3" appears here because of the way background
- * images were named/stored. Once a number is chosen, a background is assigned to one of 
+ * images were named/stored. Once a number is chosen, a background is assigned to each bio image in the DOM.
  */
 function randomizeBackground() {
     let numCards = 4;

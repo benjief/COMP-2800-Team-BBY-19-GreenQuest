@@ -7,22 +7,12 @@ var dataToRetrieve = parsedUrl.searchParams.get("redirectflag");
 
 const maxStudents = 4;
 var maxStudentsReached = false;
-
-// var userIDs = [];
-// var userID = parsedUrl.searchParams.get("userid");
-// userIDs.push(userID);
-
-
 var userNames = [];
 var className;
 var educatorName;
-// var educatorID;
 var questDescription;
-
 var validInput = false;
 var tempImagesDeleted = false;
-
-// Create empty arrays to store files added to this quest and their URLs
 var uploadedImageFiles = [];
 var imageURLs = [];
 
@@ -98,11 +88,6 @@ function processImage() {
     imageInput.addEventListener('change', function (event) {
         console.log(event.target.files[0]);
         uploadedImageFiles.push(event.target.files[0]);
-        // const reader = new FileReader();
-        // reader.readAsDataURL(uploadedImageFiles[0]);
-        // reader.addEventListener("load", () => {
-        //     console.log(reader.result);
-        // });
         storeTemporaryImage(event.target.files[0]);
         addImageNamesToDOM();
     });
@@ -128,10 +113,6 @@ function showPreview(element) {
     setTimeout(() => {
         let previewName = null;
         let previewURL = null;
-        // console.log(uploadedImageFiles);
-        // console.log($(element).attr("id"));
-        // console.log($(element).attr("id") == uploadedImageFiles[0].name);
-        // console.log(uploadedImageFiles[0].tempURL);
         for (var i = 0; i < uploadedImageFiles.length; i++) {
             if (uploadedImageFiles[i].name == $(element).attr("id")) {
                 previewName = uploadedImageFiles[i].name;
@@ -205,10 +186,7 @@ function getQuestParticipants() {
             userIDs = doc.data().Quest_Participant_IDs;
             userNames = doc.data().Quest_Participants;
             console.log(userNames);
-            // getQuestDescription();
-            // getUniqueQuestID();
             checkNumUploaded();
-            // getEducatorID();
             processImage();
             addSubmittersToDOM();
             if (!doc) {
@@ -221,21 +199,6 @@ function getQuestParticipants() {
             }
 
         })
-    // db.collection("Students").doc(userIDs[0])
-    //     .get()
-    //     .then(function (doc) {
-    //         // Extract the current student's class name
-    //         userNames.push(doc.data().Student_Name);
-    //         className = doc.data().Student_Class;
-    //         if (className == null) {
-    //             let message = "<div class='text-container'><p class='message'>You haven't been added to a class yet</p></div>"
-    //             $(".uploaded-images").append(message);
-    //             $("#card-button-container-1").remove();
-    //             $("#upload-image-input").attr("disabled", "");
-    //             $("#quest-notes").attr("disabled", "");
-    //             $("#quest-notes").attr("placeholder", "Ask your teacher to add you to their class to start getting quests");
-    //         }
-    // });
 }
 
 /**
@@ -278,14 +241,9 @@ $(document.body).on("click", ".minus-icon-active", function (event) {
     // Extract index from event id - 
     // taken from https://www.geeksforgeeks.org/extract-a-number-from-a-string-using-javascript/#:~:text=The%20number%20from%20a%20string,(%5Cd%2B)%2F)
     index = parseInt(index.match(/(\d+)/));
-    // console.log(userNames);
     console.log(index);
     console.log(index == 1);
     // Remove student from quest
-    // var test = userNames;
-    // console.log(test[1]);
-    // test.splice(index, 1);
-    // console.log(test);
     userNames.splice(index, 1);
     console.log(userNames);
     userIDs.splice(index, 1);
@@ -301,57 +259,6 @@ $(document.body).on("click", ".minus-icon-active", function (event) {
             console.error("Error removing student from quest: ", error);
         });
 });
-
-// /**
-//  * Write this.
-//  */
-// function getEducatorID() {
-//     db.collection("Educators")
-//         .where("Educator_Name", "==", educatorName)
-//         .get()
-//         .then((querySnapshot) => {
-//             querySnapshot.forEach((doc) => {
-//                 educatorID = doc.id;
-//             })
-//         })
-//         .catch((error) => {
-//             console.log("Error getting educator ID: ", error);
-//         });
-// }
-
-// /**
-//  * Write this.
-//  */
-// function getQuestDescription() {
-//     db.collection("Student_Quests").doc(questID)
-//         .get()
-//         .then(function (doc) {
-//             questDescription = doc.data().description;
-//             console.log("Quest description successfully retrieved");
-//         })
-//         .catch((error) => {
-//             console.error("Error retrieving quest description: ", error);
-//         });
-// }
-
-// /**
-//  * Write this.
-//  */
-// function getUniqueQuestID() {
-//     db.collection("Students").doc(userIDs[0]).collection("Quests")
-//         .where("Quest_Status", "==", "active")
-//         .get()
-//         .then((querySnapshot) => {
-//             // There should only ever be one quest at a time
-//             querySnapshot.forEach((doc) => {
-//                 uniqueQuestID = doc.id;
-//             })
-//         })
-//         .catch((error) => {
-//             console.log("Error getting unique quest ID: ", error);
-//         });
-// }
-
 
 /**
  * Write this
@@ -393,27 +300,6 @@ function addQuestToDB(imageURLs) {
             $("#feedback").fadeOut(1000);
             deleteTempImages("./student-home.html");
             sessionStorage.clear();
-            // // Write quest to teacher's quest collection
-            // db.collection("Educators").doc(educatorID).collection("Quests").doc(uniqueQuestID).set({
-            //     Quest_Submitters: userNames,
-            //     Submitter_IDs: userIDs,
-            //     Submitter_Class: className,
-            //     Quest_Description: questDescription,
-            //     Quest_Photos: imageURLs,
-            //     Quest_Notes: $("#quest-notes").prop("value"),
-            //     Date_Submitted: dateSubmitted
-            // })
-            //     .then(() => {
-            //         console.log("Educator quest successfully written!");
-            //         $("#feedback").html("Success! Please wait...");
-            //         $("#feedback").css({ color: "green" });
-            //         $("#feedback").show(0);
-            //         $("#feedback").fadeOut(1000);
-            //         deleteTempImages("./student-home.html");
-            //     })
-            //     .catch((error) => {
-            //         console.error("Error adding educator quest: ", error);
-            //     });
         })
         .catch((error) => {
             console.error("Error updating student quest: ", error);
@@ -541,13 +427,6 @@ function onClickAddFriends() {
         sessionStorage.setItem("numImageFilesUploaded", uploadedImageFiles.length);
         for (var i = 0; i < uploadedImageFiles.length; i++) {
             readImage(uploadedImageFiles[i], i);
-            // console.log(i);
-            // let reader = new FileReader();
-            // reader.addEventListener("load", () => {
-            //     // console.log(reader.result);
-            //     sessionStorage.setItem("uploaded-image-" + i, reader.result);
-            // });
-            // reader.readAsDataURL(uploadedImageFiles[i]);
         }
     }
     if ($("#quest-notes").prop("value") != null && ($("#quest-notes").prop("value") != "")) {
@@ -649,19 +528,4 @@ function retrieveData() {
 $(document).ready(function () {
     getQuestParticipants();
     retrieveData();
-
-    // if (previousData !== null) {
-    //     console.log(previousData);
-    //     if (previousData.imageURLs && previousData.imageURLs != null) {
-    //         imageURLs = JSON.parse(imageURLs).imageURLs;
-    //     } else {
-    //         console.log("ham");
-    //     }
-    //     if (previousData.notes && previousData.notes !== null) {
-    //         $("#quest-notes").prop("value", JSON.parse(previousData).notes);
-    //         console.log("#quest-notes").prop("value");
-    //     } else if (previousData.notes == null) {
-    //         console.log(previousData.notes);
-    //     }
-    // }
 });

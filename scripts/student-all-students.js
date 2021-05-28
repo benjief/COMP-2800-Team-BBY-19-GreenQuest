@@ -117,7 +117,7 @@ function populateStudentList(currentStudent) {
  * top 3, they are assigned a placement based on the sorted studentScores array, and that number is displayed beside their name
  * (in place of a ribbon).
  * 
- * @param {*} i - The index of the student in the students array that is currently being processed
+ * @param {*} i - The index of the student in the students array, that is currently being processed
  */
 function createRibbons(i) {
     let ribbonContainer = "<div class='ribbon-container' id='ribbon-container-" + i + "'></div>";
