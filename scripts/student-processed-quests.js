@@ -173,14 +173,3 @@ function getBitmojiBackground() {
 $(document).ready(function () {
     getCurrentUser();
 });
-
-//Loading timer
-//Taken from https://www.w3schools.com/howto/howto_css_loader.asp
-function delayTimer() {
-    setTimeout(removeSpinner, 1350);
-  }
-  
-  function removeSpinner() {
-    document.getElementById("loader").style.display = "none";
-  }
-  delayTimer();

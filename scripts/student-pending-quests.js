@@ -3,13 +3,33 @@
 var pendingQuests = [];
 var userID;
 
-/* Get the current user's ID from Firestore. */
+/**
+ * Delay timer for a spinner that spins while the page is loading to help users understand what is happening.
+ * The spinner is present for 1.5 seconds before being hidden.
+ * @author w3schools
+ * @see https://www.w3schools.com/howto/howto_css_loader.asp
+ */
+ function delayTimer() {
+    setTimeout(removeSpinner, 1350);
+}
+
+/**
+ * Sets the spinner's display to none.
+ */
+function removeSpinner() {
+    document.getElementById("loader").style.display = "none";
+}
+// Run the delay timer 
+delayTimer();
+
+/**
+ * Pulls the current user's ID from the "Students" collection in Firestore. 
+ */
 function getCurrentUser() {
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {
             db.collection("Students")
                 .doc(somebody.uid)
-                // Read
                 .get()
                 .then(function (doc) {
                     // Extract the current user's ID
@@ -21,7 +41,12 @@ function getCurrentUser() {
 }
 
 /**
- * Write this.
+ * Searches the "Student_Quests" collection in Firestore for documents with Quest_Participant_IDs fields (arrays)
+ * that contain the current student's userID (i.e. quests that the student is a participant in). Query results
+ * (if they exist) are ordered by their submission date, with newer quests at the top of the pile. The Quest_Status
+ * field of each document is then searched for a value of "submitted" (not "active," "approved" or "rejected" - the
+ * other possible values this field can take on). Finally, the quests that make it through all of these filters are 
+ * converted to JSON objects with title, date and bitmoji fields, and pushed to the pendingQuests array.
  */
 function pullPendingQuests() {
     db.collection("Student_Quests")
@@ -49,7 +74,8 @@ function pullPendingQuests() {
 }
 
 /**
- * Write this.
+ * If no pending quests are returned in the query above, a message is displayed letting the user know
+ * that thye haven't got any pending quests to view.
  */
 function appendMessage() {
     let message = "<div class='message-container'><img src='/img/slow_down.png'>"
@@ -64,9 +90,9 @@ function appendMessage() {
 
 
 /**
- * Write this - note that it was taken from your other project.
- * 
- * @param {*} store 
+ * Takes the date property of a quest object in pendingQuests and and calculates how much time (in milliseconds, seconds, 
+ * minutes, hours, days, or years) has passed since that time. This function looks incredibly long, but that's just because
+ * there are so many darn conditionals to deal with.
  */
 function getTimeElapsed() {
     for (var i = 0; i < pendingQuests.length; i++) {
@@ -111,7 +137,14 @@ function getTimeElapsed() {
 }
 
 /**
- * Write this.
+ * Creates a "quest container" DOM element that houses the quest's bitmoji, its title and the time that has
+ * passed since it was submitted (i.e. how long it's been pending for). Quest containers are created for all 
+ * quests in pendingQuests, and the final result is a list of all the user's pending quest.
+ * 
+ * @param {*} i - The index of the quest in pendingQuests, currently being processed.
+ * @param {*} timeDifference - How many milliseconds, seconds, minutes, hours, days, or years 
+ *                             (as an interger) have passed since this quest was submitted (e.g. SIX hours ago).
+ * @param {*} unitOfTime - The unit of time timeDifference is expressed in (e.g. six HOURS ago).
  */
 function populateDOM(i, timeDifference, unitOfTime) {
     let questContainer = "<div class='quest-container' id='quest-container-" + i + "'></div>";
@@ -127,7 +160,8 @@ function populateDOM(i, timeDifference, unitOfTime) {
 }
 
 /**
- * Write this.
+ * Chooses a random background from five images. The "+ 3" appears here because of the way background
+ * images were named/stored. Once a number is chosen, a background is assigned to the quest's bitmoji.
  */
 function getBitmojiBackground() {
     for (var i = 0; i < pendingQuests.length; i++) {
@@ -138,18 +172,9 @@ function getBitmojiBackground() {
     }
 }
 
-// Run function when document is ready 
+/**
+ * Calls getCurrentUser() and starts the function cascade when the page is ready.
+ */
 $(document).ready(function () {
     getCurrentUser();
 });
-
-//Loading timer
-//Taken from https://www.w3schools.com/howto/howto_css_loader.asp
-function delayTimer() {
-    setTimeout(removeSpinner, 1350);
-  }
-  
-  function removeSpinner() {
-    document.getElementById("loader").style.display = "none";
-  }
-  delayTimer();
