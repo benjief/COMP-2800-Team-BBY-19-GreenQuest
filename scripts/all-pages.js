@@ -12,7 +12,7 @@ function checkLoggedIn() {
 }
 
 /**
- * Call checkLoggedIn() when a page is ready.
+ * Calls checkLoggedIn() when a page is ready.
  */
 $(document).ready(function () {
     checkLoggedIn();
