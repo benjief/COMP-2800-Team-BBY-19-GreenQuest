@@ -1,0 +1,132 @@
+/** CSS for student-add-friends.html */
+
+#main-content-card {
+    grid-template-areas:
+        "card-text"
+        "extra-break"
+        "filter"
+        "student-list"
+        "break"
+        "submit"
+        "back";
+    margin-bottom: 60px !important;
+}
+
+.card-text-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.card-text {
+    height: 100%;
+}
+
+
+input::placeholder {
+    color: rgb(180, 180, 180);
+}
+
+#student-filter {
+    grid-area: filter;
+    margin-bottom: 15px;
+    width: 80%;
+    justify-self: center;
+    border: 1px solid rgb(160, 160, 160);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+#student-filter:focus {
+    outline-width: 0;
+    border: 1px solid teal;
+    border-radius: 5px;
+}
+
+.student-list {
+    grid-area: student-list;
+    max-height: 300px;
+    width: 90%;
+    justify-self: center;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.student-list::-webkit-scrollbar {
+    display: none;
+}
+  
+.student-list {
+    -ms-overflow-style: none; 
+    scrollbar-width: none;  
+}
+
+.student-container {
+    display: grid;
+    grid-template-columns: 80% 20%;
+    grid-template-areas:
+        "name icon";
+    border: 1px solid #ff7b00;
+    border-style: dashed;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background: linear-gradient(rgba(236, 236, 236, 0.8), rgba(255, 255, 255, 0.7)), url("/img/background_pattern_2.png");
+    font-weight: 600;
+}
+
+.student-container:first-child {
+    margin-top: 0;
+}
+
+.student-container:last-child {
+    margin-bottom: 0;
+}
+
+.student-name {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    grid-area: name;
+    margin-left: 25px;
+}
+
+.icon-container {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    grid-area: icon;
+    margin-left: 10px;
+}
+
+.plus-icon, .minus-icon {
+    height: 24px;
+    width: 24px;
+}
+
+#card-button-container-1 {
+    grid-area: submit;
+}
+
+#card-button-container-2 {
+    grid-area: back;
+    margin-bottom: 40px;
+}
+
+.message-container {
+    text-align: center;
+    height: 80%;
+    align-self: center;
+}
+
+.message-container img {
+    border: none;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+}
+
+.message {
+    font-weight: 600;
+    font-size: 12pt;
+}

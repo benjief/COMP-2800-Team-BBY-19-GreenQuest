@@ -4,6 +4,9 @@
     grid-template-areas:
         "card-text"
         "form"
+        "input"
+        "feedback"
+        "submit"
         "login";
     margin-bottom: 40px !important;
 }
@@ -11,6 +14,7 @@
 .card-text-container {
     margin-top: 20px;
     justify-content: center;
+    margin-bottom: 30px;
 }
 
 .card-text {
@@ -51,6 +55,46 @@
     left: -8px;
 }
 
+#input-container {
+    display: flex;
+    justify-content: center;
+    grid-area: input;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.input {
+    width: 90%;
+    border: 1px solid rgb(160, 160, 160);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+input::placeholder {
+    color: rgb(180, 180, 180);
+}
+
+.feedback-placeholder {
+    display: flex;
+    justify-content: center;
+    grid-area: feedback;
+    height: 20px;
+    margin-bottom: 20px;
+}
+
+#feedback {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    font-weight: 600;
+    text-align: center;
+}
+
+#card-button-container-1 {
+    grid-area: submit;
+    margin-bottom: 40px;
+}
+
 #firebaseui-auth-container {
     grid-area: login;
     margin-top: 30px;
@@ -67,6 +111,7 @@
 }
 
 .firebaseui-container.mdl-card {
+    border: none;
     border-radius: 10px;
     background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url("/img/background_pattern_2.png");
 }

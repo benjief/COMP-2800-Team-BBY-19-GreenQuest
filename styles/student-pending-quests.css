@@ -1,4 +1,5 @@
 /** CSS for student-pending-quests.html */
+
 #main-content-card {
     grid-template-areas:
         "quest-list"
@@ -8,7 +9,6 @@
 }
 
 .quest-list {
-    /* display: flex; */
     width: 90%;
     max-height: 600px;
     grid-area: quest-list;
@@ -38,8 +38,6 @@
     grid-template-areas: 
         "quest-bitmoji quest-title"
         "quest-bitmoji quest-date";
-    /* height: 50px; */
-    /* background-color: rgb(255, 241, 254); */
     background: linear-gradient(rgba(216, 233, 255, 0.7), rgba(238, 238, 238, 0.7)), url("/img/background_pattern_8.png");
     border-radius: 10px;
     align-items: center;
@@ -53,19 +51,13 @@
 }
 
 .quest-title {
-    /* display: flex;
-    height: 100%;
-    align-items: center; */
     grid-area: quest-title;
     font-weight: 600;
-    /* justify-self: center; */
     margin: 0;
-    /* margin-left: 10px; */
 }
 
 .quest-date {
     grid-area: quest-date;
-    /* justify-self: center; */
     margin: 0;
 }
 
@@ -102,3 +94,28 @@ img {
     font-size: 12pt;
 }
 
+/* Center the loader */
+#loader {
+    position: absolute;
+    left: 55%;
+    top: 18%;
+    z-index: 1;
+    width: 120px;
+    height: 120px;
+    margin: -76px 0 0 -76px;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #28c513;
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+  }
+  
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

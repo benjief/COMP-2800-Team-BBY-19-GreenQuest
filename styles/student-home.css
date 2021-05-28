@@ -1,5 +1,36 @@
 /** CSS for student-home.html */
 
+.modal-header {
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url("/img/background_pattern_2.png");
+}
+
+.modal-title {
+    font-weight: 600;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url("/img/background_pattern_2.png");
+    padding-top: 0;
+}
+
+.modal-body img {
+    width: 250px;
+    height: 250px;
+}
+
+.modal-footer {
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url("/img/background_pattern_2.png");
+}
+
+.btn {
+    background-color: #ff80ee;
+    border: none;
+    
+}
+
 .heading-container {
     margin-bottom: 10px;
 }
@@ -33,9 +64,10 @@
 #main-content-card {
     grid-template-areas:
         "card-text"
-        "my-class"
+        "my-profile"
         "my-quest"
         "completed-quests"
+        "leaderboards"
         "break"
         "logout";
 }
@@ -52,7 +84,7 @@
 
 #card-button-container-1 {
     display: flex;
-    grid-area: my-class;
+    grid-area: my-profile;
 }
 
 #card-button-container-2 {
@@ -61,7 +93,10 @@
 
 #card-button-container-3 {
     grid-area: completed-quests;
-    margin-bottom: 0;
+}
+
+#card-button-container-5 {
+    grid-area: leaderboards;
 }
 
 #card-button-container-4 {
@@ -73,4 +108,12 @@
     display: flex;
     height: 100%;
     align-items: center;
+}
+
+.inactive {
+    background-color: rgb(200, 200, 200);
+}
+
+.inactive:active {
+    transform: none;
 }

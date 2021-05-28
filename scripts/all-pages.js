@@ -1,21 +1,19 @@
 // JS for all pages
 
 /**
- * Gets the current user's name and from Firestore and use it to create a personalized greeting.
- * Also assigns the user's ID to userID.
+ * Checks to see if a user is logged in. If they aren't, they are redirected to the login page.
 */
 function checkLoggedIn() {
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (!somebody) {
-            db.collection("Students")
-                location.href = "./login.html";
+            location.href = "./login.html";
         }
     });
 }
 
 /**
- * Call functions when the page is ready .
+ * Calls checkLoggedIn() when a page is ready.
  */
- $(document).ready(function () {
+$(document).ready(function () {
     checkLoggedIn();
 });

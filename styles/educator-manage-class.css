@@ -1,4 +1,5 @@
 /** CSS for educator-manage-class.html */
+
 .page-container {
     margin-top: 50px;
 }
@@ -8,8 +9,9 @@
         "card-text"
         "add-students"
         "remove-students"
+        "delete-class"
         "break"
-        "back";
+        "home";
 }
 
 .card-text-container {
@@ -28,12 +30,23 @@
 
 #card-button-container-2 {
     grid-area: remove-students;
+}
+#card-button-container-3 {
+    grid-area: delete-class;
     margin-bottom: 0;
 }
 
-#card-button-container-3 {
-    grid-area: back;
+#card-button-container-4 {
+    grid-area: home;
     margin-bottom: 40px;
+}
+
+.inactive {
+    background-color: rgb(200, 200, 200);
+}
+
+.inactive:active {
+    transform: none;
 }
 
 .button {
@@ -48,4 +61,8 @@
 #remove-students-button {
     position: relative;
     top: -2px;
+}
+
+#button {
+    width: 100%;
 }

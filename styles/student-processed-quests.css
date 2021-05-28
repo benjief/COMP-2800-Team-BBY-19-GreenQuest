@@ -9,7 +9,6 @@
 }
 
 .quest-list {
-    /* display: flex; */
     width: 90%;
     max-height: 600px;
     grid-area: quest-list;
@@ -39,15 +38,19 @@
     grid-template-areas: 
         "quest-bitmoji quest-title notification"
         "quest-bitmoji quest-points quest-points"
-        "quest-bitmoji quest-date quest-date";
-    /* background-color: rgb(255, 241, 254); */
+        "quest-bitmoji quest-date quest-date"
+        "share share share";
     background: linear-gradient(rgba(216, 233, 255, 0.7), rgba(238, 238, 238, 0.7)), url("/img/background_pattern_8.png");
     border-radius: 10px;
     align-items: center;
-    /* margin-bottom: 15px; */
     box-shadow: 5px 5px 5px rgb(116, 103, 103);
     width: 100%;
     margin-bottom: 15px;
+}
+
+.sharethis-inline-share-buttons {
+    grid-area: share;
+    margin: 0 auto 1px;
 }
 
 .quest-container:last-child {
@@ -55,25 +58,18 @@
 }
 
 .quest-title {
-    /* display: flex;
-    height: 100%;
-    align-items: center; */
     grid-area: quest-title;
     font-weight: 600;
-    /* justify-self: center; */
     margin: 0;
-    /* margin-left: 10px; */
 }
 
 .quest-points {
     grid-area: quest-points;
-    /* justify-self: center; */
     margin: 0;
 }
 
 .quest-date {
     grid-area: quest-date;
-    /* justify-self: center; */
     margin: 0;
 }
 
@@ -125,3 +121,29 @@
     font-weight: 600;
     font-size: 12pt;
 }
+
+/* Center the loader */
+#loader {
+    position: absolute;
+    left: 55%;
+    top: 18%;
+    z-index: 1;
+    width: 120px;
+    height: 120px;
+    margin: -76px 0 0 -76px;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #28c513;
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+  }
+  
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

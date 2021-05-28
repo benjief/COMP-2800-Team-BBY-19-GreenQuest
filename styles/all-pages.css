@@ -7,11 +7,11 @@
 }
 
 nav .navbar-nav li a {
-    color: white !important;
+    color: rgba(255, 255, 255, 0.767) !important;
 }
 
 .navbar {
-    background-color: rgba(53, 255, 46, 0.9);
+    background-color: rgba(53, 255, 46, 0.95);
 }
 
 /* Body styling */
@@ -31,21 +31,19 @@ body {
     display: flex;
     grid-area: header;
     font-family: 'Press Start 2P';
-    font-size: 16pt;
+    font-size: 15.5pt;
     font-weight: 600;
     justify-content: center;
-    margin-bottom: 50px;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-bottom: 50px;;
     text-align: center;
     height: 70px;
-    /* text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.788); */
 }
 
 .page-heading {
     display: flex;
     height: 100%;
     align-items: center;
+    justify-self: center;
 }
 
 /* Content card styling */
@@ -67,19 +65,21 @@ body {
 .card-text-container {
     display: flex;
     grid-area: card-text;
-    margin-left: 10px;
-    margin-right: 10px;
     font-size: 20pt;
+    color: rgb(29, 29, 29);
+    width: 85%;
+    justify-self: center;
 }
 
 /* Other styling */
 .button {
+    display: flex;
     color: white;
     text-decoration: none;
-    width: 100%;
     justify-content: center;
     align-items: center;
     text-align: center;
+    width: 100%;
 }
 
 .card-button-container {
@@ -128,4 +128,8 @@ body {
     width: 90%;
     justify-self: center;
     box-shadow: 0 0 4px rgb(0, 83, 56);
+}
+
+.message {
+    font-size: 12pt;
 }

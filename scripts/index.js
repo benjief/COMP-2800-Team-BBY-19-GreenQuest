@@ -1,8 +1,7 @@
 // JS for index.html
 
 /**
- * Write this.
- * 
+ * Pulls a bitmoji image from Cloud Storage and pushes it to our index page DOM.
  */
 function getBitmoji() {
     let storageRef = storage.ref();
@@ -17,7 +16,9 @@ function getBitmoji() {
         })
 }
 
-// Run function when document is ready 
+/**
+ * Calls getBitmoji() when the page is ready.
+ */
 $(document).ready(function () {
     getBitmoji();
 });

@@ -1,32 +1,30 @@
 // JS for educator-home.html
 
-var currentUser;
+var userID;
 var userEmail;
 
 /**
- * Get the current user's name from Firestore and use it to create a personalized greeting. 
- * Also assigns current user's ID to currentUser and their ID to userEmail.
+ * Pulls the current user's ID and email from Firestore and assigns them to userID and userEmail, respecitvely. Once userID and
+ * userEmail are assigned values, checkNumQuests() and checkNumClasses() continue the function cascade. Finally, the user's 
+ * name is also pulled from Firestore and a personalized greeting is generated and displayed on the page header.
  */
 function sayHello() {
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {
             db.collection("Educators")
                 .doc(somebody.uid)
-                // Read
                 .get()
                 .then(function (doc) {
                     // Extract the user's ID, email and name
-                    currentUser = doc.id;
-                    checkNumQuests();
+                    userID = doc.id;
                     userEmail = doc.data().Educator_Email;
+                    checkNumQuests();
                     checkNumClasses();
                     var name = doc.data().Educator_Name.split(" ", 1);
                     if (name) {
-                        $("#personalized-greeting-new-user").html("Welcome, " + name);
                         $("#personalized-greeting-established-user").html("Welcome back, " + name);
                         // Display a generic message if no name is entered when signing up
                     } else {
-                        $("#personalized-greeting-new-user").html("Welcome, GreenQuest User!");
                         $("#personalized-greeting-established-user").html("Welcome back, GreenQuest User!");
                     }
                 });
@@ -35,35 +33,26 @@ function sayHello() {
 }
 
 /**
- * Write this
+ * Searches the "Student_Quests" collection in Firestore for quests whose 
+ * Quest_Approver_ID field match the current educator's ID. Then, if any of the 
+ * returned quests (provided they exist in the first place) have a Quest_Status 
+ * field of "submitted," enableApproveQuests() is called. Otherwise, nothing 
+ * changes and the "Approve Quests" button remains inactive.
  */
 function checkNumQuests() {
-    console.log(currentUser);
-    db.collection("Educators").doc(currentUser).collection("Quests")
+    let counter = 0;
+    console.log(userID);
+    db.collection("Student_Quests")
+        .where("Quest_Approver_ID", "==", userID)
         .get()
         .then((querySnapshot) => {
-            let numQuests = querySnapshot.size;
-            if (numQuests == 0) {
-                disableApproveQuests();
-            }
-        })
-        .catch((error) => {
-            console.log("Error getting quest IDs: ", error);
-        });
-}
-
-/**
- * Write this 
- */
- function checkNumClasses() {
-    console.log(userEmail);
-    db.collection("Classes")
-        .where("Owner_Email", "==", userEmail)
-        .get()
-        .then((querySnapshot) => {
-            let numClasses = querySnapshot.size;
-            if (numClasses == 0) {
-                disableManageClasses();
+            querySnapshot.forEach(doc => {
+                if (doc.data().Quest_Status == "submitted") {
+                    counter++;
+                }
+            })
+            if (counter > 0) {
+                enableApproveQuests();
             }
         })
         .catch((error) => {
@@ -71,21 +60,48 @@ function checkNumQuests() {
         });
 }
 
-/** Write this. */
-function disableApproveQuests() {
-    $("#card-button-container-2").css({ backgroundColor: "rgb(200, 200, 200)" });
-    $("#card-button-container-2").css({ transform: "none" });
-    $("#card-button-container-2 a").removeAttr("href");
+/**
+ * Searches the "Classes" collection in Firestore for classes whose Owner_Email
+ * attribute matches the current educator's email. If the query returns any 
+ * results, enableManageClasses() is called. Otherwise, nothing happends and
+ * the "Manage Classes" button remains inactive.
+ */
+function checkNumClasses() {
+    db.collection("Classes")
+        .where("Owner_Email", "==", userEmail)
+        .get()
+        .then((querySnapshot) => {
+            let numClasses = querySnapshot.size;
+            if (numClasses != 0) {
+                enableManageClasses();
+            }
+        })
+        .catch((error) => {
+            console.log("Error getting classes: ", error);
+        });
 }
 
-/** Write this. */
-function disableManageClasses() {
-    $("#card-button-container-1").css({ backgroundColor: "rgb(200, 200, 200)" });
-    $("#card-button-container-1").css({ transform: "none" });
-    $("#card-button-container-1 a").removeAttr("href");
+/**
+ * Changes the "Approve Quests" button from an inactive to an active state.
+ */
+function enableApproveQuests() {
+    // $("#card-button-container-2").css({ backgroundColor: "#ff80ee" });
+    $("#card-button-container-2").removeClass("inactive");
+    $("#card-button-container-2 a").attr("href", "educator-approve-quest.html");
 }
 
-// Run function when document is ready 
+/**
+ * Changes the "Manage Classes" button from an inactive to an active state.
+ */
+function enableManageClasses() {
+    // $("#card-button-container-1").css({ backgroundColor: "#ff80ee" });
+    $("#card-button-container-1").removeClass("inactive");
+    $("#card-button-container-1 a").attr("href", "./educator-manage-classes.html");
+}
+
+/**
+ * Calls sayHello() to start the function cascade when the page is ready.
+ */
 $(document).ready(function () {
     sayHello();
 });

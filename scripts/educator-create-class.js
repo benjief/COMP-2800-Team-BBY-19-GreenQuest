@@ -1,15 +1,17 @@
 // JS for educator-create-class.js
 
-var noInput = false;
+var validInput = false;
 
 /**
- * Implement a character limit counter.
- * 
- * @param {*} field - DOM-element that characters are being counted in
- * @param {*} field2 - ID of the DOM-element displaying the number of characters remaining
- * @param {*} maxlimit - Maximum number of characters allowed in "field"
- * @returns - false if the character limit has been exceeded
- */
+* Counts the characters input into a specified DOM element. Starts at a specified max limit and counts down to 0.
+* @author Paul Wilkins
+* @see https://www.sitepoint.com/community/t/javascript-form-elements-character-countdown-loop-through-form-elements/342603
+* 
+* @param {*} field - DOM element that characters are being counted in.
+* @param {*} field2 - ID of the DOM element displaying the number of characters remaining.
+* @param {*} maxlimit - Maximum number of characters allowed in "field."
+* @returns - False if the character limit has been exceeded.
+*/
 function charCounter(field, field2, maxlimit) {
     var countfield = document.getElementById(field2);
     if (field.value.length > maxlimit) {
@@ -21,35 +23,31 @@ function charCounter(field, field2, maxlimit) {
 }
 
 /**
- * Write a class to Firestore.
- * 
- * @param nickname - String containing the name of the class to be created
+ * Once the user has finished entering their class details, deal with a submission 
+ * click in the appropriate manner. Input values are saved to appropriately-named
+ * variables which are fed into a checkInput function. If the input is deemed valid,
+ * the addClass() function is called with the same variables as input parameters.
  */
-function addClass(description, nickname) {
-    db.collection("Classes").doc(nickname).set({
-            Class_Name: description,
-            Class_Nickname: nickname,
-            Class_Owner: firebase.auth().currentUser.displayName,
-            Owner_Email: firebase.auth().currentUser.email,
-            Class_Points: 0,
-            Date_Created: firebase.firestore.FieldValue.serverTimestamp()
-        })
-        .then(() => {
-            console.log("Class successfully written!");
-        })
-        .catch((error) => {
-            console.error("Error adding class: ", error);
-        });
+function onClickSubmit() {
+    let description = document.getElementById("class-description").value;
+    let nickname = document.getElementById("class-nickname").value;
+    checkInput(description, nickname);
+    if (validInput) {
+        // Add class to Firestore
+        addClass(description, nickname);
+    }
 }
 
 /**
- * Make sure the user has input a class name.
- * 
- * @param nickname - String containing the name of the class to be created
- */
+* Ensures that the user has input both a class description and nickname. If either
+* of these is missing, an error message is pushed to the DOM and the "Create Class"
+* function cascade is halted.
+* 
+* @param description - String containing a description of the class to be created.
+* @param nickname - String containing the nickname of the class to be created.
+*/
 function checkInput(description, nickname) {
     if (description == null || nickname == null || description === "" || nickname === "") {
-        noInput = true;
         $("#feedback").html("Please enter a class description and nickname");
         $("#feedback").css({
             color: "red"
@@ -57,27 +55,57 @@ function checkInput(description, nickname) {
         $("#feedback").show(0);
         $("#feedback").fadeOut(2500);
     } else {
-        noInput = false;
+        validInput = true;
     }
 }
 
 /**
- * Deal with submission click in the appropriate manner.
+ * Writes a class to Firestore using a (validated) description and nickname entered
+ * by the user. Other class fields set are: Class_Owner (set to the current user's display name),
+ * Owner_Email, Class_Points (initially set to 0), and Date_Created. Once the class has been
+ * written, users are directed back to the educator homepage.
+ * 
+ * @param description - String containing a description of the class to be created.
+ * @param nickname - String containing the nickname of the class to be created.
  */
-function onClickSubmit() {
-    let description = document.getElementById("class-description").value;
-    let nickname = document.getElementById("class-nickname").value;
-    checkInput(description, nickname);
-    if (noInput == false) {
-        // Add class to Firestore
-        addClass(description, nickname);
-        // Display success message and direct users back to the main page
-        let feedback = document.getElementById("feedback");
-        feedback.innerHTML = "Success! Please wait...";
-        $(feedback).show(0);
-        $(feedback).fadeOut(2500);
-        setTimeout(function () {
-            location.href = "./educator-home.html";
-        }, 2300);
-    }
+function addClass(description, nickname) {
+    db.collection("Classes").doc(nickname).set({
+        Class_Description: description,
+        Class_Nickname: nickname,
+        Class_Owner: firebase.auth().currentUser.displayName,
+        Owner_Email: firebase.auth().currentUser.email,
+        Class_Points: 0,
+        Date_Created: firebase.firestore.FieldValue.serverTimestamp()
+    })
+        .then(() => {
+            console.log("Class successfully written!");
+            displayFeedback();
+            setTimeout(function () {
+                // Direct users back to the educator homepage
+                location.href = "./educator-home.html";
+            }, 1000);
+        })
+        .catch((error) => {
+            console.error("Error adding class: ", error);
+        });
 }
+
+/**
+ * Pushes a success message to the DOM once the class has been written.
+ */
+function displayFeedback() {
+    $("#feedback").html("Success! Please wait...");
+    $("#feedback").css({
+        color: "green"
+    });
+    $(feedback).show(0);
+    $(feedback).fadeOut(1000);
+}
+
+/**
+ * Prevents the page from jumping upwards when a user clicks on the "Submit" button. This way,
+ * any feedback pushed to the DOM can be seen without quickly scrolling back down again.
+ */
+$("#card-button-container-1 a").click(function (event) {
+    event.preventDefault();
+});

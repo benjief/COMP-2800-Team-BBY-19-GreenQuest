@@ -2,13 +2,14 @@
 
 var userID;
 
-/* Get the current user's ID from Firestore. */
+/**
+ * Pulls the current user's ID from the "Students" collection in Firestore. 
+ */
 function getCurrentUser() {
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {
             db.collection("Students")
                 .doc(somebody.uid)
-                // Read
                 .get()
                 .then(function (doc) {
                     // Extract the current user's ID
@@ -21,88 +22,81 @@ function getCurrentUser() {
 }
 
 /**
- * Write this.
+ * Searches the "Student_Quests" collection in Firestore for documents with Quest_Participant_IDs fields (arrays)
+ * that contain the current student's userID (i.e. quests that the student was a participant in). The Quest_Status
+ * field of each document (if any documents exist) is then searched for a value of "approved" or "rejected" (not 
+ * "active" or "submitted" - the other possible values this field can take on). Any documents that make it through 
+ * all of these filters will then increment a counter which acts as a flag for the student having a backlog of 
+ * processed quests. This flag will then activate the "Processed Quests" button on this page.
  */
- function checkUnreadQuests() {
+function checkProcessedQuests() {
     let counter = 0;
-    db.collection("Students").doc(userID).collection("Quests")
-        .where("Unread", "==", true)
+    db.collection("Student_Quests")
+        .where("Quest_Participant_IDs", "array-contains", userID)
         .get()
         .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                counter++;
-                console.log(doc.data());
-            });
-            console.log(counter);
-            if (counter > 0) {
-                addAlert();
+            querySnapshot.forEach(doc => {
+                if (doc.data().Quest_Status == "approved" || doc.data().Quest_Status == "rejected") {
+                    counter++;
+                }
+            })
+            if (counter != 0) {
+                enableProcessedQuests();
             }
+        })
+        .catch((error) => {
+            console.log("Error getting processed quests: ", error);
         });
 }
 
 /**
- * Write this.
+ * Searches the "Student_Quests" collection in Firestore for documents with Quest_Participant_IDs fields (arrays)
+ * that contain the current student's userID (i.e. quests that the student was a participant in). The Quest_Status
+ * field of each document (if any documents exist) is then searched for a value of "submitted" (not "active,"
+ * "approved" or "rejected" - the other possible values this field can take on). Any documents that make it through 
+ * all of these filters will then increment a counter which acts as a flag for the student having a backlog of 
+ * pending quests. This flag will then activate the "Pending Quests" button on this page.
  */
-function addAlert() {
-    // $("#processed-quests-button").html($("#processed-quests-button").html() + "<br /> &#128276;");
-    let notificationBell = "<img class='notification' src='/img/notification_icon.png'>";
-    $("#card-button-container-1").append(notificationBell);
+function checkPendingQuests() {
+    let counter = 0;
+    db.collection("Student_Quests")
+        .where("Quest_Status", "==", "submitted")
+        .get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                if (doc.data().Quest_Participant_IDs.includes(userID)) {
+                    counter++;
+                }
+            })
+            if (counter != 0) {
+                enablePendingQuests();
+            }
+        })
+        .catch((error) => {
+            console.log("Error getting pending quests: ", error);
+        });
 }
 
 /**
- * Write this.
+ * Changes the "Processed Quests" button from an inactive to an active state.
  */
- function checkProcessedQuests() {
-    db.collection("Students").doc(userID).collection("Quests")
-    .where("Quest_Points", "!=", null)
-    .get()
-    .then((querySnapshot) => {
-        let numQuests = querySnapshot.size;
-        if (numQuests == 0) {
-            disableProcessedQuests();
-        } else {
-            checkUnreadQuests();
-        }
-    })
-    .catch((error) => {
-        console.log("Error getting processed quests: ", error);
-    });
+function enableProcessedQuests() {
+    $("#card-button-container-1 a").attr("href", "./student-processed-quests.html");
+    $("#card-button-container-1").removeClass("inactive");
 }
 
 /**
- * Write this.
+ * Changes the "Pending Quests" button from an inactive to an active state.
  */
- function checkPendingQuests() {
-    db.collection("Students").doc(userID).collection("Quests")
-    .where("Quest_Status", "==", "submitted")
-    .get()
-    .then((querySnapshot) => {
-        let numQuests = querySnapshot.size;
-        if (numQuests == 0) {
-            disablePendingQuests();
-        }
-    })
-    .catch((error) => {
-        console.log("Error getting pending quests: ", error);
-    });
+function enablePendingQuests() {
+    $("#card-button-container-2 a").attr("href", "./student-pending-quests.html");
+    $("#card-button-container-2").removeClass("inactive");
 }
 
-/** Write this. */
-function disableProcessedQuests() {
-    $("#card-button-container-1").css({ backgroundColor: "rgb(200, 200, 200)" });
-    $("#card-button-container-1").css({ transform: "none" });
-    $("#card-button-container-1 a").removeAttr("href");
-}
-
-/** Write this. */
-function disablePendingQuests() {
-    $("#card-button-container-2").css({ backgroundColor: "rgb(200, 200, 200)" });
-    $("#card-button-container-2").css({ transform: "none" });
-    $("#card-button-container-2 a").removeAttr("href");
-}
-
-// Run function when document is ready 
+/**
+ * Calls getCurrentUser() and starts the function cascade when the page is ready.
+ */
 $(document).ready(function () {
     getCurrentUser();
-    
+
 });

@@ -3,27 +3,56 @@
 var studentPoints;
 var userID;
 var questID;
+var userType;
 
-// Pull 'firstvisit' tag from URL and use it to choose the correct message to display
+// Pulls 'firstvisit' tag from URL and use it to choose the correct message to display.
 const parsedUrl = new URL(window.location.href);
 var firstVisit = parsedUrl.searchParams.get("firstvisit");
 
 /**
- * Gets the current user's name and from Firestore and use it to create a personalized greeting.
- * Also assigns the user's ID to userID.
+ * Delay timer for a spinner that spins while the page is loading to help users understand what is happening.
+ * The spinner is present for 500 milliseconds before being hidden.
+ * @author w3schools
+ * @see https://www.w3schools.com/howto/howto_css_loader.asp
+ */
+ function delayTimer() {
+    setTimeout(removeSpinner, 500);
+}
+
+/**
+ * Sets the spinner's display to none.
+ */
+function removeSpinner() {
+    document.getElementById("loader").style.display = "none";
+}
+// Run the delay timer 
+delayTimer();
+
+/**
+ * Pulls the current user's name from Firestore, before creating and displaying a personalized greeting.
+ * Also checks to see if this is the user's first visit. If it is, a welcome message is displayed in a modal.
+ * Furthermore, the user's ID is stored in userID.
 */
 function sayHello() {
+    if (firstVisit) {
+        $("#welcomeMessage").modal("show");
+    }
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {
-            db.collection("Students")
-                .doc(somebody.uid)
+            db.collection("Students").doc(somebody.uid)
                 // Read
                 .get()
                 .then(function (doc) {
+                    if (doc.data() == undefined) {
+                        window.location.assign("../index.html");
+                    }
                     userID = doc.id;
-                    getStudentPoints();
+                    // Function cascade
                     checkIfInClass(doc);
+                    getStudentPoints();
                     checkQuestHistory();
+                    enableMyProfile();
+                    enableLeaderboards();
                     // Extract the first name of the user
                     var name = doc.data().Student_Name.split(" ", 1);
                     if (name) {
@@ -43,47 +72,57 @@ function sayHello() {
 }
 
 /**
- * Write this.
- */
-function checkQuestHistory() {
-    db.collection("Students").doc(userID).collection("Quests")
-    .where("Quest_Status", "!=", "active")
-    .get()
-    .then((querySnapshot) => {
-        let numQuests = querySnapshot.size;
-        if (numQuests == 0) {
-            disableQuestHistory();
-        }
-    })
-    .catch((error) => {
-        console.log("Error getting quest history: ", error);
-    });
-}
-
-/**
- * Write this.
+ * Checks to see if the student is in a class. If they are, the "My Quest" button is enabled.
  * 
- * @param {*} doc 
+ * @param {*} doc - The current student's document in Firestore.
  */
 function checkIfInClass(doc) {
-    if (doc.data().Student_Class == null) {
-        disableMyClass();
-        disableMyQuest();
+    if (doc.data().Student_Class != null) {
+        enableMyQuest();
     }
 }
 
 /**
- * Write this.
+ * Sweeps the "Student_Quests" collection in Firestore and searches for the current student's
+ * user ID in each quest's list of Participant IDs. If at least one quest is found whose status 
+ * isn't "active" (a quest that hasn't been submitted), the "Quest History" button is enabled.
  */
+function checkQuestHistory() {
+    let counter = 0;
+    db.collection("Student_Quests")
+        .where("Quest_Participant_IDs", "array-contains", userID)
+        .get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                if (doc.data().Quest_Status !== "active") {
+                    counter++;
+                }
+            })
+            if (counter != 0) {
+                enableQuestHistory();
+            }
+        })
+        .catch((error) => {
+            console.log("Error getting quest history: ", error);
+        });
+}
+
+/**
+ * When "My Quest" is clicked on, checks to see if the current student has an active quest (the ID of which
+ * is stored in the "Student_Quest" field of each student document; this field is null if the student doesn't 
+ * have an active quest). If the student has an active quest, they are redirected to the "View Quest" page, where they
+ * can review the quest. If they don't have an active quest, they are redirected to the "Choose Quest" page, where they 
+ * can select one to complete.
+ */ 
 function onClickMyQuest() {
     db.collection("Students").doc(userID)
         .get()
         .then(function (doc) {
             // Extract the student's current quest, if it exists
             userID = doc.id;
-            hasQuest = doc.data().Student_Quest;
-            if (hasQuest) {
-                getActiveQuest();
+            questID = doc.data().Student_Quest;
+            if (questID) {
+                window.location.assign("/html/student-view-quest.html?questid=" + questID);
             } else {
                 window.location.assign("/html/student-choose-quest.html");
             }
@@ -91,6 +130,21 @@ function onClickMyQuest() {
 
 }
 
+/**
+ * Redirects the student to their profile page, with their user ID included as a URL query string.
+ */
+function onClickMyProfile() {
+    window.location.assign("./student-profile.html?userid=" + userID);
+}
+
+/**
+ * Pulls the students points from Firestore (points are stored in the "Student_Points" field of the
+ * student doc). 
+ * Number formatting code is by 
+ * @author Tom Pawlak.
+ * @see https://blog.abelotech.com/posts/number-currency-formatting-javascript/
+ * 
+ */
 function getStudentPoints() {
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {
@@ -109,51 +163,48 @@ function getStudentPoints() {
 }
 
 /**
- * Write this.
+ * Adds student points to the DOM.
  */
-function getActiveQuest() {
-    db.collection("Students").doc(userID).collection("Quests")
-        .where("Quest_Status", "==", "active")
-        .get()
-        .then((querySnapshot) => {
-            // There should only ever be one quest at a time that's active
-            querySnapshot.forEach((doc) => {
-                questID = doc.data().Quest_ID;
-            })
-            window.location.assign("/html/student-view-quest.html?questid=" + questID);
-        })
-        .catch((error) => {
-            console.log("Error getting quest ID: ", error);
-        });
-}
-
 function postStudentPoints() {
     console.log(studentPoints);
     $("#student-points").html(studentPoints);
 }
 
-/** Write this. */
-function disableMyClass() {
-    $("#card-button-container-1").css({ backgroundColor: "rgb(200, 200, 200)" });
-    $("#card-button-container-1").css({ transform: "none" });
-    $("#card-button-container-1 a").removeAttr("href");
+/**
+ * Changes the "Leaderboards" button from an inactive to an active state.
+ */
+function enableLeaderboards() {
+    $("#card-button-container-5 a").attr("href", "./student-leaderboard.html");
+    $("#card-button-container-5").removeClass("inactive");
 }
 
-/** Write this. */
-function disableQuestHistory() {
-    $("#card-button-container-3").css({ backgroundColor: "rgb(200, 200, 200)" });
-    $("#card-button-container-3").css({ transform: "none" });
-    $("#card-button-container-3 a").removeAttr("href");
+/**
+ * Changes the "My Profile" button from an inactive to an active state.
+ */
+function enableMyProfile() {
+    $("#card-button-container-1 a").attr("onclick", "onClickMyProfile()");
+    $("#card-button-container-1").removeClass("inactive");
 }
 
-/** Write this. */
-function disableMyQuest() {
-    $("#card-button-container-2").css({ backgroundColor: "rgb(200, 200, 200)" });
-    $("#card-button-container-2").css({ transform: "none" });
-    $("#card-button-container-2 a").removeAttr("onclick");
+/**
+ * Changes the "Quest History" button from an inactive to an active state.
+ */
+function enableQuestHistory() {
+    $("#card-button-container-3 a").attr("href", "./student-quest-history.html");
+    $("#card-button-container-3").removeClass("inactive");
 }
 
-// Run function when document is ready 
+/**
+ * Changes the "My Quest" button from an inactive to an active state.
+ */
+function enableMyQuest() {
+    $("#card-button-container-2 a").attr("onclick", "onClickMyQuest()");
+    $("#card-button-container-2").removeClass("inactive");
+}
+
+/**
+ * Calls sayHello() to start the function cascade when the page is ready.
+ */
 $(document).ready(function () {
     sayHello();
 });

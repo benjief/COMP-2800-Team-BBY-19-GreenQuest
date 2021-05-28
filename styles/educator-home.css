@@ -11,6 +11,7 @@
         "approve-quests"
         "manage-classes"
         "create-class"
+        "add-quest"
         "break"
         "logout";
 }
@@ -35,16 +36,22 @@
 
 #card-button-container-3 {
     grid-area: create-class;
-    margin-bottom: 0;
 }
 
 #card-button-container-4 {
+    grid-area: add-quest;
+    margin-bottom: 0;
+}
+
+#card-button-container-5 {
     grid-area: logout;
     margin-bottom: 40px;
 }
 
-.button {
-    display: flex;
-    height: 100%;
-    align-items: center;
+.inactive {
+    background-color: rgb(200, 200, 200);
+}
+
+.inactive:active {
+    transform: none;
 }

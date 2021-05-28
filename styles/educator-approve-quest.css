@@ -12,7 +12,6 @@
     display: flex;
     justify-content: center;
     height: 500px;
-    /* word-wrap: break-word; */
 }
 
 .modal-body img {
@@ -43,7 +42,7 @@
         "approve"
         "reject"
         "break"
-        "back";
+        "home";
     align-items: center;
 }
 
@@ -102,7 +101,6 @@ input {
 }
 
 .page-container ul {
-    /* text-align: center; */
     margin-bottom: 10px;
     width: 80%;
     align-self: center;
@@ -125,7 +123,7 @@ input {
 }
 
 #card-button-container-3 {
-    grid-area: back;
+    grid-area: home;
     margin-bottom: 40px;
 }
 
@@ -155,5 +153,30 @@ input {
     align-items: center;
     text-align: center;
     font-weight: 600;
-    color: green;
 }
+
+/* Center the loader */
+#loader {
+    position: absolute;
+    left: 55%;
+    top: 18%;
+    z-index: 1;
+    width: 120px;
+    height: 120px;
+    margin: -76px 0 0 -76px;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #28c513;
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+  }
+  
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

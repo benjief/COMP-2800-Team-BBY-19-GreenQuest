@@ -57,17 +57,28 @@
             </div>
             <div class="radio-button-container">
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="role" id="educator-radio" checked="checked">
+                    <input class="form-check-input" type="radio" name="role" id="educator-radio" checked="checked"
+                        onclick="educatorSelected()">
                     <label class="form-check-label" for="educator-radio">
                         Educator
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="role" id="student-radio" onclick="keepSelection()">
+                    <input class="form-check-input" type="radio" name="role" id="student-radio"
+                        onclick="studentSelected()">
                     <label class="form-check-label" id="student-radio-label" for="student-radio">
                         Student
                     </label>
                 </div>
+            </div>
+            <div id="input-container">
+                <input class="input" type="number" id="educator-validation" placeholder="Enter Valid Educator Key"></input>
+            </div>
+            <div class="feedback-placeholder">
+                <p id="feedback"></p>
+            </div>
+            <div class="card-button-container" id="card-button-container-1">
+                <a class="button" href="#" onclick="onClickSubmit()">Submit</a>
             </div>
             <div id="firebaseui-auth-container"></div>
         </div>
@@ -79,7 +90,7 @@
     <!----------------------------------------------->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
-    </script>
+        </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>

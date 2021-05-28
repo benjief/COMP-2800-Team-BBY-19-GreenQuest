@@ -1,4 +1,38 @@
 /** CSS for educator-new-home.html */
+
+.modal-header {
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url("/img/background_pattern_2.png");
+}
+
+.modal-title {
+    font-weight: 600;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url("/img/background_pattern_2.png");
+    padding-top: 0;
+}
+
+.modal-body img {
+    width: 200px;
+    height: 200px;
+    align-self: center;
+    margin-bottom: 20px;
+}
+
+.modal-footer {
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url("/img/background_pattern_2.png");
+}
+
+.btn {
+    background-color: #ff80ee;
+    border: none;
+    
+}
+
 .page-container {
     margin-top: 50px;
 }
