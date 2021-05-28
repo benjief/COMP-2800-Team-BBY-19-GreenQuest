@@ -202,7 +202,9 @@ function enableMyQuest() {
     $("#card-button-container-2").removeClass("inactive");
 }
 
-// Run sayHello() to start the function cascade when the page is ready.
+/**
+ * Runs sayHello() to start the function cascade when the page is ready.
+ */
 $(document).ready(function () {
     sayHello();
 });

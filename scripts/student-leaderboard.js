@@ -20,9 +20,9 @@ function getCurrentStudent() {
 }
 
 /**
- * Write this.
+ * Checks Firestore to see if the current student is in a class. If they are, the "My Class" button is enabled.
  * 
- * @param {*} doc 
+ * @param {*} doc - The current student's Firestore doc.
  */
 function checkIfInClass(doc) {
     if (doc.data().Student_Class != null) {
@@ -30,14 +30,17 @@ function checkIfInClass(doc) {
     }
 }
 
-/** Write this. */
+/**
+ * Changes the "My Class" button from an inactive to an active state.
+ */
 function enableMyClass() {
         $("#card-button-container-1 a").attr("href", "./student-my-class.html");
         $("#card-button-container-1").removeClass("inactive");
 }
 
-
-// Run function when document is ready 
+/**
+ * Run getCurrentStudent() to start the function cascade when the page is ready.
+ */
 $(document).ready(function () {
     getCurrentStudent();
 });

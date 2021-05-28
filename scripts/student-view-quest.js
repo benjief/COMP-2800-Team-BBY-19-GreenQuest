@@ -206,7 +206,9 @@ function enableSubmitQuest() {
     $("#card-button-container-1").removeClass("inactive");
 }
 
-// Run getCurrentStudent() to start the function cascade when the page is ready.
+/**
+ * Runs getCurrentStudent() to start the function cascade when the page is ready.
+ */
 $(document).ready(function () {
     getCurrentStudent();
 
