@@ -208,5 +208,3 @@ function enableMyQuest() {
 $(document).ready(function () {
     sayHello();
 });
-
-
