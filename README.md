@@ -116,7 +116,6 @@ It has the following subfolders and files:
 |   /index.js                       # Landing page JS for all visitors
 |   /login.js                       # Login JS for both student and educator
 |   /logout.js                      # Logout JS for both student and educator
-|   /more-info-data.js              # Data generating file for Quests
 |   /student-add-friends.js         # JS file for adding friend when submitting
 |   /student-all-classes.js         # JS file for class standings for all classes
 |   /student-all-students.js        # JS file student standings for all students
@@ -146,7 +145,6 @@ It has the following subfolders and files:
 |   /educator-remove-students.css   # Styles specifically for educator-remove-students.html
 |   /index.css                      # Styles specifically for index.html                   
 |   /login.css                      # Styles specifically for login.html                   
-|   /status-page.css                # Styles specifically for status-page.html             
 |   /student-add-friends.css        # Styles specifically for student-add-friends.html     
 |   /student-all-classes.css        # Styles specifically for student-all-classes.html     
 |   /student-all-students.css       # Styles specifically for student-all-students.html    
@@ -160,7 +158,6 @@ It has the following subfolders and files:
 |   /student-quest-history.css      # Styles specifically for student-quest-history.html   
 |   /student-submit-quest.css       # Styles specifically for student-submit-quest.html    
 |   /student-view-quest.css         # Styles specifically for student-view-quest.html      
-|   /task-page.css                  # Styles specifically for task-page.html               
 |
 Firebase hosting files:               
 ├── .firebase                       # contains hosting..cache for firebase
