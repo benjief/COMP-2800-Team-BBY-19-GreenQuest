@@ -182,13 +182,14 @@ Educator key is coded in login.js
 ## Basic setup
 
 Main languages used are HTML, CSS, JavaScript. 
-New contributor must have account for gitHub, and Firebase and be added a collaborator.
+New contributor must have account for gitHub, Firebase, and ShareThis and be added a collaborator.
 
 * language: HTML, CSS, JavaScript, jQuery, JSON
 * IDE: VSCode
 * Hosting: Firebase through GitHub Automation Action
     - github workflows settings are saved under /.github. 
 * Firebase (firestore, firebase, hosting)
+* ShareThis (social media share buttons)
 
 
 --------------------------------------------------------------------
