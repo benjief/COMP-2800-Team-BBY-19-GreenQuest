@@ -3,7 +3,7 @@
 var userID;
 
 /**
- * Gets the current student's ID and from Firestore.
+ * Pulls the current student's ID and from the "Students" collection in Firestore.
 */
 function getCurrentStudent() {
     firebase.auth().onAuthStateChanged(function (somebody) {
@@ -39,7 +39,7 @@ function enableMyClass() {
 }
 
 /**
- * Run getCurrentStudent() to start the function cascade when the page is ready.
+ * Runs getCurrentStudent() to start the function cascade when the page is ready.
  */
 $(document).ready(function () {
     getCurrentStudent();
