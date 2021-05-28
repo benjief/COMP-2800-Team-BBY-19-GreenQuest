@@ -16,13 +16,13 @@
 We organized our repo by grouping file types together such as all HTML files into the "html" folder. 
 
  Top level of project folder: 
-├── .gitignore                     # Git ignore file
-├── .vscode                        # Folder for the live server settings port
-├── jquery_plugins                 # Folder for plugins like the jquery star-rating feature
-├── mergelog                       # File with all the firestore merge history
-├── index.html                     # Landing page
-├── 404.html                       # Error page
-└── README.md                      # README file
+├── .gitignore                      # Git ignore file
+├── .vscode                         # Folder for the live server settings port
+├── jquery_plugins                  # Folder for plugins like the jquery star-rating feature
+├── mergelog                        # File with all the firestore merge history
+├── index.html                      # Landing page
+├── 404.html                        # Error page
+└── README.md                       # README file
 
 It has the following subfolders and files:
 ├── .github \ workflows             # folder for firebase-hosting-workflow
@@ -38,44 +38,71 @@ It has the following subfolders and files:
 |   /educator-manage-classes.html   # Educator page for managing multiple classes
 |   /educator-new-home.html         # Homepage for the educator
 |   /educator-remove-students.html  # Educator page for removing students from a class
-|   /login.html                     # Login page for both student and educator
+|   /login.html                     # Login page for all visitors
 |   /student-add-friends.html       # Student page for adding friend when submitting
 |   /student-all-classes.html       # Student page class standings for all classes
 |   /student-all-students.html      # Student page student standings for all students
-|   /student-choose-quest.html      # Student page for removing students from a class
-|   /student-add-friends.html       # Student page for removing students from a class
-|   /student-add-friends.html       # Student page for removing students from a class
-|   /student-add-friends.html       # Student page for removing students from a class
-
-
-
-
-
-
-
-
-
-|   /educator-add-students.html              # Reviews
-|   /stats.html                # Stats
-|   /storefront.html           # Storefront page for all stores
-|   /stores.html               # Store list
-|   /index.html                # Landing HTML file, this is what users see when you come tourl
-|   /employee-login.html       # Employee login page
-|   /member-login.html         # Member login page
-|   /more-info.html            # Costco covid-related information
-|   /feedback.html             # Feedback form
-|   /main.html                 # Main page for members
-|   /reviews.html              # Reviews
-|   /stats.html                # Stats
-|   /storefront.html           # Storefront page for all stores
-|   /stores.html               # Store list
+|   /student-choose-quest.html      # Student page for choosing a quest
+|   /student-home.html              # Homepage for students
+|   /student-leaderboard.html       # Student page for leaderboard menus
+|   /student-my-class.html          # Student page for standings in my class
+|   /student-pending-quests.html    # Student page for pending quests awaiting approval/reject
+|   /student-processed-quests.html  # Student page for processed quests
+|   /student-profile.html           # Student page for student profile
+|   /student-quest-history.html     # Student page for quest history
+|   /student-submit-quest.html      # Student page for submitting quest
+|   /student-view-quest.html        # Student page for viewing chosen quest
 |   
-├── images                         # Folder for images
-|   /back_arrow.png                # App's back button
-|   /costco.jpg                    # Picture used for index.html (landing page)
-|   /covid1.jpg                    # Picture used for more-info.html
-|   /covid2.jpg                    # Picture used for more-info.html
-|   /covid3.jpg                    # Picture used for more-info.html
+├── images                          # Folder for images
+|   /404.png                        # Picture for 404 page
+|   /add_icon_gray.png              # Picture used for index.html (landing page)
+|   /add_icon.png                   # Picture used for more-info.html
+|   /background_clouds.png          # Picture used for more-info.html
+|   /background_img_preview.png     # Picture used for more-info.html
+|   /background_pattern_1.png       # Picture used for more-info.html
+|   /background_pattern_2.png       # Picture used for more-info.html
+|   /background_pattern_3.png       # Picture used for more-info.html
+|   /background_pattern_4.png       # Picture used for more-info.html
+|   /background_pattern_5.png       # Picture used for more-info.html
+|   /background_pattern_6.png       # Picture used for more-info.html
+|   /background_pattern_7.png       # Picture used for more-info.html
+|   /background_pattern_8.png       # Picture used for more-info.html
+|   /background_pattern.png         # Picture used for more-info.html
+|   /benjie_1.png                   # Picture used for easterEgg, about us page
+|   /benjie_2.png                   # Picture used for easterEgg, about us page
+|   /benjie_3.png                   # Picture used for easterEgg, about us page
+|   /benjie_4.png                   # Picture used for easterEgg, about us page
+|   /benjie_crane.png               # Picture used for easterEgg, about us page
+|   /benjie_hi.png                  # Picture used for easterEgg, about us page
+|   /benjie_ribbon.png              # Picture used for easterEgg, about us page
+|   /bronze_ribbon.png              # Picture used for bronze medal for ranking
+|   /facebook_icon.png              # Picture used for facebook icon
+|   /giwoun_1.png                   # Picture used for easterEgg, about us page
+|   /giwoun_2.png                   # Picture used for easterEgg, about us page
+|   /giwoun_3.png                   # Picture used for easterEgg, about us page
+|   /giwoun_4.png                   # Picture used for easterEgg, about us page
+|   /gold_ribbon.png                # Picture used for gold medal for ranking
+|   /gyephel_1.png                  # Picture used for easterEgg, about us page
+|   /gyephel_2.png                  # Picture used for easterEgg, about us page
+|   /gyephel_3.png                  # Picture used for easterEgg, about us page
+|   /gyephel_4.png                  # Picture used for easterEgg, about us page
+|   /leaf_icon.png                  # Picture used for points
+|   /question_icon.png              # Picture used for points
+|   /remove_icon.png                # Picture used for points
+|   /sam_1.png                      # Picture used for easterEgg, about us page
+|   /sam_2.png                      # Picture used for easterEgg, about us page
+|   /sam_3.png                      # Picture used for easterEgg, about us page
+|   /sam_4.png                      # Picture used for easterEgg, about us page
+|   /silver_ribbon.png              # Picture used for silver medal for ranking
+|   /slow_down.png                  # Picture used for error message
+|   /twitter_icon.png               # Picture used for silver medal for ranking
+
+
+
+
+
+
+|   /background_clouds.png         # Picture used for more-info.html
 |   /covid4.jpg                    # Picture used for more-info.html
 |   /covid5.jpg                    # Picture used for more-info.html
 |   /down_arrow.png                # Icon used for headcount changes
@@ -83,35 +110,67 @@ It has the following subfolders and files:
 |   /store_downtown_storefront.png # Picture used for the storefront page
 |   /store_richmond_storefront.png # Picture used for the storefront page
 |   /up_arrow.png                  # Icon used for headcount changes
-├── scripts                        # Folder for scripts
-|   /back.js                       # Back feature to return to the page you've last visited
-|   /employee-login.js             # Employee login
-|   /feedback.js                   # Feedback form that sends data to Cloud Firestore
-|   /firebase-api-crowdmapp.js     # Our app's api for Cloud Firestore
-|   /headcount.js                  # Sends data to Cloud Firestore
-|   /hello.js                      # Says your name in the main page
-|   /logout.js                     # Logs you out from your current session
-|   /member-login.js               # Member login
-|   /reviews.js                    # Reviews
-|   /stats.js                      # Statistics
-|   /storefront.js                 # Storefronts for all locations
-|   /stores.js                     # Takes headcount data from Cloud Firestore
-|   └── outdated-scripts           # Folder for unused or obsolete files
+| 
+├── scripts                        # Folder for scripts| 
+|   /about-us.js                   # Page for about us
+|   /all-pages.js                  # Page for about us
+|   /educator-add-quest.js         # JS file for adding quest to the firebase
+|   /educator-add-students.js      # JS file for adding students to class
+|   /educator-approve-quest.js     # JS file for approving quests students submitted
+|   /educator-create-class.js      # JS file for creating a virtual class/group
+|   /educator-home.js              # Homepage JS file for the educator only
+|   /educator-manage-class.js      # JS file for managing a class
+|   /educator-manage-classes.js    # JS file for managing multiple classes
+|   /educator-new-home.js          # Homepage JS file for the educator
+|   /educator-remove-students.js   # JS file for removing students from a class
+|   /index.js                      # Landing page JS for all visitors
+|   /login.js                      # Login JS for both student and educator
+|   /logout.js                     # Logout JS for both student and educator
+|   /more-info-data.js             # Data generating file for Quests
+|   /student-add-friends.js        # JS file for adding friend when submitting
+|   /student-all-classes.js        # JS file for class standings for all classes
+|   /student-all-students.js       # JS file student standings for all students
+|   /student-choose-quest.js       # JS file for choosing a quest
+|   /student-home.js               # Homepage JS file for students
+|   /student-leaderboard.js        # JS file for leaderboard menus
+|   /student-my-class.html         # Student page for standings in my class
+|   /student-pending-quests.js     # JS file for pending quests awaiting approval/reject
+|   /student-processed-quests.js   # JS file for processed quests
+|   /student-profile.js            # JS file for student profile
+|   /student-quest-history.js      # JS file for quest history
+|   /student-submit-quest.js       # JS file for submitting quest
+|   /student-view-quest.js         # JS file for viewing chosen quest
+|
 ├── styles                         # Folder for stylesheets
-|   /all-pages.css                 # Styles every page
-|   /employee-login.css            # Styles specifically for employee-login.html
-|   /employee-main.css             # Styles specifically for employee's main.html
-|   /feedback.css                  # Styles specifically for feedback.html
-|   /headcount.css                 # Styles specifically for headcount.html
-|   /index.css                     # Styles specifically for index.html
-|   /member-login.css              # Styles specifically for member-login.html
-|   /member-main.css               # Styles specifically for member's main.html
-|   /more-info.css                 # Styles specifically for more-info.html
-|   /reviews.css                   # Styles specifically for reviews.html
-|   /stats.css                     # Styles specifically for stats.html
-|   /storefront.css                # Styles specifically for storefront.html
-|   /stores.css                    # Styles specifically for stores.html
-|   └── outdated-scripts           # Folder for unused or obsolete files
+|   /404.css                       # Styles specifically for 404.html                     
+|   /about-us.css                  # Styles specifically for about-us.html                
+|   /all-pages.css                 # Styles specifically for all-pages.html               
+|   /educator-add-quest.css        # Styles specifically for educator-add-quest.html      
+|   /educator-add-students.css     # Styles specifically for educator-add-students.html   
+|   /educator-approve-quest.css    # Styles specifically for educator-approve-quest.html   
+|   /educator-create-class.css     # Styles specifically for educator-create-class.html   
+|   /educator-home.css             # Styles specifically for educator-home.html           
+|   /educator-manage-class.css     # Styles specifically for educator-manage-class.html   
+|   /educator-manage-classes.css   # Styles specifically for educator-manage-classes.html 
+|   /educator-new-home.css         # Styles specifically for educator-new-home.html       
+|   /educator-remove-students.css  # Styles specifically for educator-remove-students.html
+|   /index.css                     # Styles specifically for index.html                   
+|   /login.css                     # Styles specifically for login.html                   
+|   /status-page.css               # Styles specifically for status-page.html             
+|   /student-add-friends.css       # Styles specifically for student-add-friends.html     
+|   /student-all-classes.css       # Styles specifically for student-all-classes.html     
+|   /student-all-students.css      # Styles specifically for student-all-students.html    
+|   /student-choose-quest.css      # Styles specifically for student-choose-quest.html    
+|   /student-home.css              # Styles specifically for student-home.html            
+|   /student-leaderboard.css       # Styles specifically for student-leaderboard.html     
+|   /student-my-class.css          # Styles specifically for student-my-class.html        
+|   /student-pending-quests.css    # Styles specifically for student-pending-quests.html  
+|   /student-processed-quests.css  # Styles specifically for student-processed-quests.html
+|   /student-profile.css           # Styles specifically for student-profile.html         
+|   /student-quest-history.css     # Styles specifically for student-quest-history.html   
+|   /student-submit-quest.css      # Styles specifically for student-submit-quest.html    
+|   /student-view-quest.css        # Styles specifically for student-view-quest.html      
+|   /task-page.css                 # Styles specifically for task-page.html               
 |
 Firebase hosting files:               
 ├── .firebase                      # contains hosting..cache for firebase
