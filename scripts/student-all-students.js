@@ -1,13 +1,30 @@
 // JS for student-all-students.js
 
 var currentStudent = null;
-
 var students = [];
 var firstPlace = 0;
 var secondPlace = 0;
 var thirdPlace = 0;
-
 var studentScores = [];
+
+/**
+ * Delay timer for a spinner that spins while the page is loading to help users understand what is happening.
+ * The spinner is present for 500 milliseconds before being hidden.
+ * @author w3schools
+ * @see https://www.w3schools.com/howto/howto_css_loader.asp
+ */
+ function delayTimer() {
+    setTimeout(removeSpinner, 1300);
+}
+
+/**
+ * Sets the spinner's display to none.
+ */
+function removeSpinner() {
+    document.getElementById("loader").style.display = "none";
+}
+// Run the delay timer 
+delayTimer();
 
 /**
  * Get the current user's name and class name from Firestore.
@@ -108,15 +125,27 @@ function getStudents() {
  */
 $(document).ready(function () {
     getCurrentStudent();
-});
 
-//Load timer
-//Taken from https://www.w3schools.com/howto/howto_css_loader.asp
-function delayTimer() {
-    setTimeout(removeSpinner, 1300);
-  }
-  
-  function removeSpinner() {
-    document.getElementById("loader").style.display = "none";
-  }
-  delayTimer();
+    /**
+     * When a string is typed into the DOM filter input, if that string isn't contained in a student's name
+     * (case insensitive), the name is hidden and disappears from the list. In this instance, I've had to create
+     * a list of student names to use for the filter, since I didn't already have one.
+     * Adapted from code by @author w3schools
+     * @see https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_filter_list
+     */
+    $("#student-filter").on("keyup", function () {
+        let studentNames = [];
+        for (var i = 0; i < students.length; i++) {
+            studentNames[i] = students[i].name;
+        }
+
+        let filter = $("#student-filter").prop("value").toLowerCase();
+        for (var i = 0; i < studentNames.length; i++) {
+            if (studentNames[i].toLowerCase().indexOf(filter) <= -1) {
+                $("#student-container-" + i).css({ display: "none" });
+            } else {
+                $("#student-container-" + i).css({ display: "" });
+            }
+        }
+    })
+});
