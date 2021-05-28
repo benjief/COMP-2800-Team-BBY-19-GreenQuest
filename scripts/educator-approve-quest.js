@@ -446,7 +446,7 @@ $("#card-button-container-2 a").click(function (event) {
 })
 
 /**
- * Call getCurrentStudent() to start the function cascade when the page is ready.
+ * Calls getCurrentStudent() to start the function cascade when the page is ready.
  */
 $(document).ready(function () {
     getCurrentUser();

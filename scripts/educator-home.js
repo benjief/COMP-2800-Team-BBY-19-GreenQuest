@@ -100,7 +100,7 @@ function enableManageClasses() {
 }
 
 /**
- * Call sayHello() to start the function cascade when the page is ready.
+ * Calls sayHello() to start the function cascade when the page is ready.
  */
 $(document).ready(function () {
     sayHello();
