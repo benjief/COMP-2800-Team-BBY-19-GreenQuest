@@ -1,4 +1,5 @@
 /** CSS for educator-add-students.html */
+
 #main-content-card {
     grid-template-areas:
         "card-text"

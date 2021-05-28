@@ -55,15 +55,15 @@ function getQuestParticipantInfo() {
 }
 
 /**
- * Searches the "Students" collection in Firestore for students who aren't already quest participants, and
- * pushes the query results to the allStudents array as JSON objects (containing name and id fields).
+ * Searches the "Students" collection in Firestore for students who aren't already quest participants (in this quest, 
+ * or otherwise), and pushes the query results to the allStudents array as JSON objects (containing name and id fields).
  */
 function getStudents() {
     db.collection("Students")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                if (doc.id != currentUserID && !questParticipantIDs.includes(doc.id)) {
+                if (doc.id != currentUserID && doc.Student_Quest == null && !questParticipantIDs.includes(doc.id)) {
                     let student = { "name": doc.data().Student_Name, "id": doc.id };
                     allStudents.push(student);
                 }

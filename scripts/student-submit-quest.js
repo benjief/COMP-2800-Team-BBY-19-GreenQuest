@@ -1,6 +1,6 @@
 // JS for student-submit-quest.js
 
-// Pull quest and user IDs from URL
+// Pull quest ID and redirect flag from URL query string
 const parsedUrl = new URL(window.location.href);
 var questID = parsedUrl.searchParams.get("questid");
 var dataToRetrieve = parsedUrl.searchParams.get("redirectflag");
@@ -36,20 +36,87 @@ function charCounter(field, field2, maxlimit) {
 }
 
 /**
- * Write this
+ * The MIT License (MIT)
+
+ * Copyright (c) 2011-2021 Twitter, Inc.
+ * Copyright (c) 2011-2021 The Bootstrap Authors
+
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE. 
+ * 
+ * @author Bootstrap
+ * @see https://getbootstrap.com/docs/5.0/components/popovers/
+ */
+var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl)
+})
+
+/**
+ * Searches the "Student_Quests" collection in Firestore for a document whose ID matches that
+ * of the current quest ID (i.e. the quest the student is submitting). That document's 
+ * Quest_Participant_IDs and Quest_Participants fields are then stored in userIDs and userNames, 
+ * respectively. If a quest document does not exist, messages letting the user know what has gone wrong and 
+ * prompting them to speak to their teacher are displayed.
+ */
+function getQuestParticipants() {
+    db.collection("Student_Quests").doc(questID)
+        .get()
+        .then(function (doc) {
+            userIDs = doc.data().Quest_Participant_IDs;
+            userNames = doc.data().Quest_Participants;
+            checkNumUploaded();
+            processImage();
+            addSubmittersToDOM();
+            // Display messages if no quest document is retrieved
+            if (!doc) {
+                let message = "<div class='text-container'><p class='message'>You haven't got any active quests to submit!</p></div>"
+                $(".uploaded-images").append(message);
+                $("#card-button-container-1").remove();
+                $("#upload-image-input").attr("disabled", "");
+                $("#quest-notes").attr("disabled", "");
+                $("#quest-notes").attr("placeholder", "Try going back to the homepage. If you haven't been added to a class yet, talk to your teacher!");
+            }
+
+        })
+}
+
+/**
+ * If a user hasn't attached any images to the quest they're submitting, a message is displayed along with a question icon
+ * that displays a popover if clicked on (helping users understand the purpose of uploaded images in this context). An input
+ * is also added to the page, which allows users to upload up to three images. If three images have been uploaded, this input
+ * becomes inactive (although users can choose to discard already-uploaded images, in which case the input is reactivated).
  */
 function checkNumUploaded() {
     const maxImages = 3;
     if (className) {
         let message = "<div class='text-container' id='message'><p id='no-images'>You haven't uploaded any "
             + "images</p><img src='/img/question_icon.png' tabindex='0' role='button' id='image-info' data-bs-toggle='popover' "
-            + "data-bs-content='Add up to 3 images that prove youve completed this task. If you worked with friends, submit a "
+            + "data-bs-content='Add up to 3 images that prove you\'ve completed this task. If you worked with friends, submit a "
             + "group shot and add them to your submission below. You'll all get points!' data-bs-container='body'>"
             + "</div>"
+        // If 3 images are uploaded, the image upload button is disabled
         if (uploadedImageFiles.length == maxImages) {
             $("#upload-image-input").attr("disabled", "");
+            // If no images have been uploaded, a message is displayed
         } else if (uploadedImageFiles.length == 0) {
             $(".uploaded-images").append(message);
+            // If 1 or 2 images have been uploaded, the image upload button is enabled and the message removed
         } else {
             $("#upload-image-input").removeAttr("disabled");
             if ($("#message")) {
@@ -57,14 +124,27 @@ function checkNumUploaded() {
             }
         }
     }
-    // Popover code (taken from https://getbootstrap.com/docs/5.0/components/popovers/)
-    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-        return new bootstrap.Popover(popoverTriggerEl)
-    })
 }
+
 /**
- * Write this.
+ * Adds an event listener to the image input button. When an image is uploaded, the file is pushed to
+ * the uploadedImageFiles array.
+ */
+function processImage() {
+    const imageInput = document.getElementById("upload-image-input");
+    imageInput.addEventListener('change', function (event) {
+        uploadedImageFiles.push(event.target.files[0]);
+        storeTemporaryImage(event.target.files[0]);
+        addImageNamesToDOM();
+    });
+}
+
+
+/**
+ * Images uploaded by users are stored in the Cloud temporarily (in a special folder) so that they can be previewed.
+ * Here, stored image files are assigned a tempURL attribute that allows them to be viewed from the DOM.
+ * 
+ * @param image - The image to be stored temporarily on the Cloud
  */
 function storeTemporaryImage(image) {
     $("#" + image.name).attr("data-target", "modalCenter");
@@ -81,20 +161,8 @@ function storeTemporaryImage(image) {
 }
 
 /**
- * CITE - Write this.
- */
-function processImage() {
-    const imageInput = document.getElementById("upload-image-input");
-    imageInput.addEventListener('change', function (event) {
-        console.log(event.target.files[0]);
-        uploadedImageFiles.push(event.target.files[0]);
-        storeTemporaryImage(event.target.files[0]);
-        addImageNamesToDOM();
-    });
-}
-
-/**
- * Write this
+ * Deletes all of the image names posted to the DOM (acts as a sort of refresh function, so that the list of
+ * uploaded images always stays in the right order, and deleted images are removed from the DOM).
  */
 function resetImageDOM() {
     var uploadedImages = document.getElementsByClassName('list-item');
@@ -104,16 +172,22 @@ function resetImageDOM() {
 }
 
 /**
- * Write this.
+ * Opens up a Bootstrap modal that displays a larger version of the DOM element in question. This is triggered when an uploaded image
+ * name (anchor) in the DOM is clicked on.
  * 
- * @param {*} element 
+ * @param {*} element  - The DOM element being displayed in this modal (in this case, one of the user's 
+ *                       attached images).
  */
 function showPreview(element) {
+    // Clear any content that may still be populating the modal
     $(".modal-body").html("");
+    /* A timeout is set because without it, images rarely display properly. This likely has something 
+       to do with a delay in information fetching */
     setTimeout(() => {
         let previewName = null;
         let previewURL = null;
         for (var i = 0; i < uploadedImageFiles.length; i++) {
+            // The image name and URL are pulled from the anchor element's ID (strategically-generated)
             if (uploadedImageFiles[i].name == $(element).attr("id")) {
                 previewName = uploadedImageFiles[i].name;
                 previewURL = uploadedImageFiles[i].tempURL;
@@ -130,9 +204,11 @@ function showPreview(element) {
 }
 
 /**
- * Write this
+ * Uploaded images' names are pushed to the DOM as anchor elements with "-" icons next to them,
+ * which allow users to delete images if they no longer wish to submit them with this quest.
  */
 function addImageNamesToDOM() {
+    // Reset the list of images every time an image is deleted or a new image is uploaded
     resetImageDOM();
     for (var i = 0; i < uploadedImageFiles.length; i++) {
         let imageDOM = "<li class='list-item'><a class='uploaded-image' id='" +
@@ -141,15 +217,20 @@ function addImageNamesToDOM() {
             uploadedImageFiles[i].name + "' onclick='removeImage(this)'></li>";
         $(".uploaded-images").append(imageDOM);
     }
+    // Check the number of uploaded images every time an image is deleted or a new image is uploaded
     checkNumUploaded();
     $("#upload-image-input").prop("value", null);
 }
 
 /**
- * Write this
- */
+ * When a user clicks on the "-" icon beside each image name, the image is removed from the uploadedImageFiles
+ * array and the DOM is refreshed so that the "deleted" image is no longer listed.
+ 
+* @param - The DOM element clicked on (in this case, a "-" icon that corresponds to a listed image)
+*/
 function removeImage(element) {
     let imageName = $(element).attr("id");
+    // A bit of crafty ID-generation above allows us to do this
     imageName = imageName.replace("delete-", "");
     let index = null;
     for (var i = 0; i < uploadedImageFiles.length; i++) {
@@ -158,61 +239,52 @@ function removeImage(element) {
         }
     }
     if (index >= 0) {
+        // Remove the image to be deleted from the uploaded images array
         uploadedImageFiles.splice(index, 1);
     }
+    // Repopulate the DOM with the updated array of uploaded images
     addImageNamesToDOM();
 }
 
 /**
- * CITE and write
+ * Generates and returns a storage reference for a file (an image in this case).
+ * 
+ * @param {*} file - The image to be uploaded to the Cloud.
+ * @param {*} temp - true or false - dictates whether or not the storage reference returned
+ *                   is for temporary (true) or semi-permanent (false) storage.
+ * @returns - A Firebase storage reference for the image to be stored.
  */
 function getStorageRef(file, temp) {
     let imageID = file.lastModified;
     // Create a storage reference
     let storageRef = storage.ref();
     if (!temp) {
+        // If the image is meant to be stored semi-permanently, the image is stored in the "quests" folder
         storageRef = storageRef.child("images/quests/" + imageID + ".jpg");
     } else {
+        // Otherwise, the image is stored in the "temp" folder
         storageRef = storageRef.child("images/temp/" + imageID + ".jpg");
     }
     return storageRef;
 }
 
-/* Get the current user's name, class name, educator name, and ID from Firestore. */
-function getQuestParticipants() {
-    db.collection("Student_Quests").doc(questID)
-        .get()
-        .then(function (doc) {
-            userIDs = doc.data().Quest_Participant_IDs;
-            userNames = doc.data().Quest_Participants;
-            console.log(userNames);
-            checkNumUploaded();
-            processImage();
-            addSubmittersToDOM();
-            if (!doc) {
-                let message = "<div class='text-container'><p class='message'>You haven't been added to a class yet</p></div>"
-                $(".uploaded-images").append(message);
-                $("#card-button-container-1").remove();
-                $("#upload-image-input").attr("disabled", "");
-                $("#quest-notes").attr("disabled", "");
-                $("#quest-notes").attr("placeholder", "Ask your teacher to add you to their class to start getting quests");
-            }
-
-        })
-}
-
 /**
- * Write this.
+ * Populates the DOM with a list of quest submitters. Each submitter has a "-" icon across from
+ * their name that allows the user to remove them from the quest (although the primary submitter
+ * cannot remove themselves, as they are the one submitting the quest).
  */
 function addSubmittersToDOM() {
     checkNumAdded();
     resetSubmitterDOM();
     for (var i = 0; i < userNames.length; i++) {
         if (i == 0) {
+            /* The primary submitter (i.e. the current student) should not be able to remove themselves
+               from the submitter list */
             let submitterName = "<li class='submitter-name'><p>" + userNames[i] + "</p>"
                 + "<img src='/img/remove_icon_grey.png' class='minus-icon-inactive'></li>";
             $("#submitter-list").append(submitterName);
         } else {
+            // Other submitters, however, can be removed with the click of a button
             let submitterName = "<li class='submitter-name'><p>" + userNames[i] + "</p>"
                 + "<img src='/img/remove_icon.png' class='minus-icon-active' id='submitter-" + i + "'></li>";
             $("#submitter-list").append(submitterName);
@@ -221,7 +293,8 @@ function addSubmittersToDOM() {
 }
 
 /**
- * Write this
+ * Deletes the list of submitters from the DOM (again, acts as a sort of reset function so that submitters are
+ * always listed in order and removed submitters get purged).
  */
 function resetSubmitterDOM() {
     var questSubmitters = document.getElementsByClassName('submitter-name');
@@ -232,21 +305,18 @@ function resetSubmitterDOM() {
 
 
 /**
- * Write this
+ * When an active "-" icon next to a submitter name is clicked, that submitter is removed
+ * from the quest's array's of user names and IDs (userNames and userIDs). Then, the quest 
+ * document itself is updated in Firestore.
  */
 $(document.body).on("click", ".minus-icon-active", function (event) {
-    // Extract index from event id
+    // Extract the participant index from the event id
     let index = $(event.target).attr("id");
-    console.log(index);
-    // Extract index from event id - 
-    // taken from https://www.geeksforgeeks.org/extract-a-number-from-a-string-using-javascript/#:~:text=The%20number%20from%20a%20string,(%5Cd%2B)%2F)
     index = parseInt(index.match(/(\d+)/));
-    console.log(index);
-    console.log(index == 1);
-    // Remove student from quest
+    // Remove student from quest arrays
     userNames.splice(index, 1);
-    console.log(userNames);
     userIDs.splice(index, 1);
+    // Update the quest document in Firestore
     db.collection("Student_Quests").doc(questID).update({
         Quest_Participants: userNames,
         Quest_Participant_IDs: userIDs
@@ -261,7 +331,9 @@ $(document.body).on("click", ".minus-icon-active", function (event) {
 });
 
 /**
- * Write this
+ * When a student is removed from this quest's list of participants, their student doc
+ * in Firestore's "Students" collection is updated so that its Student_Quest field is
+ * set to null (since they are no longer an active participant in this, or any, quest).
  */
 function updateStudentQuest() {
     db.collection("Students").doc(userIDs[0]).update({
@@ -276,20 +348,26 @@ function updateStudentQuest() {
 }
 
 /**
- * Write this.
+ * Updates the current quest document in Firestore's "Student_Quests" collection. The quest's
+ * Quest_Status field is updated to "submitted," its Quest_Participants, Quest_Participant_IDs, 
+ * Quest_Images, and Quest_Notes fields are updated to reflect any changes made on this page, and
+ * a Date_Submitted field is added. Once a quest has been updated, a success message is displayed
+ * on the page, session storage is cleared, temporary images are deleted from Cloud Storage, and the
+ * user is redirected to the student homepage.
  * 
- * @param {*} imageURLs 
+ * @param {*} imageURLs - Download URLs of any images attached and submitted by the current user.
  */
-function addQuestToDB(imageURLs) {
-    let dateSubmitted = new Date();
+function updateQuestInDB(imageURLs) {
     // Update quest status and add attributes required for approval and further retrieval
     db.collection("Student_Quests").doc(questID).update({
         Quest_Status: "submitted",
         Quest_Participants: userNames,
         Quest_Participant_IDs: userIDs,
+        // Uploaded image URLs are added
         Quest_Images: imageURLs,
+        // Quest notes input by the primary quest submitter are recorded
         Quest_Notes: $("#quest-notes").prop("value"),
-        Date_Submitted: dateSubmitted
+        Date_Submitted: new Date()
     })
         .then(() => {
             console.log("Quest successfully updated!");
@@ -307,12 +385,13 @@ function addQuestToDB(imageURLs) {
 }
 
 /**
- * Write this.
+ * Any time a user clicks on the "Submit" button, the temp image folder is deleted from Cloud Storage.
  * 
- * @param {*} link 
+ * @param {*} redirectLink - The link that the user should be redirected to once temporary images have been deleted.
  */
 function deleteTempImages(redirectLink) {
     let storageRef = storage.ref();
+    // The deletion reference corresponds to the entire temp folder in Cloud Storage
     deleteRef = storageRef.child("images/temp");
     deleteRef.listAll()
         .then((res) => {
@@ -332,7 +411,8 @@ function deleteTempImages(redirectLink) {
 }
 
 /**
- * Make sure the user has attached either photos or a note to their submission.
+ * Ensures that the user has attached either at least one photo, or a note to their submission. If either of these
+ * requirements isn't met, an error message is displayed on the page.
  */
 function checkInput() {
     console.log(uploadedImageFiles.length);
@@ -349,7 +429,7 @@ function checkInput() {
 }
 
 /**
- * Write this.
+ * Generates download URLs for the uploaded images attached to the user's submission.
  */
 function generateImageURLs() {
     for (var i = 0; i < uploadedImageFiles.length; i++) {
@@ -363,10 +443,8 @@ function generateImageURLs() {
                         console.log(url);
                         imageURLs.push(url);
                         console.log(imageURLs);
-                        /* Once list of permanent URLs is complete, create quest documents in the student's and 
-                           their teacher's quest collection (include array of image URLs as an attribute) */
                         if (i == (uploadedImageFiles.length)) {
-                            addQuestToDB(imageURLs);
+                            updateQuestInDB(imageURLs);
                         };
                     })
             });
@@ -374,7 +452,7 @@ function generateImageURLs() {
 }
 
 /**
- * Write this.
+ * Deactivates the "Add Friends" link in the DOM.
  */
 function deactivateAddFriends() {
     $("#add-friends").removeAttr("onclick");
@@ -382,7 +460,7 @@ function deactivateAddFriends() {
 }
 
 /**
- * Write this.
+ * Activates the "Add Friends" link in the DOM.
  */
 function activateAddFriends() {
     $("#add-friends").attr("onclick", "onClickAddFriends()");
@@ -390,7 +468,8 @@ function activateAddFriends() {
 }
 
 /**
- * Write this.
+ * Once the maximum number of participants (3 on top of the primary submitter) has been reached, the "Add Friends"
+ * link is rendered inactive. If participants are subsequently removed from the quest submission, the link is reactivated.
  */
 function checkNumAdded() {
     if (userNames.length == maxStudents) {
@@ -405,23 +484,29 @@ function checkNumAdded() {
 }
 
 /**
- * Write this.
- * Adapted from: https://stackoverflow.com/questions/47935571/how-to-keep-the-radio-button-remain-checked-after-the-refresh (sessionStorage code)
- * and https://www.youtube.com/watch?v=8K2ihr3NC40&ab_channel=dcode (FileReader-related code)
+ * Creates a Base64 data URL string for an image. This string is then stored in session storage so that it can
+ * be retrieved upon re-entering this page after a user adds participants to this quest.
+ * This code was adapted from @author dcode's video on YouTube
+ * @see https://www.youtube.com/watch?v=8K2ihr3NC40&ab_channel=dcode 
+ * 
+ * @param {*} image - The image to be converted into a data URL string.
+ * @param {*} index - The index of the image in the uploadedImageFiles array.
  */
 function readImage(image, index) {
     let reader = new FileReader();
     reader.addEventListener("load", () => {
-        // console.log(reader.result);
+        // Store the result (Base64 data URL string) in session storage for later retrieval
         sessionStorage.setItem("uploaded-image-" + index, reader.result);
     });
     reader.readAsDataURL(image);
 }
 
 /**
- * Write this.
- * Adapted from: https://stackoverflow.com/questions/47935571/how-to-keep-the-radio-button-remain-checked-after-the-refresh (sessionStorage code)
- */
+ * When a user clicks on the "Add Friends" link, any images uploaded or notes input on this page
+ * are stored in session storage, so that they can be retrieved upon re-entering this page after
+ * adding participants to this quest. Once data has been stored, the user is redirected to the 
+ * "Add Friends" page, along with this quest's ID in a URL query string.
+ */ 
 function onClickAddFriends() {
     if (uploadedImageFiles.length > 0) {
         sessionStorage.setItem("numImageFilesUploaded", uploadedImageFiles.length);
@@ -432,19 +517,20 @@ function onClickAddFriends() {
     if ($("#quest-notes").prop("value") != null && ($("#quest-notes").prop("value") != "")) {
         sessionStorage.setItem("previouslyInputNotes", $("#quest-notes").prop("value"));
     }
-    console.log(sessionStorage);
     window.location.assign("./student-add-friends.html?questid=" + questID);
 }
 
 /**
- * CITE and write this
+ * When the user clicks on the "Submit" button, their input (i.e. photos uploaded and quest notes)
+ * is checked, and if it's deemed valid, the quest is updated in Firestore and submitted for approval 
+ * by the primary submitter's educator. It is only at this stage that any semi-permanent image download URLs
+ * are generated.
  */
 function onClickSubmit() {
     checkInput();
-    console.log(validInput);
     if (validInput) {
         if (uploadedImageFiles.length == 0) {
-            addQuestToDB(imageURLs);
+            updateQuestInDB(imageURLs);
         } else {
             // Generate image URLs and add them to an array
             generateImageURLs();
@@ -453,27 +539,36 @@ function onClickSubmit() {
 }
 
 /**
- * Write this.
+ * When users click on the "Home" button, the temporary images folder is deleted and they are redirected
+ * to the student homepage.
  */
 function onClickHome() {
     deleteTempImages("./student-home.html");
 }
 
 /**
- * Write this.
- * Taken from https://stackoverflow.com/questions/3252730/how-to-prevent-a-click-on-a-link-from-jumping-to-top-of-page
+ * Prevents the page from jumping upwards when a user clicks on the "Submit" button. This way,
+ * any feedback pushed to the DOM can be seen without quickly scrolling back down again.
  */
- $("#card-button-container-1 a").click(function (event) {
+$("#card-button-container-1 a").click(function (event) {
     event.preventDefault();
 })
 
+/**
+ * Prevents the page from jumping upwards when a user clicks on the "Add Friends" link.
+ */
 $("a").click(function (event) {
     event.preventDefault();
 })
 
 /**
- * Write this.
- * Taken from https://stackoverflow.com/questions/22578530/failed-to-execute-atob-on-window
+ * Converts a Base64 data URL string back into a file object.
+ * @author cuixiping
+ * @see https://stackoverflow.com/questions/35940290/how-to-convert-base64-string-to-javascript-file-object-like-as-from-file-input-f
+ * 
+ * @param {*} dataurl - The data URL string to be converted back into a file object.
+ * @param {*} filename - The desired name of the file object.
+ * @returns - A file object with the specified filename.
  */
 function dataURLtoFile(dataurl, filename) {
     var arr = dataurl.split(','),
@@ -488,7 +583,12 @@ function dataURLtoFile(dataurl, filename) {
 }
 
 /** 
- * Write this.
+ * Pulls images and notes from session store upon re-entry to this page from the "Add Friends" page.
+ * Images are converted from Base64 data URL strings back into files before being placed back into the
+ * uploadedImageFiles array (and pushed to the DOM), while previously-input notes are put back into their
+ * original input container (also in the DOM). Images are also re-stored temporarily on the Cloud, so that 
+ * the user can still preview them. Note that "dataToRetrieve" actually comes from a redirect flag put into
+ * a URL query string when users leave the "Add Friends" page and are redirected back here.
  */
 function retrieveData() {
     if (dataToRetrieve) {
@@ -497,20 +597,12 @@ function retrieveData() {
             console.log(sessionStorage);
             for (var i = 0; i < numImageFilesUploaded; i++) {
                 let base64ImageString = sessionStorage.getItem("uploaded-image-" + i);
-                // let imageType = base64ImageString.substring(5, base64ImageString.indexOf(";"));
-                // console.log(imageType);
-                // console.log(base64ImageString);
-                let testFile = dataURLtoFile(base64ImageString, 'Image ' + (i + 1));
-                console.log(testFile);
-                uploadedImageFiles.push(testFile);
-                storeTemporaryImage(testFile);
-                // console.log(blobURL);
-                // let imageFile = new File([blobURL], "image-" + i);
-                // console.log(imageFile);
-                // uploadedImageFiles.push(imageFile);
-                // console.log(uploadedImageFiles);
-                // addImageNamesToDOM();
+                let imageFile = dataURLtoFile(base64ImageString, 'Image ' + (i + 1));
+                console.log(imageFile);
+                uploadedImageFiles.push(imageFile);
+                storeTemporaryImage(imageFile);
             }
+            // Put 
             addImageNamesToDOM();
         }
         var previouslyInputNotes = sessionStorage.getItem("previouslyInputNotes");
@@ -523,7 +615,7 @@ function retrieveData() {
 }
 
 /**
- * Write this.
+ * Calls getQuestParticipants() and retrieveData() to start the function cascade when the page is ready.
  */
 $(document).ready(function () {
     getQuestParticipants();

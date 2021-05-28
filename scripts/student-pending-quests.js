@@ -42,7 +42,7 @@ function getCurrentUser() {
 
 /**
  * Searches the "Student_Quests" collection in Firestore for documents with Quest_Participant_IDs fields (arrays)
- * that contain the current student's userID (i.e. quests that the student is a participant in). Query results
+ * that contain the current student's userID (i.e. quests that the student was a participant in). Query results
  * (if they exist) are ordered by their submission date, with newer quests at the top of the pile. The Quest_Status
  * field of each document is then searched for a value of "submitted" (not "active," "approved" or "rejected" - the
  * other possible values this field can take on). Finally, the quests that make it through all of these filters are 
@@ -141,7 +141,7 @@ function getTimeElapsed() {
  * passed since it was submitted (i.e. how long it's been pending for). Quest containers are created for all 
  * quests in pendingQuests, and the final result is a list of all the user's pending quests.
  * 
- * @param {*} i - The index of the quest in pendingQuests, currently being processed.
+ * @param {*} i - The index of the quest in pendingQuests, currently being dealt with.
  * @param {*} timeDifference - How many milliseconds, seconds, minutes, hours, days, or years 
  *                             (as an interger) have passed since this quest was submitted (e.g. SIX hours ago).
  * @param {*} unitOfTime - The unit of time timeDifference is expressed in (e.g. six HOURS ago).

@@ -1,7 +1,6 @@
 /** CSS for educator-new-home.html */
 
 .modal-header {
-    /* border: none; */
     background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url("/img/background_pattern_2.png");
 }
 
@@ -25,7 +24,6 @@
 }
 
 .modal-footer {
-    /* border: none; */
     background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url("/img/background_pattern_2.png");
 }
 

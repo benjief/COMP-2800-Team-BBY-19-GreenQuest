@@ -44,7 +44,7 @@ function getCurrentUser() {
 
 /**
  * Searches the "Student_Quests" collection in Firestore for documents with Quest_Participant_IDs fields (arrays)
- * that contain the current student's userID (i.e. quests that the student is a participant in). Query results
+ * that contain the current student's userID (i.e. quests that the student was a participant in). Query results
  * (if they exist) are ordered by their submission date, with newer quests at the top of the pile. The Quest_Status
  * field of each document is then searched for a value of "approved" or "rejected" (not "active" or "submitted" - the
  * other possible values this field can take on). Finally, the quests that make it through all of these filters are 
@@ -186,7 +186,7 @@ function getBitmojiBackground() {
 
 /**
  * Calls getCurrentUser() and starts the function cascade when the page is ready.
- */ 
+ */
 $(document).ready(function () {
     getCurrentUser();
 });
