@@ -131,7 +131,7 @@ $(document.body).on("click", ".plus-icon", function (event) {
 /**
  * Updates the student's Student_Class and Student_Educator attributes to null.
  * Also changes the "-" icon beside a student to a "+" icon and allows that student to be subsequently
- * added to the class in question.
+ * added back to the class in question.
  */
 $(document.body).on("click", ".minus-icon", function (event) {
     let index = $(event.target).attr("id");
