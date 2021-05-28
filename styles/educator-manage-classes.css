@@ -76,6 +76,7 @@
 }
 
 #card-button-container-1 {
+    grid-area: home;
     margin-bottom: 40px;
 }
 
