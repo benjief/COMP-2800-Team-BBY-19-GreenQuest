@@ -207,7 +207,7 @@ function enableSubmitQuest() {
 }
 
 /**
- * Runs getCurrentStudent() to start the function cascade when the page is ready.
+ * Calls getCurrentStudent() to start the function cascade when the page is ready.
  */
 $(document).ready(function () {
     getCurrentStudent();

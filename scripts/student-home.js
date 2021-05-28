@@ -203,7 +203,7 @@ function enableMyQuest() {
 }
 
 /**
- * Runs sayHello() to start the function cascade when the page is ready.
+ * Calls sayHello() to start the function cascade when the page is ready.
  */
 $(document).ready(function () {
     sayHello();
