@@ -1,8 +1,7 @@
 // JS for login.html
 
-// Set up a user type variable to store the type of user signing up or logging in
 var userType = "educator";
-
+// *** OUR EDUCATOR KEY ***
 var educatorKey = 123456;
 var validKey = false;
 
@@ -24,7 +23,9 @@ var uiConfig = {
             // The Firestore rules must allow the user to write. 
             //------------------------------------------------------------------------------------------
             var user = authResult.user;
-            if (authResult.additionalUserInfo.isNewUser) { //if new user
+            if (authResult.additionalUserInfo.isNewUser) { // If new user
+                /* Write a student document to the "Students" collection in Firestore with
+                   the following attributes: */
                 if (userType === "student") {
                     db.collection("Students").doc(user.uid).set({
                         Student_Name: user.displayName,
@@ -38,7 +39,8 @@ var uiConfig = {
                     })
                         .then(function () {
                             console.log("New student added to firestore");
-                            // Re-direct to student-new-home.html after signup
+                            /* Redirect to the student homepage (with a firstvisit=true tag)
+                               after signup */
                             window.location.assign(
                                 "/html/student-home.html?firstvisit=true"
                             );
@@ -47,6 +49,8 @@ var uiConfig = {
                             console.log("Error adding new student: " + error);
                         });
                 } else {
+                    /* Write an educator document to the "Educators" collection in Firestore with
+                       the following attributes: */
                     db.collection("Educators").doc(user.uid).set({
                         Educator_Name: user.displayName,
                         Educator_Email: user.email,
@@ -54,7 +58,7 @@ var uiConfig = {
                     })
                         .then(function () {
                             console.log("New educator added to firestore");
-                            // Re-direct to educator-new-home.html after signup
+                            // Redirect to the new educator homepage after signup
                             window.location.assign(
                                 "/html/educator-new-home.html"
                             );
@@ -64,8 +68,12 @@ var uiConfig = {
                         });
                 }
             } else {
+                /* If the user is an established educator, redirect them to the 
+                   regular educator homepage */
                 if (userType === "educator") {
                     window.location.assign("/html/educator-home.html");
+                    /* If the user is an established student, redirect them to the 
+                       student homepage without a special tag */
                 } else if (userType === "student") {
                     window.location.assign("/html/student-home.html");
                 }
@@ -73,7 +81,8 @@ var uiConfig = {
             return true;
         },
     },
-    // Get rid of page reload when a user signs in with email
+    /* Get rid of page reload when a user signs in with email (this was causing lots of issues 
+       with our radio buttons) */
     credentialHelper: firebaseui.auth.CredentialHelper.NONE,
     // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
     signInFlow: 'popup',
@@ -96,7 +105,27 @@ var uiConfig = {
 ui.start('#firebaseui-auth-container', uiConfig);
 
 /**
- * Write this.
+ * Assigns userType based on the radio button selected. If userType == educator and
+ * a valid key hasn't been input, the Firebase login widget won't be displayed. If a valid
+ * key has been input, the widget is displayed and fully functional (always the case for students,
+ * who aren't required to input a key).
+ */
+function checkUserType() {
+    if ($("#educator-radio").attr("checked") == "checked") {
+        userType = "educator";
+        if (validKey == false) {
+            showKeyElements();
+        } else {
+            hideKeyElements();
+        }
+    } else {
+        userType = "student";
+        hideKeyElements();
+    }
+}
+
+/**
+ * Hides educator-specific key input DOM elements and displays the Firebase login widget.
  */
 function hideKeyElements() {
     $("#input-container").css({ display: "none" });
@@ -106,7 +135,9 @@ function hideKeyElements() {
 }
 
 /**
- * Write this.
+ * Pushes educator-specific key input elements to the DOM and hides the Firebase login widget.
+ * Also checks to see if a valid key has been input, and if it has, key input elements are hidden,
+ * and the Firebase login widget is displayed.
  */
 function showKeyElements() {
     $("#input-container").css({ display: "" });
@@ -122,26 +153,39 @@ function showKeyElements() {
 }
 
 /**
- * Write this.
+ * When an educator has entered a key and clicked on the "Submit" button, their input is 
+ * stored and fed into checkInput(). If the key is deemed to be valid, a success message is 
+ * posted to the DOM and the fact that a valid key has been entered is written to session storage.
+ * Finally, key-input-related DOM elements are hidden and the Firebase login widget is displayed.
  */
-function checkUserType() {
-    var keyStatus = sessionStorage.getItem("key");
-    console.log(keyStatus);
-    if ($("#educator-radio").attr("checked") == "checked") {
-        userType = "educator";
-        if (validKey == false) {
-            showKeyElements();
-        } else {
-            hideKeyElements();
-        }
-    } else {
-        userType = "student";
-        hideKeyElements();
+function onClickSubmit() {
+    let key = document.getElementById("educator-validation").value;
+    checkInput(key);
+    if (validKey == true) {
+        // Display success message
+        $("#feedback").html("Success! Please wait...");
+        $("#feedback").css({
+            color: "green"
+        });
+        $(feedback).show(0);
+        $(feedback).fadeOut(1000);
+        setTimeout(function () {
+            // Store record of a valid key entry event
+            sessionStorage.setItem("keyStatus", JSON.stringify({ "key": "valid" }));
+            // Hide key-input DOM elements and display the Firebase login widget
+            $("#input-container").css({ display: "none" });
+            $("#feedback-placeholder").css({ display: "none" });
+            $("#card-button-container-1").css({ display: "none" });
+            $("#firebaseui-auth-container").css({ display: "" });
+        }, 1000);
     }
 }
 
 /**
- * Write this.
+ * Checks to see if the key input by an educator matches educatorKey (defined at the
+ * top of this file). If it does, validKey is set to true and control is passed back to 
+ * onClickSubmit(). If it doesn't, an error message is displayed, prompting the user to 
+ * enter a valid key.
  * 
  * @param {*} key
  */
@@ -159,34 +203,8 @@ function checkInput(key) {
 }
 
 /**
- * Deal with submission click in the appropriate manner.
- */
-function onClickSubmit() {
-    let key = document.getElementById("educator-validation").value;
-    checkInput(key);
-    console.log(key);
-    console.log(validKey);
-    if (validKey == true) {
-        // Display success message and direct users back to the main page
-        $("#feedback").html("Success! Please wait...");
-        $("#feedback").css({
-            color: "green"
-        });
-        $(feedback).show(0);
-        $(feedback).fadeOut(1000);
-        setTimeout(function () {
-            sessionStorage.setItem("keyStatus", JSON.stringify({ "key": "valid" }));
-            $("#input-container").css({ display: "none" });
-            $("#feedback-placeholder").css({ display: "none" });
-            $("#card-button-container-1").css({ display: "none" });
-            $("#firebaseui-auth-container").css({ display: "" });
-        }, 1000);
-    }
-}
-
-/**
- * Write this. 
- * Taken from: https://stackoverflow.com/questions/47935571/how-to-keep-the-radio-button-remain-checked-after-the-refresh
+ * If the educator radio button is selected, userType is set to "educator" and the fact that the
+ * student radio button is unchecked is written to session storage before showKeyElements() is called.
  */
 function educatorSelected() {
     userType = "educator";
@@ -195,8 +213,8 @@ function educatorSelected() {
 }
 
 /**
- * Write this. 
- * Taken from: https://stackoverflow.com/questions/47935571/how-to-keep-the-radio-button-remain-checked-after-the-refresh
+ * If the student radio button is selected, userType is set to "student" and the fact that the
+ * student radio button is checked is written to session storage before hideKeyElements() is called.
  */
 function studentSelected() {
     userType = "student";
@@ -205,31 +223,30 @@ function studentSelected() {
 }
 
 /**
- * Write this.
- * Taken from https://stackoverflow.com/questions/3252730/how-to-prevent-a-click-on-a-link-from-jumping-to-top-of-page
+ * Prevents the page from jumping upwards when an educator clicks on the "Submit" button after
+ * inputting their key. This way, any feedback pushed to the DOM can be seen without quickly 
+ * scrolling back down again.
  */
 $(".button").click(function (event) {
     event.preventDefault();
 })
 
 /**
- * Write this.
+ * When the document is ready, session storage is checked to see if a previous
+ * radio button selection was made (in the same session). If it was, the page will re-
+ * check the same selection without the user having to do so. Following this, checkUserType()
+ * is called and the rest of the login function cascade begins.
  */
 $(document).ready(function () {
-    // sessionStorage.setItem("keyStatus", JSON.stringify({ "key": "invalid" }));
     var selection = sessionStorage.getItem("selection");
     if (selection) {
         if (JSON.parse(selection).studentRadio == "checked") {
             $("#student-radio").attr("checked", "checked");
             $("#educator-radio").removeAttr("checked");
-            console.log("you're a student");
         } else {
             $("#educator-radio").attr("checked", "checked");
             $("#student-radio").removeAttr("checked");
-            console.log("you're a teacher");
         }
     }
     checkUserType();
-    console.log(userType);
 });
-
