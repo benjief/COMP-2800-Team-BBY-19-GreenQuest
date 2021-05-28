@@ -55,19 +55,19 @@ It has the following subfolders and files:
 |   
 ├── images                          # Folder for images
 |   /404.png                        # Picture for 404 page
-|   /add_icon_gray.png              # Picture used for index.html (landing page)
-|   /add_icon.png                   # Picture used for more-info.html
-|   /background_clouds.png          # Picture used for more-info.html
-|   /background_img_preview.png     # Picture used for more-info.html
-|   /background_pattern_1.png       # Picture used for more-info.html
-|   /background_pattern_2.png       # Picture used for more-info.html
-|   /background_pattern_3.png       # Picture used for more-info.html
-|   /background_pattern_4.png       # Picture used for more-info.html
-|   /background_pattern_5.png       # Picture used for more-info.html
-|   /background_pattern_6.png       # Picture used for more-info.html
-|   /background_pattern_7.png       # Picture used for more-info.html
-|   /background_pattern_8.png       # Picture used for more-info.html
-|   /background_pattern.png         # Picture used for more-info.html
+|   /add_icon_gray.png              # Picture used for add-icon
+|   /add_icon.png                   # Picture used for add-icon
+|   /background_clouds.png          # Picture used for backgrounds for all pages
+|   /background_img_preview.png     # Picture used for image-preview modal
+|   /background_pattern_1.png       # Picture used for backgroud-patterns
+|   /background_pattern_2.png       # Picture used for backgroud-patterns
+|   /background_pattern_3.png       # Picture used for backgroud-patterns
+|   /background_pattern_4.png       # Picture used for backgroud-patterns
+|   /background_pattern_5.png       # Picture used for backgroud-patterns
+|   /background_pattern_6.png       # Picture used for backgroud-patterns
+|   /background_pattern_7.png       # Picture used for backgroud-patterns
+|   /background_pattern_8.png       # Picture used for backgroud-patterns
+|   /background_pattern.png         # Picture used for backgroudn-pattern for main content cards
 |   /benjie_1.png                   # Picture used for easterEgg, about us page
 |   /benjie_2.png                   # Picture used for easterEgg, about us page
 |   /benjie_3.png                   # Picture used for easterEgg, about us page
@@ -96,89 +96,75 @@ It has the following subfolders and files:
 |   /silver_ribbon.png              # Picture used for silver medal for ranking
 |   /slow_down.png                  # Picture used for error message
 |   /twitter_icon.png               # Picture used for silver medal for ranking
-
-
-
-
-
-
-|   /background_clouds.png         # Picture used for more-info.html
-|   /covid4.jpg                    # Picture used for more-info.html
-|   /covid5.jpg                    # Picture used for more-info.html
-|   /down_arrow.png                # Icon used for headcount changes
-|   /store_burnaby_storefront.png  # Picture used for the storefront page
-|   /store_downtown_storefront.png # Picture used for the storefront page
-|   /store_richmond_storefront.png # Picture used for the storefront page
-|   /up_arrow.png                  # Icon used for headcount changes
 | 
-├── scripts                        # Folder for scripts| 
-|   /about-us.js                   # Page for about us
-|   /all-pages.js                  # Page for about us
-|   /educator-add-quest.js         # JS file for adding quest to the firebase
-|   /educator-add-students.js      # JS file for adding students to class
-|   /educator-approve-quest.js     # JS file for approving quests students submitted
-|   /educator-create-class.js      # JS file for creating a virtual class/group
-|   /educator-home.js              # Homepage JS file for the educator only
-|   /educator-manage-class.js      # JS file for managing a class
-|   /educator-manage-classes.js    # JS file for managing multiple classes
-|   /educator-new-home.js          # Homepage JS file for the educator
-|   /educator-remove-students.js   # JS file for removing students from a class
-|   /index.js                      # Landing page JS for all visitors
-|   /login.js                      # Login JS for both student and educator
-|   /logout.js                     # Logout JS for both student and educator
-|   /more-info-data.js             # Data generating file for Quests
-|   /student-add-friends.js        # JS file for adding friend when submitting
-|   /student-all-classes.js        # JS file for class standings for all classes
-|   /student-all-students.js       # JS file student standings for all students
-|   /student-choose-quest.js       # JS file for choosing a quest
-|   /student-home.js               # Homepage JS file for students
-|   /student-leaderboard.js        # JS file for leaderboard menus
-|   /student-my-class.html         # Student page for standings in my class
-|   /student-pending-quests.js     # JS file for pending quests awaiting approval/reject
-|   /student-processed-quests.js   # JS file for processed quests
-|   /student-profile.js            # JS file for student profile
-|   /student-quest-history.js      # JS file for quest history
-|   /student-submit-quest.js       # JS file for submitting quest
-|   /student-view-quest.js         # JS file for viewing chosen quest
+├── scripts                         # Folder for scripts| 
+|   /about-us.js                    # Page for about us
+|   /all-pages.js                   # Page for about us
+|   /educator-add-quest.js          # JS file for adding quest to the firebase
+|   /educator-add-students.js       # JS file for adding students to class
+|   /educator-approve-quest.js      # JS file for approving quests students submitted
+|   /educator-create-class.js       # JS file for creating a virtual class/group
+|   /educator-home.js               # Homepage JS file for the educator only
+|   /educator-manage-class.js       # JS file for managing a class
+|   /educator-manage-classes.js     # JS file for managing multiple classes
+|   /educator-new-home.js           # Homepage JS file for the educator
+|   /educator-remove-students.js    # JS file for removing students from a class
+|   /index.js                       # Landing page JS for all visitors
+|   /login.js                       # Login JS for both student and educator
+|   /logout.js                      # Logout JS for both student and educator
+|   /more-info-data.js              # Data generating file for Quests
+|   /student-add-friends.js         # JS file for adding friend when submitting
+|   /student-all-classes.js         # JS file for class standings for all classes
+|   /student-all-students.js        # JS file student standings for all students
+|   /student-choose-quest.js        # JS file for choosing a quest
+|   /student-home.js                # Homepage JS file for students
+|   /student-leaderboard.js         # JS file for leaderboard menus
+|   /student-my-class.html          # Student page for standings in my class
+|   /student-pending-quests.js      # JS file for pending quests awaiting approval/reject
+|   /student-processed-quests.js    # JS file for processed quests
+|   /student-profile.js             # JS file for student profile
+|   /student-quest-history.js       # JS file for quest history
+|   /student-submit-quest.js        # JS file for submitting quest
+|   /student-view-quest.js          # JS file for viewing chosen quest
 |
-├── styles                         # Folder for stylesheets
-|   /404.css                       # Styles specifically for 404.html                     
-|   /about-us.css                  # Styles specifically for about-us.html                
-|   /all-pages.css                 # Styles specifically for all-pages.html               
-|   /educator-add-quest.css        # Styles specifically for educator-add-quest.html      
-|   /educator-add-students.css     # Styles specifically for educator-add-students.html   
-|   /educator-approve-quest.css    # Styles specifically for educator-approve-quest.html   
-|   /educator-create-class.css     # Styles specifically for educator-create-class.html   
-|   /educator-home.css             # Styles specifically for educator-home.html           
-|   /educator-manage-class.css     # Styles specifically for educator-manage-class.html   
-|   /educator-manage-classes.css   # Styles specifically for educator-manage-classes.html 
-|   /educator-new-home.css         # Styles specifically for educator-new-home.html       
-|   /educator-remove-students.css  # Styles specifically for educator-remove-students.html
-|   /index.css                     # Styles specifically for index.html                   
-|   /login.css                     # Styles specifically for login.html                   
-|   /status-page.css               # Styles specifically for status-page.html             
-|   /student-add-friends.css       # Styles specifically for student-add-friends.html     
-|   /student-all-classes.css       # Styles specifically for student-all-classes.html     
-|   /student-all-students.css      # Styles specifically for student-all-students.html    
-|   /student-choose-quest.css      # Styles specifically for student-choose-quest.html    
-|   /student-home.css              # Styles specifically for student-home.html            
-|   /student-leaderboard.css       # Styles specifically for student-leaderboard.html     
-|   /student-my-class.css          # Styles specifically for student-my-class.html        
-|   /student-pending-quests.css    # Styles specifically for student-pending-quests.html  
-|   /student-processed-quests.css  # Styles specifically for student-processed-quests.html
-|   /student-profile.css           # Styles specifically for student-profile.html         
-|   /student-quest-history.css     # Styles specifically for student-quest-history.html   
-|   /student-submit-quest.css      # Styles specifically for student-submit-quest.html    
-|   /student-view-quest.css        # Styles specifically for student-view-quest.html      
-|   /task-page.css                 # Styles specifically for task-page.html               
+├── styles                          # Folder for stylesheets
+|   /404.css                        # Styles specifically for 404.html                     
+|   /about-us.css                   # Styles specifically for about-us.html                
+|   /all-pages.css                  # Styles specifically for all-pages.html               
+|   /educator-add-quest.css         # Styles specifically for educator-add-quest.html      
+|   /educator-add-students.css      # Styles specifically for educator-add-students.html   
+|   /educator-approve-quest.css     # Styles specifically for educator-approve-quest.html   
+|   /educator-create-class.css      # Styles specifically for educator-create-class.html   
+|   /educator-home.css              # Styles specifically for educator-home.html           
+|   /educator-manage-class.css      # Styles specifically for educator-manage-class.html   
+|   /educator-manage-classes.css    # Styles specifically for educator-manage-classes.html 
+|   /educator-new-home.css          # Styles specifically for educator-new-home.html       
+|   /educator-remove-students.css   # Styles specifically for educator-remove-students.html
+|   /index.css                      # Styles specifically for index.html                   
+|   /login.css                      # Styles specifically for login.html                   
+|   /status-page.css                # Styles specifically for status-page.html             
+|   /student-add-friends.css        # Styles specifically for student-add-friends.html     
+|   /student-all-classes.css        # Styles specifically for student-all-classes.html     
+|   /student-all-students.css       # Styles specifically for student-all-students.html    
+|   /student-choose-quest.css       # Styles specifically for student-choose-quest.html    
+|   /student-home.css               # Styles specifically for student-home.html            
+|   /student-leaderboard.css        # Styles specifically for student-leaderboard.html     
+|   /student-my-class.css           # Styles specifically for student-my-class.html        
+|   /student-pending-quests.css     # Styles specifically for student-pending-quests.html  
+|   /student-processed-quests.css   # Styles specifically for student-processed-quests.html
+|   /student-profile.css            # Styles specifically for student-profile.html         
+|   /student-quest-history.css      # Styles specifically for student-quest-history.html   
+|   /student-submit-quest.css       # Styles specifically for student-submit-quest.html    
+|   /student-view-quest.css         # Styles specifically for student-view-quest.html      
+|   /task-page.css                  # Styles specifically for task-page.html               
 |
 Firebase hosting files:               
-├── .firebase                      # contains hosting..cache for firebase
-├── firebase.json                  # firebase json
-├── .firebaserc                    # firebaserc
-├── firestore.rules                # firestore rules
-├── storage.rules                  # storage rules
-└── firestore.indexes.json         # firestore indexes json
+├── .firebase                       # contains hosting..cache for firebase
+├── firebase.json                   # firebase json
+├── .firebaserc                     # firebaserc
+├── firestore.rules                 # firestore rules
+├── storage.rules                   # storage rules
+└── firestore.indexes.json          # firestore indexes json
 
 ## Instructions on how to use GreenQuest
 
