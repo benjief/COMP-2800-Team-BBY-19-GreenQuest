@@ -5,13 +5,33 @@ var rejectedQuests = [];
 var processedQuests = [];
 var userID;
 
-/* Get the current user's ID from Firestore. */
+/**
+ * Delay timer for a spinner that spins while the page is loading to help users understand what is happening.
+ * The spinner is present for 1.5 seconds before being hidden.
+ * @author w3schools
+ * @see https://www.w3schools.com/howto/howto_css_loader.asp
+ */
+function delayTimer() {
+    setTimeout(removeSpinner, 1350);
+}
+
+/**
+ * Sets the spinner's display to none.
+ */
+function removeSpinner() {
+    document.getElementById("loader").style.display = "none";
+}
+// Run the delay timer 
+delayTimer();
+
+/**
+ * Pulls the current user's ID from the "Students" collection in Firestore. 
+ */
 function getCurrentUser() {
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {
             db.collection("Students")
                 .doc(somebody.uid)
-                // Read
                 .get()
                 .then(function (doc) {
                     // Extract the current user's ID
@@ -23,7 +43,12 @@ function getCurrentUser() {
 }
 
 /**
- * Write this.
+ * Searches the "Student_Quests" collection in Firestore for documents with Quest_Participant_IDs fields (arrays)
+ * that contain the current student's userID (i.e. quests that the student is a participant in). Query results
+ * (if they exist) are ordered by their submission date, with newer quests at the top of the pile. The Quest_Status
+ * field of each document is then searched for a value of "approved" or "rejected" (not "active" or "submitted" - the
+ * other possible values this field can take on). Finally, the quests that make it through all of these filters are 
+ * converted to JSON objects with title, date, bitmoji, points, and status fields, and pushed to the processedQuests array.
  */
 function pullQuests() {
     db.collection("Student_Quests")
@@ -49,7 +74,8 @@ function pullQuests() {
 }
 
 /**
- * Write this.
+ * If no processed quests are returned in the query above, a message is displayed letting the user know
+ * that they haven't got any processed quests to view.
  */
 function checkProcessedQuests() {
     if (processedQuests.length == 0) {
@@ -67,9 +93,9 @@ function checkProcessedQuests() {
 }
 
 /**
- * Write this - note that it was taken from your other project.
- * 
- * @param {*} store 
+ * Takes the date property of a quest object in processedQuests and and calculates how much time (in milliseconds, seconds, 
+ * minutes, hours, days, or years) has passed since that time. This function looks incredibly long, but that's just because
+ * there are so many darn conditionals to deal with.
  */
 function getTimeElapsed() {
     console.log(processedQuests.length);
@@ -116,7 +142,14 @@ function getTimeElapsed() {
 }
 
 /**
- * Write this.
+ * Creates a "quest container" DOM element that houses the quest's bitmoji, its title and the time that has
+ * passed since it was processed (i.e. how long ago it was approved or rejected). Quest containers are created 
+ * for all quests in processedQuests, and the final result is a list of all the user's processed quests.
+ * 
+ * @param {*} i - The index of the quest in processedQuests, currently being dealt with.
+ * @param {*} timeDifference - How many milliseconds, seconds, minutes, hours, days, or years 
+ *                             (as an interger) have passed since this quest was approved or rejected (e.g. SIX hours ago).
+ * @param {*} unitOfTime - The unit of time timeDifference is expressed in (e.g. six HOURS ago).
  */
 function populateDOM(i, timeDifference, unitOfTime) {
     let questContainer = "<div class='quest-container' id='quest-container-" + i + "'></div>";
@@ -128,37 +161,19 @@ function populateDOM(i, timeDifference, unitOfTime) {
     if (processedQuests[i].status === "approved") {
         var elapsedTime = "<p class='quest-date' id='elapsed-time-" + i + "'><span class='approved'>Approved</span> " + timeDifference + " "
             + unitOfTime + " ago</p>";
-        // var notification = "<img class='notification' src='/img/approved_icon.png'>";
     } else {
         var elapsedTime = "<p class='quest-date' id='elapsed-time-" + i + "'><span class='rejected'>Rejected</span> " + timeDifference + " "
             + unitOfTime + " ago</p>";
-        // var notification = "<img class='notification' src='/img/rejected_icon.png'>";
     }
-    // if (processedQuests[i].unread) {
-    //     console.log("quest-container-")
-    //     $("#quest-container-" + i).css({
-    //         background: "linear-gradient(rgba(242, 175, 255, 0.7), rgba(238, 238, 238, 0.7)), url('/img/background_pattern_8.png')"
-    //     });
-    //     console.log("wtf");
-    // }
     $("#quest-container-" + i).append(elapsedTime);
-    // if (processedQuests[i].unread) {
-    //     $("#quest-container-" + i).append(notification);
-    // }
     let questBitmoji = "<img class='bitmoji' id='bitmoji-" + i + "' src='" + processedQuests[i].bitmoji + "'>";
     $("#quest-container-" + i).append(questBitmoji);
     getBitmojiBackground();
-
-    //share button appears.
-    //Inline share buttons sourced from https://platform.sharethis.com/inline-share-buttons.
-    // $("#quest-container-" + i).append($(".sharethis-inline-share-buttons"));
-    console.log("does this work?");
-    let shareButton = '<!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons"></div><!-- ShareThis END -->';
-    $("#quest-container-" + i).append(shareButton);
 }
 
 /**
- * Write this.
+ * Chooses a random background from five images. The "+ 3" appears here because of the way background
+ * images were named/stored. Once a number is chosen, a background is assigned to the quest's bitmoji.
  */
 function getBitmojiBackground() {
     for (var i = 0; i < processedQuests.length; i++) {
@@ -169,7 +184,9 @@ function getBitmojiBackground() {
     }
 }
 
-// Run function when document is ready 
+/**
+ * Calls getCurrentUser() and starts the function cascade when the page is ready.
+ */ 
 $(document).ready(function () {
     getCurrentUser();
 });

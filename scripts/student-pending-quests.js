@@ -9,7 +9,7 @@ var userID;
  * @author w3schools
  * @see https://www.w3schools.com/howto/howto_css_loader.asp
  */
- function delayTimer() {
+function delayTimer() {
     setTimeout(removeSpinner, 1350);
 }
 
@@ -75,7 +75,7 @@ function pullPendingQuests() {
 
 /**
  * If no pending quests are returned in the query above, a message is displayed letting the user know
- * that thye haven't got any pending quests to view.
+ * that they haven't got any pending quests to view.
  */
 function appendMessage() {
     let message = "<div class='message-container'><img src='/img/slow_down.png'>"
@@ -139,7 +139,7 @@ function getTimeElapsed() {
 /**
  * Creates a "quest container" DOM element that houses the quest's bitmoji, its title and the time that has
  * passed since it was submitted (i.e. how long it's been pending for). Quest containers are created for all 
- * quests in pendingQuests, and the final result is a list of all the user's pending quest.
+ * quests in pendingQuests, and the final result is a list of all the user's pending quests.
  * 
  * @param {*} i - The index of the quest in pendingQuests, currently being processed.
  * @param {*} timeDifference - How many milliseconds, seconds, minutes, hours, days, or years 
