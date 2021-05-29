@@ -381,8 +381,6 @@
 
     .quest-container {
         grid-template-columns: 43% 57%;
-        grid-template-rows: repeat(3, 33.3px);
-        margin-bottom: 15px;
     }
     
 }
