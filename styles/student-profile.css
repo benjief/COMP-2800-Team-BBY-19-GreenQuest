@@ -189,6 +189,7 @@
 .card-text-container {
     grid-area: recent-activity;
     justify-content: center;
+    text-align: center;
 }
 
 .message-container {
@@ -314,14 +315,74 @@
     border-top: 16px solid #28c513;
     -webkit-animation: spin 1s linear infinite;
     animation: spin 1s linear infinite;
-  }
+}
   
-  @-webkit-keyframes spin {
+@-webkit-keyframes spin {
     0% { -webkit-transform: rotate(0deg); }
     100% { -webkit-transform: rotate(360deg); }
-  }
+}
   
-  @keyframes spin {
+ @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-  }
+}
+
+@media (max-width: 374px) {
+    .profile-container {
+        align-items: center;
+        height: 150px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    .profile-pic-container {
+        height: 110px;
+        width: 110px;
+    }  
+    
+    #profile-name, #profile-class {
+        font-size: 11pt;
+    }
+    
+    #profile-class {
+        font-size: 9pt;
+    }
+    
+    .profile-points-container p {
+        font-size: 11pt;
+    }
+    
+    .profile-points-container img {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .student-points-container p {
+        display: flex;
+        height: 100%;
+        align-items: center;
+        font-family: 'Mali', Arial, Helvetica, sans-serif;
+        font-size: 15pt;
+        font-weight: 600;
+        margin-left: 10px;
+        color: #ff8000;
+        text-shadow: 1px 1px 1px rgba(62, 63, 66, 0.788);
+    }
+    
+    #twitter-icon {  
+        height: 24px;
+        width: 24px;
+    }
+    
+    #facebook-icon {
+        height: 24px;
+        width: 24px;
+    }
+
+    .quest-container {
+        grid-template-columns: 43% 57%;
+        grid-template-rows: repeat(3, 33.3px);
+        margin-bottom: 15px;
+    }
+    
+}
