@@ -43,7 +43,8 @@ body {
     display: flex;
     height: 100%;
     align-items: center;
-    justify-self: center;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 /* Content card styling */
