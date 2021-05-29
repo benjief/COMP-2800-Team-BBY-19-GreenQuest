@@ -125,11 +125,17 @@ function populateDOM() {
             var imageDOM = "<li class='list-item'><a class='uploaded-image' id='" +
                 imageURLs[i] + "' data-bs-toggle='modal' data-bs-target='#imagePreview' onclick='showPreview(this)'>Image " +
                 (i + 1) + "</li>";
+<<<<<<< HEAD
                 console.log (imageURLs);
                 $(".uploaded-images").append(imageDOM);
         }
     }
 
+=======
+                $(".uploaded-images").append(imageDOM);
+        }
+    }
+>>>>>>> GB_hosting_branch
 }
 
 /**
