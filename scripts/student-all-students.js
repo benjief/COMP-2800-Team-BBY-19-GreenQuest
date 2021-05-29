@@ -78,10 +78,10 @@ function getStudents() {
         firstPlace = iterator.next().value;
         secondPlace = iterator.next().value;
         thirdPlace = iterator.next().value;
-    } else if (studentScoresSet == 2) {
+    } else if (studentScoresSet.size == 2) {
         firstPlace = iterator.next().value;
         secondPlace = iterator.next().value;
-    } else if (studentScoresSet == 1) {
+    } else if (studentScoresSet.size == 1) {
         firstPlace = iterator.next().value;
     }
     populateStudentList(currentStudent);
