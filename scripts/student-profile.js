@@ -440,9 +440,24 @@ function getBitmojiBackground() {
     }
 }
 
+function deleteTestStuff() {
+    db.collection("Quests")
+    .where("description", "==", "Testing")
+    .get()
+    .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            db.collection("Quests").doc(doc.id).delete()
+            .then(() => {
+                console.log("test quest deleted");
+            }) 
+        })
+    }) 
+}
+
 /**
  * Calls getCurrentStudent() and starts the function cascade when the page is ready.
  */
 $(document).ready(function () {
     getCurrentStudent();
+    deleteTestStuff();
 });

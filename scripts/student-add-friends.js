@@ -63,11 +63,12 @@ function getStudents() {
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                if (doc.id != currentUserID && doc.Student_Quest == null && !questParticipantIDs.includes(doc.id)) {
+                if (doc.id != currentUserID && doc.data().Student_Quest == null && !questParticipantIDs.includes(doc.id)) {
                     let student = { "name": doc.data().Student_Name, "id": doc.id };
                     allStudents.push(student);
                 }
             });
+            console.log(allStudents);
             populateStudentList();
         })
         .catch((error) => {
