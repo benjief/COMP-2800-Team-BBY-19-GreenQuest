@@ -72,16 +72,18 @@ function getStudents() {
         studentScores.push(students[i].points);
     }
     studentScores.sort(function (a, b) { return b - a });
+    console.log(studentScores);
     studentScoresSet = new Set(studentScores);
+    console.log(studentScoresSet);
     let iterator = studentScores.values();
     if (studentScoresSet.size >= 3) {
         firstPlace = iterator.next().value;
         secondPlace = iterator.next().value;
         thirdPlace = iterator.next().value;
-    } else if (studentScoresSet == 2) {
+    } else if (studentScoresSet.size == 2) {
         firstPlace = iterator.next().value;
         secondPlace = iterator.next().value;
-    } else if (studentScoresSet == 1) {
+    } else if (studentScoresSet.size == 1) {
         firstPlace = iterator.next().value;
     }
     populateStudentList(currentStudent);
@@ -93,6 +95,7 @@ function getStudents() {
  * page by clicking on an entry.
  */
 function populateStudentList(currentStudent) {
+    console.log(firstPlace);
     for (var i = 0; i < students.length; i++) {
         let studentProfileLink = "./student-profile.html?userid=" + students[i].id;
         let studentContainer = "<a class='student-container' id='student-container-" + i + "' href='" + studentProfileLink + "'></a>";

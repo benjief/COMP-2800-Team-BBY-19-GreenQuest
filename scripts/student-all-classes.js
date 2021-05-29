@@ -78,10 +78,10 @@ function getTopScores() {
         firstPlace = iterator.next().value;
         secondPlace = iterator.next().value;
         thirdPlace = iterator.next().value;
-    } else if (classScoresSet == 2) {
+    } else if (classScoresSet.size == 2) {
         firstPlace = iterator.next().value;
         secondPlace = iterator.next().value;
-    } else if (classScoresSet == 1) {
+    } else if (classScoresSet.size == 1) {
         firstPlace = iterator.next().value;
     }
     populateClassList(studentClassName);

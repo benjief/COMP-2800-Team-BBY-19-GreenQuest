@@ -46,13 +46,6 @@ body {
     justify-self: center;
 }
 
-.page-heading p {
-    display: flex;
-    height: 100%;
-    align-items: center;
-    justify-self: center;
-}
-
 /* Content card styling */
 #main-content-card {
     display: grid;
