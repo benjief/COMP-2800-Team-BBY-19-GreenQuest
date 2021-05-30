@@ -563,7 +563,7 @@ $("#card-button-container-1 a").click(function (event) {
 /**
  * Prevents the page from jumping upwards when a user clicks on the "Add Friends" link.
  */
-$("a").click(function (event) {
+$("#add-friends").click(function (event) {
     event.preventDefault();
 })
 
