@@ -140,9 +140,8 @@ input::placeholder {
 #more-info {
     grid-area: more-info;
     color: black;
-    border-bottom: 1px solid black;
-    border-bottom-style: dotted;
-    text-decoration: none;
+    text-decoration: underline;
+    text-decoration-style: dotted;
     margin-top: 20px;
     margin-bottom: 20px;
 }
