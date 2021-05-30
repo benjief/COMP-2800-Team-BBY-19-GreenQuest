@@ -182,7 +182,7 @@ function showPreview(element) {
 /**
  * Toggles the "approve quest" function cascade when the educator clicks on the "Approve" button.
  */
-function onClickApprove() {
+$(document.body).on("click", "#approve-button", function (event) {
     checkInput();
     if (validInput) {
         approveStudentQuest();
@@ -191,7 +191,8 @@ function onClickApprove() {
             deleteStoredImages();
         }
     }
-}
+});
+
 
 /**
  * Pulls the point value input by the educator for this quest (in the "Points" field) and the quest that has just
@@ -224,12 +225,12 @@ function approveStudentQuest() {
 /**
  * Toggles the "approve quest" function cascade when the educator clicks on the "Approve" button.
  */
-function onClickReject() {
+$(document.body).on("click", "#reject-button", function (event) {
     rejectStudentQuest();
     if (imageURLs.length != 0) {
         deleteStoredImages();
     }
-}
+});
 
 /**
  * Makes sure the user has entered a point value for an approved task. If they haven't, an error message
