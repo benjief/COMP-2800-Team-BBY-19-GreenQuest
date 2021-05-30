@@ -37,7 +37,7 @@ $(".button").click(function (event) {
 })
 
 /**
- * Calls checkLoggedIn() when a page is ready.
+ * Calls checkLoggedIn() and checkTimeOfDay() when a page is ready.
  */
 $(document).ready(function () {
     checkLoggedIn();
