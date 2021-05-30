@@ -600,6 +600,9 @@ function retrieveData() {
     if (dataToRetrieve) {
         var numImageFilesUploaded = parseInt(sessionStorage.getItem("numImageFilesUploaded"));
         if (numImageFilesUploaded) {
+            if (numImageFilesUploaded != 0) {
+                $("#message").remove();
+            }
             console.log(sessionStorage);
             for (var i = 0; i < numImageFilesUploaded; i++) {
                 let base64ImageString = sessionStorage.getItem("uploaded-image-" + i);

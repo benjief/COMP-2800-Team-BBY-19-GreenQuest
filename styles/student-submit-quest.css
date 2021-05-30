@@ -42,8 +42,7 @@
         "feedback"
         "submit"
         "break"
-        "home"
-        ;
+        "home";
     align-items: center;
 }
 
@@ -81,17 +80,12 @@
     margin-top: 20px;
 }
 
-#no-images {
+
+#image-info {
     font-weight: 600;
     text-align: center;
-}
-
-#image-info{
-    align-self: flex-end;
-    position: relative;
-    right: 47px;
-    width: 24px;
-    height: 24px;
+    text-decoration: underline;
+    text-decoration-style: dotted;
 }
 
 .page-container ul {
