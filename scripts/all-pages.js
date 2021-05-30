@@ -20,6 +20,8 @@ function checkTimeOfDay() {
         || (0 <= timeOfDay.getHours() && timeOfDay.getHours() <= 6)) {
         $(document.body).css({ backgroundImage: "url('/img/background_stars.png')" });
         $(".page-heading").css({ color: "white" });
+        $(".student-points-container img").attr("src", "/img/leaf_icon.png");
+        $(".student-points-container p").css({color: "#ff7b00"});
     }
 }
 
