@@ -229,5 +229,5 @@
 .popover-body {
     font-family: 'Mali', Arial, Helvetica, sans-serif;
     background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url("/img/background_pattern_2.png");
-    max-width: 180px;
+    max-height: 200px;
 }
