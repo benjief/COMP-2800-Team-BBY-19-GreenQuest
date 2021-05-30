@@ -47,3 +47,10 @@ $(".button").click(function (event) {
         event.preventDefault();
     }
 })
+
+/**
+ * Calls checkTimeOfDay() when page is ready.
+ */
+ $(document).ready(function () {
+    checkTimeOfDay();
+ });
