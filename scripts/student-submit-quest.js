@@ -117,22 +117,14 @@ function getClassName() {
  */
 function checkNumUploaded() {
     const maxImages = 3;
-    console.log(uploadedImageFiles.length);
+    console.log(uploadedImageFiles.length);        // If 1 or 2 images have been uploaded, the image upload button is enabled and the message removed
     console.log(className);
     if (className) {
-        let message = "<div class='text-container' id='message'><p id='no-images'>You haven't uploaded any "
-            + "images</p><img src='/img/question_icon.png' tabindex='0' role='button' id='image-info' data-bs-toggle='popover' "
-            + "data-bs-content='Add up to 3 images that prove you\'ve completed this task. If you worked with friends, submit a "
-            + "group shot and add them to your submission below. You'll all get points!' data-bs-container='body'>"
-            + "</div>"
         // If 3 images are uploaded, the image upload button is disabled
         if (uploadedImageFiles.length == maxImages) {
             $("#upload-image-input").attr("disabled", "");
-            // If no images have been uploaded, a message is displayed
-        } else if (uploadedImageFiles.length == 0) {
-            $(".uploaded-images").append(message);
             // If 1 or 2 images have been uploaded, the image upload button is enabled and the message removed
-        } else {
+        } else if (uploadedImageFiles.length != 0) {
             $("#upload-image-input").removeAttr("disabled");
             if ($("#message")) {
                 $("#message").remove();
@@ -627,6 +619,12 @@ function retrieveData() {
     } else {
         sessionStorage.clear();
     }
+}
+
+function populateText() {
+    $("#image-info").attr("data-bs-content", "Add up to <b>3 images</b> that you've completed your quest. " 
+    + "If you worked with friends, submit a group shot and add them to your submission below. You'll " + 
+    "all get points!");
 }
 
 /**
