@@ -426,7 +426,7 @@ function displaySuccessMessage() {
     $("#feedback").fadeOut(1000);
     setTimeout(function () {
         // Refresh the page (will be redirected if there are no more quests to approve)
-        // location.reload();
+        location.reload();
     }, 1000);
 }
 
