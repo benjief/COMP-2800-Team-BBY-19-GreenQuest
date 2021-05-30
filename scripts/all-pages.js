@@ -21,9 +21,20 @@ function checkTimeOfDay() {
         $(document.body).css({ backgroundImage: "url('/img/background_stars.png')" });
         $(".page-heading").css({ color: "white" });
         $(".student-points-container img").attr("src", "/img/leaf_icon.png");
-        $(".student-points-container p").css({color: "#ff7b00"});
+        $(".student-points-container p").css({ color: "#ff7b00" });
     }
 }
+
+/**
+ * Prevents the page from jumping upwards when a user clicks on the buttons.
+ */
+$(".button").click(function (event) {
+    if ($(event.target).attr("href") === "#") {
+        console.log($(event.target).attr("href"));
+        console.log($(event.target).html());
+        event.preventDefault();
+    }
+})
 
 /**
  * Calls checkLoggedIn() when a page is ready.
