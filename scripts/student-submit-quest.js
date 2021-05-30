@@ -80,9 +80,9 @@ function getQuestParticipants() {
         .then(function (doc) {
             userIDs = doc.data().Quest_Participant_IDs;
             userNames = doc.data().Quest_Participants;
-            checkNumUploaded();
-            processImage();
+            getClassName();
             addSubmittersToDOM();
+            processImage();
             // Display messages if no quest document is retrieved
             if (!doc) {
                 let message = "<div class='text-container'><p class='message'>You haven't got any active quests to submit!</p></div>"
@@ -97,6 +97,19 @@ function getQuestParticipants() {
 }
 
 /**
+ * Pulls the submitting student's class name from the "Students" collection in Firestore.
+ */
+function getClassName() {
+    console.log("mees");
+    db.collection("Students").doc(userIDs[0])
+        .get()
+        .then(function (doc) {
+            className = doc.data().Student_Class;
+            checkNumUploaded();
+        })
+}
+
+/**
  * If a user hasn't attached any images to the quest they're submitting, a message is displayed along with a question icon
  * that displays a popover if clicked on (helping users understand the purpose of uploaded images in this context). An input
  * is also added to the page, which allows users to upload up to three images. If three images have been uploaded, this input
@@ -104,6 +117,8 @@ function getQuestParticipants() {
  */
 function checkNumUploaded() {
     const maxImages = 3;
+    console.log(uploadedImageFiles.length);
+    console.log(className);
     if (className) {
         let message = "<div class='text-container' id='message'><p id='no-images'>You haven't uploaded any "
             + "images</p><img src='/img/question_icon.png' tabindex='0' role='button' id='image-info' data-bs-toggle='popover' "
@@ -506,7 +521,7 @@ function readImage(image, index) {
  * are stored in session storage, so that they can be retrieved upon re-entering this page after
  * adding participants to this quest. Once data has been stored, the user is redirected to the 
  * "Add Friends" page, along with this quest's ID in a URL query string.
- */ 
+ */
 function onClickAddFriends() {
     if (uploadedImageFiles.length > 0) {
         sessionStorage.setItem("numImageFilesUploaded", uploadedImageFiles.length);
