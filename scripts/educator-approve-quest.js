@@ -19,7 +19,7 @@ var imageURLs = [];
  * @author w3schools
  * @see https://www.w3schools.com/howto/howto_css_loader.asp
  */
- function delayTimer() {
+function delayTimer() {
     setTimeout(removeSpinner, 1500);
 }
 
@@ -125,7 +125,7 @@ function populateDOM() {
             var imageDOM = "<li class='list-item'><a class='uploaded-image' id='" +
                 imageURLs[i] + "' data-bs-toggle='modal' data-bs-target='#imagePreview' onclick='showPreview(this)'>Image " +
                 (i + 1) + "</li>";
-                $(".uploaded-images").append(imageDOM);
+            $(".uploaded-images").append(imageDOM);
         }
     }
 }
@@ -182,7 +182,7 @@ function showPreview(element) {
 /**
  * Toggles the "approve quest" function cascade when the educator clicks on the "Approve" button.
  */
-function onClickApprove() {
+$(document.body).on("click", "#approve-button", function (event) {
     checkInput();
     if (validInput) {
         approveStudentQuest();
@@ -190,10 +190,9 @@ function onClickApprove() {
         if (imageURLs.length != 0) {
             deleteStoredImages();
         }
-        // Display a message to let the educator know the process has completed successfully
-        displaySuccessMessage();
     }
-}
+});
+
 
 /**
  * Pulls the point value input by the educator for this quest (in the "Points" field) and the quest that has just
@@ -226,13 +225,12 @@ function approveStudentQuest() {
 /**
  * Toggles the "approve quest" function cascade when the educator clicks on the "Approve" button.
  */
-function onClickReject() {
+$(document.body).on("click", "#reject-button", function (event) {
     rejectStudentQuest();
     if (imageURLs.length != 0) {
         deleteStoredImages();
     }
-    displaySuccessMessage();
-}
+});
 
 /**
  * Makes sure the user has entered a point value for an approved task. If they haven't, an error message
@@ -398,18 +396,21 @@ function updateClassPoints(studentClass) {
  */
 function deleteStoredImages() {
     let storageRef = storage.ref();
-    for (var i = 0; i < imageURLs.length; i++)
+    for (var i = 0; i < imageURLs.length; i++) {
         deleteRef = imageURLs[i].replace("https://firebasestorage.googleapis.com/v0/b/greenquest-"
             + "5f80c.appspot.com/o/images%2Fquests%2F", "");
-    deleteRef = deleteRef.substr(0, deleteRef.indexOf("?"));
-    deleteRef = storageRef.child("images/quests/" + deleteRef);
-    deleteRef.delete()
-        .then(() => {
-            console.log("Processed image successfully removed from storage!");
-        })
-        .catch((error) => {
-            console.error("Error removing processed image from storage: ", error);
-        });
+        deleteRef = deleteRef.substr(0, deleteRef.indexOf("?"));
+        deleteRef = storageRef.child("images/quests/" + deleteRef);
+        deleteRef.delete()
+            .then(() => {
+                console.log("Processed image successfully removed from storage!");
+                // Display a message to let the educator know the process has completed successfully
+            })
+            .catch((error) => {
+                console.error("Error removing processed image from storage: ", error);
+            });
+    }
+    displaySuccessMessage();
 }
 
 /**

@@ -80,9 +80,9 @@ function getQuestParticipants() {
         .then(function (doc) {
             userIDs = doc.data().Quest_Participant_IDs;
             userNames = doc.data().Quest_Participants;
-            checkNumUploaded();
-            processImage();
+            getClassName();
             addSubmittersToDOM();
+            processImage();
             // Display messages if no quest document is retrieved
             if (!doc) {
                 let message = "<div class='text-container'><p class='message'>You haven't got any active quests to submit!</p></div>"
@@ -97,6 +97,18 @@ function getQuestParticipants() {
 }
 
 /**
+ * Pulls the submitting student's class name from the "Students" collection in Firestore.
+ */
+function getClassName() {
+    db.collection("Students").doc(userIDs[0])
+        .get()
+        .then(function (doc) {
+            className = doc.data().Student_Class;
+            checkNumUploaded();
+        })
+}
+
+/**
  * If a user hasn't attached any images to the quest they're submitting, a message is displayed along with a question icon
  * that displays a popover if clicked on (helping users understand the purpose of uploaded images in this context). An input
  * is also added to the page, which allows users to upload up to three images. If three images have been uploaded, this input
@@ -104,20 +116,14 @@ function getQuestParticipants() {
  */
 function checkNumUploaded() {
     const maxImages = 3;
+    console.log(uploadedImageFiles.length);        // If 1 or 2 images have been uploaded, the image upload button is enabled and the message removed
+    console.log(className);
     if (className) {
-        let message = "<div class='text-container' id='message'><p id='no-images'>You haven't uploaded any "
-            + "images</p><img src='/img/question_icon.png' tabindex='0' role='button' id='image-info' data-bs-toggle='popover' "
-            + "data-bs-content='Add up to 3 images that prove you\'ve completed this task. If you worked with friends, submit a "
-            + "group shot and add them to your submission below. You'll all get points!' data-bs-container='body'>"
-            + "</div>"
         // If 3 images are uploaded, the image upload button is disabled
         if (uploadedImageFiles.length == maxImages) {
             $("#upload-image-input").attr("disabled", "");
-            // If no images have been uploaded, a message is displayed
-        } else if (uploadedImageFiles.length == 0) {
-            $(".uploaded-images").append(message);
             // If 1 or 2 images have been uploaded, the image upload button is enabled and the message removed
-        } else {
+        } else if (uploadedImageFiles.length != 0) {
             $("#upload-image-input").removeAttr("disabled");
             if ($("#message")) {
                 $("#message").remove();
@@ -431,24 +437,22 @@ function checkInput() {
 /**
  * Generates download URLs for the uploaded images attached to the user's submission.
  */
-function generateImageURLs() {
-    for (var i = 0; i < uploadedImageFiles.length; i++) {
-        let storageRef = getStorageRef(uploadedImageFiles[i], false);
-        console.log(storageRef);
-        storageRef.put(uploadedImageFiles[i])
-            .then(function () {
-                console.log('Uploaded to Cloud storage');
-                storageRef.getDownloadURL()
-                    .then(function (url) {
-                        console.log(url);
-                        imageURLs.push(url);
-                        console.log(imageURLs);
-                        if (i == (uploadedImageFiles.length)) {
-                            updateQuestInDB(imageURLs);
-                        };
-                    })
-            });
-    }
+function generateImageURLs(image) {
+    let storageRef = getStorageRef(image, false);
+    console.log(storageRef);
+    storageRef.put(image)
+        .then(function () {
+            console.log('Uploaded to Cloud storage');
+            storageRef.getDownloadURL()
+                .then(function (url) {
+                    console.log(url);
+                    imageURLs.push(url);
+                    console.log(imageURLs.length);
+                    if (imageURLs.length == uploadedImageFiles.length) {
+                        updateQuestInDB(imageURLs);
+                    }
+                })
+        });
 }
 
 /**
@@ -506,7 +510,7 @@ function readImage(image, index) {
  * are stored in session storage, so that they can be retrieved upon re-entering this page after
  * adding participants to this quest. Once data has been stored, the user is redirected to the 
  * "Add Friends" page, along with this quest's ID in a URL query string.
- */ 
+ */
 function onClickAddFriends() {
     if (uploadedImageFiles.length > 0) {
         sessionStorage.setItem("numImageFilesUploaded", uploadedImageFiles.length);
@@ -526,17 +530,19 @@ function onClickAddFriends() {
  * by the primary submitter's educator. It is only at this stage that any semi-permanent image download URLs
  * are generated.
  */
-function onClickSubmit() {
+$(document.body).on("click", "#submit-button", function (event) {
     checkInput();
     if (validInput) {
         if (uploadedImageFiles.length == 0) {
             updateQuestInDB(imageURLs);
         } else {
             // Generate image URLs and add them to an array
-            generateImageURLs();
+            for (var i = 0; i < uploadedImageFiles.length; i++) {
+                generateImageURLs(uploadedImageFiles[i]);
+            }
         }
     }
-}
+});
 
 /**
  * When users click on the "Home" button, the temporary images folder is deleted and they are redirected
@@ -557,7 +563,7 @@ $("#card-button-container-1 a").click(function (event) {
 /**
  * Prevents the page from jumping upwards when a user clicks on the "Add Friends" link.
  */
-$("a").click(function (event) {
+$("#add-friends").click(function (event) {
     event.preventDefault();
 })
 
@@ -612,6 +618,12 @@ function retrieveData() {
     } else {
         sessionStorage.clear();
     }
+}
+
+function populateText() {
+    $("#image-info").attr("data-bs-content", "Add up to <b>3 images</b> that you've completed your quest. "
+        + "If you worked with friends, submit a group shot and add them to your submission below. You'll " +
+        "all get points!");
 }
 
 /**

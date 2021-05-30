@@ -54,11 +54,9 @@
     height: 100%;
     align-items: center;
     font-family: 'Mali', Arial, Helvetica, sans-serif;
-    font-size: 15pt;
+    font-size: 18pt;
     font-weight: 600;
     margin-left: 10px;
-    color: #ff8000;
-    text-shadow: 1px 1px 1px rgba(62, 63, 66, 0.788);
 }
 
 #main-content-card {
