@@ -122,6 +122,8 @@ function populateDOM() {
         var imageDOM = "<li class='list-item'>none</li>";
     } else {
         for (var i = 0; i < imageURLs.length; i++) {
+            // Images are stored in reverse order of submission
+            imageURLs.reverse();
             var imageDOM = "<li class='list-item'><a class='uploaded-image' id='" +
                 imageURLs[i] + "' data-bs-toggle='modal' data-bs-target='#imagePreview' onclick='showPreview(this)'>Image " +
                 (i + 1) + "</li>";

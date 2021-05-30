@@ -100,7 +100,6 @@ function getQuestParticipants() {
  * Pulls the submitting student's class name from the "Students" collection in Firestore.
  */
 function getClassName() {
-    console.log("mees");
     db.collection("Students").doc(userIDs[0])
         .get()
         .then(function (doc) {
