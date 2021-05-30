@@ -407,7 +407,7 @@ function deleteTempImages(redirectLink) {
             tempImagesDeleted = true;
             if (redirectLink != null && redirectLink != "") {
                 setTimeout(function () {
-                    // location.href = redirectLink;
+                    location.href = redirectLink;
                 }, 1000);
             }
         })
