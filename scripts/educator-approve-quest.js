@@ -19,7 +19,7 @@ var imageURLs = [];
  * @author w3schools
  * @see https://www.w3schools.com/howto/howto_css_loader.asp
  */
- function delayTimer() {
+function delayTimer() {
     setTimeout(removeSpinner, 1500);
 }
 
@@ -122,12 +122,10 @@ function populateDOM() {
         var imageDOM = "<li class='list-item'>none</li>";
     } else {
         for (var i = 0; i < imageURLs.length; i++) {
-            // Images are stored in reverse order of submission
-            imageURLs.reverse();
             var imageDOM = "<li class='list-item'><a class='uploaded-image' id='" +
                 imageURLs[i] + "' data-bs-toggle='modal' data-bs-target='#imagePreview' onclick='showPreview(this)'>Image " +
                 (i + 1) + "</li>";
-                $(".uploaded-images").append(imageDOM);
+            $(".uploaded-images").append(imageDOM);
         }
     }
 }
@@ -192,8 +190,6 @@ function onClickApprove() {
         if (imageURLs.length != 0) {
             deleteStoredImages();
         }
-        // Display a message to let the educator know the process has completed successfully
-        displaySuccessMessage();
     }
 }
 
@@ -233,7 +229,6 @@ function onClickReject() {
     if (imageURLs.length != 0) {
         deleteStoredImages();
     }
-    displaySuccessMessage();
 }
 
 /**
@@ -408,6 +403,8 @@ function deleteStoredImages() {
     deleteRef.delete()
         .then(() => {
             console.log("Processed image successfully removed from storage!");
+            // Display a message to let the educator know the process has completed successfully
+            displaySuccessMessage();
         })
         .catch((error) => {
             console.error("Error removing processed image from storage: ", error);
