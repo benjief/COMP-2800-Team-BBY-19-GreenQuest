@@ -232,6 +232,20 @@ $(".button").click(function (event) {
 })
 
 /**
+ * Checks the time and changes the background image depending of it's night or day.
+ */
+function checkTimeOfDay() {
+    let timeOfDay = new Date();
+    if ((20 <= timeOfDay.getHours() && (timeOfDay.getHours() <= 23))
+        || (0 <= timeOfDay.getHours() && timeOfDay.getHours() <= 6)) {
+        $(document.body).css({ backgroundImage: "url('/img/background_stars.png')" });
+        $(".page-heading").css({ color: "white" });
+        $(".student-points-container img").attr("src", "/img/leaf_icon.png");
+        $(".student-points-container p").css({ color: "#ff7b00" });
+    }
+}
+
+/**
  * When the document is ready, session storage is checked to see if a previous
  * radio button selection was made (in the same session). If it was, the page will re-
  * check the same selection without the user having to do so. Following this, checkUserType()
@@ -249,4 +263,5 @@ $(document).ready(function () {
         }
     }
     checkUserType();
+    checkTimeOfDay();
 });

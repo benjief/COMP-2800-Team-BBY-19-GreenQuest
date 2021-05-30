@@ -60,6 +60,11 @@
                     <p>Uploaded Images</p>
                 </div>
                 <ul class="uploaded-images">
+                    <div class='text-container' id='message'>
+                        <p id='no-images'>You haven't uploaded any images</p>
+                        <img src='/img/question_icon.png' tabindex='0' role='button' id='image-info'
+                            data-bs-toggle='popover' data-bs-html='true' onclick="populateText()">
+                    </div>
                 </ul>
                 <!-- CITE SOURCE: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file -->
                 <div class="container text-center py-3" id="upload-image-container">
@@ -88,7 +93,7 @@
                 <a id="add-friends" href="#" onclick="onClickAddFriends()">Add Friends</a>
             </div>
             <div class="card-button-container" id="card-button-container-1">
-                <a class="button" id="submit-button" href="#" onclick="onClickSubmit()">Submit</a>
+                <a class="button" id="submit-button" href="#">Submit</a>
             </div>
             <hr class="break">
             <div class="card-button-container" id="card-button-container-2">
