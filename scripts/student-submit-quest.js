@@ -407,7 +407,7 @@ function deleteTempImages(redirectLink) {
             tempImagesDeleted = true;
             if (redirectLink != null && redirectLink != "") {
                 setTimeout(function () {
-                    location.href = redirectLink;
+                    // location.href = redirectLink;
                 }, 1000);
             }
         })
@@ -437,24 +437,22 @@ function checkInput() {
 /**
  * Generates download URLs for the uploaded images attached to the user's submission.
  */
-function generateImageURLs() {
-    for (var i = 0; i < uploadedImageFiles.length; i++) {
-        let storageRef = getStorageRef(uploadedImageFiles[i], false);
-        console.log(storageRef);
-        storageRef.put(uploadedImageFiles[i])
-            .then(function () {
-                console.log('Uploaded to Cloud storage');
-                storageRef.getDownloadURL()
-                    .then(function (url) {
-                        console.log(url);
-                        imageURLs.push(url);
-                        console.log(imageURLs);
-                        if (i == (uploadedImageFiles.length)) {
-                            updateQuestInDB(imageURLs);
-                        };
-                    })
-            });
-    }
+function generateImageURLs(image) {
+    let storageRef = getStorageRef(image, false);
+    console.log(storageRef);
+    storageRef.put(image)
+        .then(function () {
+            console.log('Uploaded to Cloud storage');
+            storageRef.getDownloadURL()
+                .then(function (url) {
+                    console.log(url);
+                    imageURLs.push(url);
+                    console.log(imageURLs.length);
+                    if (imageURLs.length == uploadedImageFiles.length) {
+                        updateQuestInDB(imageURLs);
+                    }
+                })
+        });
 }
 
 /**
@@ -539,7 +537,9 @@ $(document.body).on("click", "#submit-button", function (event) {
             updateQuestInDB(imageURLs);
         } else {
             // Generate image URLs and add them to an array
-            generateImageURLs();
+            for (var i = 0; i < uploadedImageFiles.length; i++) {
+                generateImageURLs(uploadedImageFiles[i]);
+            }
         }
     }
 });
@@ -621,9 +621,9 @@ function retrieveData() {
 }
 
 function populateText() {
-    $("#image-info").attr("data-bs-content", "Add up to <b>3 images</b> that you've completed your quest. " 
-    + "If you worked with friends, submit a group shot and add them to your submission below. You'll " + 
-    "all get points!");
+    $("#image-info").attr("data-bs-content", "Add up to <b>3 images</b> that you've completed your quest. "
+        + "If you worked with friends, submit a group shot and add them to your submission below. You'll " +
+        "all get points!");
 }
 
 /**
