@@ -407,7 +407,7 @@ function deleteTempImages(redirectLink) {
             tempImagesDeleted = true;
             if (redirectLink != null && redirectLink != "") {
                 setTimeout(function () {
-                    location.href = redirectLink;
+                    // location.href = redirectLink;
                 }, 1000);
             }
         })
@@ -532,7 +532,7 @@ function onClickAddFriends() {
  * by the primary submitter's educator. It is only at this stage that any semi-permanent image download URLs
  * are generated.
  */
-function onClickSubmit() {
+$(document.body).on("click", "#submit-button", function (event) {
     checkInput();
     if (validInput) {
         if (uploadedImageFiles.length == 0) {
@@ -542,7 +542,7 @@ function onClickSubmit() {
             generateImageURLs();
         }
     }
-}
+});
 
 /**
  * When users click on the "Home" button, the temporary images folder is deleted and they are redirected
