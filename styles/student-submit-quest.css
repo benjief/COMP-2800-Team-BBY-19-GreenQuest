@@ -165,6 +165,7 @@
 
 #card-button-container-2 {
     grid-area: home;
+    margin-bottom: 40px;
 }
 
 .add-friends-container {
