@@ -236,9 +236,15 @@ $(".button").click(function (event) {
  */
 function checkTimeOfDay() {
     let timeOfDay = new Date();
-    if ((20 <= timeOfDay.getHours() && (timeOfDay.getHours() <= 23))
-        || (0 <= timeOfDay.getHours() && timeOfDay.getHours() <= 6)) {
-        $(document.body).css({ backgroundImage: "url('/img/background_stars.png')" });
+    if ((21 <= timeOfDay.getHours() && (timeOfDay.getHours() <= 23))
+        || (0 <= timeOfDay.getHours() && timeOfDay.getHours() <= 4)) {
+        $(document.body).css({ backgroundImage: "url('/img/background_clouds_night.png')" });
+        $(".page-heading").css({ color: "#ff80ee" });
+        $(".student-points-container img").attr("src", "/img/leaf_icon.png");
+        $(".student-points-container p").css({ color: "#ff7b00" });
+    } else if ((19 <= timeOfDay.getHours() && (timeOfDay.getHours() < 21))
+        || (4 < timeOfDay.getHours() && timeOfDay.getHours() <= 7)) {
+        $(document.body).css({ backgroundImage: "url('/img/background_clouds_dusk_dawn.png')" });
         $(".page-heading").css({ color: "white" });
         $(".student-points-container img").attr("src", "/img/leaf_icon.png");
         $(".student-points-container p").css({ color: "#ff7b00" });
