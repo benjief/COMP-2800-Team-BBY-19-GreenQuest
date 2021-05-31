@@ -102,4 +102,7 @@ $(".button").click(function (event) {
 $(document).ready(function () {
     randomizeBackground();
     checkTimeOfDay();
+    if (userType === "none") {
+        $("#nav-item-logout").remove();
+    }
 });
