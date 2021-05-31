@@ -93,7 +93,7 @@ body {
     border-radius: 10px;
     font-size: 15pt;
     justify-self: center;
-    box-shadow: 5px 5px 5px rgb(116, 103, 103);
+    box-shadow: 5px 5px 5px rgba(34, 33, 36, 0.781);
     margin-bottom: 15px;
 }
 
