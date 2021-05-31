@@ -97,9 +97,13 @@ $(".button").click(function (event) {
 })
 
 /**
- * Calls randomizeBackground(), checkLoggedIn(), checkTimeOfDay() when a page is ready.
+ * Calls randomizeBackground(), checkLoggedIn(), checkTimeOfDay() when a page is ready. Also gets 
+ * rid of logout nav bar item if the user isn't logged in.
  */
 $(document).ready(function () {
     randomizeBackground();
     checkTimeOfDay();
+    if (userType == "none") {
+        $("#nav-item-logout").remove();
+    }
 });
