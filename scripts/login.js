@@ -231,17 +231,14 @@ $(".button").click(function (event) {
     event.preventDefault();
 })
 
-/**
- * Checks the time and changes the background image depending of it's night or day.
- */
 function checkTimeOfDay() {
     let timeOfDay = new Date();
     if ((21 <= timeOfDay.getHours() && (timeOfDay.getHours() <= 23))
         || (0 <= timeOfDay.getHours() && timeOfDay.getHours() <= 4)) {
         $(document.body).css({ backgroundImage: "url('/img/background_clouds_night.png')" });
-        $(".page-heading").css({ color: "#ff80ee" });
-        $(".student-points-container img").attr("src", "/img/leaf_icon.png");
-        $(".student-points-container p").css({ color: "#ff7b00" });
+        $(".page-heading").css({ color: "#fff345" });
+        $(".student-points-container img").attr("src", "/img/leaf_icon_night.png");
+        $(".student-points-container p").css({ color: "#fff345" });
     } else if ((19 <= timeOfDay.getHours() && (timeOfDay.getHours() < 21))
         || (4 < timeOfDay.getHours() && timeOfDay.getHours() <= 7)) {
         $(document.body).css({ backgroundImage: "url('/img/background_clouds_dusk_dawn.png')" });
