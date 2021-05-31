@@ -101,6 +101,5 @@ $(".button").click(function (event) {
  */
 $(document).ready(function () {
     randomizeBackground();
-    checkLoggedIn();
     checkTimeOfDay();
 });
