@@ -103,7 +103,11 @@ $(".button").click(function (event) {
 $(document).ready(function () {
     randomizeBackground();
     checkTimeOfDay();
+<<<<<<< HEAD
     if (userType == "none") {
+=======
+    if (userType === "none") {
+>>>>>>> GB_hosting_branch
         $("#nav-item-logout").remove();
     }
 });
