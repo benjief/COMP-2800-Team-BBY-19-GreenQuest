@@ -114,9 +114,12 @@
 
 #quest-instructions,
 #quest-information {
-    border-bottom: 1px solid black;
-    border-bottom-style: dotted;
-    text-decoration: none;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+}
+
+a:hover {
+    cursor: pointer;
 }
 
 .card-button-container a {

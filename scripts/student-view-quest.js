@@ -111,6 +111,7 @@ function addInfoToDOM() {
  * @param {*} element  - The DOM element being displayed in this modal.
  */
 function showVideo(element) {
+    console.log(questInfo)
     let category = $(element).attr("id");
     let videoURL = null;
     let videoTitle = null;
