@@ -4,6 +4,23 @@ var userID;
 var userEmail;
 
 /**
+ * Checks to see if a student has accidentally logged into the educator site. If they have, redirects them
+ * to the homepage.
+ */
+function checkIfStudent(somebody) {
+    db.collection("Students")
+        .doc(somebody.uid)
+        .get()
+        .then(function (doc) {
+            // Extract the user's ID (if they're indeed a student)
+            userID = doc.id;
+            if (userID) {
+                window.location.assign("/index.html");
+            }
+        });
+}
+
+/**
  * Pulls the current user's ID and email from Firestore and assigns them to userID and userEmail, respecitvely. Once userID and
  * userEmail are assigned values, checkNumQuests() and checkNumClasses() continue the function cascade. Finally, the user's 
  * name is also pulled from Firestore and a personalized greeting is generated and displayed on the page header.
@@ -11,6 +28,7 @@ var userEmail;
 function sayHello() {
     firebase.auth().onAuthStateChanged(function (somebody) {
         if (somebody) {
+            checkIfStudent(somebody);
             db.collection("Educators")
                 .doc(somebody.uid)
                 .get()
