@@ -78,7 +78,7 @@ function checkTimeOfDay() {
         $(".student-points-container p").css({ color: "#fff345" });
     } else if ((19 <= timeOfDay.getHours() && (timeOfDay.getHours() < 21))
         || (4 < timeOfDay.getHours() && timeOfDay.getHours() <= 7)) {
-        $(document.body).css({ backgroundImage: "url('/img/background_clouds_dusk_dawn.png')" });
+        $(document.body).css({ backgroundImage: "url('/img/background_clouds_dawn_dusk.png')" });
         $(".page-heading").css({ color: "white" });
         $(".student-points-container img").attr("src", "/img/leaf_icon.png");
         $(".student-points-container p").css({ color: "#ff7b00" });
