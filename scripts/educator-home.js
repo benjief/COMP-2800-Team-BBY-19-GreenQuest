@@ -14,7 +14,7 @@ function checkIfStudent(somebody) {
         .then(function (doc) {
             // Extract the user's ID (if they're indeed a student)
             userID = doc.id;
-            userEmail = doc.data().Educator_Email;
+            userEmail = doc.data().Student_Email;
             if (userEmail) {
                 window.location.assign("/index.html");
             }
