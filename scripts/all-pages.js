@@ -22,7 +22,7 @@ function checkTimeOfDay() {
     } else if ((19 <= timeOfDay.getHours() && (timeOfDay.getHours() < 21))
         || (4 < timeOfDay.getHours() && timeOfDay.getHours() <= 7)) {
         $(document.body).css({ backgroundImage: "url('/img/background_clouds_dawn_dusk.png')" });
-        $(".page-heading").css({ color: "white" });
+        $(".page-heading").css({ color: "#ff7b00" });
         $(".student-points-container img").attr("src", "/img/leaf_icon.png");
         $(".student-points-container p").css({ color: "#ff7b00" });
     }

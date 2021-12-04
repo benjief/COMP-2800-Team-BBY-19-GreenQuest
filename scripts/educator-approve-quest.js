@@ -189,6 +189,8 @@ $(document.body).on("click", "#approve-button", function (event) {
         // If any images were attached to this quest, delete them from Cloud Storage
         if (imageURLs.length != 0) {
             deleteStoredImages();
+        } else {
+            displaySuccessMessage();
         }
     }
 });
@@ -229,6 +231,8 @@ $(document.body).on("click", "#reject-button", function (event) {
     rejectStudentQuest();
     if (imageURLs.length != 0) {
         deleteStoredImages();
+    } else {
+        displaySuccessMessage();
     }
 });
 
